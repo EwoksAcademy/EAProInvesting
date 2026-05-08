@@ -612,14 +612,18 @@
                     </button>
                 </div>
 
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                <div class="grid grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
+                    <div class="premium-card p-5 text-center border-b-4 border-indigo-500">
+                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 tooltip-trigger">Total Modal <span class="tooltip-text">Akumulasi modal yg digunakan dari seluruh jurnal</span></p>
+                        <p class="text-xl font-black text-indigo-600 mt-2 truncate" id="jr-total-modal">0</p>
+                    </div>
                     <div class="premium-card p-5 text-center border-b-4 border-purple-500">
                         <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Total Trade</p>
-                        <p class="text-3xl font-black text-slate-900" id="jr-total-trade">0</p>
+                        <p class="text-2xl font-black text-slate-900 mt-1" id="jr-total-trade">0</p>
                     </div>
                     <div class="premium-card p-5 text-center border-b-4 border-emerald-500">
                         <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Win Rate</p>
-                        <p class="text-3xl font-black text-emerald-600" id="jr-win-rate">0%</p>
+                        <p class="text-2xl font-black text-emerald-600 mt-1" id="jr-win-rate">0%</p>
                     </div>
                     <div class="premium-card p-5 text-center border-b-4 border-blue-500">
                         <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Total Cuan (Rp)</p>
@@ -654,13 +658,26 @@
                             <div class="grid grid-cols-2 gap-3">
                                 <div>
                                     <label class="text-[10px] font-black text-slate-400 uppercase mb-1 block">HARGA BELI</label>
-                                    <input type="number" id="jr-buy" placeholder="1000" class="input-pro bg-white !py-2.5 !text-sm">
+                                    <input type="number" id="jr-buy" placeholder="1000" class="input-pro bg-white !py-2.5 !text-sm" oninput="calcRRR()">
                                 </div>
                                 <div>
                                     <label class="text-[10px] font-black text-slate-400 uppercase mb-1 block">HARGA JUAL</label>
                                     <input type="number" id="jr-sell" placeholder="1100" class="input-pro bg-white !py-2.5 !text-sm">
                                 </div>
                             </div>
+                            
+                            <div class="grid grid-cols-2 gap-3 bg-indigo-50/50 p-2 rounded-xl border border-indigo-100">
+                                <div>
+                                    <label class="text-[10px] font-black text-indigo-600 uppercase mb-1 block">TARGET (TP)</label>
+                                    <input type="number" id="jr-tp" placeholder="1200" class="input-pro bg-white !py-2 !text-xs !border-indigo-100" oninput="calcRRR()">
+                                </div>
+                                <div>
+                                    <label class="text-[10px] font-black text-indigo-600 uppercase mb-1 block">STOP LOSS (SL)</label>
+                                    <input type="number" id="jr-sl" placeholder="950" class="input-pro bg-white !py-2 !text-xs !border-indigo-100" oninput="calcRRR()">
+                                </div>
+                            </div>
+                            <div id="rr-indicator" class="text-[10px] font-bold text-slate-500 italic mt-0"></div>
+
                             <div>
                                 <label class="text-[10px] font-black text-slate-400 uppercase mb-1 block">FEE BROKER (%) - TOTAL B/S</label>
                                 <input type="number" id="jr-fee" value="0.4" step="0.01" class="input-pro bg-white !py-2.5 !text-sm">
@@ -690,10 +707,13 @@
                         </div>
                     </div>
 
-                    <div class="lg:col-span-2 premium-card overflow-hidden">
-                        <div class="p-4 bg-slate-900 text-white flex justify-between items-center">
-                            <h3 class="font-black text-sm uppercase tracking-widest"><i class="fas fa-list-ul text-purple-400 mr-2"></i> Histori Perjalanan</h3>
-                            <button onclick="clearJournal()" class="text-[10px] bg-white/10 hover:bg-rose-500/80 px-2 py-1 rounded transition-colors">CLEAR</button>
+                    <div class="lg:col-span-2 premium-card overflow-hidden flex flex-col">
+                        <div class="p-4 bg-slate-900 text-white flex flex-col md:flex-row justify-between items-center gap-4">
+                            <h3 class="font-black text-sm uppercase tracking-widest flex-shrink-0"><i class="fas fa-list-ul text-purple-400 mr-2"></i> Histori Perjalanan</h3>
+                            <div class="flex gap-2 w-full md:w-auto">
+                                <input type="text" id="jr-search" onkeyup="renderJournal(this.value)" placeholder="🔍 Cari Emiten..." class="input-pro !py-1.5 !px-3 !text-xs text-slate-900 flex-1 md:w-48 !rounded-lg border-none">
+                                <button onclick="clearJournal()" class="text-[10px] bg-white/10 hover:bg-rose-500/80 px-3 py-1.5 rounded-lg transition-colors font-bold flex-shrink-0">CLEAR ALL</button>
+                            </div>
                         </div>
                         <div class="overflow-x-auto max-h-[600px] no-scrollbar">
                             <table class="w-full text-left border-collapse min-w-[700px]">
@@ -702,7 +722,7 @@
                                         <th class="p-4 text-[10px] font-black text-slate-400 uppercase">Tgl & Emiten</th>
                                         <th class="p-4 text-[10px] font-black text-slate-400 uppercase">Trade Info</th>
                                         <th class="p-4 text-[10px] font-black text-slate-400 uppercase">Psikologi & Setup</th>
-                                        <th class="p-4 text-[10px] font-black text-slate-400 uppercase text-right">Net PnL</th>
+                                        <th class="p-4 text-[10px] font-black text-slate-400 uppercase text-right">Net Profit/Loss</th>
                                         <th class="p-4 text-[10px] font-black text-slate-400 uppercase text-center">Aksi</th>
                                     </tr>
                                 </thead>
@@ -2362,6 +2382,31 @@
         // --- NEW FEATURE: JURNAL TRADING LOGIC ---
         let journal = JSON.parse(localStorage.getItem('ewoks_journal')) || [];
         
+        // RRR Calculator Logic
+        function calcRRR() {
+            const buy = parseFloat(document.getElementById('jr-buy').value) || 0;
+            const tp = parseFloat(document.getElementById('jr-tp').value) || 0;
+            const sl = parseFloat(document.getElementById('jr-sl').value) || 0;
+            const indicator = document.getElementById('rr-indicator');
+
+            if(buy > 0 && tp > 0 && sl > 0 && tp > buy && buy > sl) {
+                const risk = buy - sl;
+                const reward = tp - buy;
+                const ratio = reward / risk;
+                
+                let text = `RRR 1 : ${ratio.toFixed(1)}`;
+                if(ratio >= 3) {
+                    indicator.innerHTML = `<span class="text-emerald-500"><i class="fas fa-check-circle"></i> ${text} (Sangat Bagus)</span>`;
+                } else if(ratio >= 2) {
+                    indicator.innerHTML = `<span class="text-blue-500"><i class="fas fa-check"></i> ${text} (Ideal)</span>`;
+                } else {
+                    indicator.innerHTML = `<span class="text-rose-500"><i class="fas fa-exclamation-triangle"></i> ${text} (Kurang Ideal / Berisiko)</span>`;
+                }
+            } else {
+                indicator.innerHTML = '';
+            }
+        }
+
         function addJournal() {
             const date = document.getElementById('jr-date').value;
             const ticker = document.getElementById('jr-ticker').value.toUpperCase().trim();
@@ -2379,6 +2424,8 @@
 
             const grossValueBuy = buy * lot * 100;
             const grossValueSell = sell * lot * 100;
+            
+            // Auto-Fill Fee Broker logic applied here
             const totalFee = (grossValueBuy + grossValueSell) * (fee / 100);
             
             const grossPnL = grossValueSell - grossValueBuy;
@@ -2397,30 +2444,52 @@
             document.getElementById('jr-lot').value = '';
             document.getElementById('jr-buy').value = '';
             document.getElementById('jr-sell').value = '';
+            document.getElementById('jr-tp').value = '';
+            document.getElementById('jr-sl').value = '';
+            document.getElementById('rr-indicator').innerHTML = '';
             
             renderJournal();
         }
 
-        function renderJournal() {
+        // Helper to format big numbers
+        function formatAbbreviated(num) {
+            if (num >= 1000000000) return (num / 1000000000).toFixed(2) + ' Miliar';
+            if (num >= 1000000) return (num / 1000000).toFixed(2) + ' Juta';
+            if (num >= 1000) return (num / 1000).toFixed(1) + ' Ribu';
+            return Math.round(num).toLocaleString('id-ID');
+        }
+
+        // Render Journal with Filter Support
+        function renderJournal(searchQuery = '') {
             const tbody = document.getElementById('journal-tbody');
             const emptyState = document.getElementById('journal-empty');
             
-            if(journal.length === 0) {
+            let filteredJournal = journal;
+            if(searchQuery) {
+                const q = searchQuery.toLowerCase();
+                filteredJournal = journal.filter(j => j.ticker.toLowerCase().includes(q));
+            }
+            
+            if(filteredJournal.length === 0) {
                 tbody.innerHTML = '';
                 emptyState.classList.remove('hide');
                 document.getElementById('jr-total-trade').innerText = '0';
                 document.getElementById('jr-win-rate').innerText = '0%';
                 document.getElementById('jr-total-win').innerText = '0';
                 document.getElementById('jr-total-loss').innerText = '0';
+                document.getElementById('jr-total-modal').innerText = '0';
                 return;
             }
             
             emptyState.classList.add('hide');
-            let wins = 0, totalWinRp = 0, totalLossRp = 0;
+            let wins = 0, totalWinRp = 0, totalLossRp = 0, totalModal = 0;
 
-            tbody.innerHTML = journal.map(j => {
+            tbody.innerHTML = filteredJournal.map(j => {
                 if(j.isWin) { wins++; totalWinRp += j.netPnL; }
                 else { totalLossRp += Math.abs(j.netPnL); }
+
+                // Add to total modal
+                totalModal += (j.buy * j.lot * 100);
 
                 const pnlColor = j.isWin ? 'text-emerald-500' : 'text-rose-500';
                 const pnlSign = j.isWin ? '+' : '';
@@ -2442,29 +2511,41 @@
                     <td class="p-4 text-right font-black ${pnlColor}">
                         ${pnlSign}Rp ${Math.round(j.netPnL).toLocaleString('id-ID')}
                     </td>
-                    <td class="p-4 text-center">
-                        <button onclick="deleteJournal(${j.id})" class="w-8 h-8 rounded-lg bg-rose-50 text-rose-500 hover:bg-rose-100 transition-colors"><i class="fas fa-trash"></i></button>
+                    <td class="p-4 text-center flex flex-col gap-1 items-center justify-center">
+                        <button onclick="shareWhatsAppJournal(${j.id})" class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 hover:bg-emerald-100 transition-colors tooltip-trigger" title="Share WA"><i class="fab fa-whatsapp"></i></button>
+                        <button onclick="deleteJournal(${j.id})" class="w-8 h-8 rounded-lg bg-rose-50 text-rose-500 hover:bg-rose-100 transition-colors tooltip-trigger" title="Hapus"><i class="fas fa-trash"></i></button>
                     </td>
                 </tr>
                 `;
             }).join('');
 
-            document.getElementById('jr-total-trade').innerText = journal.length;
-            document.getElementById('jr-win-rate').innerText = Math.round((wins / journal.length) * 100) + '%';
-            document.getElementById('jr-total-win').innerText = Math.round(totalWinRp).toLocaleString('id-ID');
-            document.getElementById('jr-total-loss').innerText = Math.round(totalLossRp).toLocaleString('id-ID');
+            document.getElementById('jr-total-trade').innerText = filteredJournal.length;
+            document.getElementById('jr-win-rate').innerText = Math.round((wins / filteredJournal.length) * 100) + '%';
+            document.getElementById('jr-total-win').innerText = formatAbbreviated(totalWinRp);
+            document.getElementById('jr-total-loss').innerText = formatAbbreviated(totalLossRp);
+            document.getElementById('jr-total-modal').innerText = formatAbbreviated(totalModal);
+        }
+
+        // Share WA Jurnal
+        function shareWhatsAppJournal(id) {
+            const j = journal.find(x => x.id === id);
+            if (!j) return;
+            const status = j.isWin ? "✅ PROFIT" : "❌ LOSS";
+            const msg = `*JURNAL TRADING: ${j.ticker}*\nStatus: ${status}\n\nHarga Beli: Rp ${j.buy}\nHarga Jual: Rp ${j.sell}\nLot: ${j.lot} Lot\nNet PnL: Rp ${Math.round(j.netPnL).toLocaleString('id-ID')}\n\nSetup: ${j.reason}\nPsikologi: ${j.emotion}\n\n_Ewoks Academy Suite_`;
+            window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`);
         }
 
         function deleteJournal(id) {
             journal = journal.filter(j => j.id !== id);
             localStorage.setItem('ewoks_journal', JSON.stringify(journal));
-            renderJournal();
+            renderJournal(document.getElementById('jr-search').value);
         }
 
         function clearJournal() {
             if(confirm('Yakin ingin menghapus SELURUH histori jurnal trading?')) {
                 journal = [];
                 localStorage.removeItem('ewoks_journal');
+                document.getElementById('jr-search').value = '';
                 renderJournal();
             }
         }
