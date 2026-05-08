@@ -157,7 +157,7 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* Styles untuk Peta Konglo */
+        /* Styles untuk Peta Konglo & Funda */
         .chart-container {
             position: relative;
             width: 100%;
@@ -170,13 +170,26 @@
         .hide { display: none !important; }
         .card-hover:hover { transform: translateY(-4px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); border-color: var(--accent); }
 
+        /* Funda Styles */
+        .glass-panel { background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(51, 65, 85, 0.5); border-radius: 1rem; }
+        .funda-tab-btn { padding: 0.75rem 1.25rem; font-size: 0.875rem; color: #94a3b8; border-bottom: 2px solid transparent; cursor: pointer; transition: all 0.2s; white-space: nowrap; font-weight: 600; }
+        .funda-tab-btn.active { border-bottom: 2px solid #3b82f6; color: #60a5fa; }
+        .funda-tab-content { display: none; animation: fadeIn 0.3s ease; }
+        .funda-tab-content.active { display: block; }
+        .funda-table { width: 100%; text-align: left; border-collapse: collapse; }
+        .funda-table th, .funda-table td { padding: 0.875rem 1rem; border-bottom: 1px solid #334155; font-size: 0.875rem; }
+        .funda-table th { color: #94a3b8; font-weight: 700; background-color: rgba(15, 23, 42, 0.5); }
+        .text-green { color: #22c55e; }
+        .text-red { color: #ef4444; }
+
         @media (max-width: 768px) {
             .hero-title { font-size: 2.25rem !important; line-height: 1.2; }
             .hero-card { padding: 2rem 1.5rem !important; border-radius: 2rem !important; }
+            .funda-table th, .funda-table td { padding: 0.5rem; font-size: 0.75rem; }
         }
     </style>
 </head>
-<body class="min-h-screen">
+<body class="min-h-screen relative">
 
     <header class="md:hidden sticky top-0 z-50 bg-white/90 backdrop-blur-xl border-b border-slate-100 px-4 py-3">
         <div class="flex items-center gap-2">
@@ -199,41 +212,46 @@
                 </div>
             </div>
             
-            <nav class="flex items-center gap-2">
-                <button onclick="showPage('home')" id="nav-home" class="nav-link active"><i class="fas fa-home"></i> Beranda</button>
-                <button onclick="showPage('edukasi')" id="nav-edukasi" class="nav-link"><i class="fas fa-book-open"></i> Edukasi</button>
-                
-                <div class="relative group">
-                    <button class="nav-link" id="nav-tools-parent">
-                        <i class="fas fa-toolbox"></i> Analisis Tools <i class="fas fa-chevron-down text-[10px] ml-1"></i>
-                    </button>
-                    <div class="dropdown-content">
-                        <button onclick="showPage('pensiun')" id="nav-pensiun" class="dropdown-item">
-                            <i class="fas fa-umbrella w-5 text-emerald-500"></i> Dana Pensiun
-                        </button>
-                        <button onclick="showPage('kalkulator')" id="nav-kalkulator" class="dropdown-item">
-                            <i class="fas fa-calculator w-5 text-blue-500"></i> Trading Plan
-                        </button>
-                        <button onclick="showPage('bandar')" id="nav-bandar" class="dropdown-item">
-                            <i class="fas fa-user-secret w-5 text-orange-500"></i> Kalkulator Bandar
-                        </button>
-                    </div>
+            <div class="flex items-center gap-4">
+                <div id="liveClock" class="hidden lg:flex items-center gap-2 text-[10px] font-bold text-slate-500 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-100 shadow-sm">
+                    <i class="fas fa-clock text-blue-500"></i> <span id="clockText">--:--:-- WIB</span>
                 </div>
+                <nav class="flex items-center gap-2">
+                    <button onclick="showPage('home')" id="nav-home" class="nav-link active"><i class="fas fa-home"></i> Beranda</button>
+                    <button onclick="showPage('edukasi')" id="nav-edukasi" class="nav-link"><i class="fas fa-book-open"></i> Edukasi</button>
+                    
+                    <div class="relative group">
+                        <button class="nav-link" id="nav-tools-parent">
+                            <i class="fas fa-toolbox"></i> Analisis Tools <i class="fas fa-chevron-down text-[10px] ml-1"></i>
+                        </button>
+                        <div class="dropdown-content">
+                            <button onclick="showPage('pensiun')" id="nav-pensiun" class="dropdown-item">
+                                <i class="fas fa-umbrella w-5 text-emerald-500"></i> Dana Pensiun
+                            </button>
+                            <button onclick="showPage('kalkulator')" id="nav-kalkulator" class="dropdown-item">
+                                <i class="fas fa-calculator w-5 text-blue-500"></i> Trading Plan
+                            </button>
+                            <button onclick="showPage('bandar')" id="nav-bandar" class="dropdown-item">
+                                <i class="fas fa-user-secret w-5 text-orange-500"></i> Kalkulator Bandar
+                            </button>
+                        </div>
+                    </div>
 
-                <div class="relative group">
-                    <button class="nav-link" id="nav-database-parent">
-                        <i class="fas fa-database"></i> Database <i class="fas fa-chevron-down text-[10px] ml-1"></i>
-                    </button>
-                    <div class="dropdown-content">
-                        <button onclick="showPage('konglo')" id="nav-konglo" class="dropdown-item">
-                            <i class="fas fa-project-diagram w-5 text-indigo-500"></i> Peta Konglomerat
+                    <div class="relative group">
+                        <button class="nav-link" id="nav-database-parent">
+                            <i class="fas fa-database"></i> Database <i class="fas fa-chevron-down text-[10px] ml-1"></i>
                         </button>
-                        <button onclick="showPage('broker')" id="nav-broker" class="dropdown-item">
-                            <i class="fas fa-building w-5 text-slate-500"></i> Broker Database
-                        </button>
+                        <div class="dropdown-content">
+                            <button onclick="showPage('konglo')" id="nav-konglo" class="dropdown-item">
+                                <i class="fas fa-project-diagram w-5 text-indigo-500"></i> Peta Konglomerat
+                            </button>
+                            <button onclick="showPage('broker')" id="nav-broker" class="dropdown-item">
+                                <i class="fas fa-building w-5 text-slate-500"></i> Broker Database
+                            </button>
+                        </div>
                     </div>
-                </div>
-            </nav>
+                </nav>
+            </div>
         </div>
     </header>
 
@@ -693,6 +711,206 @@
                             </div>
                     </div>
                 </div>
+
+                <div id="konglo-funda-view" class="hide premium-card overflow-hidden bg-slate-900 text-slate-100 p-4 md:p-6">
+                    <header class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 border-b border-slate-700 pb-4 gap-4">
+                        <div>
+                            <button onclick="hideFunda()" class="bg-white/10 hover:bg-white/20 text-white px-3 py-1.5 rounded-lg font-bold transition-colors text-xs flex items-center gap-2 mb-3">
+                                <i class="fas fa-arrow-left"></i> Kembali ke Daftar Saham
+                            </button>
+                            <h1 class="text-2xl md:text-3xl font-black text-blue-500"><span id="funda-ticker">TICKER</span> <span class="text-white text-[10px] bg-blue-600 px-2 py-1 rounded ml-2 align-middle">PRO</span></h1>
+                            <p class="text-slate-400 text-xs md:text-sm mt-1" id="funda-company">Nama Perusahaan</p>
+                        </div>
+                        <div class="text-left md:text-right">
+                            <p class="text-xs text-slate-400">Update Terakhir</p>
+                            <p class="text-sm font-semibold text-slate-200">8 Mei 2026, 11:52 WIB</p>
+                        </div>
+                    </header>
+
+                    <div class="glass-panel p-5">
+                        <div class="flex border-b border-slate-700 mb-5 overflow-x-auto no-scrollbar">
+                            <button class="funda-tab-btn active" onclick="openFundaTab(event, 'tab-lapkeu')">Laporan Keuangan</button>
+                            <button class="funda-tab-btn" onclick="openFundaTab(event, 'tab-sotp')">SOTP Valuation</button>
+                            <button class="funda-tab-btn" onclick="openFundaTab(event, 'tab-npm')">NPM per Segmen</button>
+                            <button class="funda-tab-btn" onclick="openFundaTab(event, 'tab-metrics')">Metrik & FCF</button>
+                        </div>
+
+                        <div id="tab-lapkeu" class="funda-tab-content active overflow-x-auto">
+                            <h3 class="text-lg font-bold mb-4 text-white">Ringkasan Laporan Keuangan (Dalam Triliun Rupiah)</h3>
+                            <table class="funda-table min-w-full">
+                                <thead>
+                                    <tr>
+                                        <th>Akun</th>
+                                        <th>2020</th>
+                                        <th>2021</th>
+                                        <th>2022</th>
+                                        <th>2023</th>
+                                        <th>2024</th>
+                                        <th>2025</th>
+                                        <th class="text-blue-400">Mei 2026 (YTD)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="font-bold text-slate-300">Pendapatan Bersih</td>
+                                        <td>175.0</td><td>233.5</td><td>301.4</td><td>316.6</td><td>320.1</td><td>328.5</td><td class="text-blue-300">110.2</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-bold text-slate-300">Beban Pokok</td>
+                                        <td>(138.0)</td><td>(181.6)</td><td>(232.0)</td><td>(245.2)</td><td>(250.4)</td><td>(256.1)</td><td class="text-blue-300">(85.4)</td>
+                                    </tr>
+                                    <tr class="bg-slate-800/50">
+                                        <td class="font-bold text-blue-400">Laba Kotor</td>
+                                        <td class="text-blue-400 font-bold">37.0</td><td class="text-blue-400 font-bold">51.9</td><td class="text-blue-400 font-bold">69.4</td><td class="text-blue-400 font-bold">71.4</td><td class="text-blue-400 font-bold">69.7</td><td class="text-blue-400 font-bold">72.4</td><td class="text-blue-400 font-bold">24.8</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-bold text-slate-300">Beban Hutang (Bunga)</td>
+                                        <td class="text-red-400">(4.2)</td><td class="text-red-400">(3.8)</td><td class="text-red-400">(3.5)</td><td class="text-red-400">(3.1)</td><td class="text-red-400">(2.9)</td><td class="text-red-400">(2.7)</td><td class="text-red-400">(1.1)</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-bold text-slate-300">Pembayaran Pajak</td>
+                                        <td class="text-red-400">(5.1)</td><td class="text-red-400">(6.4)</td><td class="text-red-400">(8.2)</td><td class="text-red-400">(8.8)</td><td class="text-red-400">(8.5)</td><td class="text-red-400">(8.9)</td><td class="text-red-400">(3.2)</td>
+                                    </tr>
+                                    <tr class="bg-slate-800/50">
+                                        <td class="font-bold text-emerald-400">Laba Bersih (Entitas Induk)</td>
+                                        <td class="text-emerald-400 font-bold">16.1</td><td class="text-emerald-400 font-bold">20.2</td><td class="text-emerald-400 font-bold">28.9</td><td class="text-emerald-400 font-bold">33.8</td><td class="text-emerald-400 font-bold">30.5</td><td class="text-emerald-400 font-bold">32.1</td><td class="text-emerald-400 font-bold">12.5</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-bold text-slate-300">Total Aset</td>
+                                        <td>338.2</td><td>367.3</td><td>413.3</td><td>445.6</td><td>460.2</td><td>485.1</td><td class="text-blue-300">492.0</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="font-bold text-slate-300">Total Ekuitas</td>
+                                        <td>195.4</td><td>215.6</td><td>242.0</td><td>250.4</td><td>265.1</td><td>280.2</td><td class="text-blue-300">285.5</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div id="tab-sotp" class="funda-tab-content overflow-x-auto">
+                            <h3 class="text-lg font-bold mb-2 text-white">Sum of The Parts (SOTP) Valuation</h3>
+                            <p class="text-xs text-slate-400 mb-4">Estimasi Nilai Intrinsik berdasarkan segmen bisnis (Data Proyeksi 2026).</p>
+                            <table class="funda-table min-w-full">
+                                <thead>
+                                    <tr>
+                                        <th>Segmen Bisnis (Anak Usaha)</th>
+                                        <th>Metode Penilaian</th>
+                                        <th>Multiple Target</th>
+                                        <th>Estimasi Nilai (Triliun Rp)</th>
+                                        <th>Nilai per Saham (Rp)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-slate-300">Otomotif & Distribusi Utama</td>
+                                        <td>Target PER</td>
+                                        <td>8.0x</td>
+                                        <td>120.5</td>
+                                        <td>2.976</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-slate-300">Jasa Keuangan & Pembiayaan</td>
+                                        <td>Target PBV</td>
+                                        <td>1.5x</td>
+                                        <td>75.2</td>
+                                        <td>1.857</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-slate-300">Alat Berat, Tambang & Energi</td>
+                                        <td>Market Value (Diskon Holding 15%)</td>
+                                        <td>-</td>
+                                        <td>95.0</td>
+                                        <td>2.346</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-slate-300">Agribisnis & Sumber Daya</td>
+                                        <td>Market Value (Diskon Holding 15%)</td>
+                                        <td>-</td>
+                                        <td>12.4</td>
+                                        <td>306</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-slate-300">Infrastruktur & Logistik</td>
+                                        <td>Target PER</td>
+                                        <td>10.0x</td>
+                                        <td>15.6</td>
+                                        <td>385</td>
+                                    </tr>
+                                    <tr class="bg-slate-800/80 font-bold border-t-2 border-slate-600">
+                                        <td colspan="3" class="text-right text-blue-400">Total SOTP Value (Target Price)</td>
+                                        <td class="text-blue-400">318.7</td>
+                                        <td class="text-blue-400">Rp 7.870</td>
+                                    </tr>
+                                    <tr class="bg-slate-800/80 font-bold">
+                                        <td colspan="3" class="text-right text-slate-400">Harga Saat Ini (Asumsi Data)</td>
+                                        <td class="text-slate-400">220.6</td>
+                                        <td class="text-slate-400">Rp 5.450</td>
+                                    </tr>
+                                    <tr class="bg-slate-800/80 font-bold">
+                                        <td colspan="4" class="text-right text-emerald-400">Margin of Safety (MoS)</td>
+                                        <td class="text-emerald-400">+44.4%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div id="tab-npm" class="funda-tab-content">
+                            <h3 class="text-lg font-bold mb-2 text-white">Net Profit Margin (NPM) per Segmen</h3>
+                            <p class="text-xs text-slate-400 mb-4">Tren profitabilitas tiap divisi bisnis (2020 - 2026).</p>
+                            <div class="h-72 w-full">
+                                <canvas id="fundaNpmChart"></canvas>
+                            </div>
+                        </div>
+
+                        <div id="tab-metrics" class="funda-tab-content">
+                            <h3 class="text-lg font-bold mb-4 text-white">Key Ratios & Cash Flow (2020 - Mei 2026)</h3>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="bg-slate-800/50 rounded-xl p-4 h-64 border border-slate-700">
+                                    <h4 class="text-xs font-bold text-slate-300 mb-2 text-center uppercase tracking-widest">Free Cash Flow (Triliun Rp)</h4>
+                                    <div class="h-48 relative"><canvas id="fundaFcfChart"></canvas></div>
+                                </div>
+                                
+                                <div class="bg-slate-800/50 rounded-xl p-4 h-64 border border-slate-700">
+                                    <h4 class="text-xs font-bold text-slate-300 mb-2 text-center uppercase tracking-widest">Dividend Yield (%)</h4>
+                                    <div class="h-48 relative"><canvas id="fundaDivChart"></canvas></div>
+                                </div>
+
+                                <div class="md:col-span-2 mt-4 overflow-x-auto">
+                                    <table class="funda-table min-w-full text-center">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-left">Metrik Utama</th>
+                                                <th>2020</th>
+                                                <th>2021</th>
+                                                <th>2022</th>
+                                                <th>2023</th>
+                                                <th>2024</th>
+                                                <th>2025</th>
+                                                <th class="text-blue-400">2026 (May)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="text-left font-bold text-slate-300">DER (Consolidated)</td>
+                                                <td>0.73x</td><td>0.65x</td><td>0.54x</td><td>0.49x</td><td>0.51x</td><td>0.48x</td><td class="text-blue-300">0.47x</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-left font-bold text-slate-300">Dividend Yield</td>
+                                                <td>4.5%</td><td>5.2%</td><td>8.4%</td><td>9.1%</td><td>7.5%</td><td>8.0%</td><td class="text-blue-300">4.2%*</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-left font-bold text-slate-300">Free Cash Flow (Triliun)</td>
+                                                <td>15.2</td><td>21.4</td><td>25.6</td><td>28.1</td><td>24.5</td><td>26.3</td><td class="text-blue-300">10.1</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <p class="text-[10px] text-slate-500 mt-2 font-bold italic">*Dividend Yield 2026 berdasarkan dividen interim/final yang dibagikan hingga Mei.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -727,6 +945,10 @@
         </section>
 
     </main>
+
+    <button id="scrollTopBtn" onclick="scrollToTop()" class="fixed bottom-24 md:bottom-10 right-6 bg-blue-600 text-white w-12 h-12 rounded-2xl shadow-xl flex items-center justify-center opacity-0 pointer-events-none transition-all duration-300 z-50 hover:bg-blue-700 hover:-translate-y-1">
+        <i class="fas fa-arrow-up"></i>
+    </button>
 
     <div class="md:hidden fixed bottom-0 left-0 right-0 z-[60] bg-white/95 backdrop-blur-md border-t border-slate-100 px-4 py-3 flex justify-between gap-1 bottom-nav">
         <button onclick="showPage('home')" class="mobile-nav-btn active" id="m-nav-home">
@@ -883,7 +1105,7 @@
             {k:"YI", n:"DBS Vickers Sekuritas", t:"Asing", c:"Singapura"}
         ];
 
-        // --- DATA KONGLO (DENGAN ESTIMASI ANGKA REALISTIS) ---
+        // --- DATA KONGLO ---
         const dataGroups = [
             { 
                 id: "aguan", 
@@ -975,6 +1197,7 @@
                     { ticker: "BMRI", company: "PT Bank Mandiri (Persero) Tbk", sector: "Perbankan", ownership: "Negara RI memegang 52%.", kepemilikan_persen: "52.0%", sejarah: "Hasil merger bank 1998, bank terbesar berdasar aset.", tahun_masuk: "2003", broker_afiliasi: "RX, BK", free_float: "48.0%", avg_up: "6800", avg_down: "6500", support: "6300", resistance: "7200", last_update: "8 Mei 2026" }, 
                     { ticker: "BRIS", company: "PT Bank Syariah Indonesia Tbk", sector: "Perbankan Syariah", ownership: "Hasil merger bank syariah BUMN (Mandiri, BRI, BNI).", kepemilikan_persen: "Mayoritas (BMRI, BBRI, BBNI)", sejarah: "Merger tiga raksasa bank syariah BUMN.", tahun_masuk: "2021", broker_afiliasi: "RX, YP", free_float: "20.0%", avg_up: "2450", avg_down: "2300", support: "2200", resistance: "2700", last_update: "8 Mei 2026" },
                     { ticker: "GIAA", company: "PT Garuda Indonesia (Persero) Tbk", sector: "Transportasi Udara", ownership: "Maskapai *flag carrier* milik Negara RI.", kepemilikan_persen: "60.5%", sejarah: "Maskapai nasional RI.", tahun_masuk: "2011", broker_afiliasi: "YP, CC", free_float: "15.0%", avg_up: "75", avg_down: "65", support: "60", resistance: "85", last_update: "8 Mei 2026" },
+                    { ticker: "GOTO", company: "PT GoTo Gojek Tokopedia Tbk", sector: "Teknologi", ownership: "Keterlibatan investasi institusi negara (BUMN/SWF) secara historis melalui investasi Telkomsel.", kepemilikan_persen: "Investasi Strategis BUMN", sejarah: "Raksasa teknologi decacorn hasil merger Gojek dan Tokopedia, mendapat pendanaan strategis dari ekosistem BUMN.", tahun_masuk: "2020", broker_afiliasi: "CC, PD, YP", free_float: "65.1%", avg_up: "68", avg_down: "62", support: "58", resistance: "80", last_update: "8 Mei 2026" },
                     { ticker: "INCO", company: "PT Vale Indonesia Tbk", sector: "Pertambangan (Nikel)", ownership: "MIND ID (BUMN) baru saja menambah porsi menjadi pemegang saham mayoritas.", kepemilikan_persen: "34.0% (MIND ID)", sejarah: "Eks-Kanada yang diakuisisi untuk ketahanan nikel RI.", tahun_masuk: "2020", broker_afiliasi: "BK, RX", free_float: "20.6%", avg_up: "4500", avg_down: "4200", support: "4000", resistance: "5000", last_update: "8 Mei 2026" },
                     { ticker: "JSMR", company: "PT Jasa Marga (Persero) Tbk", sector: "Infrastruktur", ownership: "Pengelola jalan tol pelat merah.", kepemilikan_persen: "70.0%", sejarah: "Raksasa pengelola jalan tol di Indonesia.", tahun_masuk: "2007", broker_afiliasi: "RX, YP", free_float: "30.0%", avg_up: "5200", avg_down: "4900", support: "4800", resistance: "5600", last_update: "8 Mei 2026" },
                     { ticker: "KAEF", company: "PT Kimia Farma Tbk", sector: "Farmasi BUMN", ownership: "Bagian dari holding BUMN farmasi (Bio Farma).", kepemilikan_persen: "90.0% (Bio Farma)", sejarah: "Pabrik farmasi dan apotek negara.", tahun_masuk: "2001", broker_afiliasi: "YP", free_float: "10.0%", avg_up: "850", avg_down: "780", support: "750", resistance: "950", last_update: "8 Mei 2026" },
@@ -1265,6 +1488,7 @@
 
         let history = JSON.parse(localStorage.getItem('calc_history')) || [];
         let kongloChartRendered = false;
+        let fundaCharts = {}; // Store fundamental chart instances
 
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -1331,6 +1555,7 @@
             if (!group) return;
 
             document.getElementById('konglo-dashboard-view').classList.add('hide');
+            document.getElementById('konglo-funda-view').classList.add('hide');
             document.getElementById('konglo-detail-view').classList.remove('hide');
             window.scrollTo({ top: 0, behavior: 'smooth' });
 
@@ -1344,7 +1569,6 @@
                 const stockItem = document.createElement('div');
                 stockItem.className = 'bg-slate-50 border border-slate-100 rounded-2xl p-5 md:p-6 flex flex-col md:flex-row gap-6 hover:border-blue-300 transition-colors';
                 
-                // Fallback aman bila parameter baru belum ditambahkan secara manual
                 const freeFloat = stock.free_float || "Data N/A";
                 const brokerAfil = stock.broker_afiliasi || "Data N/A";
                 const persentase = stock.kepemilikan_persen || "-";
@@ -1394,24 +1618,32 @@
                         <p class="text-[8px] text-slate-400 text-right mt-2 font-bold italic">Update: ${lastUpdate}</p>
                     </div>
                     
-                    <div class="md:w-2/3 flex flex-col justify-center">
-                        <div class="mb-4">
-                            <h6 class="text-[10px] font-black text-blue-500 uppercase tracking-widest mb-1 flex items-center gap-2">
-                                <i class="fas fa-chart-pie"></i> Porsi & Status Kepemilikan (${tahun})
-                            </h6>
-                            <p class="text-slate-700 text-sm leading-relaxed">
-                                <span class="font-black bg-blue-50 text-blue-700 px-2 py-0.5 rounded mr-1">${persentase}</span>
-                                ${stock.ownership}
-                            </p>
+                    <div class="md:w-2/3 flex flex-col justify-between">
+                        <div>
+                            <div class="mb-4">
+                                <h6 class="text-[10px] font-black text-blue-500 uppercase tracking-widest mb-1 flex items-center gap-2">
+                                    <i class="fas fa-chart-pie"></i> Porsi & Status Kepemilikan (${tahun})
+                                </h6>
+                                <p class="text-slate-700 text-sm leading-relaxed">
+                                    <span class="font-black bg-blue-50 text-blue-700 px-2 py-0.5 rounded mr-1">${persentase}</span>
+                                    ${stock.ownership}
+                                </p>
+                            </div>
+                            
+                            <div class="bg-slate-100/50 p-4 rounded-xl">
+                                <h6 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 flex items-center gap-2">
+                                    <i class="fas fa-history"></i> Sejarah Perusahaan / Akuisisi
+                                </h6>
+                                <p class="text-slate-600 text-sm leading-relaxed italic">
+                                    "${sejarah}"
+                                </p>
+                            </div>
                         </div>
-                        
-                        <div class="bg-slate-100/50 p-4 rounded-xl">
-                            <h6 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 flex items-center gap-2">
-                                <i class="fas fa-history"></i> Sejarah Perusahaan / Akuisisi
-                            </h6>
-                            <p class="text-slate-600 text-sm leading-relaxed italic">
-                                "${sejarah}"
-                            </p>
+
+                        <div class="mt-4 pt-4 border-t border-slate-200">
+                            <button onclick="showFunda('${stock.ticker}', '${stock.company}')" class="w-full bg-slate-900 text-white py-3 rounded-xl font-bold text-xs uppercase flex items-center justify-center gap-2 hover:bg-blue-600 transition-colors shadow-md">
+                                <i class="fas fa-chart-bar"></i> Analisis Fundamental PRO
+                            </button>
                         </div>
                     </div>
                 `;
@@ -1423,6 +1655,106 @@
             document.getElementById('konglo-detail-view').classList.add('hide');
             document.getElementById('konglo-dashboard-view').classList.remove('hide');
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // --- KONGLO FUNDAMENTAL LOGIC ---
+        function showFunda(ticker, company) {
+            document.getElementById('konglo-detail-view').classList.add('hide');
+            document.getElementById('konglo-funda-view').classList.remove('hide');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            document.getElementById('funda-ticker').innerText = ticker;
+            document.getElementById('funda-company').innerText = company;
+            
+            // Render Charts for Funda View
+            renderFundaCharts();
+        }
+
+        function hideFunda() {
+            document.getElementById('konglo-funda-view').classList.add('hide');
+            document.getElementById('konglo-detail-view').classList.remove('hide');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function openFundaTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("funda-tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
+            tablinks = document.getElementsByClassName("funda-tab-btn");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active");
+            }
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        function renderFundaCharts() {
+            const labels = ['2020', '2021', '2022', '2023', '2024', '2025', '2026 (May)'];
+            const commonOptions = { 
+                responsive: true, maintainAspectRatio: false, 
+                color: '#cbd5e1',
+                scales: { 
+                    x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(51, 65, 85, 0.5)' } },
+                    y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(51, 65, 85, 0.5)' } }
+                },
+                plugins: { legend: { labels: { color: '#cbd5e1' } } }
+            };
+
+            // NPM Chart
+            if (fundaCharts.npm) fundaCharts.npm.destroy();
+            const ctxNpm = document.getElementById('fundaNpmChart').getContext('2d');
+            fundaCharts.npm = new Chart(ctxNpm, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        { label: 'Segmen Bisnis Utama (%)', data: [3.5, 4.2, 5.8, 6.1, 5.5, 5.9, 6.0], borderColor: '#3b82f6', tension: 0.3, borderWidth: 2 },
+                        { label: 'Jasa & Keuangan (%)', data: [12.1, 14.5, 16.0, 15.2, 16.5, 17.1, 16.8], borderColor: '#f59e0b', tension: 0.3, borderWidth: 2 },
+                        { label: 'Industri & Tambang (%)', data: [8.5, 11.2, 14.5, 13.8, 12.0, 11.5, 12.2], borderColor: '#10b981', tension: 0.3, borderWidth: 2 },
+                        { label: 'Agribisnis / Lainnya (%)', data: [4.0, 6.5, 8.2, 3.5, 4.8, 5.1, 4.9], borderColor: '#ec4899', tension: 0.3, borderWidth: 2 }
+                    ]
+                },
+                options: { ...commonOptions, plugins: { legend: { position: 'bottom', labels: { color: '#cbd5e1' } } } }
+            });
+
+            // FCF Chart
+            if (fundaCharts.fcf) fundaCharts.fcf.destroy();
+            const ctxFcf = document.getElementById('fundaFcfChart').getContext('2d');
+            fundaCharts.fcf = new Chart(ctxFcf, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'FCF (Triliun Rp)',
+                        data: [15.2, 21.4, 25.6, 28.1, 24.5, 26.3, 10.1],
+                        backgroundColor: '#10b981',
+                        borderRadius: 4
+                    }]
+                },
+                options: { ...commonOptions, plugins: { legend: { display: false } } }
+            });
+
+            // Div Yield Chart
+            if (fundaCharts.div) fundaCharts.div.destroy();
+            const ctxDiv = document.getElementById('fundaDivChart').getContext('2d');
+            fundaCharts.div = new Chart(ctxDiv, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Dividend Yield (%)',
+                        data: [4.5, 5.2, 8.4, 9.1, 7.5, 8.0, 4.2],
+                        borderColor: '#8b5cf6',
+                        backgroundColor: 'rgba(139, 92, 246, 0.2)',
+                        fill: true,
+                        tension: 0.4,
+                        borderWidth: 2
+                    }]
+                },
+                options: { ...commonOptions, plugins: { legend: { display: false } } }
+            });
         }
 
         function renderChart() {
@@ -1560,7 +1892,10 @@
 
             container.innerHTML = `<div class="flex justify-between items-center mb-4">
                 <h3 class="font-black text-slate-900 uppercase">Hasil Perhitungan</h3>
-                <button onclick="clearHistory()" class="text-[10px] bg-red-50 text-red-600 px-3 py-1 rounded-lg font-bold">CLEAR ALL</button>
+                <div class="flex gap-2">
+                    <button onclick="exportHistoryCSV()" class="text-[10px] bg-blue-50 text-blue-600 px-3 py-1 rounded-lg font-bold hover:bg-blue-100 transition-colors"><i class="fas fa-download mr-1"></i> EXPORT CSV</button>
+                    <button onclick="clearHistory()" class="text-[10px] bg-red-50 text-red-600 px-3 py-1 rounded-lg font-bold hover:bg-red-100 transition-colors">CLEAR ALL</button>
+                </div>
             </div>` + history.map(res => `
                 <div class="border border-slate-100 rounded-2xl p-5 mb-4 bg-slate-50/50">
                     <div class="flex justify-between items-start mb-4">
@@ -1614,6 +1949,33 @@
                 localStorage.removeItem('calc_history');
                 renderHistory();
             }
+        }
+
+        function exportHistoryCSV() {
+            if (history.length === 0) {
+                alert("Tidak ada riwayat untuk diekspor.");
+                return;
+            }
+            
+            let csvContent = "data:text/csv;charset=utf-8,";
+            csvContent += "Tanggal,Emiten,Broker,Buy Lot,Buy Avg,Bid Terendah,Offer Tertinggi,Total Bid,Total Offer,Target Low,Target High\n";
+            
+            history.forEach(row => {
+                const rowData = [
+                    row.tanggal, row.emiten, row.broker, row.buyLot, row.buyAvg, 
+                    row.bidTerendah, row.offerTertinggi, row.totalBid, row.totalOffer, 
+                    row.targetLow, row.targetHigh
+                ].join(",");
+                csvContent += rowData + "\n";
+            });
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "riwayat_bandar_ewoks.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }
 
         function copyRes(ts) {
@@ -1671,7 +2033,7 @@
             navigator.clipboard.writeText(text).then(() => alert('Berhasil disalin!'));
         }
 
-        // --- RETIREMENT LOGIC ---
+       // --- RETIREMENT LOGIC ---
         function calculateRetirement() {
             const exp = parseFloat(document.getElementById('p-expense').value) || 0;
             const savings = parseFloat(document.getElementById('p-savings').value) || 0;
@@ -1725,12 +2087,39 @@
             renderBrokers(BROKERS.filter(b => b.k.toLowerCase().includes(q) || b.n.toLowerCase().includes(q)));
         }
 
+        // --- REAL TIME CLOCK LOGIC ---
+        function updateClock() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' WIB';
+            document.getElementById('clockText').innerText = timeString;
+        }
+
+        // --- SCROLL TO TOP LOGIC ---
+        window.addEventListener('scroll', () => {
+            const btn = document.getElementById('scrollTopBtn');
+            if (window.scrollY > 300) {
+                btn.classList.remove('opacity-0', 'pointer-events-none');
+                btn.classList.add('opacity-100', 'pointer-events-auto');
+            } else {
+                btn.classList.add('opacity-0', 'pointer-events-none');
+                btn.classList.remove('opacity-100', 'pointer-events-auto');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
         window.onload = () => { 
             renderBrokers(); 
             renderHistory();
             renderGrid();
             calculateRetirement();
             document.getElementById('tanggal').value = new Date().toISOString().split('T')[0];
+            
+            // Start clock
+            updateClock();
+            setInterval(updateClock, 1000);
         };
     </script>
 </body>
