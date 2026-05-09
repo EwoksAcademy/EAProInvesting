@@ -312,7 +312,7 @@
 </head>
 <body class="min-h-screen relative">
 
-    <div class="bg-slate-900 border-b border-slate-800 hidden md:block" style="height: 42px;">
+    <div class="bg-slate-900 border-b border-slate-800 hidden md:block w-full">
         <div class="tradingview-widget-container">
             <div class="tradingview-widget-container__widget"></div>
             <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
@@ -345,7 +345,7 @@
             ],
             "showSymbolLogo": true,
             "isTransparent": true,
-            "displayMode": "adaptive",
+            "displayMode": "regular",
             "colorTheme": "dark",
             "locale": "id"
             }
@@ -2208,7 +2208,7 @@
                     { ticker: "CBDK", company: "PT Danayasa Arthatama Tbk", sector: "Properti", ownership: "Kemitraan strategis Salim dengan Aguan di beberapa kawasan eksklusif.", kepemilikan_persen: "Kemitraan", sejarah: "Kemitraan bisnis properti terpadu.", tahun_masuk: "2010-an", broker_afiliasi: "KI", free_float: "17.7%", avg_up: "310", avg_down: "280", support: "260", resistance: "350", last_update: "8 Mei 2026" },
                     { ticker: "DCII", company: "PT DCI Indonesia Tbk", sector: "Pusat Data", ownership: "Anthoni Salim secara individu menguasai saham yang sangat besar (>10%).", kepemilikan_persen: "11.1%", sejarah: "Anthoni Salim memborong saham DCII untuk menguasai pasar data center RI.", tahun_masuk: "2021", broker_afiliasi: "KI", free_float: "11.0%", avg_up: "38500", avg_down: "37000", support: "36000", resistance: "41000", last_update: "8 Mei 2026" },
                     { ticker: "DEWA", company: "PT Darma Henwa Tbk", sector: "Kontraktor Pertambangan", ownership: "Masuk bersama grup Bakrie dalam restrukturisasi.", kepemilikan_persen: "Konsorsium", sejarah: "Sejalan dengan masuknya Salim ke BUMI.", tahun_masuk: "2022", broker_afiliasi: "KI, PD", free_float: "55.0%", avg_up: "55", avg_down: "50", support: "50", resistance: "60", last_update: "8 Mei 2026" },
-                    { ticker: "EMTK", company: "PT Elang Mahkota Teknologi Tbk", sector: "Teknologi", ownership: "Salim menyuntikkan modal dan memiliki porsi investasi strategis (sekitar 9%).", kepemilikan_persen: "9.0%", sejarah: "Salim masuk ke EMTK untuk memperkuat digitalisasi ekosistemnya.", tahun_masuk: "2021", broker_afiliasi: "KI, KZ", free_float: "22.0%", avg_up: "420", avg_down: "380", support: "350", resistance: "480", last_update: "8 Mei 2026" },
+                    { ticker: "EMTK", company: "PT Elang Mahkota Teknologi Tbk", sector: "Teknologi", ownership: "Salim menyuntikkan modal dan memiliki porsi investasi strategis (sekitar 9%).",kepemilikan_persen: "9.0%", sejarah: "Salim masuk ke EMTK untuk memperkuat digitalisasi ekosistemnya.", tahun_masuk: "2021", broker_afiliasi: "KI, KZ", free_float: "22.0%", avg_up: "420", avg_down: "380", support: "350", resistance: "480", last_update: "8 Mei 2026" },
                     { ticker: "FAST", company: "PT Fast Food Indonesia Tbk", sector: "Ritel Konsumsi (Restoran)", ownership: "Pengelola KFC. Indoritel (DNET) memiliki saham minoritas signifikan (sekitar 35%).", kepemilikan_persen: "35.8%", sejarah: "Kemitraan Salim dan Keluarga Gelael di KFC.", tahun_masuk: "1990", broker_afiliasi: "KI", free_float: "20.0%", avg_up: "750", avg_down: "680", support: "650", resistance: "850", last_update: "8 Mei 2026" },
                     { ticker: "IMAS", company: "PT Indomobil Sukses Internasional Tbk", sector: "Otomotif", ownership: "Sayap otomotif grup Salim, dikendalikan via Gallant Venture Ltd.", kepemilikan_persen: "71.4%", sejarah: "Pesaing utama Astra di masa orde baru (Nissan, Suzuki, Audi).", tahun_masuk: "1990-an", broker_afiliasi: "KI", free_float: "28.6%", avg_up: "1450", avg_down: "1350", support: "1250", resistance: "1600", last_update: "8 Mei 2026" },
                     { ticker: "IMJS", company: "PT Indomobil Multi Jasa Tbk", sector: "Keuangan Otomotif", ownership: "Anak usaha IMAS yang bergerak di multifinance.", kepemilikan_persen: "91.9% (via IMAS)", sejarah: "Unit pembiayaan otomotif Grup Indomobil.", tahun_masuk: "2013", broker_afiliasi: "KI", free_float: "8.1%", avg_up: "280", avg_down: "250", support: "230", resistance: "320", last_update: "8 Mei 2026" },
@@ -2572,7 +2572,8 @@
               "allow_symbol_change": true,
               "details": true,
               "hotlist": true,
-              "calendar": true
+              "calendar": true,
+              "hide_side_toolbar": false
             });
             
             if(document.getElementById('page-watchlist').classList.contains('active')){
