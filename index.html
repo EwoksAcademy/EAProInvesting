@@ -25,6 +25,7 @@
             color: #1e293b;
             padding-bottom: 100px; 
             transition: background-color 0.3s ease, color 0.3s ease;
+            overflow-x: hidden;
         }
 
         /* --- FITUR KILLER: DARK MODE OVERRIDES --- */
@@ -72,6 +73,16 @@
         body.dark-mode-override .input-pro {
             background-color: #020617 !important;
             color: #f8fafc;
+            border-color: #1e293b;
+        }
+        
+        /* OVERRIDE KHUSUS CHART GLASS CARD */
+        body.dark-mode-override .glass-card {
+            background-color: #0f172a;
+            border-color: #1e293b;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+        }
+        body.dark-mode-override .chart-wrapper {
             border-color: #1e293b;
         }
 
@@ -138,6 +149,27 @@
         .premium-card:hover {
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
             border-color: var(--accent);
+        }
+
+        .glass-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 800px;
+            width: 100%;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+        }
+        
+        @media (min-width: 1536px) {
+            .chart-wrapper {
+                height: 900px;
+            }
         }
 
         .nav-link {
@@ -487,16 +519,6 @@
                             <div class="h-3 bg-slate-200 rounded w-full"></div>
                             <div class="h-3 bg-slate-200 rounded w-5/6"></div>
                         </div>
-                        <div class="animate-pulse flex flex-col gap-2 p-3 rounded-xl border border-slate-100 bg-slate-50">
-                            <div class="h-2 bg-slate-200 rounded w-1/4"></div>
-                            <div class="h-3 bg-slate-200 rounded w-full"></div>
-                            <div class="h-3 bg-slate-200 rounded w-5/6"></div>
-                        </div>
-                        <div class="animate-pulse flex flex-col gap-2 p-3 rounded-xl border border-slate-100 bg-slate-50">
-                            <div class="h-2 bg-slate-200 rounded w-1/4"></div>
-                            <div class="h-3 bg-slate-200 rounded w-full"></div>
-                            <div class="h-3 bg-slate-200 rounded w-5/6"></div>
-                        </div>
                     </div>
                 </div>
                 
@@ -628,13 +650,14 @@
         </section>
 
         <section id="page-watchlist" class="page">
-            <div class="max-w-6xl mx-auto space-y-6">
-                <div class="flex flex-col md:flex-row items-start justify-between mb-8 gap-4">
+            <div class="max-w-7xl mx-auto space-y-6 lg:space-y-10">
+                
+                <div class="flex flex-col md:flex-row items-start justify-between mb-4 gap-4">
                     <div>
                         <h2 class="text-2xl md:text-3xl font-black text-slate-900">Watchlist & <span class="text-amber-500">Screener</span></h2>
                         <p class="text-slate-500 font-medium text-sm">Simpan pantauan emiten Anda secara lokal & Screening saham unggulan menggunakan TradingView.</p>
                     </div>
-                    <div class="flex gap-2">
+                    <div class="flex gap-2 shrink-0">
                         <button onclick="document.getElementById('importFile').click()" class="btn-action bg-slate-200 text-slate-700 px-4 py-2 rounded-xl font-black text-xs shadow-sm hover:bg-slate-300 transition-colors">
                             <i class="fas fa-file-import"></i> IMPORT DATA
                         </button>
@@ -645,11 +668,80 @@
                     </div>
                 </div>
 
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 px-2">
+                    <div>
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider">Interactive Terminal</span>
+                            <div class="h-1 w-12 bg-blue-600 rounded-full"></div>
+                        </div>
+                        <h2 class="text-3xl md:text-5xl font-black text-slate-900 tracking-tighter">Market Analysis Center</h2>
+                        <p class="text-slate-500 text-sm md:text-lg mt-1 font-medium">Visualisasi teknikal mendalam bertenaga TradingView.</p>
+                    </div>
+                    
+                    <div class="flex items-center gap-4 bg-white p-3 rounded-2xl border border-slate-100 shadow-sm dark-mode-card">
+                        <div class="text-right border-r pr-4 border-slate-100">
+                            <div class="text-[10px] font-bold text-slate-400 uppercase">IHSG Index</div>
+                            <div class="font-black text-emerald-600" id="terminal-ihsg">7,350.25</div>
+                        </div>
+                        <div class="pl-2">
+                            <div class="text-[10px] font-bold text-slate-400 uppercase">Status</div>
+                            <div class="flex items-center gap-2">
+                                <div class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+                                <span class="font-black text-slate-800 text-sm">MARKET OPEN</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tv-chart-wrapper" class="glass-card rounded-[32px] p-4 md:p-6 mb-10 transition-colors">
+                    <div class="flex items-center justify-between mb-4 md:mb-6">
+                        <div class="flex items-center gap-4">
+                            <div class="px-3 py-1.5 md:px-4 md:py-2 bg-slate-900 text-white rounded-xl font-bold text-xs md:text-sm" id="chart-active-ticker">IDX:COMPOSITE</div>
+                            <div class="hidden md:block h-6 w-px bg-slate-200"></div>
+                        </div>
+                        <div class="flex gap-3">
+                            <button class="p-2 text-slate-400 hover:text-blue-600 transition-all tooltip-trigger"><i class="fas fa-expand"></i><span class="tooltip-text">Gunakan tombol dalam chart untuk Fullscreen</span></button>
+                        </div>
+                    </div>
+
+                    <div id="tv-chart-container" class="chart-wrapper shadow-inner"></div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-10">
+                    <div class="glass-card rounded-3xl p-6 md:p-8 flex items-center justify-between">
+                        <div>
+                            <div class="text-[10px] md:text-xs font-black text-slate-400 uppercase mb-1">Volume 24h</div>
+                            <div class="text-2xl md:text-3xl font-black text-slate-900">22.4B</div>
+                        </div>
+                        <div class="text-emerald-500 bg-emerald-50 p-4 rounded-2xl border border-emerald-100">
+                            <i class="fas fa-database text-xl md:text-2xl"></i>
+                        </div>
+                    </div>
+                    <div class="glass-card rounded-3xl p-6 md:p-8 flex items-center justify-between">
+                        <div>
+                            <div class="text-[10px] md:text-xs font-black text-slate-400 uppercase mb-1">Market Sentiment</div>
+                            <div class="text-2xl md:text-3xl font-black text-amber-500" id="terminal-sentiment">Neutral</div>
+                        </div>
+                        <div class="text-amber-500 bg-amber-50 p-4 rounded-2xl border border-amber-100">
+                            <i class="fas fa-fire text-xl md:text-2xl"></i>
+                        </div>
+                    </div>
+                    <div class="glass-card rounded-3xl p-6 md:p-8 flex items-center justify-between">
+                        <div>
+                            <div class="text-[10px] md:text-xs font-black text-slate-400 uppercase mb-1">Volatility (VIX)</div>
+                            <div class="text-2xl md:text-3xl font-black text-slate-900">14.20</div>
+                        </div>
+                        <div class="text-blue-500 bg-blue-50 p-4 rounded-2xl border border-blue-100">
+                            <i class="fas fa-wind text-xl md:text-2xl"></i>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="premium-card p-4 overflow-hidden mb-8 border-amber-200">
                     <h3 class="text-sm font-black text-slate-900 mb-3 uppercase tracking-widest flex items-center gap-2">
                         <i class="fas fa-filter text-amber-500"></i> Market Screener (Live)
                     </h3>
-                    <div class="tradingview-widget-container" style="height: 900px; width: 100%;">
+                    <div class="tradingview-widget-container" style="height: 600px; width: 100%;">
                         <div class="tradingview-widget-container__widget" style="height: 100%; width: 100%;"></div>
                         <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-screener.js" async>
                         {
@@ -664,14 +756,6 @@
                         }
                         </script>
                     </div>
-                </div>
-
-                <div id="tv-chart-wrapper" class="premium-card overflow-hidden hide mb-8 shadow-xl border-blue-200">
-                    <div class="bg-slate-900 p-3 flex justify-between items-center">
-                        <h3 class="text-white font-black text-sm flex items-center gap-2"><i class="fas fa-chart-line text-blue-400"></i> Live Advanced Chart</h3>
-                        <button onclick="document.getElementById('tv-chart-wrapper').classList.add('hide')" class="text-slate-400 hover:text-white transition-colors"><i class="fas fa-times"></i></button>
-                    </div>
-                    <div id="tv-chart-container" class="w-full h-[500px]"></div>
                 </div>
 
                 <div class="premium-card p-6 bg-slate-50">
@@ -700,7 +784,7 @@
                 </div>
 
                 <div id="watchlist-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    </div>
+                </div>
             </div>
         </section>
         
@@ -2040,7 +2124,7 @@
                     { ticker: "BCAP", company: "PT MNC Kapital Indonesia Tbk", sector: "Perbankan & Keuangan", ownership: "Holding jasa keuangan grup MNC.", kepemilikan_persen: "Afiliasi MNC", sejarah: "Kendaraan holding finansial (Bank, Sekuritas, Asuransi).", tahun_masuk: "2001", broker_afiliasi: "EP, YP", free_float: "30.0%", avg_up: "52", avg_down: "50", support: "50", resistance: "55", last_update: "8 Mei 2026" }, 
                     { ticker: "BHIT", company: "PT MNC Asia Holding Tbk", sector: "Holding Multisektor", ownership: "Induk seluruh lini bisnis MNC Group.", kepemilikan_persen: "Pengendali Utama", sejarah: "Induk utama kerajaan bisnis HT.", tahun_masuk: "1997", broker_afiliasi: "EP", free_float: "45.0%", avg_up: "52", avg_down: "50", support: "50", resistance: "55", last_update: "8 Mei 2026" }, 
                     { ticker: "BMTR", company: "PT Global Mediacom Tbk", sector: "Holding Media", ownership: "Induk usaha bisnis media dan penyiaran MNC.", kepemilikan_persen: "Afiliasi MNC", sejarah: "Eks-Bimantara Citra yang diambil alih HT.", tahun_masuk: "2001", broker_afiliasi: "EP, PD", free_float: "42.1%", avg_up: "260", avg_down: "240", support: "220", resistance: "290", last_update: "8 Mei 2026" }, 
-                    { ticker: "KPIG", company: "PT MNC Tourism Indonesia Tbk", sector: "Properti & Real Estat", ownership: "Lini bisnis properti, resor (Kawasan KEK Lido), dan perhotelan MNC.", kepemilikan_persen: "Afiliasi MNC", sejarah: "Pengembang KEK Lido dan resort mewah lainnya.", tahun_masuk: "2007", broker_afiliasi: "EP", free_float: "20.0%", avg_up: "55", avg_down: "50", support: "50", resistance: "65", last_update: "8 Mei 2026" }, 
+                    { ticker: "KPIG", company: "PT MNC Tourism Indonesia Tbk", sector: "Properti & Real Estat", ownership: "Lini bisnis properti, resor (Kawasan KEK Lido), dan perhotelan MNC.", kepemilikan_persen: "Afiliasi MNC", sejarah: "Pengembang KEK Lido dan resort mewah lainnya.", tahun_masuk: "2007", broker_afiliasi: "EP", free_float: "20.0%", avg_up: "55", avg_down: "50", support: "50", resistance: "65", last_update: "8 Mei 2026"}, 
                     { ticker: "MNCN", company: "PT Media Nusantara Citra Tbk", sector: "Media & Penyiaran", ownership: "Pengelola stasiun TV FTA (RCTI, MNCTV, GTV, iNews).", kepemilikan_persen: "Mayoritas via BMTR", sejarah: "Raja stasiun TV Free-To-Air di Indonesia.", tahun_masuk: "2007", broker_afiliasi: "EP, RX", free_float: "40.0%", avg_up: "380", avg_down: "350", support: "320", resistance: "420", last_update: "8 Mei 2026" }, 
                     { ticker: "MSIN", company: "PT MNC Digital Entertainment Tbk", sector: "Media & Teknologi Digital", ownership: "Sayap konten digital dan produksi milik grup.", kepemilikan_persen: "Afiliasi MNC", sejarah: "Merger aset digital dan production house (MNC Pictures).", tahun_masuk: "2018", broker_afiliasi: "EP", free_float: "15.0%", avg_up: "1250", avg_down: "1150", support: "1050", resistance: "1400", last_update: "8 Mei 2026" } 
                 ] 
@@ -2373,7 +2457,7 @@
             localStorage.setItem('ewoks_theme', isDark ? 'dark' : 'light');
             
             if(!document.getElementById('tv-chart-wrapper').classList.contains('hide') && window.tvWidgetInstance) {
-                const currentTicker = window.currentTickerView || "BBCA";
+                const currentTicker = window.currentTickerView || "IDX:COMPOSITE";
                 openTVChart(currentTicker); 
             }
         }
@@ -2422,21 +2506,36 @@
                 renderJournal();
             }
 
+            if(pageId === 'watchlist') {
+                // Initialize giant chart on Watchlist page if not already
+                if(!window.tvWidgetInstance) {
+                    openTVChart("IDX:COMPOSITE");
+                }
+            }
+
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
         window.tvWidgetInstance = null;
         window.currentTickerView = "";
         function openTVChart(ticker) {
-            window.currentTickerView = ticker; 
-            document.getElementById('tv-chart-wrapper').classList.remove('hide');
+            // Handle if "IDX:" is passed or not
+            const symbol = ticker.includes("IDX:") ? ticker : `IDX:${ticker}`;
+            window.currentTickerView = symbol; 
+            
+            document.getElementById('chart-active-ticker').innerText = symbol;
+
+            if(document.getElementById('tv-chart-wrapper')) {
+                document.getElementById('tv-chart-wrapper').classList.remove('hide');
+            }
+
             const isDark = document.body.classList.contains('dark-mode-override');
             
             document.getElementById('tv-chart-container').innerHTML = '';
             
             window.tvWidgetInstance = new TradingView.widget({
               "autosize": true,
-              "symbol": "IDX:" + ticker,
+              "symbol": symbol,
               "interval": "D",
               "timezone": "Asia/Jakarta",
               "theme": isDark ? "dark" : "light",
@@ -2451,10 +2550,21 @@
               "container_id": "tv-chart-container",
               "show_popup_button": true,
               "popup_width": "1000",
-              "popup_height": "650"
+              "popup_height": "650",
+              "withdateranges": true,
+              "allow_symbol_change": true,
+              "details": true,
+              "hotlist": true,
+              "calendar": true
             });
             
-            window.scrollTo({ top: document.getElementById('tv-chart-wrapper').offsetTop - 100, behavior: 'smooth' });
+            // Auto scroll to chart area when clicked from watchlist
+            if(document.getElementById('page-watchlist').classList.contains('active')){
+                const headerOffset = 100;
+                const elementPosition = document.getElementById('tv-chart-wrapper').getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+            }
         }
 
         // --- MODULE: LIVE DATA & NEWS (WITH GOOGLE SHEETS FALLBACK) ---
@@ -2507,13 +2617,17 @@
 
         function fetchLiveMarketData() {
             const ihsgEl = document.getElementById('ihsg-dash-live');
+            const termIhsgEl = document.getElementById('terminal-ihsg');
+            
             let currentIHSG = parseFloat(ihsgEl.innerText.replace(/,/g, ''));
             if(isNaN(currentIHSG)) currentIHSG = 7350.25;
             
             const change = (Math.random() * 10) - 5; 
             currentIHSG += change;
             
-            ihsgEl.innerText = currentIHSG.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            const formattedIHSG = currentIHSG.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            ihsgEl.innerText = formattedIHSG;
+            if(termIhsgEl) termIhsgEl.innerText = formattedIHSG;
             
             // Animasi Pulse UI
             ihsgEl.classList.add('scale-110');
@@ -2521,12 +2635,16 @@
 
             if(change >= 0) {
                 ihsgEl.className = "stat-badge bg-emerald-100 text-emerald-700 transition-all duration-300";
+                if(termIhsgEl) termIhsgEl.className = "font-black text-emerald-600 transition-all duration-300";
             } else {
                 ihsgEl.className = "stat-badge bg-rose-100 text-rose-700 transition-all duration-300";
+                if(termIhsgEl) termIhsgEl.className = "font-black text-rose-600 transition-all duration-300";
             }
 
             const fgPointer = document.getElementById('fg-pointer');
             const fgText = document.getElementById('fg-text');
+            const termSentiment = document.getElementById('terminal-sentiment');
+            
             let fgValue = 50 + ((currentIHSG - 7300) / 10);
             if(fgValue < 0) fgValue = 0;
             if(fgValue > 100) fgValue = 100;
@@ -2534,11 +2652,19 @@
             if(fgPointer) fgPointer.style.left = `${fgValue}%`;
             
             if(fgText) {
-                if(fgValue < 25) { fgText.innerText = `EXTREME FEAR (${Math.round(fgValue)})`; fgText.className = "text-[10px] font-black text-rose-600 transition-all duration-300"; }
-                else if(fgValue < 45) { fgText.innerText = `FEAR (${Math.round(fgValue)})`; fgText.className = "text-[10px] font-black text-rose-500 transition-all duration-300"; }
-                else if(fgValue < 55) { fgText.innerText = `NEUTRAL (${Math.round(fgValue)})`; fgText.className = "text-[10px] font-black text-amber-500 transition-all duration-300"; }
-                else if(fgValue < 75) { fgText.innerText = `GREED (${Math.round(fgValue)})`; fgText.className = "text-[10px] font-black text-emerald-500 transition-all duration-300"; }
-                else { fgText.innerText = `EXTREME GREED (${Math.round(fgValue)})`; fgText.className = "text-[10px] font-black text-emerald-600 transition-all duration-300"; }
+                let statusText = "";
+                let colorClass = "";
+                if(fgValue < 25) { statusText = "EXTREME FEAR"; colorClass = "text-rose-600"; fgText.className = "text-[10px] font-black text-rose-600 transition-all duration-300"; }
+                else if(fgValue < 45) { statusText = "FEAR"; colorClass = "text-rose-500"; fgText.className = "text-[10px] font-black text-rose-500 transition-all duration-300"; }
+                else if(fgValue < 55) { statusText = "NEUTRAL"; colorClass = "text-amber-500"; fgText.className = "text-[10px] font-black text-amber-500 transition-all duration-300"; }
+                else if(fgValue < 75) { statusText = "GREED"; colorClass = "text-emerald-500"; fgText.className = "text-[10px] font-black text-emerald-500 transition-all duration-300"; }
+                else { statusText = "EXTREME GREED"; colorClass = "text-emerald-600"; fgText.className = "text-[10px] font-black text-emerald-600 transition-all duration-300"; }
+                
+                fgText.innerText = `${statusText} (${Math.round(fgValue)})`;
+                if(termSentiment) {
+                    termSentiment.innerText = statusText;
+                    termSentiment.className = `text-2xl md:text-3xl font-black ${colorClass}`;
+                }
             }
 
             if(document.getElementById('page-watchlist').classList.contains('active')) {
@@ -2603,7 +2729,7 @@
                 const isHit = current >= target;
                 
                 return `
-                <div class="bg-white border ${isHit ? 'border-emerald-400 shadow-emerald-100' : 'border-slate-200'} rounded-2xl p-5 shadow-sm relative group hover:border-amber-400 transition-colors flex flex-col h-full">
+                <div class="bg-white border ${isHit ? 'border-emerald-400 shadow-emerald-100' : 'border-slate-200'} rounded-2xl p-5 shadow-sm relative group hover:border-amber-400 transition-colors flex flex-col h-full dark-mode-card">
                     <button onclick="deleteWatchlist(${w.id})" class="absolute top-4 right-4 text-slate-300 hover:text-red-500 transition-colors z-10"><i class="fas fa-times"></i></button>
                     ${isHit ? `<div class="absolute -top-3 -right-2 bg-emerald-500 text-white text-[10px] font-black px-3 py-1 rounded-full shadow-lg z-10 animate-bounce">🎯 TARGET HIT!</div>` : ''}
                     
