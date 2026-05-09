@@ -76,8 +76,9 @@
             border-color: #1e293b;
         }
         
-        /* OVERRIDE KHUSUS CHART GLASS CARD */
-        body.dark-mode-override .glass-card {
+        /* OVERRIDE KHUSUS CHART GLASS CARD & NEW TERMINAL */
+        body.dark-mode-override .glass-card,
+        body.dark-mode-override .dark-mode-card {
             background-color: #0f172a;
             border-color: #1e293b;
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
@@ -157,19 +158,22 @@
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
         }
 
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+
         .chart-wrapper {
             position: relative;
-            height: 800px;
+            height: 100%;
             width: 100%;
-            border-radius: 24px;
             overflow: hidden;
-            border: 1px solid #e2e8f0;
-        }
-        
-        @media (min-width: 1536px) {
-            .chart-wrapper {
-                height: 900px;
-            }
         }
 
         .nav-link {
@@ -410,7 +414,7 @@
                         </button>
                         <div class="dropdown-content">
                             <button onclick="showPage('watchlist')" id="nav-watchlist" class="dropdown-item">
-                                <i class="fas fa-star w-5 text-amber-400"></i> Watchlist & Screener
+                                <i class="fas fa-star w-5 text-amber-400"></i> Terminal & Watchlist
                             </button>
                             <button onclick="showPage('jurnal')" id="nav-jurnal" class="dropdown-item">
                                 <i class="fas fa-book w-5 text-purple-500"></i> Jurnal Trading
@@ -449,9 +453,9 @@
         </div>
     </header>
 
-    <main class="max-w-7xl mx-auto px-4 md:px-6 py-6 md:py-8">
+    <main class="max-w-[1600px] mx-auto px-4 md:px-6 py-6 md:py-8">
 
-        <section id="page-home" class="page active">
+        <section id="page-home" class="page active max-w-7xl mx-auto">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">
                 <div class="lg:col-span-2 bg-slate-900 rounded-[2rem] md:rounded-[2.5rem] p-8 md:p-12 text-white relative overflow-hidden flex flex-col justify-center shadow-2xl hero-card">
                     <div class="absolute top-0 right-0 w-64 h-64 bg-blue-600 rounded-full blur-[120px] opacity-20 -mr-20 -mt-20"></div>
@@ -461,7 +465,7 @@
                         <p class="text-slate-400 text-sm md:text-lg mb-8 md:mb-10 max-w-lg">Analisis bandarmology, manajemen risiko presisi, dan database terlengkap untuk trader profesional.</p>
                         <div class="flex flex-col sm:flex-row gap-4">
                             <button onclick="showPage('kalkulator')" class="w-full sm:w-auto bg-blue-600 text-white px-8 py-4 rounded-2xl font-bold hover:bg-blue-700 transition-all shadow-lg shadow-blue-900/20">Mulai Trading Plan</button>
-                            <button onclick="showPage('watchlist')" class="w-full sm:w-auto bg-slate-800 text-white px-8 py-4 rounded-2xl font-bold hover:bg-slate-700 transition-all border border-slate-700"><i class="fas fa-star text-amber-400 mr-2"></i> Buka Watchlist</button>
+                            <button onclick="showPage('watchlist')" class="w-full sm:w-auto bg-slate-800 text-white px-8 py-4 rounded-2xl font-bold hover:bg-slate-700 transition-all border border-slate-700"><i class="fas fa-star text-amber-400 mr-2"></i> Buka Terminal Live</button>
                         </div>
                     </div>
                 </div>
@@ -650,12 +654,12 @@
         </section>
 
         <section id="page-watchlist" class="page">
-            <div class="max-w-7xl mx-auto space-y-6 lg:space-y-10">
+            <div class="w-full mx-auto space-y-6 lg:space-y-8">
                 
-                <div class="flex flex-col md:flex-row items-start justify-between mb-4 gap-4">
+                <div class="flex flex-col md:flex-row items-start justify-between mb-2 gap-4">
                     <div>
-                        <h2 class="text-2xl md:text-3xl font-black text-slate-900">Watchlist & <span class="text-amber-500">Screener</span></h2>
-                        <p class="text-slate-500 font-medium text-sm">Simpan pantauan emiten Anda secara lokal & Screening saham unggulan menggunakan TradingView.</p>
+                        <h2 class="text-2xl md:text-3xl font-black text-slate-900">Trading <span class="text-blue-600">Terminal</span></h2>
+                        <p class="text-slate-500 font-medium text-sm">Interactive Chart, Screener, dan Pantauan Saham Pribadi.</p>
                     </div>
                     <div class="flex gap-2 shrink-0">
                         <button onclick="document.getElementById('importFile').click()" class="btn-action bg-slate-200 text-slate-700 px-4 py-2 rounded-xl font-black text-xs shadow-sm hover:bg-slate-300 transition-colors">
@@ -668,97 +672,112 @@
                     </div>
                 </div>
 
-                <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 px-2">
-                    <div>
-                        <div class="flex items-center gap-3 mb-2">
-                            <span class="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider">Interactive Terminal</span>
-                            <div class="h-1 w-12 bg-blue-600 rounded-full"></div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="glass-card p-4 md:p-5 bg-white shadow-sm dark-mode-card border border-slate-200 rounded-2xl">
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="text-[10px] md:text-xs font-bold text-slate-500 uppercase">IHSG (Composite)</span>
+                            <span class="p-1.5 md:p-2 bg-emerald-50 text-emerald-600 rounded-lg"><i class="fas fa-chart-area"></i></span>
                         </div>
-                        <h2 class="text-3xl md:text-5xl font-black text-slate-900 tracking-tighter">Market Analysis Center</h2>
-                        <p class="text-slate-500 text-sm md:text-lg mt-1 font-medium">Visualisasi teknikal mendalam bertenaga TradingView.</p>
-                    </div>
-                    
-                    <div class="flex items-center gap-4 bg-white p-3 rounded-2xl border border-slate-100 shadow-sm dark-mode-card">
-                        <div class="text-right border-r pr-4 border-slate-100">
-                            <div class="text-[10px] font-bold text-slate-400 uppercase">IHSG Index</div>
-                            <div class="font-black text-emerald-600" id="terminal-ihsg">7,350.25</div>
-                        </div>
-                        <div class="pl-2">
-                            <div class="text-[10px] font-bold text-slate-400 uppercase">Status</div>
-                            <div class="flex items-center gap-2">
-                                <div class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
-                                <span class="font-black text-slate-800 text-sm">MARKET OPEN</span>
+                        <div class="flex items-baseline gap-2">
+                            <h3 id="terminal-ihsg" class="text-xl md:text-2xl font-black text-slate-800">7,350.25</h3>
+                            <div class="hidden md:flex items-center gap-1.5 ml-1">
+                                <div class="w-1.5 h-1.5 md:w-2 md:h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+                                <span class="text-[8px] md:text-[10px] font-black text-emerald-600">LIVE</span>
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <div id="tv-chart-wrapper" class="glass-card rounded-[32px] p-4 md:p-6 mb-10 transition-colors">
-                    <div class="flex items-center justify-between mb-4 md:mb-6">
-                        <div class="flex items-center gap-4">
-                            <div class="px-3 py-1.5 md:px-4 md:py-2 bg-slate-900 text-white rounded-xl font-bold text-xs md:text-sm" id="chart-active-ticker">IDX:COMPOSITE</div>
-                            <div class="hidden md:block h-6 w-px bg-slate-200"></div>
+                    <div class="glass-card p-4 md:p-5 bg-white shadow-sm dark-mode-card border border-slate-200 rounded-2xl">
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="text-[10px] md:text-xs font-bold text-slate-500 uppercase">Market Sentiment</span>
+                            <span class="p-1.5 md:p-2 bg-amber-50 text-amber-600 rounded-lg"><i class="fas fa-fire"></i></span>
                         </div>
-                        <div class="flex gap-3">
-                            <button class="p-2 text-slate-400 hover:text-blue-600 transition-all tooltip-trigger"><i class="fas fa-expand"></i><span class="tooltip-text">Gunakan tombol dalam chart untuk Fullscreen</span></button>
+                        <div class="flex items-baseline gap-2">
+                            <h3 id="terminal-sentiment" class="text-xl md:text-2xl font-black text-amber-500">Neutral</h3>
+                            <span class="hidden md:inline-block text-[10px] font-bold text-slate-400 ml-1">Index</span>
                         </div>
                     </div>
-
-                    <div id="tv-chart-container" class="chart-wrapper shadow-inner"></div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-10">
-                    <div class="glass-card rounded-3xl p-6 md:p-8 flex items-center justify-between">
-                        <div>
-                            <div class="text-[10px] md:text-xs font-black text-slate-400 uppercase mb-1">Volume 24h</div>
-                            <div class="text-2xl md:text-3xl font-black text-slate-900">22.4B</div>
+                    <div class="glass-card p-4 md:p-5 bg-white shadow-sm dark-mode-card border border-slate-200 rounded-2xl">
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="text-[10px] md:text-xs font-bold text-slate-500 uppercase">Volume 24h</span>
+                            <span class="p-1.5 md:p-2 bg-blue-50 text-blue-600 rounded-lg"><i class="fas fa-database"></i></span>
                         </div>
-                        <div class="text-emerald-500 bg-emerald-50 p-4 rounded-2xl border border-emerald-100">
-                            <i class="fas fa-database text-xl md:text-2xl"></i>
+                        <div class="flex items-baseline gap-2">
+                            <h3 class="text-xl md:text-2xl font-black text-slate-800">22.4B</h3>
+                            <span class="hidden md:inline-block text-[10px] font-bold text-slate-400 ml-1">Shares</span>
                         </div>
                     </div>
-                    <div class="glass-card rounded-3xl p-6 md:p-8 flex items-center justify-between">
-                        <div>
-                            <div class="text-[10px] md:text-xs font-black text-slate-400 uppercase mb-1">Market Sentiment</div>
-                            <div class="text-2xl md:text-3xl font-black text-amber-500" id="terminal-sentiment">Neutral</div>
+                    <div class="glass-card p-4 md:p-5 bg-white shadow-sm dark-mode-card border border-slate-200 rounded-2xl">
+                        <div class="flex justify-between items-start mb-2">
+                            <span class="text-[10px] md:text-xs font-bold text-slate-500 uppercase">Volatility (VIX)</span>
+                            <span class="p-1.5 md:p-2 bg-purple-50 text-purple-600 rounded-lg"><i class="fas fa-wind"></i></span>
                         </div>
-                        <div class="text-amber-500 bg-amber-50 p-4 rounded-2xl border border-amber-100">
-                            <i class="fas fa-fire text-xl md:text-2xl"></i>
-                        </div>
-                    </div>
-                    <div class="glass-card rounded-3xl p-6 md:p-8 flex items-center justify-between">
-                        <div>
-                            <div class="text-[10px] md:text-xs font-black text-slate-400 uppercase mb-1">Volatility (VIX)</div>
-                            <div class="text-2xl md:text-3xl font-black text-slate-900">14.20</div>
-                        </div>
-                        <div class="text-blue-500 bg-blue-50 p-4 rounded-2xl border border-blue-100">
-                            <i class="fas fa-wind text-xl md:text-2xl"></i>
+                        <div class="flex items-baseline gap-2">
+                            <h3 class="text-xl md:text-2xl font-black text-slate-800">14.20</h3>
+                            <span class="hidden md:inline-block text-[10px] font-bold text-slate-400 ml-1">Normal</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="premium-card p-4 overflow-hidden mb-8 border-amber-200">
-                    <h3 class="text-sm font-black text-slate-900 mb-3 uppercase tracking-widest flex items-center gap-2">
-                        <i class="fas fa-filter text-amber-500"></i> Market Screener (Live)
+                <div class="flex flex-col xl:flex-row gap-6 h-[800px] xl:h-[850px] mb-8" id="tv-chart-wrapper">
+                    
+                    <div class="flex-1 glass-card flex flex-col h-full bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden dark-mode-card transition-colors">
+                        <div class="px-5 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-chart-line text-blue-600 text-lg"></i>
+                                <h2 class="font-black text-slate-800 text-sm md:text-base">Interactive Chart</h2>
+                                <div class="px-3 py-1 bg-slate-900 text-white rounded-lg font-bold text-[10px] md:text-xs ml-2 tracking-wider" id="chart-active-ticker">IDX:COMPOSITE</div>
+                            </div>
+                            <button class="w-8 h-8 rounded-lg bg-white border border-slate-200 text-slate-500 hover:text-blue-600 hover:border-blue-300 transition-all flex items-center justify-center shadow-sm tooltip-trigger">
+                                <i class="fas fa-expand"></i><span class="tooltip-text">Gunakan tombol dalam chart untuk Fullscreen</span>
+                            </button>
+                        </div>
+                        <div id="tv-chart-container" class="flex-1 w-full relative"></div>
+                    </div>
+
+                    <div class="w-full xl:w-[450px] flex flex-col h-full gap-6">
+                        <div class="flex-1 glass-card flex flex-col bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden dark-mode-card transition-colors">
+                            <div class="px-5 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+                                <div class="flex items-center gap-3">
+                                    <i class="fas fa-filter text-amber-500 text-lg"></i>
+                                    <h2 class="font-black text-slate-800 text-sm md:text-base">Market Screener Live</h2>
+                                </div>
+                                <span class="text-[10px] bg-emerald-100 text-emerald-700 px-2 py-1 rounded-full font-black tracking-widest uppercase animate-pulse">Connected</span>
+                            </div>
+                            <div class="flex-1 w-full relative">
+                                <div class="tradingview-widget-container" style="height: 100%; width: 100%;">
+                                    <div class="tradingview-widget-container__widget" style="height: 100%; width: 100%;"></div>
+                                    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-screener.js" async>
+                                    {
+                                    "width": "100%",
+                                    "height": "100%",
+                                    "defaultColumn": "overview",
+                                    "defaultScreen": "top_gainers",
+                                    "market": "indonesia",
+                                    "showToolbar": true,
+                                    "colorTheme": "light",
+                                    "locale": "id"
+                                    }
+                                    </script>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="glass-card p-5 bg-gradient-to-br from-blue-600 to-indigo-700 text-white rounded-2xl shadow-sm border-0 shrink-0">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="bg-white/20 p-2 rounded-lg text-amber-300">
+                                    <i class="fas fa-lightbulb"></i>
+                                </div>
+                                <h3 class="font-black uppercase tracking-widest text-sm">Pro Tip</h3>
+                            </div>
+                            <p class="text-xs md:text-sm text-blue-100 leading-relaxed font-medium">Klik pada kode saham apapun di area Screener, lalu sinkronkan atau ketik manual di menu <span class="font-bold text-white">Interactive Chart</span> untuk melihat Technical Analysis secara lebih dalam.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="premium-card p-6 bg-slate-50 mt-8 rounded-2xl border border-slate-200 shadow-sm">
+                    <h3 class="text-sm font-black text-slate-900 mb-4 uppercase tracking-widest flex items-center gap-2">
+                        <i class="fas fa-bookmark text-blue-600"></i> Pantau Saham Pribadi
                     </h3>
-                    <div class="tradingview-widget-container" style="height: 600px; width: 100%;">
-                        <div class="tradingview-widget-container__widget" style="height: 100%; width: 100%;"></div>
-                        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-screener.js" async>
-                        {
-                        "width": "100%",
-                        "height": "100%",
-                        "defaultColumn": "overview",
-                        "defaultScreen": "top_gainers",
-                        "market": "indonesia",
-                        "showToolbar": true,
-                        "colorTheme": "light",
-                        "locale": "id"
-                        }
-                        </script>
-                    </div>
-                </div>
-
-                <div class="premium-card p-6 bg-slate-50">
                     <div class="grid grid-cols-1 md:grid-cols-5 gap-4 items-end">
                         <div class="md:col-span-1">
                             <label class="text-[10px] font-black text-slate-400 uppercase mb-2 block">KODE EMITEN</label>
@@ -783,13 +802,13 @@
                     </div>
                 </div>
 
-                <div id="watchlist-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div id="watchlist-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 </div>
             </div>
         </section>
         
-        <section id="page-jurnal" class="page">
-            <div class="max-w-6xl mx-auto space-y-6">
+        <section id="page-jurnal" class="page max-w-7xl mx-auto">
+            <div class="w-full space-y-6">
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-4">
                     <div>
                         <h2 class="text-2xl md:text-3xl font-black text-slate-900">Jurnal <span class="text-purple-600">Trading</span></h2>
@@ -961,7 +980,7 @@
             </div>
         </section>
 
-        <section id="page-quiz" class="page">
+        <section id="page-quiz" class="page max-w-7xl mx-auto">
             <div class="max-w-3xl mx-auto">
                 <div class="text-center mb-10">
                     <h2 class="text-2xl md:text-4xl font-black text-slate-900 mb-4">Kenali <span class="text-emerald-500">Profil Risiko</span> Anda</h2>
@@ -1036,7 +1055,7 @@
             </div>
         </section>
 
-        <section id="page-fixed-income" class="page">
+        <section id="page-fixed-income" class="page max-w-7xl mx-auto">
             <div class="max-w-6xl mx-auto space-y-8">
                 <div class="text-center mb-10">
                     <h2 class="text-3xl md:text-4xl font-black text-slate-900 mb-4">Investasi <span class="text-amber-500">Rendah Risiko</span> & Terukur</h2>
@@ -1119,7 +1138,7 @@
             </div>
         </section>
 
-        <section id="page-bandarmology-edu" class="page">
+        <section id="page-bandarmology-edu" class="page max-w-7xl mx-auto">
             <div class="max-w-6xl mx-auto space-y-8">
                 <div class="premium-card p-6 md:p-10 overflow-hidden relative bg-slate-900 text-white">
                     <div class="flex items-center gap-4 mb-4">
@@ -1191,7 +1210,7 @@
             </div>
         </section>
 
-        <section id="page-pensiun" class="page">
+        <section id="page-pensiun" class="page max-w-7xl mx-auto">
             <div class="max-w-5xl mx-auto">
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-4">
                     <div>
@@ -1260,7 +1279,7 @@
             </div>
         </section>
 
-        <section id="page-edukasi" class="page">
+        <section id="page-edukasi" class="page max-w-7xl mx-auto">
             <div class="max-w-5xl mx-auto space-y-8 md:space-y-10">
                 <div class="premium-card p-6 md:p-10 overflow-hidden relative">
                     <div class="flex items-center gap-4 mb-8">
@@ -1330,7 +1349,7 @@
             </div>
         </section>
 
-        <section id="page-kalkulator" class="page">
+        <section id="page-kalkulator" class="page max-w-7xl mx-auto">
             <div class="max-w-6xl mx-auto">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 items-start">
                     <div class="space-y-6">
@@ -1459,7 +1478,7 @@
             </div>
         </section>
 
-        <section id="page-bandar" class="page">
+        <section id="page-bandar" class="page max-w-7xl mx-auto">
             <div class="max-w-6xl mx-auto space-y-6">
                 <div class="premium-card p-6 md:p-8">
                     <h2 class="text-2xl font-bold text-slate-800 mb-6 text-center">Target Realistis Saham</h2>
@@ -1531,7 +1550,7 @@
             </div>
         </section>
 
-        <section id="page-konglo" class="page">
+        <section id="page-konglo" class="page max-w-7xl mx-auto">
             <div class="max-w-6xl mx-auto">
                 <div id="konglo-dashboard-view">
                     <section class="mb-10 text-center max-w-4xl mx-auto">
@@ -1695,7 +1714,7 @@
             </div>
         </section>
 
-        <section id="page-broker" class="page">
+        <section id="page-broker" class="page max-w-7xl mx-auto">
             <div class="max-w-6xl mx-auto">
                 <div class="premium-card overflow-hidden">
                     <div class="p-6 md:p-12 bg-slate-900 text-white flex flex-col md:flex-row justify-between items-center gap-6 md:gap-8 border-slate-800">
@@ -2507,7 +2526,6 @@
             }
 
             if(pageId === 'watchlist') {
-                // Initialize giant chart on Watchlist page if not already
                 if(!window.tvWidgetInstance) {
                     openTVChart("IDX:COMPOSITE");
                 }
@@ -2519,7 +2537,6 @@
         window.tvWidgetInstance = null;
         window.currentTickerView = "";
         function openTVChart(ticker) {
-            // Handle if "IDX:" is passed or not
             const symbol = ticker.includes("IDX:") ? ticker : `IDX:${ticker}`;
             window.currentTickerView = symbol; 
             
@@ -2558,7 +2575,6 @@
               "calendar": true
             });
             
-            // Auto scroll to chart area when clicked from watchlist
             if(document.getElementById('page-watchlist').classList.contains('active')){
                 const headerOffset = 100;
                 const elementPosition = document.getElementById('tv-chart-wrapper').getBoundingClientRect().top;
@@ -2663,7 +2679,7 @@
                 fgText.innerText = `${statusText} (${Math.round(fgValue)})`;
                 if(termSentiment) {
                     termSentiment.innerText = statusText;
-                    termSentiment.className = `text-2xl md:text-3xl font-black ${colorClass}`;
+                    termSentiment.className = `text-xl md:text-2xl font-black ${colorClass}`;
                 }
             }
 
@@ -3628,7 +3644,7 @@
             const fivePercent = buyAvg * 0.05;
 
             const targetHigh = buyAvg + fivePercent + (papanCountHigh * tick);
-            const targetLow = buyAvg + fivePercent + (papanCountLow * tick);
+            const targetLow = buyAvg + percentLow + (papanCountLow * tick);
             const percentLow = ((targetLow - buyAvg) / buyAvg) * 100;
             const percentHigh = ((targetHigh - buyAvg) / buyAvg) * 100;
 
