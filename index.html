@@ -382,7 +382,7 @@
             </div>
             
             <div class="flex items-center gap-4">
-                <div id="liveClock" class="hidden lg:flex items-center gap-2 text-[10px] font-bold text-slate-500 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-100 shadow-sm transition-colors">
+                <div id="liveClock" class="hidden lg:flex items-center gap-2 text-[10px] font-bold text-slate-50 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-100 shadow-sm transition-colors">
                     <i class="fas fa-clock text-blue-500"></i> <span id="clockText">--:--:-- WIB</span>
                 </div>
                 <nav class="flex items-center gap-2">
@@ -1281,74 +1281,378 @@
 
         <section id="page-edukasi" class="page max-w-7xl mx-auto">
             <div class="max-w-5xl mx-auto space-y-8 md:space-y-10">
-                <div class="premium-card p-6 md:p-10 overflow-hidden relative">
-                    <div class="flex items-center gap-4 mb-8">
-                        <div class="w-2 h-8 bg-red-600 rounded-full"></div>
-                        <h2 class="text-xl md:text-2xl font-black text-slate-900">Dashboard Makro Indonesia</h2>
+                
+                <div class="text-center mb-6">
+                    <h2 class="text-3xl md:text-4xl font-black text-slate-900 mb-2">Ewoks <span class="text-blue-600">Academy Hub</span></h2>
+                    <p class="text-slate-500 text-sm">Pusat pembelajaran komprehensif mulai dari dasar instrumen, profil trader, hingga analisis teknikal lanjutan.</p>
+                </div>
+
+                <div class="flex overflow-x-auto gap-2 mb-6 no-scrollbar pb-2 border-b border-slate-200">
+                    <button id="btn-edu-dasar" onclick="switchEduTab('edu-dasar')" class="edu-tab-btn whitespace-nowrap px-5 py-3 rounded-t-xl bg-blue-600 text-white font-bold text-xs transition-colors border-b-2 border-transparent"><i class="fas fa-chart-pie mr-2"></i>Dasar & Makro</button>
+                    <button id="btn-edu-profil" onclick="switchEduTab('edu-profil')" class="edu-tab-btn whitespace-nowrap px-5 py-3 rounded-t-xl bg-slate-100 text-slate-600 font-bold text-xs hover:bg-slate-200 transition-colors border-b-2 border-transparent"><i class="fas fa-users mr-2"></i>Profil Trader & Screener</button>
+                    <button id="btn-edu-kamus" onclick="switchEduTab('edu-kamus')" class="edu-tab-btn whitespace-nowrap px-5 py-3 rounded-t-xl bg-slate-100 text-slate-600 font-bold text-xs hover:bg-slate-200 transition-colors border-b-2 border-transparent"><i class="fas fa-book mr-2"></i>Kamus & Regulasi</button>
+                    <button id="btn-edu-teknikal" onclick="switchEduTab('edu-teknikal')" class="edu-tab-btn whitespace-nowrap px-5 py-3 rounded-t-xl bg-slate-100 text-slate-600 font-bold text-xs hover:bg-slate-200 transition-colors border-b-2 border-transparent"><i class="fas fa-chart-line mr-2"></i>Analisis Teknikal</button>
+                </div>
+
+                <div id="edu-dasar" class="edu-tab-content block space-y-8">
+                    <div class="premium-card p-6 md:p-10 overflow-hidden relative">
+                        <div class="flex items-center gap-4 mb-8">
+                            <div class="w-2 h-8 bg-red-600 rounded-full"></div>
+                            <h2 class="text-xl md:text-2xl font-black text-slate-900">Dashboard Makro Indonesia</h2>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
+                            <div class="p-6 bg-slate-50 rounded-3xl border border-slate-100 text-center md:text-left hover:border-blue-300 transition-colors">
+                                <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3 block">Est. Inflasi 2024</span>
+                                <div class="text-3xl md:text-4xl font-black text-slate-900 mb-2">2.80%</div>
+                                <p class="text-[10px] text-slate-500 font-bold uppercase tooltip-trigger">Fokus: Ketahanan Pangan<span class="tooltip-text">Inflasi dijaga lewat operasi beras/pangan subsidi.</span></p>
+                            </div>
+                            <div class="p-6 bg-slate-50 rounded-3xl border border-slate-100 text-center md:text-left hover:border-blue-300 transition-colors">
+                                <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3 block">Proj. Inflasi 2025</span>
+                                <div class="text-3xl md:text-4xl font-black text-slate-900 mb-2">2.92%</div>
+                                <p class="text-[10px] text-slate-500 font-bold uppercase tooltip-trigger">Target: Konsumsi Domestik<span class="tooltip-text">Rangsang daya beli ritel di tengah pelemahan suku bunga.</span></p>
+                            </div>
+                            <div class="p-6 bg-slate-50 rounded-3xl border border-slate-100 text-center md:text-left hover:border-blue-300 transition-colors">
+                                <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3 block">Proj. Inflasi 2026</span>
+                                <div class="text-3xl md:text-4xl font-black text-slate-900 mb-2">4.76%</div>
+                                <p class="text-[10px] text-slate-500 font-bold uppercase tooltip-trigger">Visi: Stabilitas Jangka Panjang<span class="tooltip-text">Angka perkiraan atas jika program ambisius menekan defisit fiscal.</span></p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
-                        <div class="p-6 bg-slate-50 rounded-3xl border border-slate-100 text-center md:text-left">
-                            <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3 block">Est. Inflasi 2024</span>
-                            <div class="text-3xl md:text-4xl font-black text-slate-900 mb-2">2.80%</div>
-                            <p class="text-[10px] text-slate-500 font-bold uppercase tooltip-trigger">Fokus: Ketahanan Pangan<span class="tooltip-text">Inflasi dijaga lewat operasi beras/pangan subsidi.</span></p>
+
+                    <div class="premium-card p-6 md:p-10 border-blue-100 bg-blue-50/20">
+                        <div class="flex items-center gap-4 mb-8">
+                            <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center text-xl shadow-sm">
+                                <i class="fas fa-coins"></i>
+                            </div>
+                            <div>
+                                <h2 class="text-xl md:text-2xl font-black text-slate-900">Macam Macam Instrumen Investasi</h2>
+                                <p class="text-slate-500 text-xs md:text-sm mt-1">Pahami kendaraan kekayaan Anda sebelum melangkah.</p>
+                            </div>
                         </div>
-                        <div class="p-6 bg-slate-50 rounded-3xl border border-slate-100 text-center md:text-left">
-                            <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3 block">Proj. Inflasi 2025</span>
-                            <div class="text-3xl md:text-4xl font-black text-slate-900 mb-2">2.92%</div>
-                            <p class="text-[10px] text-slate-500 font-bold uppercase tooltip-trigger">Target: Konsumsi Domestik<span class="tooltip-text">Rangsang daya beli ritel di tengah pelemahan suku bunga.</span></p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                                <div class="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mb-4"><i class="fas fa-chart-line"></i></div>
+                                <h3 class="font-black text-slate-800 text-lg mb-2">1. Saham (Emiten)</h3>
+                                <p class="text-xs text-slate-600 leading-relaxed mb-4">Surat berharga yang menunjukkan bukti kepemilikan perusahaan. Membeli 1 lot (100 lembar) menjadikan Anda pemilik sah.</p>
+                                <ul class="text-[11px] text-slate-500 space-y-2 font-medium">
+                                    <li><i class="fas fa-check text-emerald-500 mr-1"></i> Mendapat Dividen (Bagi Hasil)</li>
+                                    <li><i class="fas fa-check text-emerald-500 mr-1"></i> Hak ikut RUPS / RUPSLB</li>
+                                    <li><i class="fas fa-check text-emerald-500 mr-1"></i> Potensi Capital Gain (Kenaikan Harga)</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                                <div class="w-10 h-10 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mb-4"><i class="fas fa-piggy-bank"></i></div>
+                                <h3 class="font-black text-slate-800 text-lg mb-2">2. Deposito</h3>
+                                <p class="text-xs text-slate-600 leading-relaxed mb-4">Investasi menyimpan uang di bank untuk jangka waktu (1, 3, 6, 12 bulan) dengan bunga lebih tinggi dari tabungan biasa.</p>
+                                <ul class="text-[11px] text-slate-500 space-y-2 font-medium">
+                                    <li><i class="fas fa-lock text-slate-400 mr-1"></i> Tidak bisa ditarik tanpa penalti</li>
+                                    <li><i class="fas fa-percent text-slate-400 mr-1"></i> Pajak bunga final 20%</li>
+                                    <li><i class="fas fa-info-circle text-slate-400 mr-1"></i> Contoh: Bunga 6% bruto $\approx 4,8\%$ bersih</li>
+                                </ul>
+                            </div>
+
+                            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
+                                <div class="w-10 h-10 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mb-4"><i class="fas fa-file-invoice-dollar"></i></div>
+                                <h3 class="font-black text-slate-800 text-lg mb-2">3. Obligasi (Surat Utang)</h3>
+                                <p class="text-xs text-slate-600 leading-relaxed mb-4">Instrumen utang yang diterbitkan pemerintah (ORI, Sukuk, SBR) atau korporasi. Risiko lebih rendah, pendapatan tetap.</p>
+                                <ul class="text-[11px] text-slate-500 space-y-2 font-medium">
+                                    <li><i class="fas fa-calendar-check text-amber-500 mr-1"></i> Memperoleh Kupon Berkala</li>
+                                    <li><i class="fas fa-hand-holding-usd text-amber-500 mr-1"></i> Pengembalian Pokok saat Jatuh Tempo</li>
+                                    <li><i class="fas fa-chart-bar text-amber-500 mr-1"></i> Kinerja historis 4.7% - 6.5% p.a</li>
+                                </ul>
+                            </div>
                         </div>
-                        <div class="p-6 bg-slate-50 rounded-3xl border border-slate-100 text-center md:text-left">
-                            <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3 block">Proj. Inflasi 2026</span>
-                            <div class="text-3xl md:text-4xl font-black text-slate-900 mb-2">4.76%</div>
-                            <p class="text-[10px] text-slate-500 font-bold uppercase tooltip-trigger">Visi: Stabilitas Jangka Panjang<span class="tooltip-text">Angka perkiraan atas jika program ambisius menekan defisit fiscal.</span></p>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
+                        <div class="premium-card p-6 md:p-10 bg-slate-900 text-white border-slate-700">
+                            <h3 class="text-lg md:text-xl font-black mb-6 md:mb-8 flex items-center gap-3">
+                                <i class="fas fa-lightbulb text-blue-400"></i> Core Fundamental
+                            </h3>
+                            <div class="space-y-6 md:space-y-8">
+                                <div>
+                                    <h4 class="text-blue-400 font-black text-[10px] md:text-xs uppercase tracking-widest mb-2 tooltip-trigger border-b border-blue-400/50">Psikologi: Exit Plan <span class="tooltip-text">Selalu tahu dimana harus Cut Loss!</span></h4>
+                                    <p class="text-xs md:text-sm text-slate-400 leading-relaxed">Pasar modal tidak berutang apapun kepada Anda. Selalu siapkan titik keluar sebelum masuk ke suatu emiten.</p>
+                                </div>
+                                <div>
+                                    <h4 class="text-blue-400 font-black text-[10px] md:text-xs uppercase tracking-widest mb-2 tooltip-trigger border-b border-blue-400/50">Likuiditas adalah Raja <span class="tooltip-text">Bisa beli belum tentu bisa jual jika antrean kosong.</span></h4>
+                                    <p class="text-xs md:text-sm text-slate-400 leading-relaxed">Hindari saham "tidur" dengan volume kecil meskipun fundamentalnya tampak murah.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="premium-card p-6 md:p-10">
+                            <h3 class="text-lg md:text-xl font-black text-slate-900 mb-6 md:mb-8 flex items-center gap-3">
+                                <i class="fas fa-gem text-amber-500"></i> Alokasi Asset
+                            </h3>
+                            <div class="space-y-4 md:space-y-5">
+                                <div class="flex items-center gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-100">
+                                    <div class="w-10 h-10 md:w-12 md:h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                                        <i class="fas fa-university"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-extrabold text-xs md:text-sm text-slate-900">Perbankan & Deposito</h4>
+                                        <p class="text-[10px] md:text-[11px] text-slate-500">Yield stabil 3-5% p.a. Aman.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-100">
+                                    <div class="w-10 h-10 md:w-12 md:h-12 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                                        <i class="fas fa-file-invoice-dollar"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-extrabold text-xs md:text-sm text-slate-900">Obligasi Negara (SBN)</h4>
+                                        <p class="text-[10px] md:text-[11px] text-slate-500">Kupon tetap, pajak lebih rendah.</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
-                    <div class="premium-card p-6 md:p-10 bg-slate-900 text-white border-slate-700">
-                        <h3 class="text-lg md:text-xl font-black mb-6 md:mb-8 flex items-center gap-3">
-                            <i class="fas fa-lightbulb text-blue-400"></i> Core Fundamental
-                        </h3>
-                        <div class="space-y-6 md:space-y-8">
-                            <div>
-                                <h4 class="text-blue-400 font-black text-[10px] md:text-xs uppercase tracking-widest mb-2 tooltip-trigger border-b border-blue-400/50">Psikologi: Exit Plan <span class="tooltip-text">Selalu tahu dimana harus Cut Loss!</span></h4>
-                                <p class="text-xs md:text-sm text-slate-400 leading-relaxed">Pasar modal tidak berutang apapun kepada Anda. Selalu siapkan titik keluar sebelum masuk ke suatu emiten.</p>
+
+                <div id="edu-profil" class="edu-tab-content hidden space-y-8">
+                    <div class="premium-card p-6 md:p-10 bg-slate-900 text-white">
+                        <h2 class="text-2xl md:text-3xl font-black mb-2 text-center text-blue-400">Siapa Kita di Dunia Persahaman?</h2>
+                        <p class="text-center text-slate-400 text-sm mb-10">Mengenali Jati Diri Persahaman: The Scalper's vs The Investor</p>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6">
+                                <h3 class="text-xl font-black text-rose-500 mb-4 flex items-center gap-2"><i class="fas fa-bolt"></i> THE SCALPER'S</h3>
+                                <p class="text-xs text-slate-300 mb-4 leading-relaxed">Strategi jangka sangat pendek mengambil cuan tipis (0.5% - 2%) dari pergerakan cepat dalam hitungan detik sampai menit.</p>
+                                <ul class="space-y-3">
+                                    <li class="bg-slate-900/50 p-3 rounded-lg border border-slate-700">
+                                        <span class="block text-[10px] font-black text-rose-400 uppercase">Intraday (BSJP/BPJS)</span>
+                                        <span class="text-xs text-slate-400 mt-1 block">Beli Sore Jual Pagi / Beli Pagi Jual Sore. Mengandalkan harga IEP (Indicative Equilibrium Price) di pre-opening/closing.</span>
+                                    </li>
+                                    <li class="bg-slate-900/50 p-3 rounded-lg border border-slate-700">
+                                        <span class="block text-[10px] font-black text-rose-400 uppercase">First Shooting / One Shoot Moment</span>
+                                        <span class="text-xs text-slate-400 mt-1 block">Mengambil momentum cepat di awal buka pasar (15-60 menit pertama) dengan modal besar & target "sekali tembak".</span>
+                                    </li>
+                                    <li class="bg-slate-900/50 p-3 rounded-lg border border-slate-700">
+                                        <span class="block text-[10px] font-black text-rose-400 uppercase">Ciri Khas Eksekusi</span>
+                                        <span class="text-xs text-slate-400 mt-1 block">Cut loss super ketat (≤1%), jumlah transaksi puluhan kali sehari, wajib saham likuid, fokus murni pada tape reading & order book (Bid/Offer).</span>
+                                    </li>
+                                </ul>
                             </div>
-                            <div>
-                                <h4 class="text-blue-400 font-black text-[10px] md:text-xs uppercase tracking-widest mb-2 tooltip-trigger border-b border-blue-400/50">Likuiditas adalah Raja <span class="tooltip-text">Bisa beli belum tentu bisa jual jika antrean kosong.</span></h4>
-                                <p class="text-xs md:text-sm text-slate-400 leading-relaxed">Hindari saham "tidur" dengan volume kecil meskipun fundamentalnya tampak murah.</p>
+
+                            <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6">
+                                <h3 class="text-xl font-black text-emerald-500 mb-4 flex items-center gap-2"><i class="fas fa-seedling"></i> THE INVESTOR & SWINGER</h3>
+                                <p class="text-xs text-slate-300 mb-4 leading-relaxed">Pendekatan dengan rentang waktu menengah ke panjang, memanfaatkan tren utama atau sekedar mengamankan nilai uang.</p>
+                                <ul class="space-y-3">
+                                    <li class="bg-slate-900/50 p-3 rounded-lg border border-slate-700">
+                                        <span class="block text-[10px] font-black text-emerald-400 uppercase">Swing Trader</span>
+                                        <span class="text-xs text-slate-400 mt-1 block">Tahan posisi 1 minggu hingga 3 bulan (Per Kuartal). Fokus teknikal mencari tren valid serta titik Support & Resisten.</span>
+                                    </li>
+                                    <li class="bg-slate-900/50 p-3 rounded-lg border border-slate-700">
+                                        <span class="block text-[10px] font-black text-emerald-400 uppercase">Invest / Nabung / Dividen Hunter</span>
+                                        <span class="text-xs text-slate-400 mt-1 block">Fokus menabung tanpa pusing volatilitas, ditahan >3 bulan sampai bertahun-tahun. Mengincar dividen atau aksi korporasi jangka panjang.</span>
+                                    </li>
+                                    <li class="bg-slate-900/50 p-3 rounded-lg border border-rose-900/50">
+                                        <span class="block text-[10px] font-black text-rose-400 uppercase"><i class="fas fa-exclamation-circle"></i> Sangkuters (The Trap)</span>
+                                        <span class="text-xs text-slate-400 mt-1 block">Menjadi 'investor dadakan' karena terjebak FOMO atau salah analisa dan tidak disiplin Cut Loss, akhirnya menahan saham rugi tak menentu.</span>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
+
+                    <div class="premium-card p-6 md:p-10 bg-slate-50 border-slate-200">
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="w-10 h-10 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center text-lg"><i class="fas fa-filter"></i></div>
+                            <div>
+                                <h3 class="font-black text-slate-900 text-xl">Screener Setup (The Scalper's)</h3>
+                                <p class="text-xs text-slate-500">Kondisi filtering saham harian untuk berbagai tipe Copet.</p>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                                <div class="bg-indigo-600 text-white p-3 font-black text-[10px] tracking-widest uppercase text-center">BPJS (Beli Pagi Jual Sore)</div>
+                                <div class="p-4 bg-slate-900 font-mono text-[10px] text-emerald-400 leading-loose">
+                                    <p><span class="text-blue-400">Price</span> > Price MA 5</p>
+                                    <p><span class="text-blue-400">Price</span> > (Prev Price * 1.05)</p>
+                                    <p><span class="text-blue-400">Price</span> >= Open Price</p>
+                                    <p><span class="text-blue-400">Volume</span> > (Prev Volume * 0.2)</p>
+                                    <p><span class="text-blue-400">Value</span> > 5.000.000.000</p>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                                <div class="bg-indigo-600 text-white p-3 font-black text-[10px] tracking-widest uppercase text-center">BSJP (Beli Sore Jual Pagi)</div>
+                                <div class="p-4 bg-slate-900 font-mono text-[10px] text-amber-400 leading-loose h-full">
+                                    <p><span class="text-blue-400">Price</span> < (Prev Price * 1.05)</p>
+                                    <p><span class="text-blue-400">Price</span> < Price MA 5</p>
+                                    <p><span class="text-blue-400">Volume</span> >= (Prev Volume * 1.2)</p>
+                                    <p><span class="text-blue-400">Value</span> >= 5.000.000.000</p>
+                                </div>
+                            </div>
+
+                            <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                                <div class="bg-indigo-600 text-white p-3 font-black text-[10px] tracking-widest uppercase text-center">One Shoot / DayTrading</div>
+                                <div class="p-4 bg-slate-900 font-mono text-[10px] text-rose-400 leading-loose h-full">
+                                    <p><span class="text-blue-400">1 Day Price Return (%)</span> > 5</p>
+                                    <p><span class="text-blue-400">1 Day Price Return (%)</span> < 15</p>
+                                    <p><span class="text-blue-400">Value</span> > 300.000.000</p>
+                                    <br>
+                                    <p class="text-slate-500 italic">// Cari saham volatilitas awal // momentum</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="edu-kamus" class="edu-tab-content hidden space-y-8">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="premium-card p-6 border-t-4 border-blue-600">
+                            <h4 class="font-black text-slate-900 mb-2 uppercase text-sm">Saham Blue Chip (1st Liner)</h4>
+                            <p class="text-[11px] text-slate-500 mb-3">Saham unggulan / Big Caps. Likuiditas sangat tinggi, fundamental mapan, dan rutin bagi dividen.</p>
+                            <ul class="text-[10px] font-bold text-slate-700 space-y-1">
+                                <li>• Range: Rp 5.000 - Rp 50.000+</li>
+                                <li>• Penggerak indeks (IHSG, LQ45)</li>
+                                <li>• Disukai institusi/jangka panjang</li>
+                                <li>• Contoh: BBCA, BBRI, TLKM, ASII</li>
+                            </ul>
+                        </div>
+                        <div class="premium-card p-6 border-t-4 border-amber-500">
+                            <h4 class="font-black text-slate-900 mb-2 uppercase text-sm">Saham Second Liner</h4>
+                            <p class="text-[11px] text-slate-500 mb-3">Saham lapis dua (menengah) dengan kinerja stabil dan potensi growth cepat.</p>
+                            <ul class="text-[10px] font-bold text-slate-700 space-y-1">
+                                <li>• Range: Rp 500 - Rp 5.000</li>
+                                <li>• Likuiditas lumayan baik</li>
+                                <li>• Cocok untuk Swing Trader</li>
+                                <li>• Non-market leader tapi prospektif</li>
+                            </ul>
+                        </div>
+                        <div class="premium-card p-6 border-t-4 border-rose-600">
+                            <h4 class="font-black text-slate-900 mb-2 uppercase text-sm">Saham Gorengan (3rd Liner)</h4>
+                            <p class="text-[11px] text-slate-500 mb-3">Saham lapis tiga yang sangat volatil, fundamental minim, namun mudah dikontrol bandar.</p>
+                            <ul class="text-[10px] font-bold text-slate-700 space-y-1">
+                                <li>• Range: Rp 50 - Rp 500</li>
+                                <li>• Volume tipis / tidak stabil</li>
+                                <li>• Sering berada di papan akselerasi</li>
+                                <li>• High Risk, untuk Scalper andal</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="premium-card p-6 md:p-8 bg-slate-900 text-white">
+                        <div class="flex flex-col md:flex-row gap-8 items-center">
+                            <div class="flex-1">
+                                <h3 class="text-xl font-black text-blue-400 mb-4 flex items-center gap-2"><i class="fas fa-gavel"></i> Aturan Bursa Efek Indonesia (BEI)</h3>
+                                <p class="text-sm text-slate-300 mb-4">Kebijakan Auto Reject dan Trading Halt dirancang untuk meredam kepanikan atau euforia berlebih.</p>
+                                <div class="bg-rose-900/40 p-4 rounded-xl border border-rose-800 mb-4">
+                                    <h4 class="font-bold text-rose-400 text-xs mb-2">Batas ARB (Auto Reject Bawah)</h4>
+                                    <p class="text-sm font-black text-white">Semua Harga Saham = -15% Maksimal Harian</p>
+                                </div>
+                                <div class="bg-emerald-900/40 p-4 rounded-xl border border-emerald-800">
+                                    <h4 class="font-bold text-emerald-400 text-xs mb-2">Batas ARA (Auto Reject Atas) Berlapis</h4>
+                                    <ul class="text-xs text-white space-y-1">
+                                        <li>• Harga < Rp 200 = <span class="font-black text-emerald-300">Maks +35%</span></li>
+                                        <li>• Harga Rp 200 – Rp 5.000 = <span class="font-black text-emerald-300">Maks +25%</span></li>
+                                        <li>• Harga > Rp 5.000 = <span class="font-black text-emerald-300">Maks +20%</span></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="w-full md:w-1/3 bg-slate-800 p-5 rounded-2xl border border-slate-700 text-center shrink-0">
+                                <i class="fas fa-hand-paper text-4xl text-amber-500 mb-3"></i>
+                                <h4 class="font-black text-white mb-2">IHSG Trading Halt</h4>
+                                <p class="text-[10px] text-slate-400 mb-3">Penghentian sementara pasar jika IHSG anjlok dalam sehari.</p>
+                                <ul class="text-left text-[11px] font-bold text-slate-300 space-y-2">
+                                    <li class="flex justify-between border-b border-slate-700 pb-1"><span>Turun -8%</span> <span class="text-amber-400">Halt 30 Menit</span></li>
+                                    <li class="flex justify-between border-b border-slate-700 pb-1"><span>Turun -15%</span> <span class="text-orange-400">Halt +30 Menit</span></li>
+                                    <li class="flex justify-between"><span>Turun -20%</span> <span class="text-rose-500">Suspend Seharian</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="premium-card p-6 md:p-10">
-                        <h3 class="text-lg md:text-xl font-black text-slate-900 mb-6 md:mb-8 flex items-center gap-3">
-                            <i class="fas fa-gem text-amber-500"></i> Alokasi Asset
-                        </h3>
-                        <div class="space-y-4 md:space-y-5">
-                            <div class="flex items-center gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-100">
-                                <div class="w-10 h-10 md:w-12 md:h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center flex-shrink-0">
-                                    <i class="fas fa-university"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-extrabold text-xs md:text-sm text-slate-900">Perbankan & Deposito</h4>
-                                    <p class="text-[10px] md:text-[11px] text-slate-500">Yield stabil 3-5% p.a. Aman.</p>
-                                </div>
-                            </div>
-                            <div class="flex items-center gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-100">
-                                <div class="w-10 h-10 md:w-12 md:h-12 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center flex-shrink-0">
-                                    <i class="fas fa-file-invoice-dollar"></i>
-                                </div>
-                                <div>
-                                    <h4 class="font-extrabold text-xs md:text-sm text-slate-900">Obligasi Negara (SBN)</h4>
-                                    <p class="text-[10px] md:text-[11px] text-slate-500">Kupon tetap, pajak lebih rendah.</p>
-                                </div>
-                            </div>
+                        <h3 class="text-xl font-black text-slate-900 mb-6 flex items-center gap-2"><i class="fas fa-spell-check text-blue-600"></i> Kamus Istilah Trader</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            <div class="bg-slate-50 p-3 rounded-xl border border-slate-100"><span class="font-black text-slate-800 text-xs">Volatile</span><p class="text-[10px] text-slate-500 mt-1">Harga saham yang bergejolak naik turun dengan tajam dan cepat.</p></div>
+                            <div class="bg-slate-50 p-3 rounded-xl border border-slate-100"><span class="font-black text-slate-800 text-xs">FOMO</span><p class="text-[10px] text-slate-500 mt-1">(Fear of Missing Out) Rasa takut ketinggalan momen naik sehingga beli di pucuk.</p></div>
+                            <div class="bg-slate-50 p-3 rounded-xl border border-slate-100"><span class="font-black text-slate-800 text-xs">UMA</span><p class="text-[10px] text-slate-500 mt-1">(Unusual Market Activity) Aktivitas/pergerakan saham di luar kewajaran (peringatan bursa).</p></div>
+                            <div class="bg-slate-50 p-3 rounded-xl border border-slate-100"><span class="font-black text-slate-800 text-xs">Suspend</span><p class="text-[10px] text-slate-500 mt-1">Perdagangan suatu saham dibekukan/dihentikan paksa oleh BEI.</p></div>
+                            <div class="bg-slate-50 p-3 rounded-xl border border-slate-100"><span class="font-black text-slate-800 text-xs">HAKA / HAKI</span><p class="text-[10px] text-slate-500 mt-1">Hajar Kanan (Beli langsung di harga Offer) / Hajar Kiri (Jual paksa ke harga Bid).</p></div>
+                            <div class="bg-slate-50 p-3 rounded-xl border border-slate-100"><span class="font-black text-slate-800 text-xs">Bid / Offer</span><p class="text-[10px] text-slate-500 mt-1">Bid = Kolom antrean beli (Kiri). Offer = Kolom antrean jual (Kanan).</p></div>
+                            <div class="bg-slate-50 p-3 rounded-xl border border-slate-100"><span class="font-black text-slate-800 text-xs">Bandar / Ritel</span><p class="text-[10px] text-slate-500 mt-1">Bandar = Big fund/institusi pembuat tren. Ritel = Investor/trader perorangan modal kecil.</p></div>
+                            <div class="bg-slate-50 p-3 rounded-xl border border-slate-100"><span class="font-black text-slate-800 text-xs">e-IPO</span><p class="text-[10px] text-slate-500 mt-1">Penawaran perdana saham secara elektronik sebelum listing resmi di Bursa.</p></div>
+                            <div class="bg-slate-50 p-3 rounded-xl border border-slate-100"><span class="font-black text-slate-800 text-xs">TP / SL</span><p class="text-[10px] text-slate-500 mt-1">Take Profit = Eksekusi jual untung. Stop Loss = Jual paksa batasi kerugian (Cut Loss).</p></div>
                         </div>
                     </div>
                 </div>
+
+                <div id="edu-teknikal" class="edu-tab-content hidden space-y-8">
+                    <div class="premium-card p-6 md:p-10 border-indigo-100 bg-indigo-50/10">
+                        <div class="text-center mb-10">
+                            <h2 class="text-2xl md:text-3xl font-black text-slate-900 mb-2">Analisis <span class="text-indigo-600">Teknikal Dasar</span></h2>
+                            <p class="text-slate-500 text-sm">Membaca jejak pergerakan harga lewat struktur visual grafik (Candlestick) dan pola (Pattern).</p>
+                        </div>
+
+                        <div class="mb-10">
+                            <h3 class="text-xl font-black text-slate-800 mb-4 border-b border-slate-200 pb-2"><i class="fas fa-fire-flame-curved text-orange-500 mr-2"></i> Anatomi Candlestick</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex justify-center gap-10">
+                                    <div class="flex flex-col items-center">
+                                        <span class="text-[10px] font-bold text-slate-400 mb-1">High</span>
+                                        <div class="w-1 h-6 bg-slate-800"></div>
+                                        <div class="w-8 h-20 bg-emerald-500 border-2 border-emerald-700 relative">
+                                            <span class="absolute -right-12 top-0 text-[9px] font-bold text-slate-500">Close</span>
+                                            <span class="absolute -right-12 bottom-0 text-[9px] font-bold text-slate-500">Open</span>
+                                        </div>
+                                        <div class="w-1 h-6 bg-slate-800"></div>
+                                        <span class="text-[10px] font-bold text-slate-400 mt-1">Low</span>
+                                        <span class="mt-2 text-xs font-black text-emerald-600">BULLISH</span>
+                                    </div>
+                                    <div class="flex flex-col items-center">
+                                        <span class="text-[10px] font-bold text-slate-400 mb-1">High</span>
+                                        <div class="w-1 h-6 bg-slate-800"></div>
+                                        <div class="w-8 h-20 bg-rose-500 border-2 border-rose-700 relative">
+                                            <span class="absolute -left-12 top-0 text-[9px] font-bold text-slate-500">Open</span>
+                                            <span class="absolute -left-12 bottom-0 text-[9px] font-bold text-slate-500">Close</span>
+                                        </div>
+                                        <div class="w-1 h-6 bg-slate-800"></div>
+                                        <span class="text-[10px] font-bold text-slate-400 mt-1">Low</span>
+                                        <span class="mt-2 text-xs font-black text-rose-600">BEARISH</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-slate-600 leading-relaxed mb-4">Candlestick merekam emosi pasar dalam 1 periode waktu (misal: 1 hari). Terdiri dari <strong>Body</strong> (badan) dan <strong>Wick/Shadow</strong> (ekor).</p>
+                                    <ul class="text-xs text-slate-500 space-y-2">
+                                        <li><span class="font-bold text-emerald-600">Bullish (Hijau):</span> Harga penutupan (Close) > Harga pembukaan (Open). Tanda dominasi Buyer.</li>
+                                        <li><span class="font-bold text-rose-600">Bearish (Merah):</span> Harga penutupan (Close) < Harga pembukaan (Open). Tanda dominasi Seller.</li>
+                                        <li><span class="font-bold text-slate-700">Wick (Ekor):</span> Jejak harga tertinggi dan terendah yang pernah disentuh namun tertolak.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl font-black text-slate-800 mb-4 border-b border-slate-200 pb-2"><i class="fas fa-shapes text-indigo-500 mr-2"></i> Pola Harga Klasik (Chart Patterns)</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm text-center hover:-translate-y-1 transition-transform">
+                                    <div class="text-4xl text-emerald-500 font-black tracking-tighter mb-2" style="font-family: monospace;">W</div>
+                                    <h4 class="font-black text-slate-900 text-sm">Double Bottom</h4>
+                                    <p class="text-[10px] text-slate-500 mt-2">Pola huruf W di area support. Indikasi pembalikan arah (Reversal) dari tren turun menjadi tren naik (Bullish). Saat *breakout neckline*, itu konfirmasi entry.</p>
+                                </div>
+                                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm text-center hover:-translate-y-1 transition-transform">
+                                    <div class="text-4xl text-rose-500 font-black tracking-tighter mb-2" style="font-family: monospace;">M</div>
+                                    <h4 class="font-black text-slate-900 text-sm">Double Top</h4>
+                                    <p class="text-[10px] text-slate-500 mt-2">Pola huruf M di area resisten (pucuk). Indikasi kuat pembalikan arah dari tren naik menjadi tren turun (Bearish). Tanda peringatan Take Profit.</p>
+                                </div>
+                                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm text-center hover:-translate-y-1 transition-transform">
+                                    <div class="text-4xl text-blue-500 font-black tracking-tighter mb-2" style="font-family: monospace;">/⚑</div>
+                                    <h4 class="font-black text-slate-900 text-sm">Bullish Flag</h4>
+                                    <p class="text-[10px] text-slate-500 mt-2">Pola kelanjutan (Continuation) setelah tiang panjang (kenaikan impulsif) diikuti koreksi landai menyerupai bendera. Menandakan harga istirahat sebelum meroket lagi.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
             </div>
         </section>
-
         <section id="page-kalkulator" class="page max-w-7xl mx-auto">
             <div class="max-w-6xl mx-auto">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 items-start">
@@ -1810,6 +2114,18 @@
     </div>
 
     <script>
+        // --- EDUKASI SUB-TAB FUNCTION ---
+        function switchEduTab(tabId) {
+            document.querySelectorAll('.edu-tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.edu-tab-btn').forEach(el => {
+                el.classList.remove('bg-blue-600', 'text-white');
+                el.classList.add('bg-slate-100', 'text-slate-600');
+            });
+            document.getElementById(tabId).classList.remove('hidden');
+            document.getElementById('btn-' + tabId).classList.remove('bg-slate-100', 'text-slate-600');
+            document.getElementById('btn-' + tabId).classList.add('bg-blue-600', 'text-white');
+        }
+
         // --- MODULE: DATA BROKER ---
         const BROKERS = [
             {k:"AG", n:"Sandi Nusantara Sekuritas", t:"Lokal", c:"Indonesia"},
