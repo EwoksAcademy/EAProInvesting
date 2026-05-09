@@ -369,7 +369,7 @@
                         </button>
                         <div class="dropdown-content">
                             <button onclick="showPage('watchlist')" id="nav-watchlist" class="dropdown-item">
-                                <i class="fas fa-star w-5 text-amber-400"></i> Watchlist Pribadi
+                                <i class="fas fa-star w-5 text-amber-400"></i> Watchlist & Screener
                             </button>
                             <button onclick="showPage('jurnal')" id="nav-jurnal" class="dropdown-item">
                                 <i class="fas fa-book w-5 text-purple-500"></i> Jurnal Trading
@@ -431,7 +431,7 @@
                         <p class="text-xs text-slate-500 mb-6 font-medium">Data Live & Makro Terkini.</p>
                         <div class="space-y-4">
                             <div class="flex items-center justify-between p-3 bg-white rounded-xl border border-blue-50 shadow-sm">
-                                <span class="text-sm font-bold text-slate-700 tooltip-trigger">IHSG Live <span class="tooltip-text">Indeks Harga Saham Gabungan real-time update.</span></span>
+                                <span class="text-sm font-bold text-slate-700 tooltip-trigger">IHSG Live <span class="tooltip-text">Simulasi Data Berjalan untuk Demo.</span></span>
                                 <span class="stat-badge bg-emerald-100 text-emerald-700" id="ihsg-dash-live">7,350.25</span>
                             </div>
                             <div class="flex items-center justify-between p-3 bg-white rounded-xl border border-blue-50 shadow-sm">
@@ -615,13 +615,40 @@
 
         <section id="page-watchlist" class="page">
             <div class="max-w-6xl mx-auto space-y-6">
-                <div class="flex items-center justify-between mb-8">
+                <div class="flex flex-col md:flex-row items-start justify-between mb-8 gap-4">
                     <div>
-                        <h2 class="text-2xl md:text-3xl font-black text-slate-900">Watchlist <span class="text-amber-500">Pribadi</span></h2>
-                        <p class="text-slate-500 font-medium text-sm">Simpan pantauan emiten Anda secara lokal di browser & Analisis dengan Chart.</p>
+                        <h2 class="text-2xl md:text-3xl font-black text-slate-900">Watchlist & <span class="text-amber-500">Screener</span></h2>
+                        <p class="text-slate-500 font-medium text-sm">Simpan pantauan emiten Anda secara lokal & Screening saham unggulan menggunakan TradingView.</p>
                     </div>
-                    <div class="w-12 h-12 bg-amber-100 text-amber-600 rounded-2xl flex items-center justify-center text-xl shadow-sm">
-                        <i class="fas fa-star"></i>
+                    <div class="flex gap-2">
+                        <button onclick="document.getElementById('importFile').click()" class="btn-action bg-slate-200 text-slate-700 px-4 py-2 rounded-xl font-black text-xs shadow-sm hover:bg-slate-300 transition-colors">
+                            <i class="fas fa-file-import"></i> IMPORT DATA
+                        </button>
+                        <button onclick="exportBackup()" class="btn-action bg-slate-900 text-white px-4 py-2 rounded-xl font-black text-xs shadow-sm hover:bg-slate-800 transition-colors">
+                            <i class="fas fa-file-export"></i> BACKUP
+                        </button>
+                        <input type="file" id="importFile" class="hidden" accept=".json" onchange="importBackup(event)">
+                    </div>
+                </div>
+
+                <div class="premium-card p-4 overflow-hidden mb-8 border-amber-200">
+                    <h3 class="text-sm font-black text-slate-900 mb-3 uppercase tracking-widest flex items-center gap-2">
+                        <i class="fas fa-filter text-amber-500"></i> Market Screener (Live)
+                    </h3>
+                    <div class="tradingview-widget-container" style="height: 400px; width: 100%;">
+                        <div class="tradingview-widget-container__widget" style="height: calc(100% - 32px); width: 100%;"></div>
+                        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-screener.js" async>
+                        {
+                        "width": "100%",
+                        "height": "100%",
+                        "defaultColumn": "overview",
+                        "defaultScreen": "top_gainers",
+                        "market": "indonesia",
+                        "showToolbar": true,
+                        "colorTheme": "light",
+                        "locale": "id"
+                        }
+                        </script>
                     </div>
                 </div>
 
@@ -667,7 +694,7 @@
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-4">
                     <div>
                         <h2 class="text-2xl md:text-3xl font-black text-slate-900">Jurnal <span class="text-purple-600">Trading</span></h2>
-                        <p class="text-slate-500 font-medium text-sm">Catat psikologi, alasan entry, dan track Win Rate portofolio Anda.</p>
+                        <p class="text-slate-500 font-medium text-sm">Catat psikologi, alasan entry, dan track Win Rate portofolio Anda secara visual.</p>
                     </div>
                     <button onclick="exportJournalCSV()" class="btn-action bg-purple-600 text-white px-5 py-3 rounded-xl font-black text-xs flex items-center justify-center gap-2 shadow-lg hover:bg-purple-700 transition-colors">
                         <i class="fas fa-download"></i> EXPORT HISTORI (CSV)
@@ -697,6 +724,21 @@
                     </div>
                 </div>
 
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                    <div class="md:col-span-2 premium-card p-5 bg-white border-slate-200">
+                        <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Equity Curve (Kumulatif PnL)</h4>
+                        <div class="h-48 w-full relative">
+                            <canvas id="equityChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="md:col-span-1 premium-card p-5 bg-white border-slate-200">
+                        <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Rasio Win vs Loss</h4>
+                        <div class="h-48 w-full relative">
+                            <canvas id="winLossChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     <div class="lg:col-span-1 premium-card p-6 h-fit bg-slate-50">
                         <h3 class="font-black text-slate-900 mb-4 uppercase tracking-widest text-xs flex items-center gap-2">
@@ -714,36 +756,42 @@
                                 </div>
                                 <div>
                                     <label class="text-[10px] font-black text-slate-400 uppercase mb-1 block">JUMLAH LOT</label>
-                                    <input type="number" id="jr-lot" placeholder="10" class="input-pro bg-white !py-2.5 !text-sm">
+                                    <input type="number" id="jr-lot" placeholder="10" class="input-pro bg-white !py-2.5 !text-sm" min="1">
                                 </div>
                             </div>
                             <div class="grid grid-cols-2 gap-3">
                                 <div>
                                     <label class="text-[10px] font-black text-slate-400 uppercase mb-1 block">HARGA BELI</label>
-                                    <input type="number" id="jr-buy" placeholder="1000" class="input-pro bg-white !py-2.5 !text-sm" oninput="calcRRR()">
+                                    <input type="number" id="jr-buy" placeholder="1000" class="input-pro bg-white !py-2.5 !text-sm" min="1" oninput="calcRRR()">
                                 </div>
                                 <div>
                                     <label class="text-[10px] font-black text-slate-400 uppercase mb-1 block">HARGA JUAL</label>
-                                    <input type="number" id="jr-sell" placeholder="1100" class="input-pro bg-white !py-2.5 !text-sm">
+                                    <input type="number" id="jr-sell" placeholder="1100" class="input-pro bg-white !py-2.5 !text-sm" min="1">
                                 </div>
                             </div>
                             
                             <div class="grid grid-cols-2 gap-3 bg-indigo-50/50 p-2 rounded-xl border border-indigo-100">
                                 <div>
                                     <label class="text-[10px] font-black text-indigo-600 uppercase mb-1 block">TARGET (TP)</label>
-                                    <input type="number" id="jr-tp" placeholder="1200" class="input-pro bg-white !py-2 !text-xs !border-indigo-100" oninput="calcRRR()">
+                                    <input type="number" id="jr-tp" placeholder="1200" class="input-pro bg-white !py-2 !text-xs !border-indigo-100" min="1" oninput="calcRRR()">
                                 </div>
                                 <div>
                                     <label class="text-[10px] font-black text-indigo-600 uppercase mb-1 block">STOP LOSS (SL)</label>
-                                    <input type="number" id="jr-sl" placeholder="950" class="input-pro bg-white !py-2 !text-xs !border-indigo-100" oninput="calcRRR()">
+                                    <input type="number" id="jr-sl" placeholder="950" class="input-pro bg-white !py-2 !text-xs !border-indigo-100" min="1" oninput="calcRRR()">
                                 </div>
                             </div>
                             <div id="rr-indicator" class="text-[10px] font-bold text-slate-500 italic mt-0"></div>
 
                             <div>
                                 <label class="text-[10px] font-black text-slate-400 uppercase mb-1 block">FEE BROKER (%) - TOTAL B/S</label>
-                                <input type="number" id="jr-fee" value="0.4" step="0.01" class="input-pro bg-white !py-2.5 !text-sm">
+                                <input type="number" id="jr-fee" value="0.4" step="0.01" min="0" class="input-pro bg-white !py-2.5 !text-sm">
                             </div>
+                            
+                            <div>
+                                <label class="text-[10px] font-black text-slate-400 uppercase mb-1 block">LINK SCREENSHOT CHART (OPSIONAL)</label>
+                                <input type="url" id="jr-screenshot" placeholder="https://prnt.sc/xxx" class="input-pro bg-white !py-2.5 !text-sm">
+                            </div>
+
                             <div>
                                 <label class="text-[10px] font-black text-slate-400 uppercase mb-1 block">ALASAN ENTRY (SETUP)</label>
                                 <select id="jr-reason" class="input-pro bg-white !py-2.5 !text-sm">
@@ -1052,23 +1100,23 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div class="col-span-1 md:col-span-2">
                                 <label class="text-[10px] font-black text-slate-400 uppercase mb-2 block">Biaya Hidup Bulanan Saat Ini (Rp)</label>
-                                <input type="number" id="p-expense" value="10000000" class="input-pro" oninput="calculateRetirement()">
+                                <input type="number" id="p-expense" value="10000000" class="input-pro" oninput="calculateRetirement()" min="0">
                             </div>
                             <div>
                                 <label class="text-[10px] font-black text-slate-400 uppercase mb-2 block">Umur Saat Ini</label>
-                                <input type="number" id="p-age-now" value="25" class="input-pro" oninput="calculateRetirement()">
+                                <input type="number" id="p-age-now" value="25" class="input-pro" oninput="calculateRetirement()" min="1">
                             </div>
                             <div>
                                 <label class="text-[10px] font-black text-slate-400 uppercase mb-2 block">Target Umur Pensiun</label>
-                                <input type="number" id="p-age-retire" value="55" class="input-pro" oninput="calculateRetirement()">
+                                <input type="number" id="p-age-retire" value="55" class="input-pro" oninput="calculateRetirement()" min="1">
                             </div>
                             <div>
                                 <label class="text-[10px] font-black text-slate-400 uppercase mb-2 block">Ekspektasi Umur Maksimum</label>
-                                <input type="number" id="p-age-max" value="80" class="input-pro" oninput="calculateRetirement()">
+                                <input type="number" id="p-age-max" value="80" class="input-pro" oninput="calculateRetirement()" min="1">
                             </div>
                             <div>
                                 <label class="text-[10px] font-black text-slate-400 uppercase mb-2 block">Tabungan Saat Ini (Rupiah)</label>
-                                <input type="number" id="p-savings" value="0" class="input-pro" oninput="calculateRetirement()">
+                                <input type="number" id="p-savings" value="0" class="input-pro" oninput="calculateRetirement()" min="0">
                             </div>
                             <div class="p-4 bg-blue-50 rounded-2xl relative border border-blue-100">
                                 <span class="absolute top-2 right-2 bg-blue-200 text-blue-700 text-[8px] font-black px-2 py-0.5 rounded tooltip-trigger">AUTO LIVE<span class="tooltip-text">Otomatis sinkron dengan inflasi terkini.</span></span>
@@ -1182,19 +1230,19 @@
                                 </div>
                                 <div>
                                     <label class="text-[10px] font-black text-slate-400 uppercase mb-2 block">HARGA BELI</label>
-                                    <input type="number" id="calc-price" placeholder="0" class="input-pro" oninput="runSimpleCalc()">
+                                    <input type="number" id="calc-price" placeholder="0" class="input-pro" oninput="runSimpleCalc()" min="1">
                                 </div>
                                 <div>
                                     <label class="text-[10px] font-black text-slate-400 uppercase mb-2 block">JUMLAH LOT</label>
-                                    <input type="number" id="calc-lot" placeholder="0" class="input-pro" oninput="runSimpleCalc()">
+                                    <input type="number" id="calc-lot" placeholder="0" class="input-pro" oninput="runSimpleCalc()" min="1">
                                 </div>
                                 <div>
                                     <label class="text-[10px] font-black text-emerald-600 uppercase mb-2 block">TP (%)</label>
-                                    <input type="number" id="calc-tp" value="5" class="input-pro !border-emerald-100 bg-emerald-50/30" oninput="runSimpleCalc()">
+                                    <input type="number" id="calc-tp" value="5" class="input-pro !border-emerald-100 bg-emerald-50/30" oninput="runSimpleCalc()" min="0.1" step="0.1">
                                 </div>
                                 <div>
                                     <label class="text-[10px] font-black text-rose-600 uppercase mb-2 block">SL (%)</label>
-                                    <input type="number" id="calc-sl" value="3" class="input-pro !border-rose-100 bg-rose-50/30" oninput="runSimpleCalc()">
+                                    <input type="number" id="calc-sl" value="3" class="input-pro !border-rose-100 bg-rose-50/30" oninput="runSimpleCalc()" min="0.1" step="0.1">
                                 </div>
                             </div>
                         </div>
@@ -1207,19 +1255,19 @@
                             <div class="grid grid-cols-2 gap-4">
                                 <div class="col-span-2">
                                     <label class="text-[10px] font-black text-slate-400 uppercase mb-2 block">MODAL TRADING (Rp)</label>
-                                    <input type="number" id="ps-modal" placeholder="10000000" class="input-pro bg-white">
+                                    <input type="number" id="ps-modal" placeholder="10000000" class="input-pro bg-white" min="1">
                                 </div>
                                 <div>
                                     <label class="text-[10px] font-black text-slate-400 uppercase mb-2 block">RISIKO MAKS (%)</label>
-                                    <input type="number" id="ps-risk" value="1" step="0.5" class="input-pro bg-white border-purple-100">
+                                    <input type="number" id="ps-risk" value="1" step="0.5" class="input-pro bg-white border-purple-100" min="0.1">
                                 </div>
                                 <div>
                                     <label class="text-[10px] font-black text-slate-400 uppercase mb-2 block">ENTRY PRICE</label>
-                                    <input type="number" id="ps-entry" placeholder="1000" class="input-pro bg-white">
+                                    <input type="number" id="ps-entry" placeholder="1000" class="input-pro bg-white" min="1">
                                 </div>
                                 <div>
                                     <label class="text-[10px] font-black text-slate-400 uppercase mb-2 block">STOP LOSS PRICE</label>
-                                    <input type="number" id="ps-sl" placeholder="950" class="input-pro bg-white border-rose-100">
+                                    <input type="number" id="ps-sl" placeholder="950" class="input-pro bg-white border-rose-100" min="1">
                                 </div>
                                 <div class="flex items-end">
                                     <button onclick="calculateSizing()" class="w-full bg-purple-600 text-white py-3.5 rounded-xl font-bold text-[10px] hover:bg-purple-700 transition-colors uppercase">Hitung Lot</button>
@@ -1243,8 +1291,8 @@
                                     <i class="fas fa-layer-group text-blue-600"></i> Average Down
                                 </h4>
                                 <div class="space-y-3">
-                                    <input type="number" id="avg-down-price" class="input-pro bg-white !py-3 !text-sm" placeholder="Harga Baru">
-                                    <input type="number" id="avg-down-lot" class="input-pro bg-white !py-3 !text-sm" placeholder="Lot Baru">
+                                    <input type="number" id="avg-down-price" class="input-pro bg-white !py-3 !text-sm" placeholder="Harga Baru" min="1">
+                                    <input type="number" id="avg-down-lot" class="input-pro bg-white !py-3 !text-sm" placeholder="Lot Baru" min="1">
                                     <button onclick="calculateAvg('down')" class="w-full bg-slate-900 text-white py-3 rounded-xl font-bold text-[10px] uppercase">Hitung</button>
                                 </div>
                             </div>
@@ -1253,8 +1301,8 @@
                                     <i class="fas fa-arrow-trend-up text-emerald-600"></i> Average Up
                                 </h4>
                                 <div class="space-y-3">
-                                    <input type="number" id="avg-up-price" class="input-pro bg-white !py-3 !text-sm" placeholder="Harga Baru">
-                                    <input type="number" id="avg-up-lot" class="input-pro bg-white !py-3 !text-sm" placeholder="Lot Baru">
+                                    <input type="number" id="avg-up-price" class="input-pro bg-white !py-3 !text-sm" placeholder="Harga Baru" min="1">
+                                    <input type="number" id="avg-up-lot" class="input-pro bg-white !py-3 !text-sm" placeholder="Lot Baru" min="1">
                                     <button onclick="calculateAvg('up')" class="w-full bg-emerald-600 text-white py-3 rounded-xl font-bold text-[10px] uppercase">Hitung</button>
                                 </div>
                             </div>
@@ -1321,11 +1369,11 @@
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                         <div>
                             <label class="block text-[10px] font-black text-slate-400 uppercase mb-1">Buy Lot <span class="text-red-500">*</span></label>
-                            <input type="number" id="buyLot" placeholder="100000" class="input-pro">
+                            <input type="number" id="buyLot" placeholder="100000" class="input-pro" min="1">
                         </div>
                         <div>
                             <label class="block text-[10px] font-black text-slate-400 uppercase mb-1">Buy Avg <span class="text-red-500">*</span></label>
-                            <input type="number" id="buyAvg" placeholder="216.4" class="input-pro" oninput="handleBuyAvgChange(event)">
+                            <input type="number" id="buyAvg" placeholder="216.4" class="input-pro" oninput="handleBuyAvgChange(event)" min="1">
                         </div>
                         <div>
                             <label class="block text-[10px] font-black text-slate-400 uppercase mb-1 tooltip-trigger">Tick Size<span class="tooltip-text">Kelipatan Fraksi Harga (Otomatis)</span></label>
@@ -1336,11 +1384,11 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                         <div>
                             <label class="block text-[10px] font-black text-slate-400 uppercase mb-1 tooltip-trigger">Bid Terendah <span class="text-red-500">*</span><span class="tooltip-text">Harga antrean beli (Bid) paling bawah saat ini</span></label>
-                            <input type="number" id="bidTerendah" placeholder="200" class="input-pro" oninput="updateJumlahPapan()">
+                            <input type="number" id="bidTerendah" placeholder="200" class="input-pro" oninput="updateJumlahPapan()" min="1">
                         </div>
                         <div>
                             <label class="block text-[10px] font-black text-slate-400 uppercase mb-1 tooltip-trigger">Offer Tertinggi <span class="text-red-500">*</span><span class="tooltip-text">Harga antrean jual (Offer) paling atas saat ini</span></label>
-                            <input type="number" id="offerTertinggi" placeholder="250" class="input-pro" oninput="updateJumlahPapan()">
+                            <input type="number" id="offerTertinggi" placeholder="250" class="input-pro" oninput="updateJumlahPapan()" min="1">
                         </div>
                     </div>
 
@@ -1352,11 +1400,11 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                         <div>
                             <label class="block text-[10px] font-black text-slate-400 uppercase mb-1">Total Bid (lot)</label>
-                            <input type="number" id="totalBid" placeholder="85000" class="input-pro">
+                            <input type="number" id="totalBid" placeholder="85000" class="input-pro" min="0">
                         </div>
                         <div>
                             <label class="block text-[10px] font-black text-slate-400 uppercase mb-1">Total Offer (lot)</label>
-                            <input type="number" id="totalOffer" placeholder="65000" class="input-pro">
+                            <input type="number" id="totalOffer" placeholder="65000" class="input-pro" min="0">
                         </div>
                     </div>
 
@@ -1397,7 +1445,7 @@
                                 </div>
                                 <div class="relative w-full md:w-64 flex-shrink-0">
                                     <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
-                                    <input type="text" id="kongloSearch" onkeyup="searchKonglo()" placeholder="Cari Grup/Tokoh..." class="w-full bg-slate-50 border border-slate-200 px-10 py-3 rounded-xl text-xs font-bold outline-none focus:ring-2 focus:ring-blue-500/30">
+                                    <input type="text" id="kongloSearch" onkeyup="searchKonglo()" placeholder="Cari Grup/Tokoh/Kode..." class="w-full bg-slate-50 border border-slate-200 px-10 py-3 rounded-xl text-xs font-bold outline-none focus:ring-2 focus:ring-blue-500/30">
                                 </div>
                             </div>
                             <div id="group-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -1434,7 +1482,7 @@
                         </div>
                         <div class="text-left md:text-right">
                             <p class="text-xs text-slate-400">Update Terakhir</p>
-                            <p class="text-sm font-semibold text-slate-200">8 Mei 2026, 11:52 WIB</p>
+                            <p class="text-sm font-semibold text-slate-200">Hari Ini, WIB</p>
                         </div>
                     </header>
 
@@ -1458,7 +1506,7 @@
                                         <th>2023</th>
                                         <th>2024</th>
                                         <th>2025</th>
-                                        <th class="text-blue-400">Mei 2026 (YTD)</th>
+                                        <th class="text-blue-400">2026 (YTD)</th>
                                     </tr>
                                 </thead>
                                 <tbody id="funda-lapkeu-body">
@@ -1468,7 +1516,7 @@
 
                         <div id="tab-sotp" class="funda-tab-content overflow-x-auto">
                             <h3 class="text-lg font-bold mb-2 text-white">Sum of The Parts (SOTP) Valuation</h3>
-                            <p class="text-xs text-slate-400 mb-4">Estimasi Nilai Intrinsik berdasarkan segmen bisnis (Data Proyeksi 2026).</p>
+                            <p class="text-xs text-slate-400 mb-4">Estimasi Nilai Intrinsik berdasarkan segmen bisnis (Data Proyeksi).</p>
                             <table class="funda-table min-w-full">
                                 <thead>
                                     <tr>
@@ -1492,7 +1540,7 @@
                         </div>
 
                         <div id="tab-metrics" class="funda-tab-content">
-                            <h3 class="text-lg font-bold mb-4 text-white">Key Ratios & Insight Valuasi (2020 - Mei 2026)</h3>
+                            <h3 class="text-lg font-bold mb-4 text-white">Key Ratios & Insight Valuasi (2020 - 2026)</h3>
                             
                             <div id="funda-valuation-dashboard" class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
                                 </div>
@@ -1519,13 +1567,13 @@
                                                 <th>2023</th>
                                                 <th>2024</th>
                                                 <th>2025</th>
-                                                <th class="text-blue-400">2026 (Mei)</th>
+                                                <th class="text-blue-400">2026 (YTD)</th>
                                             </tr>
                                         </thead>
                                         <tbody id="funda-metrics-body">
                                             </tbody>
                                     </table>
-                                    <p class="text-[10px] text-slate-500 mt-2 font-bold italic">*Dividend Yield 2026 bersifat annualized berdasarkan pembagian kuartal 1/interim.</p>
+                                    <p class="text-[10px] text-slate-500 mt-2 font-bold italic">*Dividend Yield bersifat annualized berdasarkan pembagian kuartal/interim terbaru.</p>
                                 </div>
                             </div>
                         </div>
@@ -1542,9 +1590,17 @@
                             <h3 class="text-2xl md:text-3xl font-black uppercase">Database Broker</h3>
                             <p class="text-xs md:text-sm text-slate-400 mt-1">Daftar 94 Anggota Bursa Efek Indonesia, lengkap dengan label kategori bandarmologi.</p>
                         </div>
-                        <div class="relative w-full md:w-96">
-                            <i class="fas fa-search absolute left-5 top-1/2 -translate-y-1/2 text-slate-400"></i>
-                            <input type="text" id="brokerSearch" onkeyup="searchBroker()" placeholder="Kode atau Nama..." class="w-full bg-white/10 border border-white/20 px-12 py-4 rounded-2xl text-xs md:text-sm font-bold outline-none focus:ring-4 focus:ring-blue-500/30 text-white">
+                        <div class="flex flex-col md:flex-row gap-4 w-full md:w-auto">
+                            <select id="brokerFilter" onchange="searchBroker()" class="bg-white/10 border border-white/20 px-4 py-4 rounded-2xl text-xs md:text-sm font-bold outline-none focus:ring-4 focus:ring-blue-500/30 text-white h-[50px]">
+                                <option value="ALL" class="text-slate-900">Semua Tipe</option>
+                                <option value="Asing/Institusi" class="text-slate-900">Asing/Institusi</option>
+                                <option value="Dominan Ritel" class="text-slate-900">Dominan Ritel</option>
+                                <option value="Standar Lokal" class="text-slate-900">Standar Lokal</option>
+                            </select>
+                            <div class="relative w-full md:w-64">
+                                <i class="fas fa-search absolute left-5 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                                <input type="text" id="brokerSearch" onkeyup="searchBroker()" placeholder="Kode atau Nama..." class="w-full bg-white/10 border border-white/20 px-12 py-4 rounded-2xl text-xs md:text-sm font-bold outline-none focus:ring-4 focus:ring-blue-500/30 text-white h-[50px]">
+                            </div>
                         </div>
                     </div>
                     <div class="p-4 bg-slate-50 border-b border-slate-200 flex gap-4 text-xs font-bold text-slate-600 overflow-x-auto">
@@ -1821,7 +1877,7 @@
                     { ticker: "BBRI", company: "PT Bank Rakyat Indonesia (Persero) Tbk", sector: "Perbankan", ownership: "Negara RI memegang 53%. Salah satu market cap terbesar.", kepemilikan_persen: "53.19%", sejarah: "Bank dengan spesialisasi mikro terbesar.", tahun_masuk: "2003", broker_afiliasi: "BK, AK", free_float: "46.81%", avg_up: "4850", avg_down: "4600", support: "4500", resistance: "5200", last_update: "8 Mei 2026" }, 
                     { ticker: "BBTN", company: "PT Bank Tabungan Negara (Persero) Tbk", sector: "Perbankan", ownership: "Negara RI memegang 60%. Fokus pembiayaan perumahan.", kepemilikan_persen: "60.0%", sejarah: "Bank BUMN penyalur KPR utama.", tahun_masuk: "2009", broker_afiliasi: "RX, YP", free_float: "40.0%", avg_up: "1450", avg_down: "1350", support: "1300", resistance: "1600", last_update: "8 Mei 2026" },
                     { ticker: "BKSL", company: "PT Sentul City Tbk", sector: "Properti", ownership: "Porsi investasi/restrukturisasi yang melibatkan institusi negara/BUMN.", kepemilikan_persen: "Afiliasi Restrukturisasi", sejarah: "Terkait restrukturisasi aset properti via BUMN.", tahun_masuk: "2010-an", broker_afiliasi: "YP", free_float: "60.0%", avg_up: "53", avg_down: "50", support: "50", resistance: "58", last_update: "8 Mei 2026" },
-                    { ticker: "BMRI", company: "PT Bank Mandiri (Persero) Tbk", sector: "Perbankan", ownership: "Negara RI memegang 52%.", kepemilikan_persen: "52.0%", sejarah: "Hasil merger bank 1998, bank terbesar berdasar aset.", tahun_masuk: "2003", broker_afiliasi: "RX, BK", free_float: "48.0%", avg_up: "6800", avg_down: "6500", support: "6300", resistance: "7200", last_update: "8 Mei 2026" }, 
+                    { ticker: "BMTR", company: "PT Bank Mandiri (Persero) Tbk", sector: "Perbankan", ownership: "Negara RI memegang 52%.", kepemilikan_persen: "52.0%", sejarah: "Hasil merger bank 1998, bank terbesar berdasar aset.", tahun_masuk: "2003", broker_afiliasi: "RX, BK", free_float: "48.0%", avg_up: "6800", avg_down: "6500", support: "6300", resistance: "7200", last_update: "8 Mei 2026" }, 
                     { ticker: "BRIS", company: "PT Bank Syariah Indonesia Tbk", sector: "Perbankan Syariah", ownership: "Hasil merger bank syariah BUMN (Mandiri, BRI, BNI).", kepemilikan_persen: "Mayoritas (BMRI, BBRI, BBNI)", sejarah: "Merger tiga raksasa bank syariah BUMN.", tahun_masuk: "2021", broker_afiliasi: "RX, YP", free_float: "20.0%", avg_up: "2450", avg_down: "2300", support: "2200", resistance: "2700", last_update: "8 Mei 2026" },
                     { ticker: "GIAA", company: "PT Garuda Indonesia (Persero) Tbk", sector: "Transportasi Udara", ownership: "Maskapai *flag carrier* milik Negara RI.", kepemilikan_persen: "60.5%", sejarah: "Maskapai nasional RI.", tahun_masuk: "2011", broker_afiliasi: "YP, CC", free_float: "15.0%", avg_up: "75", avg_down: "65", support: "60", resistance: "85", last_update: "8 Mei 2026" },
                     { ticker: "GOTO", company: "PT GoTo Gojek Tokopedia Tbk", sector: "Teknologi", ownership: "Keterlibatan investasi institusi negara (BUMN/SWF) secara historis melalui investasi Telkomsel.", kepemilikan_persen: "Investasi Strategis BUMN", sejarah: "Raksasa teknologi decacorn hasil merger Gojek dan Tokopedia, mendapat pendanaan strategis dari ekosistem BUMN.", tahun_masuk: "2020", broker_afiliasi: "CC, PD, YP", free_float: "65.1%", avg_up: "68", avg_down: "62", support: "58", resistance: "80", last_update: "8 Mei 2026" },
@@ -2244,7 +2300,42 @@
         let kongloChartRendered = false;
         let fundaCharts = {}; 
 
-        // PERBAIKAN: DARK MODE MEMANGGIL ULANG WIDGET CHART JIKA TERBUKA
+        // ADDED FEATURE: BACKUP & RESTORE DATA (JSON)
+        function exportBackup() {
+            const dataToExport = {
+                journal: JSON.parse(localStorage.getItem('ewoks_journal')) || [],
+                watchlist: JSON.parse(localStorage.getItem('ewoks_watchlist')) || [],
+                history: JSON.parse(localStorage.getItem('calc_history')) || []
+            };
+            const jsonStr = JSON.stringify(dataToExport, null, 2);
+            const blob = new Blob([jsonStr], { type: "application/json" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `Ewoks_Backup_${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function importBackup(e) {
+            const file = e.target.files[0];
+            if(!file) return;
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                try {
+                    const data = JSON.parse(event.target.result);
+                    if(data.journal) localStorage.setItem('ewoks_journal', JSON.stringify(data.journal));
+                    if(data.watchlist) localStorage.setItem('ewoks_watchlist', JSON.stringify(data.watchlist));
+                    if(data.history) localStorage.setItem('calc_history', JSON.stringify(data.history));
+                    alert('Data berhasil di-import dan disinkronkan!');
+                    location.reload();
+                } catch(err) {
+                    alert('Gagal memproses file. Pastikan file JSON formatnya benar.');
+                }
+            };
+            reader.readAsText(file);
+        }
+
         function toggleDarkMode() {
             document.body.classList.toggle('dark-mode-override');
             const isDark = document.body.classList.contains('dark-mode-override');
@@ -2254,7 +2345,6 @@
             localStorage.setItem('ewoks_theme', isDark ? 'dark' : 'light');
             
             if(!document.getElementById('tv-chart-wrapper').classList.contains('hide') && window.tvWidgetInstance) {
-                // Ambil ticker yang sedang aktif jika ada, default ke BBCA jika tidak
                 const currentTicker = window.currentTickerView || "BBCA";
                 openTVChart(currentTicker); 
             }
@@ -2269,7 +2359,7 @@
         window.tvWidgetInstance = null;
         window.currentTickerView = "";
         function openTVChart(ticker) {
-            window.currentTickerView = ticker; // Simpan tracker untuk refresh dark mode
+            window.currentTickerView = ticker; 
             document.getElementById('tv-chart-wrapper').classList.remove('hide');
             const isDark = document.body.classList.contains('dark-mode-override');
             
@@ -2298,7 +2388,6 @@
             window.scrollTo({ top: document.getElementById('tv-chart-wrapper').offsetTop - 100, behavior: 'smooth' });
         }
 
-        // PERBAIKAN: NEWS FETCH DENGAN SKELETON LOADER & FALLBACK
         async function fetchNews() {
             const container = document.getElementById('news-container');
             try {
@@ -2306,14 +2395,12 @@
                 const data = await res.json();
                 
                 if(data.status === 'ok') {
-                    // Filter keyword spesifik seputar IHSG, Emiten, Asing, Suku Bunga
                     const keywords = ['IHSG', 'saham', 'asing', 'bunga', 'fed', 'investor', 'emiten', 'rupiah', 'BI'];
                     const filteredItems = data.items.filter(item => {
                         const titleLower = item.title.toLowerCase();
                         return keywords.some(kw => titleLower.includes(kw.toLowerCase()));
                     });
 
-                    // Tampilkan maksimal 5 berita yang lolos filter
                     const itemsToShow = filteredItems.length > 0 ? filteredItems.slice(0, 5) : data.items.slice(0, 5);
 
                     container.innerHTML = itemsToShow.map(item => `
@@ -2326,7 +2413,6 @@
                     throw new Error("API Limit Reached");
                 }
             } catch (e) {
-                // FALLBACK JIKA API GRATIS LIMIT/GAGAL
                 container.innerHTML = `
                     <a href="https://www.cnbcindonesia.com/market" target="_blank" class="block p-3 rounded-xl border border-slate-100 hover:bg-blue-50 transition-colors bg-white shadow-sm">
                         <p class="text-[10px] text-blue-500 font-black mb-1 uppercase tracking-widest">HARI INI</p>
@@ -2375,7 +2461,7 @@
 
             if(pageId === 'fixed-income') {
                 setTimeout(renderYieldChart, 100);
-                setTimeout(renderYieldCurve, 100); // Fitur Baru
+                setTimeout(renderYieldCurve, 100); 
             }
             
             if(pageId === 'jurnal') {
@@ -2385,14 +2471,24 @@
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
-        // PERBAIKAN: LIVE MARKET DATA TICK & FEAR GREED INDEX
+        // ADDED CONCEPT: API / Live Data Fetch (Di-wrap di try-catch untuk demo)
+        async function fetchRealIHSG() {
+            try {
+                // Di dunia nyata, ini bisa mengarah ke endpoint API public atau Google Apps Script (CSV)
+                // cth: const res = await fetch('https://api.example.com/ihsg');
+                // Karena batasan CORS, kita masih gunakan random walk sebagai simulasi real-time untuk demo UI
+                fetchLiveMarketData(); 
+            } catch (error) {
+                console.log("Fallback to simulated tick");
+                fetchLiveMarketData();
+            }
+        }
+
         function fetchLiveMarketData() {
-            // Simulasi pergerakan IHSG
             const ihsgEl = document.getElementById('ihsg-dash-live');
             let currentIHSG = parseFloat(ihsgEl.innerText.replace(/,/g, ''));
             if(isNaN(currentIHSG)) currentIHSG = 7350.25;
             
-            // Random walk -5 to +5 (Simulasi Tick Live)
             const change = (Math.random() * 10) - 5; 
             currentIHSG += change;
             
@@ -2403,10 +2499,8 @@
                 ihsgEl.className = "stat-badge bg-rose-100 text-rose-700";
             }
 
-            // Simulasi Market Sentiment (Fear & Greed Index)
             const fgPointer = document.getElementById('fg-pointer');
             const fgText = document.getElementById('fg-text');
-            // Basis kalkulasi sederhana dari IHSG (Misal baseline 7300 = 50 Neutral)
             let fgValue = 50 + ((currentIHSG - 7300) / 10);
             if(fgValue < 0) fgValue = 0;
             if(fgValue > 100) fgValue = 100;
@@ -2421,13 +2515,11 @@
                 else { fgText.innerText = `EXTREME GREED (${Math.round(fgValue)})`; fgText.className = "text-[10px] font-black text-emerald-600"; }
             }
 
-            // Simulasi update harga di Watchlist untuk cek Target Hit visual
             if(document.getElementById('page-watchlist').classList.contains('active')) {
                  renderWatchlist(true);
             }
         }
 
-        // --- WATCHLIST PRIBADI LOGIC ---
         let watchlist = JSON.parse(localStorage.getItem('ewoks_watchlist')) || [];
         
         function addWatchlist() {
@@ -2452,7 +2544,6 @@
             renderWatchlist();
         }
 
-        // PERBAIKAN: WATCHLIST RENDER DENGAN VISUAL TARGET HIT (TP/SL)
         function renderWatchlist(isTick = false) {
             const container = document.getElementById('watchlist-container');
             if(watchlist.length === 0) {
@@ -2460,12 +2551,11 @@
                 return;
             }
 
-            // Simulasi current price
             if(isTick) {
                 watchlist.forEach(w => {
                     const target = parseFloat(w.price);
-                    if(!w.currentPrice) w.currentPrice = target * 0.95; // start 5% below target
-                    const change = (Math.random() * target * 0.02) - (target * 0.005); // upward bias
+                    if(!w.currentPrice) w.currentPrice = target * 0.95; 
+                    const change = (Math.random() * target * 0.02) - (target * 0.005); 
                     w.currentPrice += change;
                 });
             } else {
@@ -2552,9 +2642,14 @@
             const fee = parseFloat(document.getElementById('jr-fee').value) || 0.4;
             const reason = document.getElementById('jr-reason').value;
             const emotion = document.getElementById('jr-emotion').value;
+            const screenshot = document.getElementById('jr-screenshot').value.trim();
 
             if(!date || !ticker || !lot || !buy || !sell) {
-                alert("Semua kolom input wajib diisi!");
+                alert("Semua kolom input bertanda wajib harus diisi!");
+                return;
+            }
+            if(buy < 0 || sell < 0 || lot <= 0) {
+                alert("Harga dan Lot tidak boleh bernilai negatif/nol!");
                 return;
             }
 
@@ -2569,7 +2664,7 @@
 
             journal.unshift({
                 id: Date.now(),
-                date, ticker, lot, buy, sell, fee, reason, emotion, netPnL, isWin
+                date, ticker, lot, buy, sell, fee, reason, emotion, screenshot, netPnL, isWin
             });
 
             localStorage.setItem('ewoks_journal', JSON.stringify(journal));
@@ -2580,6 +2675,7 @@
             document.getElementById('jr-sell').value = '';
             document.getElementById('jr-tp').value = '';
             document.getElementById('jr-sl').value = '';
+            document.getElementById('jr-screenshot').value = '';
             document.getElementById('rr-indicator').innerHTML = '';
             
             renderJournal();
@@ -2590,6 +2686,78 @@
             if (num >= 1000000) return (num / 1000000).toFixed(2) + ' Juta';
             if (num >= 1000) return (num / 1000).toFixed(1) + ' Ribu';
             return Math.round(num).toLocaleString('id-ID');
+        }
+
+        let equityChartInstance = null;
+        let winLossChartInstance = null;
+
+        // ADDED FEATURE: CHART EQUITY CURVE & WINRATE
+        function renderJurnalCharts(journalData) {
+            if(!journalData || journalData.length === 0) return;
+
+            const sorted = [...journalData].sort((a,b) => new Date(a.date) - new Date(b.date));
+            let equity = [];
+            let labels = [];
+            let currentEq = 0;
+            let wins = 0;
+            let losses = 0;
+
+            sorted.forEach((j) => {
+                currentEq += j.netPnL;
+                equity.push(currentEq);
+                labels.push(`${j.ticker} (${j.date.split('-').slice(1).join('/')})`);
+                if(j.isWin) wins++; else losses++;
+            });
+
+            const ctxEq = document.getElementById('equityChart');
+            if(ctxEq) {
+                if(equityChartInstance) equityChartInstance.destroy();
+                equityChartInstance = new Chart(ctxEq.getContext('2d'), {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Kumulatif PnL Bersih (Rp)',
+                            data: equity,
+                            borderColor: '#8b5cf6',
+                            backgroundColor: 'rgba(139, 92, 246, 0.2)',
+                            fill: true,
+                            tension: 0.3,
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true, maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: { 
+                            x: { display: false },
+                            y: { ticks: { color: '#94a3b8', font: { size: 10 } }, grid: { color: 'rgba(226, 232, 240, 0.5)' } }
+                        }
+                    }
+                });
+            }
+
+            const ctxWl = document.getElementById('winLossChart');
+            if(ctxWl) {
+                if(winLossChartInstance) winLossChartInstance.destroy();
+                winLossChartInstance = new Chart(ctxWl.getContext('2d'), {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Win', 'Loss'],
+                        datasets: [{
+                            data: [wins, losses],
+                            backgroundColor: ['#10b981', '#ef4444'],
+                            borderWidth: 2,
+                            borderColor: '#ffffff'
+                        }]
+                    },
+                    options: {
+                        responsive: true, maintainAspectRatio: false,
+                        plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 10 } } } },
+                        cutout: '70%'
+                    }
+                });
+            }
         }
 
         function renderJournal(searchQuery = '') {
@@ -2610,6 +2778,9 @@
                 document.getElementById('jr-total-win').innerText = '0';
                 document.getElementById('jr-total-loss').innerText = '0';
                 document.getElementById('jr-total-modal').innerText = '0';
+                
+                if(equityChartInstance) equityChartInstance.destroy();
+                if(winLossChartInstance) winLossChartInstance.destroy();
                 return;
             }
             
@@ -2624,11 +2795,14 @@
 
                 const pnlColor = j.isWin ? 'text-emerald-500' : 'text-rose-500';
                 const pnlSign = j.isWin ? '+' : '';
+                
+                // Screenshot Icon Logic
+                const screenHTML = j.screenshot ? `<a href="${j.screenshot}" target="_blank" class="text-blue-500 hover:text-blue-700 ml-1 tooltip-trigger"><i class="fas fa-image"></i><span class="tooltip-text">Lihat Chart Entry</span></a>` : '';
 
                 return `
                 <tr class="border-b border-slate-100 hover:bg-slate-50/50 bg-white transition-colors">
                     <td class="p-4">
-                        <span class="font-black text-blue-600 text-sm block">${j.ticker}</span>
+                        <span class="font-black text-blue-600 text-sm flex items-center">${j.ticker} ${screenHTML}</span>
                         <span class="text-[9px] text-slate-400 font-bold">${j.date}</span>
                     </td>
                     <td class="p-4">
@@ -2655,6 +2829,8 @@
             document.getElementById('jr-total-win').innerText = formatAbbreviated(totalWinRp);
             document.getElementById('jr-total-loss').innerText = formatAbbreviated(totalLossRp);
             document.getElementById('jr-total-modal').innerText = formatAbbreviated(totalModal);
+
+            renderJurnalCharts(filteredJournal);
         }
 
         function shareWhatsAppJournal(id) {
@@ -2680,13 +2856,12 @@
             }
         }
 
-        // PERBAIKAN: EKSPOR CSV BERJALAN DENGAN BENAR
         function exportJournalCSV() {
             if(journal.length === 0) { alert('Jurnal masih kosong!'); return; }
-            let csv = "Tanggal,Emiten,Lot,Buy,Sell,Fee(%),Alasan Entry,Psikologi/Emosi,Net PnL,Status\n";
+            let csv = "Tanggal,Emiten,Lot,Buy,Sell,Fee(%),Alasan Entry,Psikologi/Emosi,Link Gambar,Net PnL,Status\n";
             journal.forEach(j => {
                 const status = j.isWin ? 'WIN' : 'LOSS';
-                csv += `${j.date},${j.ticker},${j.lot},${j.buy},${j.sell},${j.fee},"${j.reason}","${j.emotion}",${j.netPnL},${status}\n`;
+                csv += `${j.date},${j.ticker},${j.lot},${j.buy},${j.sell},${j.fee},"${j.reason}","${j.emotion}","${j.screenshot || '-'}",${j.netPnL},${status}\n`;
             });
             const encoded = encodeURI("data:text/csv;charset=utf-8," + csv);
             const link = document.createElement("a");
@@ -2794,7 +2969,7 @@
                     labels: ['1Y', '3Y', '5Y', '10Y', '15Y', '20Y'],
                     datasets: [{
                         label: 'SBN Yield Curve (IDR)',
-                        data: [6.15, 6.35, 6.50, 6.65, 6.80, 6.95], // Kurva Normal
+                        data: [6.15, 6.35, 6.50, 6.65, 6.80, 6.95], 
                         borderColor: '#10b981',
                         backgroundColor: 'rgba(16, 185, 129, 0.1)',
                         borderWidth: 3,
@@ -2859,9 +3034,14 @@
             });
         }
 
+        // ADDED FEATURE: IMPROVED KONGLO SEARCH (Filter by Ticker & Desc)
         function searchKonglo() {
             const q = document.getElementById('kongloSearch').value.toLowerCase();
-            const filtered = dataGroups.filter(g => g.name.toLowerCase().includes(q) || g.desc.toLowerCase().includes(q));
+            const filtered = dataGroups.filter(g => {
+                const matchNameDesc = g.name.toLowerCase().includes(q) || g.desc.toLowerCase().includes(q);
+                const matchTicker = g.stocks.some(s => s.ticker.toLowerCase().includes(q));
+                return matchNameDesc || matchTicker;
+            });
             renderGrid(filtered);
         }
 
@@ -2944,9 +3124,12 @@
                             </div>
                         </div>
 
-                        <div class="mt-4 pt-4 border-t border-slate-200">
-                            <button onclick="showFunda('${stock.ticker}', '${stock.company}', '${stock.sector}')" class="w-full bg-slate-900 text-white py-3 rounded-xl font-bold text-xs uppercase flex items-center justify-center gap-2 hover:bg-blue-600 transition-colors shadow-md">
+                        <div class="mt-4 pt-4 border-t border-slate-200 flex gap-2">
+                            <button onclick="showFunda('${stock.ticker}', '${stock.company}', '${stock.sector}')" class="flex-[3] bg-slate-900 text-white py-3 rounded-xl font-bold text-xs uppercase flex items-center justify-center gap-2 hover:bg-blue-600 transition-colors shadow-md">
                                 <i class="fas fa-chart-bar"></i> Analisis Fundamental PRO
+                            </button>
+                            <button onclick="showPage('watchlist'); document.getElementById('wl-ticker').value='${stock.ticker}';" class="flex-1 bg-amber-100 text-amber-700 py-3 rounded-xl font-bold text-xs uppercase hover:bg-amber-200 transition-colors flex items-center justify-center tooltip-trigger">
+                                <i class="fas fa-star"></i><span class="tooltip-text">Kirim ke Watchlist</span>
                             </button>
                         </div>
                     </div>
@@ -3110,7 +3293,7 @@
         }
 
         function renderFundaCharts(fcfData, divData, npmData, ticker) {
-            const labels = ['2020', '2021', '2022', '2023', '2024', '2025', 'May 2026'];
+            const labels = ['2020', '2021', '2022', '2023', '2024', '2025', 'YTD 2026'];
             const commonOptions = { 
                 responsive: true, maintainAspectRatio: false, 
                 color: '#cbd5e1',
@@ -3212,7 +3395,6 @@
             }
         }
 
-        // PERBAIKAN: AUTO TICK SIZE KALKULATOR BANDAR
         function getTickSize(price) {
             const p = Number(price) || 0;
             if (p <= 200) return 1;
@@ -3259,6 +3441,10 @@
 
             if (!tanggal || !emiten || !broker || !buyLot || !buyAvg || !bidTerendah || !offerTertinggi) {
                 alert('Semua field bertanda * wajib diisi');
+                return;
+            }
+            if(buyLot <= 0 || buyAvg <= 0) {
+                alert('Data Lot dan Harga tidak valid!');
                 return;
             }
 
@@ -3427,7 +3613,7 @@
                 const box = document.getElementById('avg-result-box');
                 box.style.borderColor = type === 'up' ? '#10b981' : '#2563eb';
             } else {
-                alert("Mohon isi Harga Beli & Lot di menu Trading Plan serta input baru!");
+                alert("Mohon isi Harga Beli & Lot di menu Trading Plan serta input baru (tidak boleh minus/nol)!");
             }
         }
 
@@ -3517,19 +3703,28 @@
             `).join('');
         }
 
+        // ADDED FEATURE: BROKER TIPE FILTER
         function searchBroker() {
             const q = document.getElementById('brokerSearch').value.toLowerCase();
-            renderBrokers(BROKERS.filter(b => b.k.toLowerCase().includes(q) || b.n.toLowerCase().includes(q)));
+            const filterVal = document.getElementById('brokerFilter').value;
+            
+            let filtered = BROKERS.filter(b => b.k.toLowerCase().includes(q) || b.n.toLowerCase().includes(q));
+            
+            if(filterVal !== "ALL") {
+                filtered = filtered.filter(b => {
+                    const badgeText = getBrokerBadge(b.k);
+                    return badgeText.includes(filterVal);
+                });
+            }
+            renderBrokers(filtered);
         }
 
-        // PERBAIKAN: JAM ERROR SEKARANG MENAMPILKAN JAM LOKAL (WIB)
         function updateClock() {
             const now = new Date();
             const timeString = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' WIB';
             const clockEl = document.getElementById('clockText');
             if(clockEl) clockEl.innerText = timeString;
             
-            // Hapus class hidden jika jam sudah berjalan
             const clockContainer = document.getElementById('liveClock');
             if(clockContainer && clockContainer.classList.contains('hidden')){
                 clockContainer.classList.remove('hidden');
@@ -3566,11 +3761,11 @@
             document.getElementById('jr-date').value = today;
             
             updateClock();
-            fetchLiveMarketData();
+            fetchRealIHSG(); // Memanggil simulasi API yang di-wrap
             fetchNews();
             
             setInterval(updateClock, 1000);
-            setInterval(fetchLiveMarketData, 5000); // Simulasi Live Tick tiap 5 Detik
+            setInterval(fetchRealIHSG, 5000); 
         };
     </script>
 </body>
