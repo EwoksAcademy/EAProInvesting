@@ -1718,43 +1718,378 @@
                     <div class="premium-card p-6 md:p-10 border-indigo-200 bg-indigo-50/10 shadow-sm">
                         <div class="text-center mb-10">
                             <h2 class="text-2xl md:text-3xl font-black text-slate-900 mb-2">Analisis <span class="text-indigo-600">Teknikal Dasar</span></h2>
-                            <p class="text-slate-500 text-sm">Membaca jejak pergerakan harga lewat struktur visual grafik (Candlestick) dan pola (Pattern).</p>
+                            <p class="text-slate-500 text-sm">Membaca jejak pergerakan harga lewat struktur visual grafik, trend, support & resisten, hingga pola candlestick.</p>
+                        </div>
+
+                        <div class="mb-10">
+                            <h3 class="text-xl font-black text-slate-800 mb-4 border-b border-slate-200 pb-2"><i class="fas fa-chart-area text-blue-500 mr-2"></i> Pengenalan Chart Harga</h3>
+                            <p class="text-sm text-slate-600 mb-6">Chart adalah sebuah gambar yang fungsi utamanya menunjukkan riwayat pergerakan nilai harga saham pada suatu periode waktu tertentu, sehingga dibutuhkan sebagai alat utama untuk menganalisa secara teknikal. Ada 3 jenis chart yang paling sering digunakan:</p>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 text-center flex flex-col justify-between">
+                                    <div>
+                                        <div class="text-blue-500 text-3xl mb-3"><i class="fas fa-chart-line"></i></div>
+                                        <h4 class="font-black text-slate-900 text-sm mb-2">1. Line Chart</h4>
+                                        <p class="text-xs text-slate-500 mb-4">Grafik garis sederhana yang biasanya hanya menghubungkan titik-titik harga penutupan (Close) dari waktu ke waktu.</p>
+                                    </div>
+                                    <div class="bg-slate-900 p-3 rounded-xl border border-slate-800 mt-auto">
+                                        <svg class="w-full h-20" viewBox="0 0 100 50">
+                                            <path d="M5,40 Q25,10 50,30 T95,10" fill="none" stroke="#3b82f6" stroke-width="3"/>
+                                            <circle cx="5" cy="40" r="2.5" fill="#60a5fa"/><circle cx="30" cy="20" r="2.5" fill="#60a5fa"/><circle cx="50" cy="30" r="2.5" fill="#60a5fa"/><circle cx="75" cy="20" r="2.5" fill="#60a5fa"/><circle cx="95" cy="10" r="2.5" fill="#60a5fa"/>
+                                        </svg>
+                                        <span class="text-[9px] font-bold text-slate-400 block mt-1">Hanya menghubungkan titik harga Close</span>
+                                    </div>
+                                </div>
+                                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 text-center flex flex-col justify-between">
+                                    <div>
+                                        <div class="text-amber-500 text-3xl mb-3"><i class="fas fa-chart-bar"></i></div>
+                                        <h4 class="font-black text-slate-900 text-sm mb-2">2. Bar Chart</h4>
+                                        <p class="text-xs text-slate-500 mb-4">Grafik batang yang menunjukkan level Open, High, Low, dan Close melalui garis vertikal dengan cabang horizontal kecil.</p>
+                                    </div>
+                                    <div class="bg-slate-900 p-3 rounded-xl border border-slate-800 mt-auto">
+                                        <svg class="w-full h-20" viewBox="0 0 100 50">
+                                            <line x1="20" y1="10" x2="20" y2="40" stroke="#10b981" stroke-width="2"/>
+                                            <line x1="15" y1="35" x2="20" y2="35" stroke="#10b981" stroke-width="2"/> <line x1="20" y1="15" x2="25" y2="15" stroke="#10b981" stroke-width="2"/> <line x1="50" y1="5" x2="50" y2="45" stroke="#ef4444" stroke-width="2"/>
+                                            <line x1="45" y1="10" x2="50" y2="10" stroke="#ef4444" stroke-width="2"/> <line x1="50" y1="40" x2="55" y2="40" stroke="#ef4444" stroke-width="2"/> <line x1="80" y1="15" x2="80" y2="35" stroke="#10b981" stroke-width="2"/>
+                                            <line x1="75" y1="30" x2="80" y2="30" stroke="#10b981" stroke-width="2"/> <line x1="80" y1="20" x2="85" y2="20" stroke="#10b981" stroke-width="2"/> </svg>
+                                        <span class="text-[9px] font-bold text-slate-400 block mt-1">OHLC (Open, High, Low, Close) via tick bar</span>
+                                    </div>
+                                </div>
+                                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 text-center flex flex-col justify-between">
+                                    <div>
+                                        <div class="text-emerald-500 text-3xl mb-3"><i class="fas fa-candlestick-empty"></i></div>
+                                        <h4 class="font-black text-slate-900 text-sm mb-2">3. Candlestick Chart</h4>
+                                        <p class="text-xs text-slate-500 mb-4">Grafik paling populer karena sangat visual. Memiliki body (badan) dan wick (ekor) yang memperjelas kekuatan dominasi pembeli atau penjual.</p>
+                                    </div>
+                                    <div class="bg-slate-900 p-3 rounded-xl border border-slate-800 mt-auto">
+                                        <svg class="w-full h-20" viewBox="0 0 100 50">
+                                            <line x1="25" y1="5" x2="25" y2="45" stroke="#94a3b8" stroke-width="1.5"/>
+                                            <rect x="18" y="15" width="14" height="20" fill="#10b981" stroke="#059669" stroke-width="1"/>
+                                            <line x1="75" y1="10" x2="75" y2="40" stroke="#94a3b8" stroke-width="1.5"/>
+                                            <rect x="68" y="20" width="14" height="15" fill="#ef4444" stroke="#dc2626" stroke-width="1"/>
+                                        </svg>
+                                        <span class="text-[9px] font-bold text-slate-400 block mt-1">Visual Body (Warna) dan Wick (Ekor)</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="mb-10">
                             <h3 class="text-xl font-black text-slate-800 mb-4 border-b border-slate-200 pb-2"><i class="fas fa-fire-flame-curved text-orange-500 mr-2"></i> Anatomi Candlestick</h3>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex justify-center gap-10 hover:shadow-md transition-shadow">
-                                    <div class="flex flex-col items-center">
-                                        <span class="text-[10px] font-bold text-slate-400 mb-1">High</span>
-                                        <div class="w-1 h-6 bg-slate-800"></div>
-                                        <div class="w-8 h-20 bg-emerald-500 border-2 border-emerald-700 relative shadow-inner">
-                                            <span class="absolute -right-12 top-0 text-[9px] font-bold text-slate-500">Close</span>
-                                            <span class="absolute -right-12 bottom-0 text-[9px] font-bold text-slate-500">Open</span>
-                                        </div>
-                                        <div class="w-1 h-6 bg-slate-800"></div>
-                                        <span class="text-[10px] font-bold text-slate-400 mt-1">Low</span>
-                                        <span class="mt-2 text-xs font-black text-emerald-600">BULLISH</span>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center mb-6">
+                                <div class="bg-slate-900 p-6 rounded-2xl shadow-xl border border-slate-800 flex justify-around items-center hover:shadow-2xl transition-all">
+                                    <div class="flex flex-col items-center w-1/2">
+                                        <span class="text-[10px] font-black tracking-widest text-slate-400 mb-1">HIGH</span>
+                                        <svg class="w-32 h-48 overflow-visible" viewBox="0 0 100 150">
+                                            <line x1="50" y1="10" x2="50" y2="140" stroke="#94a3b8" stroke-width="2"/>
+                                            <line x1="10" y1="10" x2="90" y2="10" stroke="#94a3b8" stroke-dasharray="2,2" stroke-width="1"/>
+                                            <line x1="10" y1="35" x2="90" y2="35" stroke="#10b981" stroke-dasharray="2,2" stroke-width="1"/>
+                                            <line x1="10" y1="115" x2="90" y2="115" stroke="#10b981" stroke-dasharray="2,2" stroke-width="1"/>
+                                            <line x1="10" y1="140" x2="90" y2="140" stroke="#94a3b8" stroke-dasharray="2,2" stroke-width="1"/>
+                                            <text x="5" y="38" fill="#10b981" font-size="8" font-weight="bold">CLOSE</text>
+                                            <text x="5" y="118" fill="#10b981" font-size="8" font-weight="bold">OPEN</text>
+                                            <rect x="30" y="35" width="40" height="80" fill="#10b981" rx="2" stroke="#059669" stroke-width="2"/>
+                                            <text x="50" y="78" fill="#ffffff" font-size="9" font-weight="bold" text-anchor="middle">REAL</text>
+                                            <text x="50" y="88" fill="#ffffff" font-size="9" font-weight="bold" text-anchor="middle">BODY</text>
+                                        </svg>
+                                        <span class="text-[10px] font-black tracking-widest text-slate-400 mt-1">LOW</span>
+                                        <span class="mt-2 px-3 py-1 bg-emerald-500/20 rounded-full text-xs font-black text-emerald-400 border border-emerald-500/30">BULLISH (NAIK)</span>
                                     </div>
-                                    <div class="flex flex-col items-center">
-                                        <span class="text-[10px] font-bold text-slate-400 mb-1">High</span>
-                                        <div class="w-1 h-6 bg-slate-800"></div>
-                                        <div class="w-8 h-20 bg-rose-500 border-2 border-rose-700 relative shadow-inner">
-                                            <span class="absolute -left-12 top-0 text-[9px] font-bold text-slate-500">Open</span>
-                                            <span class="absolute -left-12 bottom-0 text-[9px] font-bold text-slate-500">Close</span>
-                                        </div>
-                                        <div class="w-1 h-6 bg-slate-800"></div>
-                                        <span class="text-[10px] font-bold text-slate-400 mt-1">Low</span>
-                                        <span class="mt-2 text-xs font-black text-rose-600">BEARISH</span>
+                                    <div class="flex flex-col items-center w-1/2 border-l border-slate-800 pl-4">
+                                        <span class="text-[10px] font-black tracking-widest text-slate-400 mb-1">HIGH</span>
+                                        <svg class="w-32 h-48 overflow-visible" viewBox="0 0 100 150">
+                                            <line x1="50" y1="10" x2="50" y2="140" stroke="#94a3b8" stroke-width="2"/>
+                                            <line x1="10" y1="10" x2="90" y2="10" stroke="#94a3b8" stroke-dasharray="2,2" stroke-width="1"/>
+                                            <line x1="10" y1="35" x2="90" y2="35" stroke="#ef4444" stroke-dasharray="2,2" stroke-width="1"/>
+                                            <line x1="10" y1="115" x2="90" y2="115" stroke="#ef4444" stroke-dasharray="2,2" stroke-width="1"/>
+                                            <line x1="10" y1="140" x2="90" y2="140" stroke="#94a3b8" stroke-dasharray="2,2" stroke-width="1"/>
+                                            <text x="5" y="38" fill="#ef4444" font-size="8" font-weight="bold">OPEN</text>
+                                            <text x="5" y="118" fill="#ef4444" font-size="8" font-weight="bold">CLOSE</text>
+                                            <rect x="30" y="35" width="40" height="80" fill="#ef4444" rx="2" stroke="#dc2626" stroke-width="2"/>
+                                            <text x="50" y="78" fill="#ffffff" font-size="9" font-weight="bold" text-anchor="middle">REAL</text>
+                                            <text x="50" y="88" fill="#ffffff" font-size="9" font-weight="bold" text-anchor="middle">BODY</text>
+                                        </svg>
+                                        <span class="text-[10px] font-black tracking-widest text-slate-400 mt-1">LOW</span>
+                                        <span class="mt-2 px-3 py-1 bg-rose-500/20 rounded-full text-xs font-black text-rose-400 border border-rose-500/30">BEARISH (TURUN)</span>
                                     </div>
                                 </div>
                                 <div>
-                                    <p class="text-sm text-slate-600 leading-relaxed mb-4">Candlestick merekam emosi pasar dalam 1 periode waktu (misal: 1 hari). Terdiri dari <strong>Body</strong> (badan) dan <strong>Wick/Shadow</strong> (ekor).</p>
+                                    <p class="text-sm text-slate-600 leading-relaxed mb-4">Pada sebuah candlestick tercermin 4 komponen harga, yaitu: Harga pembukaan (Open), Harga tertinggi (High), Harga terendah (Low), dan Harga penutupan (Close).</p>
                                     <ul class="text-xs text-slate-500 space-y-2">
-                                        <li><span class="font-bold text-emerald-600">Bullish (Hijau):</span> Harga penutupan (Close) > Harga pembukaan (Open). Tanda dominasi Buyer.</li>
-                                        <li><span class="font-bold text-rose-600">Bearish (Merah):</span> Harga penutupan (Close) < Harga pembukaan (Open). Tanda dominasi Seller.</li>
-                                        <li><span class="font-bold text-slate-700">Wick (Ekor):</span> Jejak harga tertinggi dan terendah yang pernah disentuh namun tertolak.</li>
+                                        <li><span class="font-bold text-emerald-600 bg-emerald-50 px-1 rounded">Bullish (Hijau):</span> Harga penutupan (Close) di atas harga pembukaan (Open). Tanda dominasi Buyer.</li>
+                                        <li><span class="font-bold text-rose-600 bg-rose-50 px-1 rounded">Bearish (Merah):</span> Harga penutupan (Close) di bawah harga pembukaan (Open). Tanda dominasi Seller.</li>
+                                        <li><span class="font-bold text-slate-700">Real Body:</span> Badan kotak yang merepresentasikan jarak dari Open hingga Close. Panjang pendeknya body menunjukkan seberapa kuat dominasi bull/bear pada sesi tersebut. Body hijau yang panjang (Long Candle) menunjukkan demand yang lebih besar, sedangkan body merah yang panjang menunjukkan supply yang sangat kuat.</li>
+                                        <li><span class="font-bold text-slate-700">Shadow / Wick (Ekor):</span> Garis tipis di atas (Upper Shadow) dan di bawah (Lower Shadow) body yang merupakan jejak titik High dan Low.</li>
                                     </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-10">
+                            <h3 class="text-xl font-black text-slate-800 mb-4 border-b border-slate-200 pb-2"><i class="fas fa-shapes text-indigo-500 mr-2"></i> Jenis Candlestick Dasar</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                                    <div>
+                                        <h4 class="font-black text-slate-900 text-sm mb-3">1. Marubozu</h4>
+                                        <p class="text-xs text-slate-600 mb-4">Candle dengan body utuh yang panjang tanpa shadow (atau sangat minim), menunjukkan dominasi ekstrem satu arah sepanjang sesi pasar.</p>
+                                        <ul class="text-[11px] text-slate-500 space-y-2">
+                                            <li><span class="font-bold text-emerald-600">Marubozu Bullish:</span> Terjadi ketika harga penutupan lebih tinggi dari harga pembukaan (Close = High, Open = Low). Melambangkan minat beli yang sangat kuat.</li>
+                                            <li><span class="font-bold text-rose-600">Marubozu Bearish:</span> Terjadi ketika harga penutupan berada di bawah harga pembukaan (Close = Low, Open = High). Melambangkan tekanan jual yang sangat tinggi.</li>
+                                        </ul>
+                                    </div>
+                                    <div class="mt-6 p-4 bg-slate-900 rounded-xl border border-slate-800 flex justify-around items-center">
+                                        <div class="text-center">
+                                            <svg class="w-16 h-32 mx-auto" viewBox="0 0 50 100">
+                                                <rect x="10" y="5" width="30" height="90" fill="#10b981" rx="2"/>
+                                            </svg>
+                                            <span class="text-[10px] font-black text-emerald-400 block mt-2">Bullish Marubozu</span>
+                                        </div>
+                                        <div class="text-center">
+                                            <svg class="w-16 h-32 mx-auto" viewBox="0 0 50 100">
+                                                <rect x="10" y="5" width="30" height="90" fill="#ef4444" rx="2"/>
+                                            </svg>
+                                            <span class="text-[10px] font-black text-rose-400 block mt-2">Bearish Marubozu</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between">
+                                    <div>
+                                        <h4 class="font-black text-slate-900 text-sm mb-3">2. Doji</h4>
+                                        <p class="text-xs text-slate-600 mb-4">Candle yang harga pembukaannya hampir sama persis dengan harga penutupan, sehingga tidak memiliki body (hanya berbentuk garis silang). Menunjukkan kekuatan bulls (pembeli) dan bears (penjual) yang seimbang. Doji sering menjadi sinyal pembalikan arah (reversal).</p>
+                                        <div class="text-[11px] text-slate-500 font-bold mb-2">Beberapa jenis Doji yang sering muncul:</div>
+                                        <div class="flex gap-2 flex-wrap text-[10px] mb-4">
+                                            <span class="bg-slate-100 text-slate-700 px-2 py-1 rounded font-bold">Doji Biasa</span>
+                                            <span class="bg-slate-100 text-slate-700 px-2 py-1 rounded font-bold">Long Legged Doji</span>
+                                            <span class="bg-slate-100 text-slate-700 px-2 py-1 rounded font-bold">Dragonfly Doji</span>
+                                            <span class="bg-slate-100 text-slate-700 px-2 py-1 rounded font-bold">Gravestone Doji</span>
+                                            <span class="bg-slate-100 text-slate-700 px-2 py-1 rounded font-bold">4 Price Doji</span>
+                                        </div>
+                                    </div>
+                                    <div class="mt-auto p-4 bg-slate-900 rounded-xl border border-slate-800 grid grid-cols-5 gap-2 text-center">
+                                        <div>
+                                            <svg class="w-full h-20" viewBox="0 0 40 80">
+                                                <line x1="20" y1="15" x2="20" y2="65" stroke="#cbd5e1" stroke-width="2"/>
+                                                <line x1="10" y1="40" x2="30" y2="40" stroke="#cbd5e1" stroke-width="3"/>
+                                            </svg>
+                                            <span class="text-[8px] font-black text-slate-300 block mt-1 truncate">Biasa</span>
+                                        </div>
+                                        <div>
+                                            <svg class="w-full h-20" viewBox="0 0 40 80">
+                                                <line x1="20" y1="5" x2="20" y2="75" stroke="#cbd5e1" stroke-width="2"/>
+                                                <line x1="10" y1="40" x2="30" y2="40" stroke="#cbd5e1" stroke-width="3"/>
+                                            </svg>
+                                            <span class="text-[8px] font-black text-slate-300 block mt-1 truncate">Long Leg</span>
+                                        </div>
+                                        <div>
+                                            <svg class="w-full h-20" viewBox="0 0 40 80">
+                                                <line x1="20" y1="10" x2="20" y2="70" stroke="#cbd5e1" stroke-width="2"/>
+                                                <line x1="10" y1="10" x2="30" y2="10" stroke="#cbd5e1" stroke-width="3"/>
+                                            </svg>
+                                            <span class="text-[8px] font-black text-slate-300 block mt-1 truncate">Dragonfly</span>
+                                        </div>
+                                        <div>
+                                            <svg class="w-full h-20" viewBox="0 0 40 80">
+                                                <line x1="20" y1="10" x2="20" y2="70" stroke="#cbd5e1" stroke-width="2"/>
+                                                <line x1="10" y1="70" x2="30" y2="70" stroke="#cbd5e1" stroke-width="3"/>
+                                            </svg>
+                                            <span class="text-[8px] font-black text-slate-300 block mt-1 truncate">Gravestone</span>
+                                        </div>
+                                        <div>
+                                            <svg class="w-full h-20" viewBox="0 0 40 80">
+                                                <line x1="10" y1="40" x2="30" y2="40" stroke="#cbd5e1" stroke-width="3"/>
+                                            </svg>
+                                            <span class="text-[8px] font-black text-slate-300 block mt-1 truncate">4-Price</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-10">
+                            <h3 class="text-xl font-black text-slate-800 mb-4 border-b border-slate-200 pb-2"><i class="fas fa-arrows-turn-to-dots text-purple-500 mr-2"></i> Candlestick Reversal Patterns</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="bg-emerald-50/30 p-5 rounded-2xl border border-emerald-200 shadow-sm flex flex-col justify-between">
+                                    <div>
+                                        <h4 class="font-black text-emerald-700 text-sm mb-2"><i class="fas fa-arrow-trend-up"></i> Bullish Reversal Patterns</h4>
+                                        <p class="text-[11px] text-slate-500 mb-3">Pola ini selalu diawali dengan downtrend pada chart dan memberikan indikasi harga akan segera berbalik naik. Beberapa jenisnya antara lain:</p>
+                                        <ul class="text-xs text-slate-600 font-semibold space-y-1 mb-6">
+                                            <li>• Southern Doji</li>
+                                            <li>• Bullish Belt Hold</li>
+                                            <li>• Long-Legged Doji</li>
+                                            <li>• Abandoned Baby Bottom</li>
+                                            <li>• Hammer</li>
+                                            <li>• Inverted Hammer</li>
+                                            <li>• Morning Doji Star</li>
+                                        </ul>
+                                    </div>
+                                    <div class="mt-auto p-4 bg-slate-900 rounded-xl border border-slate-800 text-center">
+                                        <p class="text-[10px] font-black text-emerald-400 tracking-widest mb-2 uppercase">Contoh: Hammer & Morning Star</p>
+                                        <svg class="w-full h-32" viewBox="0 0 200 100">
+                                            <line x1="20" y1="10" x2="60" y2="70" stroke="#ef4444" stroke-dasharray="2,2" stroke-width="2"/>
+                                            <line x1="40" y1="20" x2="40" y2="60" stroke="#94a3b8" stroke-width="1"/>
+                                            <rect x="35" y="25" width="10" height="30" fill="#ef4444"/>
+                                            <line x1="80" y1="65" x2="80" y2="95" stroke="#94a3b8" stroke-width="2"/>
+                                            <rect x="73" y="65" width="14" height="10" fill="#10b981" rx="1"/>
+                                            <text x="80" y="55" fill="#10b981" font-size="8" font-weight="bold" text-anchor="middle">HAMMER</text>
+                                            <line x1="120" y1="30" x2="120" y2="80" stroke="#94a3b8" stroke-width="1"/>
+                                            <rect x="115" y="35" width="10" height="40" fill="#10b981"/>
+                                            <line x1="10" y1="95" x2="190" y2="95" stroke="#3b82f6" stroke-width="2"/>
+                                            <text x="170" y="90" fill="#3b82f6" font-size="8" font-weight="bold">SUPPORT</text>
+                                            <path d="M140,70 L180,20" fill="none" stroke="#10b981" stroke-width="2" marker-end="url(#arrow-green)"/>
+                                            <defs>
+                                                <marker id="arrow-green" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                                    <path d="M 0 0 L 10 5 L 0 10 z" fill="#10b981"/>
+                                                </marker>
+                                            </defs>
+                                        </svg>
+                                        <span class="text-[9px] font-bold text-slate-400 block mt-1">Sinyal penolakan di lantai Support (Lantai Harga)</span>
+                                    </div>
+                                </div>
+                                <div class="bg-rose-50/30 p-5 rounded-2xl border border-rose-200 shadow-sm flex flex-col justify-between">
+                                    <div>
+                                        <h4 class="font-black text-rose-700 text-sm mb-2"><i class="fas fa-arrow-trend-down"></i> Bearish Reversal Patterns</h4>
+                                        <p class="text-[11px] text-slate-500 mb-3">Pola ini selalu diawali dengan uptrend pada chart dan memberikan peringatan keras bahwa harga akan berbalik turun. Beberapa jenisnya antara lain:</p>
+                                        <ul class="text-xs text-slate-600 font-semibold space-y-1 mb-6">
+                                            <li>• Northern Doji</li>
+                                            <li>• Bearish Belt Hold</li>
+                                            <li>• Evening Doji Star</li>
+                                            <li>• Shooting Star</li>
+                                            <li>• Abandoned Baby Top</li>
+                                            <li>• Gravestone Doji</li>
+                                            <li>• Hanging Man</li>
+                                        </ul>
+                                    </div>
+                                    <div class="mt-auto p-4 bg-slate-900 rounded-xl border border-slate-800 text-center">
+                                        <p class="text-[10px] font-black text-rose-400 tracking-widest mb-2 uppercase">Contoh: Shooting Star di Pucuk</p>
+                                        <svg class="w-full h-32" viewBox="0 0 200 100">
+                                            <line x1="10" y1="20" x2="190" y2="20" stroke="#ef4444" stroke-width="2"/>
+                                            <text x="170" y="15" fill="#ef4444" font-size="8" font-weight="bold">RESISTEN</text>
+                                            <line x1="40" y1="40" x2="40" y2="80" stroke="#94a3b8" stroke-width="1"/>
+                                            <rect x="35" y="45" width="10" height="30" fill="#10b981"/>
+                                            <line x1="80" y1="20" x2="80" y2="55" stroke="#94a3b8" stroke-width="2"/>
+                                            <rect x="73" y="45" width="14" height="10" fill="#ef4444" rx="1"/>
+                                            <text x="80" y="65" fill="#ef4444" font-size="8" font-weight="bold" text-anchor="middle">SHOOTING STAR</text>
+                                            <line x1="120" y1="35" x2="120" y2="85" stroke="#94a3b8" stroke-width="1"/>
+                                            <rect x="115" y="40" width="10" height="40" fill="#ef4444"/>
+                                            <path d="M140,40 L180,90" fill="none" stroke="#ef4444" stroke-width="2" marker-end="url(#arrow-red)"/>
+                                            <defs>
+                                                <marker id="arrow-red" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                                    <path d="M 0 0 L 10 5 L 0 10 z" fill="#ef4444"/>
+                                                </marker>
+                                            </defs>
+                                        </svg>
+                                        <span class="text-[9px] font-bold text-slate-400 block mt-1">Sinyal pembuangan saat menabrak Plafon Resisten</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-10">
+                            <h3 class="text-xl font-black text-slate-800 mb-4 border-b border-slate-200 pb-2"><i class="fas fa-chart-line text-blue-600 mr-2"></i> Mengenal Trend Pasar</h3>
+                            <p class="text-sm text-slate-600 mb-6">Trend merupakan arah kecenderungan pergerakan harga saham dalam periode waktu tertentu. Mengenali tren adalah tugas pertama seorang trader. Terdapat 3 jenis trend utama:</p>
+                            
+                            <div class="space-y-6">
+                                <div class="bg-white p-5 rounded-2xl border-l-4 border-emerald-500 shadow-sm flex flex-col md:flex-row gap-6 items-center">
+                                    <div class="md:w-1/2">
+                                        <h4 class="font-black text-emerald-600 text-lg mb-2">1. Uptrend (Kecenderungan Naik)</h4>
+                                        <p class="text-xs text-slate-600 mb-3">Suatu pergerakan harga saham dikatakan uptrend jika pergerakannya selalu membentuk puncak yang lebih tinggi (Higher High) dan lembah yang lebih tinggi (Higher Low).</p>
+                                        <p class="text-[11px] text-slate-500 bg-slate-50 p-2 rounded"><b>Pro-Tip:</b> Cara menggambar garis trendline uptrend pada chart adalah dengan menghubungkan titik nilai harga terendah pada lembah-lembah yang terbentuk.</p>
+                                    </div>
+                                    <div class="md:w-1/2 w-full bg-slate-900 p-4 rounded-xl border border-slate-800 text-center">
+                                        <svg class="w-full h-28 overflow-visible" viewBox="0 0 200 100">
+                                            <line x1="10" y1="90" x2="180" y2="40" stroke="#10b981" stroke-width="2"/>
+                                            <path d="M20,85 L50,40 L80,65 L120,20 L150,50 L190,5" fill="none" stroke="#60a5fa" stroke-width="3"/>
+                                            <circle cx="50" cy="40" r="3" fill="#ffffff"/><text x="50" y="30" fill="#ffffff" font-size="8" font-weight="bold" text-anchor="middle">HH</text>
+                                            <circle cx="80" cy="65" r="3" fill="#10b981"/><text x="80" y="80" fill="#10b981" font-size="8" font-weight="bold" text-anchor="middle">HL</text>
+                                            <circle cx="120" cy="20" r="3" fill="#ffffff"/><text x="120" y="10" fill="#ffffff" font-size="8" font-weight="bold" text-anchor="middle">HH</text>
+                                            <circle cx="150" cy="50" r="3" fill="#10b981"/><text x="150" y="65" fill="#10b981" font-size="8" font-weight="bold" text-anchor="middle">HL</text>
+                                            <circle cx="190" cy="5" r="3" fill="#ffffff"/><text x="190" y="-5" fill="#ffffff" font-size="8" font-weight="bold" text-anchor="middle">HH</text>
+                                        </svg>
+                                        <span class="text-[9px] font-mono text-slate-400 block mt-1">HH = Higher High, HL = Higher Low (Koneksi Support Naik)</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white p-5 rounded-2xl border-l-4 border-rose-500 shadow-sm flex flex-col md:flex-row gap-6 items-center">
+                                    <div class="md:w-1/2">
+                                        <h4 class="font-black text-rose-600 text-lg mb-2">2. Downtrend (Kecenderungan Turun)</h4>
+                                        <p class="text-xs text-slate-600 mb-3">Suatu pergerakan harga saham dikatakan downtrend jika pergerakannya selalu membentuk puncak yang lebih rendah (Lower High) dan lembah yang lebih rendah (Lower Low).</p>
+                                        <p class="text-[11px] text-slate-500 bg-slate-50 p-2 rounded"><b>Pro-Tip:</b> Cara menggambar garis trendline downtrend adalah dengan menghubungkan titik nilai harga tertinggi pada puncak-puncak yang terbentuk.</p>
+                                    </div>
+                                    <div class="md:w-1/2 w-full bg-slate-900 p-4 rounded-xl border border-slate-800 text-center">
+                                        <svg class="w-full h-28 overflow-visible" viewBox="0 0 200 100">
+                                            <line x1="20" y1="15" x2="180" y2="75" stroke="#ef4444" stroke-width="2"/>
+                                            <path d="M10,10 L40,60 L70,30 L110,80 L140,55 L180,95" fill="none" stroke="#60a5fa" stroke-width="3"/>
+                                            <circle cx="40" cy="60" r="3" fill="#ffffff"/><text x="40" y="75" fill="#ffffff" font-size="8" font-weight="bold" text-anchor="middle">LL</text>
+                                            <circle cx="70" cy="30" r="3" fill="#ef4444"/><text x="70" y="20" fill="#ef4444" font-size="8" font-weight="bold" text-anchor="middle">LH</text>
+                                            <circle cx="110" cy="80" r="3" fill="#ffffff"/><text x="110" y="95" fill="#ffffff" font-size="8" font-weight="bold" text-anchor="middle">LL</text>
+                                            <circle cx="140" cy="55" r="3" fill="#ef4444"/><text x="140" y="45" fill="#ef4444" font-size="8" font-weight="bold" text-anchor="middle">LH</text>
+                                        </svg>
+                                        <span class="text-[9px] font-mono text-slate-400 block mt-1">LH = Lower High, LL = Lower Low (Koneksi Resisten Turun)</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-white p-5 rounded-2xl border-l-4 border-blue-500 shadow-sm flex flex-col md:flex-row gap-6 items-center">
+                                    <div class="md:w-1/2">
+                                        <h4 class="font-black text-blue-600 text-lg mb-2">3. Sideways (Konsolidasi/Tetap)</h4>
+                                        <p class="text-xs text-slate-600 mb-3">Terjadi ketika harga sebuah saham naik turun berulang kali sehingga membentuk gerakan zig-zag dengan level puncak ke puncak dan lembah ke lembah yang hampir sama.</p>
+                                        <p class="text-[11px] text-slate-500 bg-slate-50 p-2 rounded"><b>Pro-Tip:</b> Tarik garis menghubungkan titik puncak ke puncak (batas atas) dan titik lembah ke lembah (batas bawah). Pada level ini, pergerakan pola sideways akan terus diuji hingga terjadi breakout/breakdown.</p>
+                                    </div>
+                                    <div class="md:w-1/2 w-full bg-slate-900 p-4 rounded-xl border border-slate-800 text-center">
+                                        <svg class="w-full h-28 overflow-visible" viewBox="0 0 200 100">
+                                            <line x1="10" y1="20" x2="190" y2="20" stroke="#ef4444" stroke-width="2"/>
+                                            <line x1="10" y1="80" x2="190" y2="80" stroke="#10b981" stroke-width="2"/>
+                                            <path d="M15,50 L40,20 L70,80 L100,20 L130,80 L160,20 L185,50" fill="none" stroke="#60a5fa" stroke-width="3"/>
+                                            <circle cx="40" cy="20" r="3" fill="#ef4444"/><circle cx="100" cy="20" r="3" fill="#ef4444"/><circle cx="160" cy="20" r="3" fill="#ef4444"/>
+                                            <circle cx="70" cy="80" r="3" fill="#10b981"/><circle cx="130" cy="80" r="3" fill="#10b981"/>
+                                        </svg>
+                                        <span class="text-[9px] font-mono text-slate-400 block mt-1">Konsolidasi mantul di dalam boks batas atas & bawah yang sejajar</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-10">
+                            <h3 class="text-xl font-black text-slate-800 mb-4 border-b border-slate-200 pb-2"><i class="fas fa-layer-group text-blue-500 mr-2"></i> Support, Resisten & Channel</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
+                                    <h4 class="font-black text-slate-900 text-sm mb-2 text-emerald-600">Support (Lantai Harga)</h4>
+                                    <p class="text-[11px] text-slate-500 mb-2">Garis SUPPORT adalah level di mana terdapat kecenderungan harga akan naik (memantul), karena pembeli lebih banyak daripada penjual, atau demand lebih besar dari supply.</p>
+                                </div>
+                                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
+                                    <h4 class="font-black text-slate-900 text-sm mb-2 text-rose-600">Resistance (Plafon Harga)</h4>
+                                    <p class="text-[11px] text-slate-500 mb-2">Garis RESISTEN adalah level di mana terdapat kecenderungan harga akan tertolak turun karena penjual lebih banyak daripada pembeli, atau supply lebih besar dari demand.</p>
+                                </div>
+                            </div>
+
+                            <div class="bg-slate-900 text-white p-6 rounded-2xl shadow-inner border border-slate-700">
+                                <h4 class="font-black text-amber-400 text-sm mb-3 uppercase tracking-widest"><i class="fas fa-bolt"></i> Hukum Pergerakan Support & Resisten</h4>
+                                <ul class="text-xs text-slate-300 space-y-3 mb-6">
+                                    <li><span class="text-emerald-400 font-bold">1. Breakout:</span> Penembusan yang solid melewati level resisten disebut sebagai breakout. Ini menandakan kemenangan kubu pembeli.</li>
+                                    <li><span class="text-blue-400 font-bold">2. Role Reversal (Perubahan Fungsi):</span> Bila suatu garis resisten mampu tertembus (breakout), maka garis tersebut selanjutnya akan berubah fungsi menjadi support baru. Sebaliknya, jika level support tertembus (breakdown), maka ia akan menjadi resisten baru yang berat untuk ditembus.</li>
+                                    <li><span class="text-purple-400 font-bold">3. Pullback (Retest):</span> Bila harga kembali berbalik menguji level support maupun resisten yang sebelumnya sudah dilewati/ditembus, maka fenomena itu disebut dengan pullback. Ini adalah area *entry* teraman bagi banyak *trader*.</li>
+                                    <li><span class="text-amber-300 font-bold">4. Paralel Channel:</span> Terbentuk minimal dari 3 buah titik lembah maupun puncak yang membentuk saluran (channel). Saat harga menyentuh garis support dari channel paralel, itulah saatnya untuk buy. Jika tembus, potensi kenaikan diukur dengan memantulkan jarak support-resisten ke area breakout.</li>
+                                </ul>
+                                
+                                <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 text-center">
+                                    <p class="text-[10px] font-bold text-amber-400 uppercase tracking-wider mb-2">Ilustrasi Breakout, Pullback & Role Reversal</p>
+                                    <svg class="w-full h-40 overflow-visible" viewBox="0 0 300 120">
+                                        <line x1="10" y1="80" x2="140" y2="80" stroke="#3b82f6" stroke-width="2"/>
+                                        <text x="20" y="93" fill="#3b82f6" font-size="8" font-weight="bold">SUPPORT LAMA</text>
+                                        
+                                        <line x1="10" y1="40" x2="140" y2="40" stroke="#ef4444" stroke-width="2"/>
+                                        <text x="20" y="33" fill="#ef4444" font-size="8" font-weight="bold">RESISTEN LAMA</text>
+                                        
+                                        <line x1="140" y1="40" x2="290" y2="40" stroke="#10b981" stroke-width="2" stroke-dasharray="3,3"/>
+                                        <text x="180" y="53" fill="#10b981" font-size="8" font-weight="bold">BERUBAH JADI SUPPORT BARU</text>
+                                        
+                                        <path d="M10,60 L30,40 L50,80 L80,40 L100,80 L130,20 L160,40 L200,5 L240,40 L280,0" fill="none" stroke="#60a5fa" stroke-width="2.5"/>
+                                        
+                                        <circle cx="30" cy="40" r="3" fill="#ef4444"/>
+                                        <circle cx="130" cy="20" r="4" fill="#10b981"/>
+                                        <text x="130" y="8" fill="#10b981" font-size="8" font-weight="bold" text-anchor="middle">BREAKOUT!</text>
+                                        <circle cx="160" cy="40" r="4" fill="#f59e0b"/>
+                                        <text x="160" y="28" fill="#f59e0b" font-size="8" font-weight="bold" text-anchor="middle">PULLBACK (BUY ENTRY)</text>
+                                        <path d="M240,40 L280,0" fill="none" stroke="#10b981" stroke-width="3" marker-end="url(#arrow-green)"/>
+                                    </svg>
                                 </div>
                             </div>
                         </div>
@@ -1762,20 +2097,59 @@
                         <div>
                             <h3 class="text-xl font-black text-slate-800 mb-4 border-b border-slate-200 pb-2"><i class="fas fa-shapes text-indigo-500 mr-2"></i> Pola Harga Klasik (Chart Patterns)</h3>
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm text-center hover:-translate-y-2 transition-transform">
-                                    <div class="text-4xl text-emerald-500 font-black tracking-tighter mb-2" style="font-family: monospace;">W</div>
-                                    <h4 class="font-black text-slate-900 text-sm">Double Bottom</h4>
-                                    <p class="text-[10px] text-slate-500 mt-2">Pola huruf W di area support. Indikasi pembalikan arah (Reversal) dari tren turun menjadi tren naik (Bullish). Saat *breakout neckline*, itu konfirmasi entry.</p>
+                                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm text-center hover:-translate-y-2 transition-transform flex flex-col justify-between">
+                                    <div>
+                                        <div class="text-4xl text-emerald-500 font-black tracking-tighter mb-2" style="font-family: monospace;">W</div>
+                                        <h4 class="font-black text-slate-900 text-sm">Double Bottom</h4>
+                                        <p class="text-[10px] text-slate-500 mt-2 mb-4 leading-relaxed">Pola huruf W di area support. Indikasi pembalikan arah (Reversal) dari tren turun menjadi tren naik (Bullish). Saat *breakout neckline*, itu konfirmasi entry.</p>
+                                    </div>
+                                    <div class="bg-slate-900 p-3 rounded-xl border border-slate-800 mt-auto">
+                                        <svg class="w-full h-24 overflow-visible" viewBox="0 0 100 60">
+                                            <line x1="5" y1="50" x2="95" y2="50" stroke="#3b82f6" stroke-width="2"/>
+                                            <line x1="5" y1="25" x2="95" y2="25" stroke="#94a3b8" stroke-dasharray="2,2" stroke-width="1"/>
+                                            <text x="50" y="20" fill="#94a3b8" font-size="6" text-anchor="middle">NECKLINE</text>
+                                            <path d="M10,5 L30,50 L50,25 L70,50 L90,10" fill="none" stroke="#10b981" stroke-width="2.5"/>
+                                            <circle cx="80" cy="25" r="2.5" fill="#ffffff"/>
+                                            <path d="M80,25 L95,2" fill="none" stroke="#10b981" stroke-width="2" marker-end="url(#arrow-green)"/>
+                                        </svg>
+                                        <span class="text-[8px] font-bold text-emerald-400 block mt-1">Konfirmasi beli saat tembus Neckline atas</span>
+                                    </div>
                                 </div>
-                                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm text-center hover:-translate-y-2 transition-transform">
-                                    <div class="text-4xl text-rose-500 font-black tracking-tighter mb-2" style="font-family: monospace;">M</div>
-                                    <h4 class="font-black text-slate-900 text-sm">Double Top</h4>
-                                    <p class="text-[10px] text-slate-500 mt-2">Pola huruf M di area resisten (pucuk). Indikasi kuat pembalikan arah dari tren naik menjadi tren turun (Bearish). Tanda peringatan Take Profit.</p>
+                                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm text-center hover:-translate-y-2 transition-transform flex flex-col justify-between">
+                                    <div>
+                                        <div class="text-4xl text-rose-500 font-black tracking-tighter mb-2" style="font-family: monospace;">M</div>
+                                        <h4 class="font-black text-slate-900 text-sm">Double Top</h4>
+                                        <p class="text-[10px] text-slate-500 mt-2 mb-4 leading-relaxed">Pola huruf M di area resisten (pucuk). Indikasi kuat pembalikan arah dari tren naik menjadi tren turun (Bearish). Tanda peringatan Take Profit.</p>
+                                    </div>
+                                    <div class="bg-slate-900 p-3 rounded-xl border border-slate-800 mt-auto">
+                                        <svg class="w-full h-24 overflow-visible" viewBox="0 0 100 60">
+                                            <line x1="5" y1="10" x2="95" y2="10" stroke="#ef4444" stroke-width="2"/>
+                                            <line x1="5" y1="35" x2="95" y2="35" stroke="#94a3b8" stroke-dasharray="2,2" stroke-width="1"/>
+                                            <text x="50" y="43" fill="#94a3b8" font-size="6" text-anchor="middle">NECKLINE</text>
+                                            <path d="M10,55 L30,10 L50,35 L70,10 L90,50" fill="none" stroke="#ef4444" stroke-width="2.5"/>
+                                            <circle cx="80" cy="35" r="2.5" fill="#ffffff"/>
+                                            <path d="M80,35 L95,58" fill="none" stroke="#ef4444" stroke-width="2" marker-end="url(#arrow-red)"/>
+                                        </svg>
+                                        <span class="text-[8px] font-bold text-rose-400 block mt-1">Sinyal buang muatan saat tembus Neckline bawah</span>
+                                    </div>
                                 </div>
-                                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm text-center hover:-translate-y-2 transition-transform">
-                                    <div class="text-4xl text-blue-500 font-black tracking-tighter mb-2" style="font-family: monospace;">/⚑</div>
-                                    <h4 class="font-black text-slate-900 text-sm">Bullish Flag</h4>
-                                    <p class="text-[10px] text-slate-500 mt-2">Pola kelanjutan (Continuation) setelah tiang panjang (kenaikan impulsif) diikuti koreksi landai menyerupai bendera. Menandakan harga istirahat sebelum meroket lagi.</p>
+                                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm text-center hover:-translate-y-2 transition-transform flex flex-col justify-between">
+                                    <div>
+                                        <div class="text-4xl text-blue-500 font-black tracking-tighter mb-2" style="font-family: monospace;">/⚑</div>
+                                        <h4 class="font-black text-slate-900 text-sm">Bullish Flag</h4>
+                                        <p class="text-[10px] text-slate-500 mt-2 mb-4 leading-relaxed">Pola kelanjutan (Continuation) setelah tiang panjang (kenaikan impulsif) diikuti koreksi landai menyerupai bendera. Menandakan harga istirahat sebelum meroket lagi.</p>
+                                    </div>
+                                    <div class="bg-slate-900 p-3 rounded-xl border border-slate-800 mt-auto">
+                                        <svg class="w-full h-24 overflow-visible" viewBox="0 0 100 60">
+                                            <line x1="10" y1="55" x2="40" y2="15" stroke="#10b981" stroke-width="3"/>
+                                            <text x="20" y="30" fill="#10b981" font-size="6" font-weight="bold">TIANG</text>
+                                            <line x1="40" y1="10" x2="70" y2="25" stroke="#60a5fa" stroke-width="1"/>
+                                            <line x1="35" y1="25" x2="65" y2="40" stroke="#60a5fa" stroke-width="1"/>
+                                            <path d="M40,15 L45,28 L55,20 L60,33 L65,22" fill="none" stroke="#cbd5e1" stroke-width="1.5"/>
+                                            <path d="M65,22 L90,5" fill="none" stroke="#10b981" stroke-width="2.5" marker-end="url(#arrow-green)"/>
+                                        </svg>
+                                        <span class="text-[8px] font-bold text-blue-400 block mt-1">Breakout pola bendera searah tren utama (Tiang)</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -2660,7 +3034,7 @@
                                         </td>
                                         <td class="p-4 align-top">
                                             <div class="flex flex-col gap-1 items-center">
-                                                <span class="bg-indigo-50 text-indigo-600border border-indigo-100 px-2 py-1 rounded text-[9px] font-black uppercase w-full text-center">D1+</span>
+                                                <span class="bg-indigo-50 text-indigo-600 border border-indigo-100 px-2 py-1 rounded text-[9px] font-black uppercase w-full text-center">D1+</span>
                                                 <span class="bg-emerald-50 text-emerald-600 border border-emerald-100 px-2 py-1 rounded text-[9px] font-black uppercase w-full text-center">Swing</span>
                                             </div>
                                         </td>
@@ -4672,9 +5046,6 @@
         }
 
         // --- UPGRADE: FUNGSI EXPORT MARKET SCREENER KE WA & EXCEL ---
-        // Penjelasan Teknis: Karena widget Screener menggunakan iframe langsung dari s3.tradingview.com, kebijakan CORS browser mencegah kita mengambil data secara langsung (scraping) dari dalam kotak.
-        // Solusi Workflow: Tombol ekspor menarik data dari "Pantau Saham Pribadi (Watchlist)" kamu yang merupakan hasil screening.
-        
         function exportScreenerWA() {
             if(watchlist.length === 0) {
                 showToast("Tambahkan saham dari Screener ke 'Pantau Saham Pribadi' (Watchlist) terlebih dahulu untuk diekspor!", "warning");
@@ -4708,7 +5079,6 @@
             document.body.removeChild(link);
             showToast("Hasil Export CSV Berhasil Diunduh!", "success");
         }
-
 
         // --- EDUKASI SUB-TAB FUNCTION ---
         function switchEduTab(tabId) {
@@ -4925,7 +5295,7 @@
                     { ticker: "KAEF", company: "PT Kimia Farma Tbk", sector: "Farmasi BUMN", ownership: "Bagian dari holding BUMN farmasi (Bio Farma).", kepemilikan_persen: "90.0% (Bio Farma)", sejarah: "Pabrik farmasi dan apotek negara.", tahun_masuk: "2001", broker_afiliasi: "YP", free_float: "10.0%", avg_up: "850", avg_down: "780", support: "750", resistance: "950", last_update: "8 Mei 2026" },
                     { ticker: "KRAS", company: "PT Krakatau Steel (Persero) Tbk", sector: "Manufaktur Baja", ownership: "BUMN produsen baja nasional.", kepemilikan_persen: "80.0%", sejarah: "Pabrik baja raksasa di Cilegon.", tahun_masuk: "2010", broker_afiliasi: "YP", free_float: "20.0%", avg_up: "145", avg_down: "135", support: "125", resistance: "170", last_update: "8 Mei 2026" },
                     { ticker: "MBMA", company: "PT Merdeka Battery Materials Tbk", sector: "Material Baterai", ownership: "Keterlibatan investasi strategis institusi negara dalam rantai pasok EV.", kepemilikan_persen: "Afiliasi SWF", sejarah: "Ekosistem nikel grup Merdeka dengan dukungan investasi negara.", tahun_masuk: "2023", broker_afiliasi: "RX, KZ", free_float: "15.0%", avg_up: "580", avg_down: "540", support: "500", resistance: "650", last_update: "8 Mei 2026" },
-                    { ticker: "PGAS", company: "PT Perusahaan Gas Negara Tbk", sector: "Energi (Minyak & Gas)", ownership: "Aset BUMN gas (Sub-holding Pertamina).", kepemilikan_persen: "56.9% (Pertamina)", sejarah: "Sub-holding gas bagian dari grup Pertamina.", tahun_masuk: "2003", broker_afiliasi: "RX, AK", free_float: "43.1%", avg_up: "1450", avg_down: "1380", support: "1300", resistance: "1600", last_update: "8 Mei 2026" }, 
+                    { ticker: "PGAS", company: "PT Perusahaan Gas Negara Tbk", sector: "Energi (Minyak & Gas)", ownership: "Aset BUMN gas (Sub-holding Pertamina).", kepemilikan_persen:"56.9% (Pertamina)", sejarah: "Sub-holding gas bagian dari grup Pertamina.", tahun_masuk: "2003", broker_afiliasi: "RX, AK", free_float: "43.1%", avg_up: "1450", avg_down: "1380", support: "1300", resistance: "1600", last_update: "8 Mei 2026" }, 
                     { ticker: "PTBA", company: "PT Bukit Asam Tbk", sector: "Pertambangan (Batu Bara)", ownership: "Anggota holding MIND ID.", kepemilikan_persen: "65.9% (MIND ID)", sejarah: "Perusahaan batu bara pelat merah di Sumatera.", tahun_masuk: "2002", broker_afiliasi: "YP, RX", free_float: "34.1%", avg_up: "2850", avg_down: "2700", support: "2600", resistance: "3100", last_update: "8 Mei 2026" }, 
                     { ticker: "PTPP", company: "PT PP (Persero) Tbk", sector: "Konstruksi BUMN", ownership: "Negara RI bertindak sebagai pemegang saham pengendali mayoritas.", kepemilikan_persen: "51.0%", sejarah: "BUMN Karya dengan portofolio kuat di pembangunan gedung, pelabuhan, dan infrastruktur utama.", tahun_masuk: "2010", broker_afiliasi: "YP, PD", free_float: "49.0%", avg_up: "420", avg_down: "380", support: "350", resistance: "480", last_update: "10 Mei 2026" },
                     { ticker: "SMGR", company: "PT Semen Indonesia (Persero) Tbk", sector: "Infrastruktur & Material", ownership: "Holding BUMN Semen.", kepemilikan_persen: "51.2%", sejarah: "Holding dari pabrik semen milik negara.", tahun_masuk: "1991", broker_afiliasi: "RX, BK", free_float: "48.8%", avg_up: "4800", avg_down: "4500", support: "4300", resistance: "5200", last_update: "8 Mei 2026" }, 
