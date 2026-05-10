@@ -726,7 +726,7 @@
                     </div>
                 </div>
 
-                <div class="flex flex-col xl:flex-row gap-6 h-[800px] xl:h-[850px] mb-8" id="tv-chart-wrapper">
+                <div class="flex flex-col xl:flex-row gap-6 h-[850px] xl:h-[1000px] mb-8" id="tv-chart-wrapper">
                     
                     <div class="flex-1 glass-card flex flex-col h-full bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden dark-mode-card transition-colors">
                         
@@ -776,6 +776,43 @@
                                     "locale": "id"
                                     }
                                     </script>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="glass-card bg-slate-900 rounded-2xl shadow-sm border-0 shrink-0 overflow-hidden">
+                            <div class="px-5 py-3 border-b border-slate-700 flex items-center justify-between">
+                                <div class="flex items-center gap-2">
+                                    <i class="fas fa-filter text-amber-400"></i>
+                                    <h3 class="font-black text-white text-sm">Template Screening Otomatis</h3>
+                                </div>
+                            </div>
+                            <div class="p-4 bg-slate-900 flex flex-col gap-3 max-h-[300px] overflow-y-auto custom-scrollbar">
+                                <div class="bg-slate-800 rounded-xl border border-slate-700 p-3">
+                                    <h4 class="text-[10px] font-black text-amber-400 mb-1 uppercase tracking-widest">1. Scalping MA/DEMA (3m)</h4>
+                                    <div class="font-mono text-[10px] text-slate-300 leading-relaxed">
+                                        <p><span class="text-blue-400">Timeframe</span> = 3 Minutes</p>
+                                        <p><span class="text-blue-400">Price</span> > MA 5 & DEMA 5</p>
+                                        <p><span class="text-blue-400">Volume</span> > Volume MA 20 (Breakout)</p>
+                                        <p><span class="text-blue-400">Value</span> > 5.000.000.000 (5M)</p>
+                                    </div>
+                                </div>
+                                <div class="bg-slate-800 rounded-xl border border-slate-700 p-3">
+                                    <h4 class="text-[10px] font-black text-emerald-400 mb-1 uppercase tracking-widest">2. Swing Buy on Support (Daily)</h4>
+                                    <div class="font-mono text-[10px] text-slate-300 leading-relaxed">
+                                        <p><span class="text-blue-400">Timeframe</span> = Daily</p>
+                                        <p><span class="text-blue-400">Last Price</span> <= (Support 1 * 1.02)</p>
+                                        <p><span class="text-blue-400">Last Price</span> >= Support 1</p>
+                                        <p><span class="text-blue-400">Stochastic</span> %K CrossUp %D (Oversold)</p>
+                                    </div>
+                                </div>
+                                <div class="bg-slate-800 rounded-xl border border-slate-700 p-3">
+                                    <h4 class="text-[10px] font-black text-rose-400 mb-1 uppercase tracking-widest">3. Running Trade HAKA</h4>
+                                    <div class="font-mono text-[10px] text-slate-300 leading-relaxed">
+                                        <p><span class="text-blue-400">Transaction Size</span> >= 500 Lot</p>
+                                        <p><span class="text-blue-400">Trade Action</span> = BUY (Hajar Kanan)</p>
+                                        <p><span class="text-blue-400">Trade Price</span> >= Best Offer</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1486,7 +1523,7 @@
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                             <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
                                 <div class="bg-indigo-600 text-white p-3 font-black text-[10px] tracking-widest uppercase text-center">BPJS (Beli Pagi Jual Sore)</div>
-                                <div class="p-4 bg-slate-900 font-mono text-[10px] text-emerald-400 leading-loose">
+                                <div class="p-4 bg-slate-900 font-mono text-[10px] text-emerald-400 leading-loose h-full">
                                     <p><span class="text-blue-400">Price</span> > Price MA 5</p>
                                     <p><span class="text-blue-400">Price</span> > (Prev Price * 1.05)</p>
                                     <p><span class="text-blue-400">Price</span> >= Open Price</p>
@@ -1513,6 +1550,41 @@
                                     <p><span class="text-blue-400">Value</span> > 300.000.000</p>
                                     <br>
                                     <p class="text-slate-500 italic">// Cari saham volatilitas awal // momentum</p>
+                                </div>
+                            </div>
+
+                            <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                                <div class="bg-indigo-600 text-white p-3 font-black text-[10px] tracking-widest uppercase text-center">Scalping MA/DEMA & Vol Break (3m)</div>
+                                <div class="p-4 bg-slate-900 font-mono text-[10px] text-purple-400 leading-loose h-full">
+                                    <p><span class="text-blue-400">Timeframe</span> = 3 Minutes</p>
+                                    <p><span class="text-blue-400">Price</span> > MA 5 & DEMA 5</p>
+                                    <p><span class="text-blue-400">Volume</span> > Volume MA 20</p>
+                                    <p><span class="text-blue-400">Value</span> > 5.000.000.000</p>
+                                    <br>
+                                    <p class="text-slate-500 italic">// Konfirmasi momentum scalping cepat dengan ledakan volume</p>
+                                </div>
+                            </div>
+
+                            <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                                <div class="bg-indigo-600 text-white p-3 font-black text-[10px] tracking-widest uppercase text-center">Swing Buy on Support (Daily)</div>
+                                <div class="p-4 bg-slate-900 font-mono text-[10px] text-emerald-400 leading-loose h-full">
+                                    <p><span class="text-blue-400">Timeframe</span> = Daily</p>
+                                    <p><span class="text-blue-400">Last Price</span> <= (Support 1 * 1.02)</p>
+                                    <p><span class="text-blue-400">Last Price</span> >= Support 1</p>
+                                    <p><span class="text-blue-400">Stochastic</span> %K CrossUp %D (Oversold)</p>
+                                    <br>
+                                    <p class="text-slate-500 italic">// Cicil beli di area pantulan support historis</p>
+                                </div>
+                            </div>
+
+                            <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                                <div class="bg-indigo-600 text-white p-3 font-black text-[10px] tracking-widest uppercase text-center">Running Trade HAKA (>500 Lot)</div>
+                                <div class="p-4 bg-slate-900 font-mono text-[10px] text-amber-400 leading-loose h-full">
+                                    <p><span class="text-blue-400">Transaction Size</span> >= 500 Lot</p>
+                                    <p><span class="text-blue-400">Trade Action</span> = BUY (Hajar Kanan)</p>
+                                    <p><span class="text-blue-400">Trade Price</span> >= Best Offer</p>
+                                    <br>
+                                    <p class="text-slate-500 italic">// Deteksi jejak paus/bandar akumulasi agresif secara live</p>
                                 </div>
                             </div>
                         </div>
