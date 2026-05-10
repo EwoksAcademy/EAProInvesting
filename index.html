@@ -188,6 +188,14 @@
             cursor: pointer;
         }
 
+        .nav-link:hover {
+            color: var(--accent);
+            background: #f1f5f9;
+        }
+        body.dark-mode-override .nav-link:hover {
+            background: #1e293b;
+        }
+
         .nav-link.active {
             color: white;
             background: var(--accent);
@@ -382,7 +390,7 @@
             </div>
             
             <div class="flex items-center gap-4">
-                <div id="liveClock" class="hidden lg:flex items-center gap-2 text-[10px] font-bold text-slate-50 bg-slate-50 px-3 py-1.5 rounded-lg border border-slate-100 shadow-sm transition-colors">
+                <div id="liveClock" class="hidden lg:flex items-center gap-2 text-[10px] font-bold text-slate-700 bg-white px-3 py-1.5 rounded-lg border border-slate-200 shadow-sm transition-colors">
                     <i class="fas fa-clock text-blue-500"></i> <span id="clockText">--:--:-- WIB</span>
                 </div>
                 <nav class="flex items-center gap-2">
@@ -457,10 +465,10 @@
 
         <section id="page-home" class="page active max-w-7xl mx-auto">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-10">
-                <div class="lg:col-span-2 bg-slate-900 rounded-[2rem] md:rounded-[2.5rem] p-8 md:p-12 text-white relative overflow-hidden flex flex-col justify-center shadow-2xl hero-card">
+                <div class="lg:col-span-2 bg-slate-900 rounded-[2rem] md:rounded-[2.5rem] p-8 md:p-12 text-white relative overflow-hidden flex flex-col justify-center shadow-2xl hero-card transition-all duration-500">
                     <div class="absolute top-0 right-0 w-64 h-64 bg-blue-600 rounded-full blur-[120px] opacity-20 -mr-20 -mt-20"></div>
                     <div class="relative z-10">
-                        <span class="bg-blue-600 text-white text-[10px] font-black px-3 py-1 rounded-full mb-4 md:mb-6 inline-block tracking-widest uppercase">Trading Suite Official</span>
+                        <span class="bg-blue-600 text-white text-[10px] font-black px-3 py-1 rounded-full mb-4 md:mb-6 inline-block tracking-widest uppercase shadow-md shadow-blue-500/30">Trading Suite Official</span>
                         <h2 class="text-3xl md:text-6xl font-black mb-6 leading-tight hero-title">Navigasi Cerdas di <br><span class="text-blue-500">Pasar Modal.</span></h2>
                         <p class="text-slate-400 text-sm md:text-lg mb-8 md:mb-10 max-w-lg">Analisis bandarmology, manajemen risiko presisi, dan database terlengkap untuk trader profesional.</p>
                         <div class="flex flex-col sm:flex-row gap-4">
@@ -506,7 +514,7 @@
                         </div>
                     </div>
                     <div class="mt-6 pt-6 border-t border-blue-100">
-                        <button onclick="showPage('quiz')" class="w-full bg-slate-900 text-white py-3 rounded-xl font-bold text-xs hover:bg-slate-800 transition-colors">Ikuti Kuis Profil Risiko <i class="fas fa-arrow-right ml-1"></i></button>
+                        <button onclick="showPage('quiz')" class="w-full bg-slate-900 text-white py-3 rounded-xl font-bold text-xs hover:bg-slate-800 transition-colors shadow-sm">Ikuti Kuis Profil Risiko <i class="fas fa-arrow-right ml-1"></i></button>
                     </div>
                 </div>
             </div>
@@ -577,7 +585,7 @@
                     <h3 class="text-xl font-black text-slate-900 uppercase tracking-tight">Quick Analysis Tools</h3>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-                    <div onclick="showPage('pensiun')" class="premium-card p-6 cursor-pointer group border-emerald-100 bg-emerald-50/10">
+                    <div onclick="showPage('pensiun')" class="premium-card p-6 cursor-pointer group border-emerald-100 bg-emerald-50/10 hover:bg-emerald-50/30 transition-all">
                         <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                             <i class="fas fa-umbrella text-xl"></i>
                         </div>
@@ -586,7 +594,7 @@
                         <span class="text-xs font-bold text-emerald-600">Buka <i class="fas fa-arrow-right ml-1"></i></span>
                     </div>
 
-                    <div onclick="showPage('kalkulator')" class="premium-card p-6 cursor-pointer group">
+                    <div onclick="showPage('kalkulator')" class="premium-card p-6 cursor-pointer group hover:bg-blue-50/30 transition-all">
                         <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                             <i class="fas fa-calculator text-xl"></i>
                         </div>
@@ -595,7 +603,7 @@
                         <span class="text-xs font-bold text-blue-600">Buka <i class="fas fa-arrow-right ml-1"></i></span>
                     </div>
 
-                    <div onclick="showPage('bandar')" class="premium-card p-6 cursor-pointer group">
+                    <div onclick="showPage('bandar')" class="premium-card p-6 cursor-pointer group hover:bg-orange-50/30 transition-all">
                         <div class="w-12 h-12 bg-orange-50 text-orange-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                             <i class="fas fa-user-secret text-xl"></i>
                         </div>
@@ -604,7 +612,7 @@
                         <span class="text-xs font-bold text-orange-600">Buka <i class="fas fa-arrow-right ml-1"></i></span>
                     </div>
                     
-                    <div onclick="showPage('jurnal')" class="premium-card p-6 cursor-pointer group border-purple-100 bg-purple-50/10">
+                    <div onclick="showPage('jurnal')" class="premium-card p-6 cursor-pointer group border-purple-100 bg-purple-50/10 hover:bg-purple-50/30 transition-all">
                         <div class="w-12 h-12 bg-purple-50 text-purple-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                             <i class="fas fa-book text-xl"></i>
                         </div>
@@ -616,7 +624,7 @@
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
-                <div onclick="showPage('konglo')" class="premium-card p-6 cursor-pointer group border-indigo-100 bg-indigo-50/20">
+                <div onclick="showPage('konglo')" class="premium-card p-6 cursor-pointer group border-indigo-100 bg-indigo-50/20 hover:bg-indigo-50/40 transition-all">
                     <div class="w-12 h-12 bg-indigo-100 text-indigo-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                         <i class="fas fa-project-diagram text-xl"></i>
                     </div>
@@ -624,7 +632,7 @@
                     <p class="text-xs text-slate-500 leading-relaxed mb-4">Jelajahi peta kepemilikan saham dari tokoh, konglomerat, dan bandar utama di BEI.</p>
                     <span class="text-xs font-bold text-indigo-600">Lihat Peta <i class="fas fa-arrow-right ml-1"></i></span>
                 </div>
-                <div onclick="showPage('broker')" class="premium-card p-6 cursor-pointer group">
+                <div onclick="showPage('broker')" class="premium-card p-6 cursor-pointer group hover:bg-slate-50 transition-all">
                     <div class="w-12 h-12 bg-slate-50 text-slate-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                         <i class="fas fa-database text-xl"></i>
                     </div>
@@ -634,11 +642,11 @@
                 </div>
             </div>
 
-            <div class="premium-card p-6 md:p-8 wa-floating-card text-white overflow-hidden relative group">
+            <div class="premium-card p-6 md:p-8 wa-floating-card text-white overflow-hidden relative group shadow-xl">
                 <div class="absolute right-0 top-0 h-full w-1/3 bg-white/10 -skew-x-12 translate-x-20 group-hover:translate-x-10 transition-transform duration-700"></div>
                 <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
                     <div class="flex flex-col md:flex-row items-center gap-4 md:gap-6 text-center md:text-left">
-                        <div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center text-3xl">
+                        <div class="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center text-3xl shadow-inner">
                             <i class="fab fa-whatsapp"></i>
                         </div>
                         <div>
@@ -646,7 +654,7 @@
                             <p class="text-emerald-50 text-xs md:text-sm font-medium">Bergabung dengan 1000+ trader lainnya untuk diskusi harian.</p>
                         </div>
                     </div>
-                    <a href="https://chat.whatsapp.com/Kbic2YNTC1V1abRfq7Xb5Q" target="_blank" class="w-full md:w-auto bg-white text-emerald-600 px-8 py-4 rounded-2xl font-black text-sm uppercase tracking-wider hover:bg-emerald-50 transition-colors shadow-xl shadow-emerald-900/20 text-center">
+                    <a href="https://chat.whatsapp.com/Kbic2YNTC1V1abRfq7Xb5Q" target="_blank" class="w-full md:w-auto bg-white text-emerald-600 px-8 py-4 rounded-2xl font-black text-sm uppercase tracking-wider hover:bg-emerald-50 transition-colors shadow-lg shadow-emerald-900/20 text-center">
                         Gabung Grup Komunitas
                     </a>
                 </div>
@@ -721,16 +729,26 @@
                 <div class="flex flex-col xl:flex-row gap-6 h-[800px] xl:h-[850px] mb-8" id="tv-chart-wrapper">
                     
                     <div class="flex-1 glass-card flex flex-col h-full bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden dark-mode-card transition-colors">
-                        <div class="px-5 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
-                            <div class="flex items-center gap-3">
+                        
+                        <div class="px-5 py-4 border-b border-slate-100 flex flex-col md:flex-row items-center justify-between bg-slate-50/50 gap-4">
+                            <div class="flex items-center gap-3 w-full md:w-auto">
                                 <i class="fas fa-chart-line text-blue-600 text-lg"></i>
-                                <h2 class="font-black text-slate-800 text-sm md:text-base">Interactive Chart</h2>
-                                <div class="px-3 py-1 bg-slate-900 text-white rounded-lg font-bold text-[10px] md:text-xs ml-2 tracking-wider" id="chart-active-ticker">IDX:COMPOSITE</div>
+                                <h2 class="font-black text-slate-800 text-sm md:text-base whitespace-nowrap">Interactive Chart</h2>
+                                <div class="flex items-center gap-2 ml-2 bg-slate-900 rounded-lg px-3 py-1.5 shadow-inner flex-1 md:flex-none hover:ring-2 hover:ring-blue-500/50 transition-all">
+                                    <i class="fas fa-search text-slate-400 text-[10px]"></i>
+                                    <input type="text" id="chart-active-ticker-input" value="COMPOSITE"
+                                           class="bg-transparent text-white font-bold text-[10px] md:text-xs tracking-wider w-full md:w-24 outline-none uppercase"
+                                           onkeydown="if(event.key === 'Enter') openTVChart(this.value)"
+                                           placeholder="KODE...">
+                                </div>
                             </div>
-                            <button class="w-8 h-8 rounded-lg bg-white border border-slate-200 text-slate-500 hover:text-blue-600 hover:border-blue-300 transition-all flex items-center justify-center shadow-sm tooltip-trigger">
-                                <i class="fas fa-expand"></i><span class="tooltip-text">Gunakan tombol dalam chart untuk Fullscreen</span>
-                            </button>
+                            <div class="flex items-center justify-between w-full md:w-auto gap-4">
+                                <button class="w-8 h-8 shrink-0 rounded-lg bg-white border border-slate-200 text-slate-500 hover:text-blue-600 hover:border-blue-300 transition-all flex items-center justify-center shadow-sm tooltip-trigger">
+                                    <i class="fas fa-expand"></i><span class="tooltip-text">Gunakan tombol dalam chart untuk Fullscreen</span>
+                                </button>
+                            </div>
                         </div>
+
                         <div id="tv-chart-container" class="flex-1 w-full relative"></div>
                     </div>
 
@@ -769,7 +787,7 @@
                                 </div>
                                 <h3 class="font-black uppercase tracking-widest text-sm">Pro Tip</h3>
                             </div>
-                            <p class="text-xs md:text-sm text-blue-100 leading-relaxed font-medium">Klik pada kode saham apapun di area Screener, lalu sinkronkan atau ketik manual di menu <span class="font-bold text-white">Interactive Chart</span> untuk melihat Technical Analysis secara lebih dalam.</p>
+                            <p class="text-xs md:text-sm text-blue-100 leading-relaxed font-medium">Ketik kode saham pilihan Anda (dari area Screener) ke dalam <span class="font-bold text-white">Kolom Pencarian Chart</span> lalu tekan Enter untuk menganalisa langsung tanpa pindah halaman.</p>
                         </div>
                     </div>
                 </div>
@@ -781,23 +799,23 @@
                     <div class="grid grid-cols-1 md:grid-cols-5 gap-4 items-end">
                         <div class="md:col-span-1">
                             <label class="text-[10px] font-black text-slate-400 uppercase mb-2 block">KODE EMITEN</label>
-                            <input type="text" id="wl-ticker" placeholder="BREN" class="input-pro uppercase bg-white">
+                            <input type="text" id="wl-ticker" placeholder="BREN" class="input-pro uppercase bg-white border border-slate-200">
                         </div>
                         <div class="md:col-span-1">
                             <label class="text-[10px] font-black text-slate-400 uppercase mb-2 block">HARGA TARGET BELI</label>
-                            <input type="number" id="wl-price" placeholder="7000" class="input-pro bg-white">
+                            <input type="number" id="wl-price" placeholder="7000" class="input-pro bg-white border border-slate-200">
                         </div>
                         <div class="md:col-span-1">
                             <label class="text-[10px] font-black text-slate-400 uppercase mb-2 block">CATATAN (ALASAN)</label>
-                            <input type="text" id="wl-note" placeholder="Support kuat" class="input-pro bg-white">
+                            <input type="text" id="wl-note" placeholder="Support kuat" class="input-pro bg-white border border-slate-200">
                         </div>
                         <div class="md:col-span-1">
                             <label class="text-[10px] font-black text-slate-400 uppercase mb-2 block tooltip-trigger">FOREIGN FLOW <span class="tooltip-text">Track akumulasi/distribusi asing</span></label>
-                            <input type="text" id="wl-foreign" placeholder="Net Buy 50B" class="input-pro bg-white">
+                            <input type="text" id="wl-foreign" placeholder="Net Buy 50B" class="input-pro bg-white border border-slate-200">
                         </div>
                         <div class="md:col-span-1 flex gap-2">
-                            <button onclick="addWatchlist()" class="w-full bg-slate-900 text-white py-3.5 rounded-xl font-bold text-xs hover:bg-blue-600 transition-colors uppercase"><i class="fas fa-plus mr-2"></i> Tambah</button>
-                            <button onclick="clearWatchlist()" class="w-12 flex-shrink-0 bg-red-50 text-red-600 border border-red-200 py-3.5 rounded-xl font-bold text-xs hover:bg-red-100 transition-colors tooltip-trigger"><i class="fas fa-trash"></i><span class="tooltip-text">Bersihkan Semua</span></button>
+                            <button onclick="addWatchlist()" class="w-full bg-slate-900 text-white py-3.5 rounded-xl font-bold text-xs hover:bg-blue-600 transition-colors uppercase shadow-sm"><i class="fas fa-plus mr-2"></i> Tambah</button>
+                            <button onclick="clearWatchlist()" class="w-12 flex-shrink-0 bg-red-50 text-red-600 border border-red-200 py-3.5 rounded-xl font-bold text-xs hover:bg-red-100 transition-colors tooltip-trigger shadow-sm"><i class="fas fa-trash"></i><span class="tooltip-text">Bersihkan Semua</span></button>
                         </div>
                     </div>
                 </div>
@@ -822,23 +840,23 @@
                 </div>
 
                 <div class="grid grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
-                    <div class="premium-card p-5 text-center border-b-4 border-indigo-500">
+                    <div class="premium-card p-5 text-center border-b-4 border-indigo-500 hover:-translate-y-1 transition-transform">
                         <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1 tooltip-trigger">Total Modal <span class="tooltip-text">Akumulasi modal yg digunakan dari seluruh jurnal</span></p>
                         <p class="text-xl font-black text-indigo-600 mt-2 truncate" id="jr-total-modal">0</p>
                     </div>
-                    <div class="premium-card p-5 text-center border-b-4 border-purple-500">
+                    <div class="premium-card p-5 text-center border-b-4 border-purple-500 hover:-translate-y-1 transition-transform">
                         <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Total Trade</p>
                         <p class="text-2xl font-black text-slate-900 mt-1" id="jr-total-trade">0</p>
                     </div>
-                    <div class="premium-card p-5 text-center border-b-4 border-emerald-500">
+                    <div class="premium-card p-5 text-center border-b-4 border-emerald-500 hover:-translate-y-1 transition-transform">
                         <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Win Rate</p>
                         <p class="text-2xl font-black text-emerald-600 mt-1" id="jr-win-rate">0%</p>
                     </div>
-                    <div class="premium-card p-5 text-center border-b-4 border-blue-500">
+                    <div class="premium-card p-5 text-center border-b-4 border-blue-500 hover:-translate-y-1 transition-transform">
                         <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Total Cuan (Rp)</p>
                         <p class="text-xl font-black text-blue-600 mt-2 truncate" id="jr-total-win">0</p>
                     </div>
-                    <div class="premium-card p-5 text-center border-b-4 border-rose-500">
+                    <div class="premium-card p-5 text-center border-b-4 border-rose-500 hover:-translate-y-1 transition-transform">
                         <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Total Rugi (Rp)</p>
                         <p class="text-xl font-black text-rose-600 mt-2 truncate" id="jr-total-loss">0</p>
                     </div>
@@ -849,7 +867,7 @@
                         <i class="fas fa-globe text-amber-500"></i> Catatan Sentimen Makro (Log Book)
                         <span class="tooltip-trigger ml-auto"><i class="fas fa-info-circle text-slate-400"></i><span class="tooltip-text">Catat sentimen pasar global yang mempengaruhi keputusan investasi.</span></span>
                     </h4>
-                    <textarea id="macro-notes" rows="3" class="w-full bg-white border border-slate-200 p-4 rounded-xl font-medium text-sm text-slate-700 outline-none focus:border-amber-400 focus:ring-4 focus:ring-amber-500/10 transition-all" placeholder="Contoh: Hari ini The Fed menaikkan suku bunga. Market diprediksi volatil, pertimbangkan perbanyak posisi cash..."></textarea>
+                    <textarea id="macro-notes" rows="3" class="w-full bg-white border border-slate-200 p-4 rounded-xl font-medium text-sm text-slate-700 outline-none focus:border-amber-400 focus:ring-4 focus:ring-amber-500/10 transition-all shadow-inner" placeholder="Contoh: Hari ini The Fed menaikkan suku bunga. Market diprediksi volatil, pertimbangkan perbanyak posisi cash..."></textarea>
                     <div class="flex justify-between items-center mt-3">
                         <p id="macro-save-status" class="text-xs font-bold text-emerald-500 hidden"><i class="fas fa-check-circle"></i> Catatan tersimpan!</p>
                         <button onclick="saveMacroNotes()" class="bg-amber-500 text-white px-6 py-2.5 rounded-xl font-bold text-xs hover:bg-amber-600 transition-colors shadow-md ml-auto">Simpan Catatan</button>
@@ -857,13 +875,13 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-                    <div class="md:col-span-2 premium-card p-5 bg-white border-slate-200">
+                    <div class="md:col-span-2 premium-card p-5 bg-white border-slate-200 shadow-sm">
                         <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Equity Curve (Kumulatif PnL)</h4>
                         <div class="h-48 w-full relative">
                             <canvas id="equityChart"></canvas>
                         </div>
                     </div>
-                    <div class="md:col-span-1 premium-card p-5 bg-white border-slate-200">
+                    <div class="md:col-span-1 premium-card p-5 bg-white border-slate-200 shadow-sm">
                         <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Rasio Win vs Loss</h4>
                         <div class="h-48 w-full relative">
                             <canvas id="winLossChart"></canvas>
@@ -872,33 +890,33 @@
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <div class="lg:col-span-1 premium-card p-6 h-fit bg-slate-50">
+                    <div class="lg:col-span-1 premium-card p-6 h-fit bg-slate-50 border-slate-200 shadow-sm">
                         <h3 class="font-black text-slate-900 mb-4 uppercase tracking-widest text-xs flex items-center gap-2">
                             <i class="fas fa-pen-nib text-purple-600"></i> Catat Trade Baru
                         </h3>
                         <div class="space-y-4">
                             <div>
                                 <label class="text-[10px] font-black text-slate-400 uppercase mb-1 block">TANGGAL JUAL</label>
-                                <input type="date" id="jr-date" class="input-pro bg-white !py-2.5 !text-sm">
+                                <input type="date" id="jr-date" class="input-pro border border-slate-200 bg-white !py-2.5 !text-sm">
                             </div>
                             <div class="grid grid-cols-2 gap-3">
                                 <div>
                                     <label class="text-[10px] font-black text-slate-400 uppercase mb-1 block">EMITEN</label>
-                                    <input type="text" id="jr-ticker" placeholder="BBCA" class="input-pro uppercase bg-white !py-2.5 !text-sm">
+                                    <input type="text" id="jr-ticker" placeholder="BBCA" class="input-pro border border-slate-200 uppercase bg-white !py-2.5 !text-sm">
                                 </div>
                                 <div>
                                     <label class="text-[10px] font-black text-slate-400 uppercase mb-1 block">JUMLAH LOT</label>
-                                    <input type="number" id="jr-lot" placeholder="10" class="input-pro bg-white !py-2.5 !text-sm" min="1">
+                                    <input type="number" id="jr-lot" placeholder="10" class="input-pro border border-slate-200 bg-white !py-2.5 !text-sm" min="1">
                                 </div>
                             </div>
                             <div class="grid grid-cols-2 gap-3">
                                 <div>
                                     <label class="text-[10px] font-black text-slate-400 uppercase mb-1 block">HARGA BELI</label>
-                                    <input type="number" id="jr-buy" placeholder="1000" class="input-pro bg-white !py-2.5 !text-sm" min="1" oninput="calcRRR()">
+                                    <input type="number" id="jr-buy" placeholder="1000" class="input-pro border border-slate-200 bg-white !py-2.5 !text-sm" min="1" oninput="calcRRR()">
                                 </div>
                                 <div>
                                     <label class="text-[10px] font-black text-slate-400 uppercase mb-1 block">HARGA JUAL</label>
-                                    <input type="number" id="jr-sell" placeholder="1100" class="input-pro bg-white !py-2.5 !text-sm" min="1">
+                                    <input type="number" id="jr-sell" placeholder="1100" class="input-pro border border-slate-200 bg-white !py-2.5 !text-sm" min="1">
                                 </div>
                             </div>
                             
@@ -916,17 +934,17 @@
 
                             <div>
                                 <label class="text-[10px] font-black text-slate-400 uppercase mb-1 block">FEE BROKER (%) - TOTAL B/S</label>
-                                <input type="number" id="jr-fee" value="0.4" step="0.01" min="0" class="input-pro bg-white !py-2.5 !text-sm">
+                                <input type="number" id="jr-fee" value="0.4" step="0.01" min="0" class="input-pro border border-slate-200 bg-white !py-2.5 !text-sm">
                             </div>
                             
                             <div>
                                 <label class="text-[10px] font-black text-slate-400 uppercase mb-1 block">LINK SCREENSHOT CHART (OPSIONAL)</label>
-                                <input type="url" id="jr-screenshot" placeholder="https://prnt.sc/xxx" class="input-pro bg-white !py-2.5 !text-sm">
+                                <input type="url" id="jr-screenshot" placeholder="https://prnt.sc/xxx" class="input-pro border border-slate-200 bg-white !py-2.5 !text-sm">
                             </div>
 
                             <div>
                                 <label class="text-[10px] font-black text-slate-400 uppercase mb-1 block">ALASAN ENTRY (SETUP)</label>
-                                <select id="jr-reason" class="input-pro bg-white !py-2.5 !text-sm">
+                                <select id="jr-reason" class="input-pro border border-slate-200 bg-white !py-2.5 !text-sm">
                                     <option value="Breakout Resist">Breakout Resisten</option>
                                     <option value="Buy on Support">Buy on Support / Rebound</option>
                                     <option value="Akumulasi Bandar">Akumulasi Bandar Kuat</option>
@@ -936,20 +954,20 @@
                             </div>
                             <div>
                                 <label class="text-[10px] font-black text-slate-400 uppercase mb-1 block">EMOSI SAAT TRADE</label>
-                                <select id="jr-emotion" class="input-pro bg-white !py-2.5 !text-sm">
+                                <select id="jr-emotion" class="input-pro border border-slate-200 bg-white !py-2.5 !text-sm">
                                     <option value="Tenang / Sesuai Plan">Tenang, Sesuai Trading Plan</option>
                                     <option value="Takut / Panik">Panik / Takut Makin Turun</option>
                                     <option value="Serakah / Overconfident">Serakah / Over PD</option>
                                     <option value="Ragu-ragu">Ragu-ragu</option>
                                 </select>
                             </div>
-                            <button onclick="addJournal()" class="w-full bg-slate-900 text-white py-3.5 rounded-xl font-bold text-xs hover:bg-purple-600 transition-colors uppercase mt-2">
+                            <button onclick="addJournal()" class="w-full bg-slate-900 text-white py-3.5 rounded-xl font-bold text-xs hover:bg-purple-600 transition-colors uppercase mt-2 shadow-md">
                                 <i class="fas fa-save mr-2"></i> Simpan ke Jurnal
                             </button>
                         </div>
                     </div>
 
-                    <div class="lg:col-span-2 premium-card overflow-hidden flex flex-col">
+                    <div class="lg:col-span-2 premium-card overflow-hidden flex flex-col shadow-sm">
                         <div class="p-4 bg-slate-900 text-white flex flex-col md:flex-row justify-between items-center gap-4">
                             <h3 class="font-black text-sm uppercase tracking-widest flex-shrink-0"><i class="fas fa-list-ul text-purple-400 mr-2"></i> Histori Perjalanan</h3>
                             <div class="flex gap-2 w-full md:w-auto">
@@ -959,13 +977,13 @@
                         </div>
                         <div class="overflow-x-auto max-h-[600px] no-scrollbar">
                             <table class="w-full text-left border-collapse min-w-[700px]">
-                                <thead class="bg-slate-50 border-b border-slate-100">
+                                <thead class="bg-slate-50 border-b border-slate-200">
                                     <tr>
-                                        <th class="p-4 text-[10px] font-black text-slate-400 uppercase">Tgl & Emiten</th>
-                                        <th class="p-4 text-[10px] font-black text-slate-400 uppercase">Trade Info</th>
-                                        <th class="p-4 text-[10px] font-black text-slate-400 uppercase">Psikologi & Setup</th>
-                                        <th class="p-4 text-[10px] font-black text-slate-400 uppercase text-right">Net Profit/Loss</th>
-                                        <th class="p-4 text-[10px] font-black text-slate-400 uppercase text-center">Aksi</th>
+                                        <th class="p-4 text-[10px] font-black text-slate-500 uppercase">Tgl & Emiten</th>
+                                        <th class="p-4 text-[10px] font-black text-slate-500 uppercase">Trade Info</th>
+                                        <th class="p-4 text-[10px] font-black text-slate-500 uppercase">Psikologi & Setup</th>
+                                        <th class="p-4 text-[10px] font-black text-slate-500 uppercase text-right">Net Profit/Loss</th>
+                                        <th class="p-4 text-[10px] font-black text-slate-500 uppercase text-center">Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody id="journal-tbody">
@@ -987,14 +1005,14 @@
                     <p class="text-slate-500 text-sm">Sebelum investasi, ketahui tingkat toleransi Anda terhadap risiko penurunan harga.</p>
                 </div>
 
-                <div id="quiz-container" class="premium-card p-6 md:p-10">
+                <div id="quiz-container" class="premium-card p-6 md:p-10 shadow-sm">
                     <div id="quiz-q1" class="quiz-step active">
                         <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-4">Pertanyaan 1 dari 5</p>
                         <h3 class="text-xl font-bold text-slate-800 mb-6">Apa tujuan utama Anda berinvestasi?</h3>
                         <div class="space-y-3">
-                            <button onclick="nextQuiz(1, 1)" class="w-full text-left p-4 rounded-xl border border-slate-200 hover:border-blue-500 hover:bg-blue-50 font-semibold text-slate-700 transition-all">A. Menjaga nilai uang agar tidak tergerus inflasi (Aman).</button>
-                            <button onclick="nextQuiz(1, 2)" class="w-full text-left p-4 rounded-xl border border-slate-200 hover:border-blue-500 hover:bg-blue-50 font-semibold text-slate-700 transition-all">B. Mendapat pendapatan rutin sekaligus sedikit pertumbuhan modal.</button>
-                            <button onclick="nextQuiz(1, 3)" class="w-full text-left p-4 rounded-xl border border-slate-200 hover:border-blue-500 hover:bg-blue-50 font-semibold text-slate-700 transition-all">C. Pertumbuhan modal maksimal dalam jangka panjang (Siap rugi sementara).</button>
+                            <button onclick="nextQuiz(1, 1)" class="w-full text-left p-4 rounded-xl border border-slate-200 hover:border-blue-500 hover:bg-blue-50 font-semibold text-slate-700 transition-all shadow-sm">A. Menjaga nilai uang agar tidak tergerus inflasi (Aman).</button>
+                            <button onclick="nextQuiz(1, 2)" class="w-full text-left p-4 rounded-xl border border-slate-200 hover:border-blue-500 hover:bg-blue-50 font-semibold text-slate-700 transition-all shadow-sm">B. Mendapat pendapatan rutin sekaligus sedikit pertumbuhan modal.</button>
+                            <button onclick="nextQuiz(1, 3)" class="w-full text-left p-4 rounded-xl border border-slate-200 hover:border-blue-500 hover:bg-blue-50 font-semibold text-slate-700 transition-all shadow-sm">C. Pertumbuhan modal maksimal dalam jangka panjang (Siap rugi sementara).</button>
                         </div>
                     </div>
                     
@@ -1002,9 +1020,9 @@
                         <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-4">Pertanyaan 2 dari 5</p>
                         <h3 class="text-xl font-bold text-slate-800 mb-6">Berapa lama rencana jangka waktu investasi Anda?</h3>
                         <div class="space-y-3">
-                            <button onclick="nextQuiz(2, 1)" class="w-full text-left p-4 rounded-xl border border-slate-200 hover:border-blue-500 hover:bg-blue-50 font-semibold text-slate-700 transition-all">A. Kurang dari 1 tahun (Butuh uang cepat).</button>
-                            <button onclick="nextQuiz(2, 2)" class="w-full text-left p-4 rounded-xl border border-slate-200 hover:border-blue-500 hover:bg-blue-50 font-semibold text-slate-700 transition-all">B. Antara 1 sampai 5 tahun.</button>
-                            <button onclick="nextQuiz(2, 3)" class="w-full text-left p-4 rounded-xl border border-slate-200 hover:border-blue-500 hover:bg-blue-50 font-semibold text-slate-700 transition-all">C. Lebih dari 5 tahun (Dana Pensiun/Jangka Panjang).</button>
+                            <button onclick="nextQuiz(2, 1)" class="w-full text-left p-4 rounded-xl border border-slate-200 hover:border-blue-500 hover:bg-blue-50 font-semibold text-slate-700 transition-all shadow-sm">A. Kurang dari 1 tahun (Butuh uang cepat).</button>
+                            <button onclick="nextQuiz(2, 2)" class="w-full text-left p-4 rounded-xl border border-slate-200 hover:border-blue-500 hover:bg-blue-50 font-semibold text-slate-700 transition-all shadow-sm">B. Antara 1 sampai 5 tahun.</button>
+                            <button onclick="nextQuiz(2, 3)" class="w-full text-left p-4 rounded-xl border border-slate-200 hover:border-blue-500 hover:bg-blue-50 font-semibold text-slate-700 transition-all shadow-sm">C. Lebih dari 5 tahun (Dana Pensiun/Jangka Panjang).</button>
                         </div>
                     </div>
 
@@ -1012,9 +1030,9 @@
                         <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-4">Pertanyaan 3 dari 5</p>
                         <h3 class="text-xl font-bold text-slate-800 mb-6">Jika portofolio Anda tiba-tiba turun 20% dalam sebulan karena sentimen pasar, apa yang Anda lakukan?</h3>
                         <div class="space-y-3">
-                            <button onclick="nextQuiz(3, 1)" class="w-full text-left p-4 rounded-xl border border-slate-200 hover:border-blue-500 hover:bg-blue-50 font-semibold text-slate-700 transition-all">A. Panik, jual semua untuk menyelamatkan sisa uang.</button>
-                            <button onclick="nextQuiz(3, 2)" class="w-full text-left p-4 rounded-xl border border-slate-200 hover:border-blue-500 hover:bg-blue-50 font-semibold text-slate-700 transition-all">B. Menunggu pasar pulih, tapi tidak berani tambah dana.</button>
-                            <button onclick="nextQuiz(3, 3)" class="w-full text-left p-4 rounded-xl border border-slate-200 hover:border-blue-500 hover:bg-blue-50 font-semibold text-slate-700 transition-all">C. Beli lagi (Average Down) mumpung harga sedang diskon.</button>
+                            <button onclick="nextQuiz(3, 1)" class="w-full text-left p-4 rounded-xl border border-slate-200 hover:border-blue-500 hover:bg-blue-50 font-semibold text-slate-700 transition-all shadow-sm">A. Panik, jual semua untuk menyelamatkan sisa uang.</button>
+                            <button onclick="nextQuiz(3, 2)" class="w-full text-left p-4 rounded-xl border border-slate-200 hover:border-blue-500 hover:bg-blue-50 font-semibold text-slate-700 transition-all shadow-sm">B. Menunggu pasar pulih, tapi tidak berani tambah dana.</button>
+                            <button onclick="nextQuiz(3, 3)" class="w-full text-left p-4 rounded-xl border border-slate-200 hover:border-blue-500 hover:bg-blue-50 font-semibold text-slate-700 transition-all shadow-sm">C. Beli lagi (Average Down) mumpung harga sedang diskon.</button>
                         </div>
                     </div>
 
@@ -1022,9 +1040,9 @@
                         <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-4">Pertanyaan 4 dari 5</p>
                         <h3 class="text-xl font-bold text-slate-800 mb-6">Pengetahuan Anda tentang instrumen pasar modal (Saham, Reksa Dana, Obligasi)?</h3>
                         <div class="space-y-3">
-                            <button onclick="nextQuiz(4, 1)" class="w-full text-left p-4 rounded-xl border border-slate-200 hover:border-blue-500 hover:bg-blue-50 font-semibold text-slate-700 transition-all">A. Sangat minim, baru pertama kali.</button>
-                            <button onclick="nextQuiz(4, 2)" class="w-full text-left p-4 rounded-xl border border-slate-200 hover:border-blue-500 hover:bg-blue-50 font-semibold text-slate-700 transition-all">B. Tahu dasar-dasarnya dan pernah mencoba.</button>
-                            <button onclick="nextQuiz(4, 3)" class="w-full text-left p-4 rounded-xl border border-slate-200 hover:border-blue-500 hover:bg-blue-50 font-semibold text-slate-700 transition-all">C. Sangat paham, sering melakukan analisis fundamental/teknikal.</button>
+                            <button onclick="nextQuiz(4, 1)" class="w-full text-left p-4 rounded-xl border border-slate-200 hover:border-blue-500 hover:bg-blue-50 font-semibold text-slate-700 transition-all shadow-sm">A. Sangat minim, baru pertama kali.</button>
+                            <button onclick="nextQuiz(4, 2)" class="w-full text-left p-4 rounded-xl border border-slate-200 hover:border-blue-500 hover:bg-blue-50 font-semibold text-slate-700 transition-all shadow-sm">B. Tahu dasar-dasarnya dan pernah mencoba.</button>
+                            <button onclick="nextQuiz(4, 3)" class="w-full text-left p-4 rounded-xl border border-slate-200 hover:border-blue-500 hover:bg-blue-50 font-semibold text-slate-700 transition-all shadow-sm">C. Sangat paham, sering melakukan analisis fundamental/teknikal.</button>
                         </div>
                     </div>
 
@@ -1032,9 +1050,9 @@
                         <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-4">Pertanyaan 5 dari 5</p>
                         <h3 class="text-xl font-bold text-slate-800 mb-6">Pilih salah satu portofolio hipotetis ini:</h3>
                         <div class="space-y-3">
-                            <button onclick="nextQuiz(5, 1)" class="w-full text-left p-4 rounded-xl border border-slate-200 hover:border-blue-500 hover:bg-blue-50 font-semibold text-slate-700 transition-all">A. Untung max 5% setahun, tapi pasti dan tidak pernah rugi.</button>
-                            <button onclick="nextQuiz(5, 2)" class="w-full text-left p-4 rounded-xl border border-slate-200 hover:border-blue-500 hover:bg-blue-50 font-semibold text-slate-700 transition-all">B. Untung bisa 10% setahun, tapi ada risiko turun 3-5%.</button>
-                            <button onclick="nextQuiz(5, 3)" class="w-full text-left p-4 rounded-xl border border-slate-200 hover:border-blue-500 hover:bg-blue-50 font-semibold text-slate-700 transition-all">C. Untung bisa 20%++ setahun, tapi siap jika suatu saat turun 15%++.</button>
+                            <button onclick="nextQuiz(5, 1)" class="w-full text-left p-4 rounded-xl border border-slate-200 hover:border-blue-500 hover:bg-blue-50 font-semibold text-slate-700 transition-all shadow-sm">A. Untung max 5% setahun, tapi pasti dan tidak pernah rugi.</button>
+                            <button onclick="nextQuiz(5, 2)" class="w-full text-left p-4 rounded-xl border border-slate-200 hover:border-blue-500 hover:bg-blue-50 font-semibold text-slate-700 transition-all shadow-sm">B. Untung bisa 10% setahun, tapi ada risiko turun 3-5%.</button>
+                            <button onclick="nextQuiz(5, 3)" class="w-full text-left p-4 rounded-xl border border-slate-200 hover:border-blue-500 hover:bg-blue-50 font-semibold text-slate-700 transition-all shadow-sm">C. Untung bisa 20%++ setahun, tapi siap jika suatu saat turun 15%++.</button>
                         </div>
                     </div>
 
@@ -1044,7 +1062,7 @@
                         <h2 id="res-title" class="text-3xl font-black text-slate-900 mb-4">Tipe Profil</h2>
                         <p id="res-desc" class="text-slate-500 max-w-lg mx-auto mb-8 leading-relaxed">Deskripsi</p>
                         
-                        <div class="bg-slate-50 p-6 rounded-2xl text-left border border-slate-100 max-w-xl mx-auto mb-8">
+                        <div class="bg-slate-50 p-6 rounded-2xl text-left border border-slate-200 shadow-sm max-w-xl mx-auto mb-8">
                             <h4 class="font-bold text-slate-800 mb-4">Rekomendasi Alokasi Aset:</h4>
                             <ul id="res-allocation" class="space-y-3 text-sm font-semibold text-slate-600"></ul>
                         </div>
@@ -1063,7 +1081,7 @@
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    <div class="lg:col-span-1 premium-card p-6 flex flex-col justify-center bg-slate-900 text-white border-slate-700">
+                    <div class="lg:col-span-1 premium-card p-6 flex flex-col justify-center bg-slate-900 text-white border-slate-700 shadow-xl">
                         <h3 class="text-lg font-bold text-white mb-2 border-b border-slate-700 pb-2">Yield vs Risiko (Historis)</h3>
                         <p class="text-xs text-slate-400 mb-4">Perbandingan rata-rata return tahunan vs fluktuasi harga (drawdown).</p>
                         <div class="chart-container !h-[250px]">
@@ -1071,49 +1089,49 @@
                         </div>
                     </div>
 
-                    <div class="lg:col-span-2 premium-card overflow-hidden">
+                    <div class="lg:col-span-2 premium-card overflow-hidden shadow-sm">
                         <div class="p-6 bg-amber-50 border-b border-amber-100 flex items-center justify-between">
                             <h3 class="text-lg font-black text-amber-800">Curated Picks 2024-2026</h3>
-                            <span class="bg-amber-200 text-amber-800 text-[10px] font-black px-2 py-1 rounded uppercase">Live Data</span>
+                            <span class="bg-amber-200 text-amber-800 text-[10px] font-black px-2 py-1 rounded uppercase shadow-sm">Live Data</span>
                         </div>
                         <div class="overflow-x-auto">
                             <table class="w-full text-left border-collapse">
                                 <thead>
-                                    <tr class="bg-white border-b border-slate-100">
-                                        <th class="p-4 text-xs font-black text-slate-400 uppercase">Instrumen</th>
-                                        <th class="p-4 text-xs font-black text-slate-400 uppercase">Info & Keuntungan</th>
-                                        <th class="p-4 text-xs font-black text-slate-400 uppercase text-right">Est. Yield (p.a)</th>
+                                    <tr class="bg-white border-b border-slate-200">
+                                        <th class="p-4 text-xs font-black text-slate-500 uppercase">Instrumen</th>
+                                        <th class="p-4 text-xs font-black text-slate-500 uppercase">Info & Keuntungan</th>
+                                        <th class="p-4 text-xs font-black text-slate-500 uppercase text-right">Est. Yield (p.a)</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="border-b border-slate-50 hover:bg-slate-50 transition-colors">
+                                    <tr class="border-b border-slate-100 hover:bg-slate-50 transition-colors bg-white">
                                         <td class="p-4 font-black text-slate-800">SBN Ritel<br><span class="text-[10px] text-emerald-500 font-bold">(SR / ORI / SBR)</span></td>
                                         <td class="p-4 text-xs text-slate-600">Dijamin 100% oleh Negara. Pajak hanya 10%. Cocok untuk melawan inflasi dengan aman. Kupon dibayar tiap bulan.</td>
                                         <td class="p-4 text-right font-black text-emerald-600 text-lg">6.50%</td>
                                     </tr>
-                                    <tr class="border-b border-slate-50 hover:bg-slate-50 transition-colors">
+                                    <tr class="border-b border-slate-100 hover:bg-slate-50 transition-colors bg-white">
                                         <td class="p-4 font-black text-slate-800">Reksa Dana<br><span class="text-[10px] text-blue-500 font-bold">(Pasar Uang)</span></td>
                                         <td class="p-4 text-xs text-slate-600">Sangat likuid (bisa dicairkan kapan saja tanpa denda). Tidak ada pajak (bukan objek pajak).</td>
                                         <td class="p-4 text-right font-black text-blue-600 text-lg">4.50%</td>
                                     </tr>
-                                    <tr class="border-b border-slate-50 hover:bg-slate-50 transition-colors">
+                                    <tr class="border-b border-slate-100 hover:bg-slate-50 transition-colors bg-white">
                                         <td class="p-4 font-black text-slate-800">ETF Saham<br><span class="text-[10px] text-indigo-500 font-bold">(R-LQ45X dll)</span></td>
                                         <td class="p-4 text-xs text-slate-600">Membeli 45 saham bluechip sekaligus dalam 1 klik. Risiko terbagi (diversifikasi otomatis).</td>
                                         <td class="p-4 text-right font-black text-indigo-600 text-lg">8-12%*</td>
                                     </tr>
-                                    <tr class="hover:bg-slate-50 transition-colors">
+                                    <tr class="hover:bg-slate-50 transition-colors bg-white">
                                         <td class="p-4 font-black text-slate-800">Deposito Bank<br><span class="text-[10px] text-slate-500 font-bold">(Bank Digital)</span></td>
                                         <td class="p-4 text-xs text-slate-600">Dijamin LPS (maks 2M, rate wajar). Pajak 20%.</td>
                                         <td class="p-4 text-right font-black text-slate-600 text-lg">5.00%</td>
                                     </tr>
                                 </tbody>
                             </table>
-                            <p class="p-4 text-[9px] text-slate-400 italic">*Return ETF mengikuti pergerakan index IHSG/LQ45 secara fluktuatif.</p>
+                            <p class="p-4 text-[9px] text-slate-400 italic bg-white">*Return ETF mengikuti pergerakan index IHSG/LQ45 secara fluktuatif.</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="premium-card p-6 border-blue-100 mt-8">
+                <div class="premium-card p-6 border-blue-200 mt-8 shadow-sm">
                     <h3 class="text-xl font-black text-slate-900 mb-2 tooltip-trigger">Yield Curve Tracker <span class="tooltip-text">Kurva imbal hasil obligasi negara berdasar tenor waktu.</span></h3>
                     <p class="text-xs text-slate-500 mb-6">Jika kurva <span class="text-red-500 font-bold">Inverted (Terbalik)</span> di mana tenor pendek lebih tinggi dari tenor panjang, itu biasanya merupakan indikator resesi/perlambatan ekonomi.</p>
                     <div class="chart-container !h-[250px] !max-w-full">
@@ -1121,15 +1139,15 @@
                     </div>
                 </div>
 
-                <div class="premium-card p-6 md:p-8 border-l-[6px] border-emerald-500 flex flex-col md:flex-row items-center gap-6">
+                <div class="premium-card p-6 md:p-8 border-l-[6px] border-emerald-500 flex flex-col md:flex-row items-center gap-6 shadow-sm">
                     <div class="flex-1 w-full">
                         <h3 class="text-xl font-black text-slate-900 mb-2">Simulasi Kupon SBN</h3>
                         <p class="text-xs text-slate-500 mb-6">Jika saya beli seri SBN terbaru dengan yield <span class="font-bold text-emerald-600">6.50%</span>, berapa kupon bersih saya?</p>
                         
                         <label class="text-[10px] font-black text-slate-400 uppercase mb-2 block">Masukkan Modal (Rupiah)</label>
-                        <input type="number" id="sbn-modal" class="input-pro text-lg" placeholder="10000000" value="10000000" oninput="calcSbn()">
+                        <input type="number" id="sbn-modal" class="input-pro text-lg border border-slate-200 bg-white" placeholder="10000000" value="10000000" oninput="calcSbn()">
                     </div>
-                    <div class="bg-emerald-50 rounded-2xl p-6 w-full md:w-64 text-center shrink-0 border border-emerald-100">
+                    <div class="bg-emerald-50 rounded-2xl p-6 w-full md:w-64 text-center shrink-0 border border-emerald-200 shadow-inner">
                         <p class="text-[10px] font-black text-emerald-600 uppercase mb-1">Kupon Bersih Per Bulan</p>
                         <p class="text-2xl font-black text-slate-900" id="sbn-res-month">Rp 48.750</p>
                         <p class="text-[9px] text-slate-400 mt-2 font-bold">Dipotong pajak 10%</p>
@@ -1140,7 +1158,7 @@
 
         <section id="page-bandarmology-edu" class="page max-w-7xl mx-auto">
             <div class="max-w-6xl mx-auto space-y-8">
-                <div class="premium-card p-6 md:p-10 overflow-hidden relative bg-slate-900 text-white">
+                <div class="premium-card p-6 md:p-10 overflow-hidden relative bg-slate-900 text-white shadow-xl">
                     <div class="flex items-center gap-4 mb-4">
                         <div class="w-12 h-12 bg-indigo-500/20 text-indigo-400 rounded-xl flex items-center justify-center text-xl">
                             <i class="fas fa-search-dollar"></i>
@@ -1153,7 +1171,7 @@
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <div class="premium-card p-6 border-emerald-200">
+                    <div class="premium-card p-6 border-emerald-300 shadow-sm hover:shadow-md transition-shadow">
                         <h3 class="text-xl font-black text-emerald-600 mb-4 flex items-center gap-2"><i class="fas fa-arrow-trend-up"></i> Ciri Akumulasi (Koleksi)</h3>
                         <ul class="space-y-4">
                             <li class="flex gap-4 items-start">
@@ -1180,7 +1198,7 @@
                         </ul>
                     </div>
 
-                    <div class="premium-card p-6 border-rose-200">
+                    <div class="premium-card p-6 border-rose-300 shadow-sm hover:shadow-md transition-shadow">
                         <h3 class="text-xl font-black text-rose-600 mb-4 flex items-center gap-2"><i class="fas fa-arrow-trend-down"></i> Ciri Distribusi (Jualan)</h3>
                         <ul class="space-y-4">
                             <li class="flex gap-4 items-start">
@@ -1218,44 +1236,44 @@
                         <p class="text-slate-500 font-medium">Simulasikan kemandirian finansial Anda di masa tua.</p>
                     </div>
                     <div class="flex gap-3 w-full md:w-auto">
-                        <button onclick="window.print()" class="btn-action bg-slate-800 text-white px-5 py-3 rounded-xl font-black text-xs flex items-center justify-center gap-2 shadow-lg hover:bg-slate-700">
+                        <button onclick="window.print()" class="btn-action bg-slate-800 text-white px-5 py-3 rounded-xl font-black text-xs flex items-center justify-center gap-2 shadow-md hover:bg-slate-700">
                             <i class="fas fa-print"></i> CETAK PDF
                         </button>
-                        <button onclick="shareWhatsAppPensiun()" class="btn-action bg-emerald-600 text-white px-5 py-3 rounded-xl font-black text-xs flex items-center justify-center gap-2 shadow-lg hover:bg-emerald-700">
+                        <button onclick="shareWhatsAppPensiun()" class="btn-action bg-emerald-600 text-white px-5 py-3 rounded-xl font-black text-xs flex items-center justify-center gap-2 shadow-md hover:bg-emerald-700">
                             <i class="fab fa-whatsapp text-lg"></i> SHARE WA
                         </button>
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    <div class="lg:col-span-2 premium-card p-6 md:p-8">
+                    <div class="lg:col-span-2 premium-card p-6 md:p-8 shadow-sm">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div class="col-span-1 md:col-span-2">
                                 <label class="text-[10px] font-black text-slate-400 uppercase mb-2 block">Biaya Hidup Bulanan Saat Ini (Rp)</label>
-                                <input type="number" id="p-expense" value="10000000" class="input-pro" oninput="calculateRetirement()" min="0">
+                                <input type="number" id="p-expense" value="10000000" class="input-pro border border-slate-200 bg-white" oninput="calculateRetirement()" min="0">
                             </div>
                             <div>
                                 <label class="text-[10px] font-black text-slate-400 uppercase mb-2 block">Umur Saat Ini</label>
-                                <input type="number" id="p-age-now" value="25" class="input-pro" oninput="calculateRetirement()" min="1">
+                                <input type="number" id="p-age-now" value="25" class="input-pro border border-slate-200 bg-white" oninput="calculateRetirement()" min="1">
                             </div>
                             <div>
                                 <label class="text-[10px] font-black text-slate-400 uppercase mb-2 block">Target Umur Pensiun</label>
-                                <input type="number" id="p-age-retire" value="55" class="input-pro" oninput="calculateRetirement()" min="1">
+                                <input type="number" id="p-age-retire" value="55" class="input-pro border border-slate-200 bg-white" oninput="calculateRetirement()" min="1">
                             </div>
                             <div>
                                 <label class="text-[10px] font-black text-slate-400 uppercase mb-2 block">Ekspektasi Umur Maksimum</label>
-                                <input type="number" id="p-age-max" value="80" class="input-pro" oninput="calculateRetirement()" min="1">
+                                <input type="number" id="p-age-max" value="80" class="input-pro border border-slate-200 bg-white" oninput="calculateRetirement()" min="1">
                             </div>
                             <div>
                                 <label class="text-[10px] font-black text-slate-400 uppercase mb-2 block">Tabungan Saat Ini (Rupiah)</label>
-                                <input type="number" id="p-savings" value="0" class="input-pro" oninput="calculateRetirement()" min="0">
+                                <input type="number" id="p-savings" value="0" class="input-pro border border-slate-200 bg-white" oninput="calculateRetirement()" min="0">
                             </div>
-                            <div class="p-4 bg-blue-50 rounded-2xl relative border border-blue-100">
+                            <div class="p-4 bg-blue-50 rounded-2xl relative border border-blue-200 shadow-inner">
                                 <span class="absolute top-2 right-2 bg-blue-200 text-blue-700 text-[8px] font-black px-2 py-0.5 rounded tooltip-trigger">AUTO LIVE<span class="tooltip-text">Otomatis sinkron dengan inflasi terkini.</span></span>
                                 <label class="text-[10px] font-black text-blue-600 uppercase mb-2 block">Asumsi Inflasi (%)</label>
                                 <input type="number" id="p-inflation" value="2.8" class="bg-transparent w-full text-xl font-black outline-none text-slate-900" oninput="calculateRetirement()">
                             </div>
-                            <div class="p-4 bg-emerald-50 rounded-2xl relative border border-emerald-100">
+                            <div class="p-4 bg-emerald-50 rounded-2xl relative border border-emerald-200 shadow-inner">
                                 <span class="absolute top-2 right-2 bg-emerald-200 text-emerald-700 text-[8px] font-black px-2 py-0.5 rounded tooltip-trigger">AUTO LIVE<span class="tooltip-text">Otomatis sinkron yield SBN.</span></span>
                                 <label class="text-[10px] font-black text-emerald-600 uppercase mb-2 block">Return Investasi (%)</label>
                                 <input type="number" id="p-return" value="6.5" class="bg-transparent w-full text-xl font-black outline-none text-slate-900" oninput="calculateRetirement()">
@@ -1264,12 +1282,12 @@
                     </div>
 
                     <div class="space-y-6">
-                        <div class="premium-card p-6 md:p-8 bg-slate-900 text-white relative overflow-hidden">
+                        <div class="premium-card p-6 md:p-8 bg-slate-900 text-white relative overflow-hidden shadow-xl border-slate-800">
                             <span class="text-[10px] font-black text-blue-400 uppercase mb-2 block tracking-widest tooltip-trigger">Dana Pensiun Wajib<span class="tooltip-text">Uang yang harus ada di Rekening saat lo mau berhenti kerja</span></span>
                             <h4 class="text-2xl md:text-3xl font-black mb-2">Rp <span id="res-total-fund">0</span></h4>
                             <p class="text-[10px] text-slate-400 font-bold uppercase leading-relaxed" id="res-monthly-future">Masa Depan: Rp 0/bln</p>
                         </div>
-                        <div class="premium-card p-6 md:p-8 border-t-4 border-emerald-500">
+                        <div class="premium-card p-6 md:p-8 border-t-4 border-emerald-500 shadow-md">
                             <span class="text-[10px] font-black text-slate-400 uppercase mb-2 block tooltip-trigger">Investasi Per Bulan<span class="tooltip-text">Rutin masukkan uang segini tiap bulan ke SBN / Reksadana!</span></span>
                             <h4 class="text-2xl md:text-3xl font-black text-emerald-600">Rp <span id="res-monthly-invest">0</span></h4>
                             <p class="text-[10px] text-slate-500 font-bold mt-2 uppercase">Wajib disisihkan setiap bulan</p>
@@ -1288,38 +1306,38 @@
                 </div>
 
                 <div class="flex overflow-x-auto gap-2 mb-6 no-scrollbar pb-2 border-b border-slate-200">
-                    <button id="btn-edu-dasar" onclick="switchEduTab('edu-dasar')" class="edu-tab-btn whitespace-nowrap px-5 py-3 rounded-t-xl bg-blue-600 text-white font-bold text-xs transition-colors border-b-2 border-transparent"><i class="fas fa-chart-pie mr-2"></i>Dasar & Makro</button>
+                    <button id="btn-edu-dasar" onclick="switchEduTab('edu-dasar')" class="edu-tab-btn whitespace-nowrap px-5 py-3 rounded-t-xl bg-blue-600 text-white font-bold text-xs transition-colors border-b-2 border-transparent shadow-sm"><i class="fas fa-chart-pie mr-2"></i>Dasar & Makro</button>
                     <button id="btn-edu-profil" onclick="switchEduTab('edu-profil')" class="edu-tab-btn whitespace-nowrap px-5 py-3 rounded-t-xl bg-slate-100 text-slate-600 font-bold text-xs hover:bg-slate-200 transition-colors border-b-2 border-transparent"><i class="fas fa-users mr-2"></i>Profil Trader & Screener</button>
                     <button id="btn-edu-kamus" onclick="switchEduTab('edu-kamus')" class="edu-tab-btn whitespace-nowrap px-5 py-3 rounded-t-xl bg-slate-100 text-slate-600 font-bold text-xs hover:bg-slate-200 transition-colors border-b-2 border-transparent"><i class="fas fa-book mr-2"></i>Kamus & Regulasi</button>
                     <button id="btn-edu-teknikal" onclick="switchEduTab('edu-teknikal')" class="edu-tab-btn whitespace-nowrap px-5 py-3 rounded-t-xl bg-slate-100 text-slate-600 font-bold text-xs hover:bg-slate-200 transition-colors border-b-2 border-transparent"><i class="fas fa-chart-line mr-2"></i>Analisis Teknikal</button>
                 </div>
 
                 <div id="edu-dasar" class="edu-tab-content block space-y-8">
-                    <div class="premium-card p-6 md:p-10 overflow-hidden relative">
+                    <div class="premium-card p-6 md:p-10 overflow-hidden relative shadow-sm">
                         <div class="flex items-center gap-4 mb-8">
                             <div class="w-2 h-8 bg-red-600 rounded-full"></div>
                             <h2 class="text-xl md:text-2xl font-black text-slate-900">Dashboard Makro Indonesia</h2>
                         </div>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
-                            <div class="p-6 bg-slate-50 rounded-3xl border border-slate-100 text-center md:text-left hover:border-blue-300 transition-colors">
-                                <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3 block">Est. Inflasi 2024</span>
+                            <div class="p-6 bg-slate-50 rounded-3xl border border-slate-200 text-center md:text-left hover:border-blue-400 transition-colors shadow-sm">
+                                <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-3 block">Est. Inflasi 2024</span>
                                 <div class="text-3xl md:text-4xl font-black text-slate-900 mb-2">2.80%</div>
                                 <p class="text-[10px] text-slate-500 font-bold uppercase tooltip-trigger">Fokus: Ketahanan Pangan<span class="tooltip-text">Inflasi dijaga lewat operasi beras/pangan subsidi.</span></p>
                             </div>
-                            <div class="p-6 bg-slate-50 rounded-3xl border border-slate-100 text-center md:text-left hover:border-blue-300 transition-colors">
-                                <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3 block">Proj. Inflasi 2025</span>
+                            <div class="p-6 bg-slate-50 rounded-3xl border border-slate-200 text-center md:text-left hover:border-blue-400 transition-colors shadow-sm">
+                                <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-3 block">Proj. Inflasi 2025</span>
                                 <div class="text-3xl md:text-4xl font-black text-slate-900 mb-2">2.92%</div>
                                 <p class="text-[10px] text-slate-500 font-bold uppercase tooltip-trigger">Target: Konsumsi Domestik<span class="tooltip-text">Rangsang daya beli ritel di tengah pelemahan suku bunga.</span></p>
                             </div>
-                            <div class="p-6 bg-slate-50 rounded-3xl border border-slate-100 text-center md:text-left hover:border-blue-300 transition-colors">
-                                <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3 block">Proj. Inflasi 2026</span>
+                            <div class="p-6 bg-slate-50 rounded-3xl border border-slate-200 text-center md:text-left hover:border-blue-400 transition-colors shadow-sm">
+                                <span class="text-[10px] font-black text-slate-500 uppercase tracking-widest mb-3 block">Proj. Inflasi 2026</span>
                                 <div class="text-3xl md:text-4xl font-black text-slate-900 mb-2">4.76%</div>
                                 <p class="text-[10px] text-slate-500 font-bold uppercase tooltip-trigger">Visi: Stabilitas Jangka Panjang<span class="tooltip-text">Angka perkiraan atas jika program ambisius menekan defisit fiscal.</span></p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="premium-card p-6 md:p-10 border-blue-100 bg-blue-50/20">
+                    <div class="premium-card p-6 md:p-10 border-blue-200 bg-blue-50/20 shadow-sm">
                         <div class="flex items-center gap-4 mb-8">
                             <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center text-xl shadow-sm">
                                 <i class="fas fa-coins"></i>
@@ -1367,7 +1385,7 @@
                     </div>
 
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
-                        <div class="premium-card p-6 md:p-10 bg-slate-900 text-white border-slate-700">
+                        <div class="premium-card p-6 md:p-10 bg-slate-900 text-white border-slate-700 shadow-xl">
                             <h3 class="text-lg md:text-xl font-black mb-6 md:mb-8 flex items-center gap-3">
                                 <i class="fas fa-lightbulb text-blue-400"></i> Core Fundamental
                             </h3>
@@ -1382,13 +1400,13 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="premium-card p-6 md:p-10">
+                        <div class="premium-card p-6 md:p-10 shadow-sm">
                             <h3 class="text-lg md:text-xl font-black text-slate-900 mb-6 md:mb-8 flex items-center gap-3">
                                 <i class="fas fa-gem text-amber-500"></i> Alokasi Asset
                             </h3>
                             <div class="space-y-4 md:space-y-5">
-                                <div class="flex items-center gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-100">
-                                    <div class="w-10 h-10 md:w-12 md:h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <div class="flex items-center gap-4 p-4 rounded-2xl bg-white border border-slate-200 shadow-sm">
+                                    <div class="w-10 h-10 md:w-12 md:h-12 bg-blue-50 text-blue-600 rounded-xl flex items-center justify-center flex-shrink-0">
                                         <i class="fas fa-university"></i>
                                     </div>
                                     <div>
@@ -1396,8 +1414,8 @@
                                         <p class="text-[10px] md:text-[11px] text-slate-500">Yield stabil 3-5% p.a. Aman.</p>
                                     </div>
                                 </div>
-                                <div class="flex items-center gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-100">
-                                    <div class="w-10 h-10 md:w-12 md:h-12 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center flex-shrink-0">
+                                <div class="flex items-center gap-4 p-4 rounded-2xl bg-white border border-slate-200 shadow-sm">
+                                    <div class="w-10 h-10 md:w-12 md:h-12 bg-emerald-50 text-emerald-600 rounded-xl flex items-center justify-center flex-shrink-0">
                                         <i class="fas fa-file-invoice-dollar"></i>
                                     </div>
                                     <div>
@@ -1411,12 +1429,12 @@
                 </div>
 
                 <div id="edu-profil" class="edu-tab-content hidden space-y-8">
-                    <div class="premium-card p-6 md:p-10 bg-slate-900 text-white">
+                    <div class="premium-card p-6 md:p-10 bg-slate-900 text-white shadow-xl">
                         <h2 class="text-2xl md:text-3xl font-black mb-2 text-center text-blue-400">Siapa Kita di Dunia Persahaman?</h2>
                         <p class="text-center text-slate-400 text-sm mb-10">Mengenali Jati Diri Persahaman: The Scalper's vs The Investor</p>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6">
+                            <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6 shadow-inner">
                                 <h3 class="text-xl font-black text-rose-500 mb-4 flex items-center gap-2"><i class="fas fa-bolt"></i> THE SCALPER'S</h3>
                                 <p class="text-xs text-slate-300 mb-4 leading-relaxed">Strategi jangka sangat pendek mengambil cuan tipis (0.5% - 2%) dari pergerakan cepat dalam hitungan detik sampai menit.</p>
                                 <ul class="space-y-3">
@@ -1435,7 +1453,7 @@
                                 </ul>
                             </div>
 
-                            <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6">
+                            <div class="bg-slate-800 border border-slate-700 rounded-2xl p-6 shadow-inner">
                                 <h3 class="text-xl font-black text-emerald-500 mb-4 flex items-center gap-2"><i class="fas fa-seedling"></i> THE INVESTOR & SWINGER</h3>
                                 <p class="text-xs text-slate-300 mb-4 leading-relaxed">Pendekatan dengan rentang waktu menengah ke panjang, memanfaatkan tren utama atau sekedar mengamankan nilai uang.</p>
                                 <ul class="space-y-3">
@@ -1456,7 +1474,7 @@
                         </div>
                     </div>
 
-                    <div class="premium-card p-6 md:p-10 bg-slate-50 border-slate-200">
+                    <div class="premium-card p-6 md:p-10 bg-slate-50 border-slate-200 shadow-sm">
                         <div class="flex items-center gap-4 mb-6">
                             <div class="w-10 h-10 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center text-lg"><i class="fas fa-filter"></i></div>
                             <div>
@@ -1503,7 +1521,7 @@
 
                 <div id="edu-kamus" class="edu-tab-content hidden space-y-8">
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div class="premium-card p-6 border-t-4 border-blue-600">
+                        <div class="premium-card p-6 border-t-4 border-blue-600 shadow-sm hover:shadow-md transition-shadow">
                             <h4 class="font-black text-slate-900 mb-2 uppercase text-sm">Saham Blue Chip (1st Liner)</h4>
                             <p class="text-[11px] text-slate-500 mb-3">Saham unggulan / Big Caps. Likuiditas sangat tinggi, fundamental mapan, dan rutin bagi dividen.</p>
                             <ul class="text-[10px] font-bold text-slate-700 space-y-1">
@@ -1513,7 +1531,7 @@
                                 <li>• Contoh: BBCA, BBRI, TLKM, ASII</li>
                             </ul>
                         </div>
-                        <div class="premium-card p-6 border-t-4 border-amber-500">
+                        <div class="premium-card p-6 border-t-4 border-amber-500 shadow-sm hover:shadow-md transition-shadow">
                             <h4 class="font-black text-slate-900 mb-2 uppercase text-sm">Saham Second Liner</h4>
                             <p class="text-[11px] text-slate-500 mb-3">Saham lapis dua (menengah) dengan kinerja stabil dan potensi growth cepat.</p>
                             <ul class="text-[10px] font-bold text-slate-700 space-y-1">
@@ -1523,7 +1541,7 @@
                                 <li>• Non-market leader tapi prospektif</li>
                             </ul>
                         </div>
-                        <div class="premium-card p-6 border-t-4 border-rose-600">
+                        <div class="premium-card p-6 border-t-4 border-rose-600 shadow-sm hover:shadow-md transition-shadow">
                             <h4 class="font-black text-slate-900 mb-2 uppercase text-sm">Saham Gorengan (3rd Liner)</h4>
                             <p class="text-[11px] text-slate-500 mb-3">Saham lapis tiga yang sangat volatil, fundamental minim, namun mudah dikontrol bandar.</p>
                             <ul class="text-[10px] font-bold text-slate-700 space-y-1">
@@ -1535,16 +1553,16 @@
                         </div>
                     </div>
 
-                    <div class="premium-card p-6 md:p-8 bg-slate-900 text-white">
+                    <div class="premium-card p-6 md:p-8 bg-slate-900 text-white shadow-xl">
                         <div class="flex flex-col md:flex-row gap-8 items-center">
                             <div class="flex-1">
                                 <h3 class="text-xl font-black text-blue-400 mb-4 flex items-center gap-2"><i class="fas fa-gavel"></i> Aturan Bursa Efek Indonesia (BEI)</h3>
                                 <p class="text-sm text-slate-300 mb-4">Kebijakan Auto Reject dan Trading Halt dirancang untuk meredam kepanikan atau euforia berlebih.</p>
-                                <div class="bg-rose-900/40 p-4 rounded-xl border border-rose-800 mb-4">
+                                <div class="bg-rose-900/40 p-4 rounded-xl border border-rose-800 mb-4 shadow-inner">
                                     <h4 class="font-bold text-rose-400 text-xs mb-2">Batas ARB (Auto Reject Bawah)</h4>
                                     <p class="text-sm font-black text-white">Semua Harga Saham = -15% Maksimal Harian</p>
                                 </div>
-                                <div class="bg-emerald-900/40 p-4 rounded-xl border border-emerald-800">
+                                <div class="bg-emerald-900/40 p-4 rounded-xl border border-emerald-800 shadow-inner">
                                     <h4 class="font-bold text-emerald-400 text-xs mb-2">Batas ARA (Auto Reject Atas) Berlapis</h4>
                                     <ul class="text-xs text-white space-y-1">
                                         <li>• Harga < Rp 200 = <span class="font-black text-emerald-300">Maks +35%</span></li>
@@ -1553,7 +1571,7 @@
                                     </ul>
                                 </div>
                             </div>
-                            <div class="w-full md:w-1/3 bg-slate-800 p-5 rounded-2xl border border-slate-700 text-center shrink-0">
+                            <div class="w-full md:w-1/3 bg-slate-800 p-5 rounded-2xl border border-slate-700 text-center shrink-0 shadow-lg">
                                 <i class="fas fa-hand-paper text-4xl text-amber-500 mb-3"></i>
                                 <h4 class="font-black text-white mb-2">IHSG Trading Halt</h4>
                                 <p class="text-[10px] text-slate-400 mb-3">Penghentian sementara pasar jika IHSG anjlok dalam sehari.</p>
@@ -1566,24 +1584,24 @@
                         </div>
                     </div>
 
-                    <div class="premium-card p-6 md:p-10">
+                    <div class="premium-card p-6 md:p-10 shadow-sm">
                         <h3 class="text-xl font-black text-slate-900 mb-6 flex items-center gap-2"><i class="fas fa-spell-check text-blue-600"></i> Kamus Istilah Trader</h3>
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                            <div class="bg-slate-50 p-3 rounded-xl border border-slate-100"><span class="font-black text-slate-800 text-xs">Volatile</span><p class="text-[10px] text-slate-500 mt-1">Harga saham yang bergejolak naik turun dengan tajam dan cepat.</p></div>
-                            <div class="bg-slate-50 p-3 rounded-xl border border-slate-100"><span class="font-black text-slate-800 text-xs">FOMO</span><p class="text-[10px] text-slate-500 mt-1">(Fear of Missing Out) Rasa takut ketinggalan momen naik sehingga beli di pucuk.</p></div>
-                            <div class="bg-slate-50 p-3 rounded-xl border border-slate-100"><span class="font-black text-slate-800 text-xs">UMA</span><p class="text-[10px] text-slate-500 mt-1">(Unusual Market Activity) Aktivitas/pergerakan saham di luar kewajaran (peringatan bursa).</p></div>
-                            <div class="bg-slate-50 p-3 rounded-xl border border-slate-100"><span class="font-black text-slate-800 text-xs">Suspend</span><p class="text-[10px] text-slate-500 mt-1">Perdagangan suatu saham dibekukan/dihentikan paksa oleh BEI.</p></div>
-                            <div class="bg-slate-50 p-3 rounded-xl border border-slate-100"><span class="font-black text-slate-800 text-xs">HAKA / HAKI</span><p class="text-[10px] text-slate-500 mt-1">Hajar Kanan (Beli langsung di harga Offer) / Hajar Kiri (Jual paksa ke harga Bid).</p></div>
-                            <div class="bg-slate-50 p-3 rounded-xl border border-slate-100"><span class="font-black text-slate-800 text-xs">Bid / Offer</span><p class="text-[10px] text-slate-500 mt-1">Bid = Kolom antrean beli (Kiri). Offer = Kolom antrean jual (Kanan).</p></div>
-                            <div class="bg-slate-50 p-3 rounded-xl border border-slate-100"><span class="font-black text-slate-800 text-xs">Bandar / Ritel</span><p class="text-[10px] text-slate-500 mt-1">Bandar = Big fund/institusi pembuat tren. Ritel = Investor/trader perorangan modal kecil.</p></div>
-                            <div class="bg-slate-50 p-3 rounded-xl border border-slate-100"><span class="font-black text-slate-800 text-xs">e-IPO</span><p class="text-[10px] text-slate-500 mt-1">Penawaran perdana saham secara elektronik sebelum listing resmi di Bursa.</p></div>
-                            <div class="bg-slate-50 p-3 rounded-xl border border-slate-100"><span class="font-black text-slate-800 text-xs">TP / SL</span><p class="text-[10px] text-slate-500 mt-1">Take Profit = Eksekusi jual untung. Stop Loss = Jual paksa batasi kerugian (Cut Loss).</p></div>
+                            <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-sm"><span class="font-black text-slate-800 text-xs">Volatile</span><p class="text-[10px] text-slate-500 mt-1">Harga saham yang bergejolak naik turun dengan tajam dan cepat.</p></div>
+                            <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-sm"><span class="font-black text-slate-800 text-xs">FOMO</span><p class="text-[10px] text-slate-500 mt-1">(Fear of Missing Out) Rasa takut ketinggalan momen naik sehingga beli di pucuk.</p></div>
+                            <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-sm"><span class="font-black text-slate-800 text-xs">UMA</span><p class="text-[10px] text-slate-500 mt-1">(Unusual Market Activity) Aktivitas/pergerakan saham di luar kewajaran (peringatan bursa).</p></div>
+                            <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-sm"><span class="font-black text-slate-800 text-xs">Suspend</span><p class="text-[10px] text-slate-500 mt-1">Perdagangan suatu saham dibekukan/dihentikan paksa oleh BEI.</p></div>
+                            <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-sm"><span class="font-black text-slate-800 text-xs">HAKA / HAKI</span><p class="text-[10px] text-slate-500 mt-1">Hajar Kanan (Beli langsung di harga Offer) / Hajar Kiri (Jual paksa ke harga Bid).</p></div>
+                            <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-sm"><span class="font-black text-slate-800 text-xs">Bid / Offer</span><p class="text-[10px] text-slate-500 mt-1">Bid = Kolom antrean beli (Kiri). Offer = Kolom antrean jual (Kanan).</p></div>
+                            <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-sm"><span class="font-black text-slate-800 text-xs">Bandar / Ritel</span><p class="text-[10px] text-slate-500 mt-1">Bandar = Big fund/institusi pembuat tren. Ritel = Investor/trader perorangan modal kecil.</p></div>
+                            <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-sm"><span class="font-black text-slate-800 text-xs">e-IPO</span><p class="text-[10px] text-slate-500 mt-1">Penawaran perdana saham secara elektronik sebelum listing resmi di Bursa.</p></div>
+                            <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-sm"><span class="font-black text-slate-800 text-xs">TP / SL</span><p class="text-[10px] text-slate-500 mt-1">Take Profit = Eksekusi jual untung. Stop Loss = Jual paksa batasi kerugian (Cut Loss).</p></div>
                         </div>
                     </div>
                 </div>
 
                 <div id="edu-teknikal" class="edu-tab-content hidden space-y-8">
-                    <div class="premium-card p-6 md:p-10 border-indigo-100 bg-indigo-50/10">
+                    <div class="premium-card p-6 md:p-10 border-indigo-200 bg-indigo-50/10 shadow-sm">
                         <div class="text-center mb-10">
                             <h2 class="text-2xl md:text-3xl font-black text-slate-900 mb-2">Analisis <span class="text-indigo-600">Teknikal Dasar</span></h2>
                             <p class="text-slate-500 text-sm">Membaca jejak pergerakan harga lewat struktur visual grafik (Candlestick) dan pola (Pattern).</p>
@@ -1592,11 +1610,11 @@
                         <div class="mb-10">
                             <h3 class="text-xl font-black text-slate-800 mb-4 border-b border-slate-200 pb-2"><i class="fas fa-fire-flame-curved text-orange-500 mr-2"></i> Anatomi Candlestick</h3>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex justify-center gap-10">
+                                <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex justify-center gap-10 hover:shadow-md transition-shadow">
                                     <div class="flex flex-col items-center">
                                         <span class="text-[10px] font-bold text-slate-400 mb-1">High</span>
                                         <div class="w-1 h-6 bg-slate-800"></div>
-                                        <div class="w-8 h-20 bg-emerald-500 border-2 border-emerald-700 relative">
+                                        <div class="w-8 h-20 bg-emerald-500 border-2 border-emerald-700 relative shadow-inner">
                                             <span class="absolute -right-12 top-0 text-[9px] font-bold text-slate-500">Close</span>
                                             <span class="absolute -right-12 bottom-0 text-[9px] font-bold text-slate-500">Open</span>
                                         </div>
@@ -1607,7 +1625,7 @@
                                     <div class="flex flex-col items-center">
                                         <span class="text-[10px] font-bold text-slate-400 mb-1">High</span>
                                         <div class="w-1 h-6 bg-slate-800"></div>
-                                        <div class="w-8 h-20 bg-rose-500 border-2 border-rose-700 relative">
+                                        <div class="w-8 h-20 bg-rose-500 border-2 border-rose-700 relative shadow-inner">
                                             <span class="absolute -left-12 top-0 text-[9px] font-bold text-slate-500">Open</span>
                                             <span class="absolute -left-12 bottom-0 text-[9px] font-bold text-slate-500">Close</span>
                                         </div>
@@ -1630,17 +1648,17 @@
                         <div>
                             <h3 class="text-xl font-black text-slate-800 mb-4 border-b border-slate-200 pb-2"><i class="fas fa-shapes text-indigo-500 mr-2"></i> Pola Harga Klasik (Chart Patterns)</h3>
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm text-center hover:-translate-y-1 transition-transform">
+                                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm text-center hover:-translate-y-2 transition-transform">
                                     <div class="text-4xl text-emerald-500 font-black tracking-tighter mb-2" style="font-family: monospace;">W</div>
                                     <h4 class="font-black text-slate-900 text-sm">Double Bottom</h4>
                                     <p class="text-[10px] text-slate-500 mt-2">Pola huruf W di area support. Indikasi pembalikan arah (Reversal) dari tren turun menjadi tren naik (Bullish). Saat *breakout neckline*, itu konfirmasi entry.</p>
                                 </div>
-                                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm text-center hover:-translate-y-1 transition-transform">
+                                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm text-center hover:-translate-y-2 transition-transform">
                                     <div class="text-4xl text-rose-500 font-black tracking-tighter mb-2" style="font-family: monospace;">M</div>
                                     <h4 class="font-black text-slate-900 text-sm">Double Top</h4>
                                     <p class="text-[10px] text-slate-500 mt-2">Pola huruf M di area resisten (pucuk). Indikasi kuat pembalikan arah dari tren naik menjadi tren turun (Bearish). Tanda peringatan Take Profit.</p>
                                 </div>
-                                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm text-center hover:-translate-y-1 transition-transform">
+                                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm text-center hover:-translate-y-2 transition-transform">
                                     <div class="text-4xl text-blue-500 font-black tracking-tighter mb-2" style="font-family: monospace;">/⚑</div>
                                     <h4 class="font-black text-slate-900 text-sm">Bullish Flag</h4>
                                     <p class="text-[10px] text-slate-500 mt-2">Pola kelanjutan (Continuation) setelah tiang panjang (kenaikan impulsif) diikuti koreksi landai menyerupai bendera. Menandakan harga istirahat sebelum meroket lagi.</p>
@@ -1657,33 +1675,33 @@
             <div class="max-w-6xl mx-auto">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 items-start">
                     <div class="space-y-6">
-                        <div class="premium-card p-6 md:p-8">
+                        <div class="premium-card p-6 md:p-8 shadow-sm">
                             <h3 class="text-xl font-black text-slate-900 mb-6 md:mb-8 uppercase">Trading Plan</h3>
                             <div class="grid grid-cols-2 gap-4 md:gap-6">
                                 <div class="col-span-2">
                                     <label class="text-[10px] font-black text-slate-400 uppercase mb-2 block">EMITEN</label>
-                                    <input type="text" id="calc-name" placeholder="BBCA" class="input-pro uppercase">
+                                    <input type="text" id="calc-name" placeholder="BBCA" class="input-pro border border-slate-200 bg-white uppercase">
                                 </div>
                                 <div>
                                     <label class="text-[10px] font-black text-slate-400 uppercase mb-2 block">HARGA BELI</label>
-                                    <input type="number" id="calc-price" placeholder="0" class="input-pro" oninput="runSimpleCalc()" min="1">
+                                    <input type="number" id="calc-price" placeholder="0" class="input-pro border border-slate-200 bg-white" oninput="runSimpleCalc()" min="1">
                                 </div>
                                 <div>
                                     <label class="text-[10px] font-black text-slate-400 uppercase mb-2 block">JUMLAH LOT</label>
-                                    <input type="number" id="calc-lot" placeholder="0" class="input-pro" oninput="runSimpleCalc()" min="1">
+                                    <input type="number" id="calc-lot" placeholder="0" class="input-pro border border-slate-200 bg-white" oninput="runSimpleCalc()" min="1">
                                 </div>
                                 <div>
                                     <label class="text-[10px] font-black text-emerald-600 uppercase mb-2 block">TP (%)</label>
-                                    <input type="number" id="calc-tp" value="5" class="input-pro !border-emerald-100 bg-emerald-50/30" oninput="runSimpleCalc()" min="0.1" step="0.1">
+                                    <input type="number" id="calc-tp" value="5" class="input-pro border !border-emerald-200 bg-emerald-50/30" oninput="runSimpleCalc()" min="0.1" step="0.1">
                                 </div>
                                 <div>
                                     <label class="text-[10px] font-black text-rose-600 uppercase mb-2 block">SL (%)</label>
-                                    <input type="number" id="calc-sl" value="3" class="input-pro !border-rose-100 bg-rose-50/30" oninput="runSimpleCalc()" min="0.1" step="0.1">
+                                    <input type="number" id="calc-sl" value="3" class="input-pro border !border-rose-200 bg-rose-50/30" oninput="runSimpleCalc()" min="0.1" step="0.1">
                                 </div>
                             </div>
                         </div>
                         
-                        <div class="premium-card p-6 bg-slate-50 border-purple-100">
+                        <div class="premium-card p-6 bg-slate-50 border-purple-200 shadow-sm">
                             <h4 class="text-xs font-black text-slate-900 mb-4 uppercase tracking-widest flex items-center gap-2">
                                 <i class="fas fa-shield-alt text-purple-600"></i> Position Sizing
                                 <span class="tooltip-trigger ml-auto"><i class="fas fa-info-circle text-slate-400"></i><span class="tooltip-text">Ketahui Lot Maksimal untuk membatasi risiko kerugian!</span></span>
@@ -1691,25 +1709,25 @@
                             <div class="grid grid-cols-2 gap-4">
                                 <div class="col-span-2">
                                     <label class="text-[10px] font-black text-slate-400 uppercase mb-2 block">MODAL TRADING (Rp)</label>
-                                    <input type="number" id="ps-modal" placeholder="10000000" class="input-pro bg-white" min="1">
+                                    <input type="number" id="ps-modal" placeholder="10000000" class="input-pro bg-white border border-slate-200" min="1">
                                 </div>
                                 <div>
                                     <label class="text-[10px] font-black text-slate-400 uppercase mb-2 block">RISIKO MAKS (%)</label>
-                                    <input type="number" id="ps-risk" value="1" step="0.5" class="input-pro bg-white border-purple-100" min="0.1">
+                                    <input type="number" id="ps-risk" value="1" step="0.5" class="input-pro bg-white border border-purple-200" min="0.1">
                                 </div>
                                 <div>
                                     <label class="text-[10px] font-black text-slate-400 uppercase mb-2 block">ENTRY PRICE</label>
-                                    <input type="number" id="ps-entry" placeholder="1000" class="input-pro bg-white" min="1">
+                                    <input type="number" id="ps-entry" placeholder="1000" class="input-pro bg-white border border-slate-200" min="1">
                                 </div>
                                 <div>
                                     <label class="text-[10px] font-black text-slate-400 uppercase mb-2 block">STOP LOSS PRICE</label>
-                                    <input type="number" id="ps-sl" placeholder="950" class="input-pro bg-white border-rose-100" min="1">
+                                    <input type="number" id="ps-sl" placeholder="950" class="input-pro bg-white border border-rose-200" min="1">
                                 </div>
                                 <div class="flex items-end">
-                                    <button onclick="calculateSizing()" class="w-full bg-purple-600 text-white py-3.5 rounded-xl font-bold text-[10px] hover:bg-purple-700 transition-colors uppercase">Hitung Lot</button>
+                                    <button onclick="calculateSizing()" class="w-full bg-purple-600 text-white py-3.5 rounded-xl font-bold text-[10px] hover:bg-purple-700 transition-colors uppercase shadow-md">Hitung Lot</button>
                                 </div>
                             </div>
-                            <div id="ps-result" class="hidden mt-4 p-4 border-l-[4px] border-purple-600 bg-white shadow-sm flex justify-between items-center">
+                            <div id="ps-result" class="hidden mt-4 p-4 border-l-[4px] border-purple-600 bg-white shadow-sm flex justify-between items-center rounded-r-xl">
                                  <div>
                                      <p class="text-[10px] text-slate-400 font-bold uppercase">MAKSIMAL BELI:</p>
                                      <p class="text-xl font-black text-slate-900" id="res-ps-lot">0 Lot</p>
@@ -1722,29 +1740,29 @@
                         </div>
 
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div class="premium-card p-6 bg-slate-50">
+                            <div class="premium-card p-6 bg-slate-50 border-slate-200 shadow-sm hover:border-blue-300 transition-colors">
                                 <h4 class="text-xs font-black text-slate-900 mb-4 uppercase tracking-widest flex items-center gap-2">
                                     <i class="fas fa-layer-group text-blue-600"></i> Average Down
                                 </h4>
                                 <div class="space-y-3">
-                                    <input type="number" id="avg-down-price" class="input-pro bg-white !py-3 !text-sm" placeholder="Harga Baru" min="1">
-                                    <input type="number" id="avg-down-lot" class="input-pro bg-white !py-3 !text-sm" placeholder="Lot Baru" min="1">
-                                    <button onclick="calculateAvg('down')" class="w-full bg-slate-900 text-white py-3 rounded-xl font-bold text-[10px] uppercase">Hitung</button>
+                                    <input type="number" id="avg-down-price" class="input-pro bg-white border border-slate-200 !py-3 !text-sm" placeholder="Harga Baru" min="1">
+                                    <input type="number" id="avg-down-lot" class="input-pro bg-white border border-slate-200 !py-3 !text-sm" placeholder="Lot Baru" min="1">
+                                    <button onclick="calculateAvg('down')" class="w-full bg-slate-900 text-white py-3 rounded-xl font-bold text-[10px] uppercase shadow-md hover:bg-blue-600 transition-colors">Hitung</button>
                                 </div>
                             </div>
-                            <div class="premium-card p-6 bg-slate-50">
+                            <div class="premium-card p-6 bg-slate-50 border-slate-200 shadow-sm hover:border-emerald-300 transition-colors">
                                 <h4 class="text-xs font-black text-slate-900 mb-4 uppercase tracking-widest flex items-center gap-2">
                                     <i class="fas fa-arrow-trend-up text-emerald-600"></i> Average Up
                                 </h4>
                                 <div class="space-y-3">
-                                    <input type="number" id="avg-up-price" class="input-pro bg-white !py-3 !text-sm" placeholder="Harga Baru" min="1">
-                                    <input type="number" id="avg-up-lot" class="input-pro bg-white !py-3 !text-sm" placeholder="Lot Baru" min="1">
-                                    <button onclick="calculateAvg('up')" class="w-full bg-emerald-600 text-white py-3 rounded-xl font-bold text-[10px] uppercase">Hitung</button>
+                                    <input type="number" id="avg-up-price" class="input-pro bg-white border border-slate-200 !py-3 !text-sm" placeholder="Harga Baru" min="1">
+                                    <input type="number" id="avg-up-lot" class="input-pro bg-white border border-slate-200 !py-3 !text-sm" placeholder="Lot Baru" min="1">
+                                    <button onclick="calculateAvg('up')" class="w-full bg-emerald-600 text-white py-3 rounded-xl font-bold text-[10px] uppercase shadow-md hover:bg-emerald-700 transition-colors">Hitung</button>
                                 </div>
                             </div>
                         </div>
 
-                        <div id="avg-result-box" class="hidden premium-card p-4 border-l-4 border-blue-600 bg-white">
+                        <div id="avg-result-box" class="hidden premium-card p-4 border-l-4 border-blue-600 bg-white shadow-sm rounded-r-xl">
                              <div class="flex justify-between items-center">
                                 <div>
                                     <p class="text-[10px] text-slate-400 font-bold uppercase" id="avg-type-label">AVG BARU:</p>
@@ -1759,21 +1777,21 @@
                     </div>
 
                     <div class="space-y-4 md:space-y-6 lg:sticky lg:top-24">
-                        <div class="premium-card p-6 md:p-8 border-l-[6px] border-emerald-500">
+                        <div class="premium-card p-6 md:p-8 border-l-[6px] border-emerald-500 shadow-sm">
                             <span class="text-[10px] font-black text-emerald-600 uppercase mb-2 block">Estimasi Profit</span>
                             <h4 class="text-3xl md:text-4xl font-black text-slate-900 mb-4">Rp <span id="res-gain">0</span></h4>
-                            <div class="bg-emerald-50 border border-emerald-100 px-4 py-2 rounded-lg text-xs md:text-sm font-black text-emerald-700 inline-block" id="res-tp-price">@0</div>
+                            <div class="bg-emerald-50 border border-emerald-200 px-4 py-2 rounded-lg text-xs md:text-sm font-black text-emerald-700 inline-block shadow-inner" id="res-tp-price">@0</div>
                         </div>
-                        <div class="premium-card p-6 md:p-8 border-l-[6px] border-rose-500">
+                        <div class="premium-card p-6 md:p-8 border-l-[6px] border-rose-500 shadow-sm">
                             <span class="text-[10px] font-black text-rose-600 uppercase mb-2 block">Risiko Maksimal</span>
                             <h4 class="text-3xl md:text-4xl font-black text-slate-900 mb-4">Rp <span id="res-risk">0</span></h4>
-                            <div class="bg-rose-50 border border-rose-100 px-4 py-2 rounded-lg text-xs md:text-sm font-black text-rose-700 inline-block" id="res-sl-price">@0</div>
+                            <div class="bg-rose-50 border border-rose-200 px-4 py-2 rounded-lg text-xs md:text-sm font-black text-rose-700 inline-block shadow-inner" id="res-sl-price">@0</div>
                         </div>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <button onclick="shareWhatsAppCalc()" class="btn-action bg-emerald-600 text-white py-4 md:py-5 rounded-2xl font-black text-xs uppercase flex items-center justify-center gap-3 shadow-lg hover:bg-emerald-700">
+                            <button onclick="shareWhatsAppCalc()" class="btn-action bg-emerald-600 text-white py-4 md:py-5 rounded-2xl font-black text-xs uppercase flex items-center justify-center gap-3 shadow-lg hover:bg-emerald-700 transition-colors">
                                 <i class="fab fa-whatsapp text-lg"></i> SHARE WA
                             </button>
-                            <button onclick="copyToClipboardCalc()" class="btn-action bg-slate-900 text-white py-4 md:py-5 rounded-2xl font-black text-xs uppercase flex items-center justify-center gap-3 shadow-lg hover:bg-slate-800">
+                            <button onclick="copyToClipboardCalc()" class="btn-action bg-slate-900 text-white py-4 md:py-5 rounded-2xl font-black text-xs uppercase flex items-center justify-center gap-3 shadow-lg hover:bg-slate-800 transition-colors">
                                 <i class="fas fa-copy text-lg"></i> COPY DATA
                             </button>
                         </div>
@@ -1784,32 +1802,32 @@
 
         <section id="page-bandar" class="page max-w-7xl mx-auto">
             <div class="max-w-6xl mx-auto space-y-6">
-                <div class="premium-card p-6 md:p-8">
+                <div class="premium-card p-6 md:p-8 shadow-sm">
                     <h2 class="text-2xl font-bold text-slate-800 mb-6 text-center">Target Realistis Saham</h2>
                     
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                         <div>
                             <label class="block text-[10px] font-black text-slate-400 uppercase mb-1">Tanggal <span class="text-red-500">*</span></label>
-                            <input type="date" id="tanggal" class="input-pro">
+                            <input type="date" id="tanggal" class="input-pro border border-slate-200 bg-white">
                         </div>
                         <div>
                             <label class="block text-[10px] font-black text-slate-400 uppercase mb-1 tooltip-trigger">Emiten <span class="text-red-500">*</span><span class="tooltip-text">Pastikan saham tidak suspen / ARB</span></label>
-                            <input type="text" id="emiten" placeholder="BBCA" class="input-pro uppercase">
+                            <input type="text" id="emiten" placeholder="BBCA" class="input-pro border border-slate-200 bg-white uppercase">
                         </div>
                         <div>
                             <label class="block text-[10px] font-black text-slate-400 uppercase mb-1">Broker <span class="text-red-500">*</span> <span id="broker-heatmap-badge"></span></label>
-                            <input type="text" id="broker" placeholder="AK" class="input-pro uppercase" oninput="checkBrokerHeatmap(event)">
+                            <input type="text" id="broker" placeholder="AK" class="input-pro border border-slate-200 bg-white uppercase" oninput="checkBrokerHeatmap(event)">
                         </div>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                         <div>
                             <label class="block text-[10px] font-black text-slate-400 uppercase mb-1">Buy Lot <span class="text-red-500">*</span></label>
-                            <input type="number" id="buyLot" placeholder="100000" class="input-pro" min="1">
+                            <input type="number" id="buyLot" placeholder="100000" class="input-pro border border-slate-200 bg-white" min="1">
                         </div>
                         <div>
                             <label class="block text-[10px] font-black text-slate-400 uppercase mb-1">Buy Avg <span class="text-red-500">*</span></label>
-                            <input type="number" id="buyAvg" placeholder="216.4" class="input-pro" oninput="handleBuyAvgChange(event)" min="1">
+                            <input type="number" id="buyAvg" placeholder="216.4" class="input-pro border border-slate-200 bg-white" oninput="handleBuyAvgChange(event)" min="1">
                         </div>
                         <div>
                             <label class="block text-[10px] font-black text-slate-400 uppercase mb-1 tooltip-trigger">Tick Size<span class="tooltip-text">Kelipatan Fraksi Harga (Otomatis)</span></label>
@@ -1820,11 +1838,11 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                         <div>
                             <label class="block text-[10px] font-black text-slate-400 uppercase mb-1 tooltip-trigger">Bid Terendah <span class="text-red-500">*</span><span class="tooltip-text">Harga antrean beli (Bid) paling bawah saat ini</span></label>
-                            <input type="number" id="bidTerendah" placeholder="200" class="input-pro" oninput="updateJumlahPapan()" min="1">
+                            <input type="number" id="bidTerendah" placeholder="200" class="input-pro border border-slate-200 bg-white" oninput="updateJumlahPapan()" min="1">
                         </div>
                         <div>
                             <label class="block text-[10px] font-black text-slate-400 uppercase mb-1 tooltip-trigger">Offer Tertinggi <span class="text-red-500">*</span><span class="tooltip-text">Harga antrean jual (Offer) paling atas saat ini</span></label>
-                            <input type="number" id="offerTertinggi" placeholder="250" class="input-pro" oninput="updateJumlahPapan()" min="1">
+                            <input type="number" id="offerTertinggi" placeholder="250" class="input-pro border border-slate-200 bg-white" oninput="updateJumlahPapan()" min="1">
                         </div>
                     </div>
 
@@ -1836,21 +1854,21 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
                         <div>
                             <label class="block text-[10px] font-black text-slate-400 uppercase mb-1">Total Bid (lot)</label>
-                            <input type="number" id="totalBid" placeholder="85000" class="input-pro" min="0">
+                            <input type="number" id="totalBid" placeholder="85000" class="input-pro border border-slate-200 bg-white" min="0">
                         </div>
                         <div>
                             <label class="block text-[10px] font-black text-slate-400 uppercase mb-1">Total Offer (lot)</label>
-                            <input type="number" id="totalOffer" placeholder="65000" class="input-pro" min="0">
+                            <input type="number" id="totalOffer" placeholder="65000" class="input-pro border border-slate-200 bg-white" min="0">
                         </div>
                     </div>
 
                     <div class="flex gap-3">
                         <button onclick="handleCalculate()" class="flex-[2] bg-blue-600 text-white font-bold py-4 rounded-xl hover:bg-blue-700 transition-colors shadow-md">Hitung Target</button>
-                        <button onclick="handleReset()" class="flex-1 bg-slate-200 text-slate-700 font-bold py-4 rounded-xl hover:bg-slate-300">Reset</button>
+                        <button onclick="handleReset()" class="flex-1 bg-slate-200 text-slate-700 font-bold py-4 rounded-xl hover:bg-slate-300 shadow-sm transition-colors">Reset</button>
                     </div>
                 </div>
 
-                <div id="historySection" class="hidden premium-card p-6 md:p-8 space-y-4"></div>
+                <div id="historySection" class="hidden premium-card p-6 md:p-8 space-y-4 shadow-sm"></div>
             </div>
         </section>
 
@@ -1865,7 +1883,7 @@
                     </section>
 
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
-                        <div class="lg:col-span-1 premium-card p-6 flex flex-col justify-center">
+                        <div class="lg:col-span-1 premium-card p-6 flex flex-col justify-center shadow-sm">
                             <h3 class="text-lg font-bold text-slate-900 mb-2 border-b border-slate-100 pb-2">Distribusi Sektor Emiten</h3>
                             <p class="text-xs text-slate-500 mb-4">Proporsi sektor bisnis dari total perusahaan tercatat yang terafiliasi dengan grup besar.</p>
                             <div class="chart-container">
@@ -1881,7 +1899,7 @@
                                 </div>
                                 <div class="relative w-full md:w-64 flex-shrink-0">
                                     <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
-                                    <input type="text" id="kongloSearch" onkeyup="searchKonglo()" placeholder="Cari Grup/Tokoh/Kode..." class="w-full bg-slate-50 border border-slate-200 px-10 py-3 rounded-xl text-xs font-bold outline-none focus:ring-2 focus:ring-blue-500/30">
+                                    <input type="text" id="kongloSearch" onkeyup="searchKonglo()" placeholder="Cari Grup/Tokoh/Kode..." class="w-full bg-white border border-slate-200 px-10 py-3 rounded-xl text-xs font-bold outline-none focus:ring-2 focus:ring-blue-500/30 shadow-sm transition-all">
                                 </div>
                             </div>
                             <div id="group-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -1890,8 +1908,8 @@
                     </div>
                 </div>
 
-                <div id="konglo-detail-view" class="hide premium-card overflow-hidden">
-                    <div class="bg-slate-900 px-6 py-8 relative">
+                <div id="konglo-detail-view" class="hide premium-card overflow-hidden shadow-xl">
+                    <div class="bg-slate-900 px-6 py-8 relative border-slate-800">
                         <button id="btn-back" onclick="hideDetail()" class="absolute top-4 left-4 bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-xl font-bold transition-colors text-xs flex items-center gap-2">
                             <i class="fas fa-arrow-left"></i> Kembali
                         </button>
@@ -1907,13 +1925,13 @@
                     </div>
                 </div>
 
-                <div id="konglo-funda-view" class="hide premium-card overflow-hidden bg-slate-900 text-slate-100 p-4 md:p-6 border-slate-700">
+                <div id="konglo-funda-view" class="hide premium-card overflow-hidden bg-slate-900 text-slate-100 p-4 md:p-6 border-slate-700 shadow-xl">
                     <header class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 border-b border-slate-700 pb-4 gap-4">
                         <div>
-                            <button onclick="hideFunda()" class="bg-white/10 hover:bg-white/20 text-white px-3 py-1.5 rounded-lg font-bold transition-colors text-xs flex items-center gap-2 mb-3">
+                            <button onclick="hideFunda()" class="bg-white/10 hover:bg-white/20 text-white px-3 py-1.5 rounded-lg font-bold transition-colors text-xs flex items-center gap-2 mb-3 shadow-sm">
                                 <i class="fas fa-arrow-left"></i> Kembali ke Daftar Saham
                             </button>
-                            <h1 class="text-2xl md:text-3xl font-black text-blue-500"><span id="funda-ticker">TICKER</span> <span class="text-white text-[10px] bg-blue-600 px-2 py-1 rounded ml-2 align-middle tooltip-trigger">PRO<span class="tooltip-text">Akses Data Proyection Tersedia</span></span></h1>
+                            <h1 class="text-2xl md:text-3xl font-black text-blue-500"><span id="funda-ticker">TICKER</span> <span class="text-white text-[10px] bg-blue-600 px-2 py-1 rounded ml-2 align-middle tooltip-trigger shadow-md">PRO<span class="tooltip-text">Akses Data Proyection Tersedia</span></span></h1>
                             <p class="text-slate-400 text-xs md:text-sm mt-1" id="funda-company">Nama Perusahaan</p>
                         </div>
                         <div class="text-left md:text-right">
@@ -1982,12 +2000,12 @@
                                 </div>
 
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                <div class="bg-slate-800/50 rounded-xl p-4 h-64 border border-slate-700">
+                                <div class="bg-slate-800/50 rounded-xl p-4 h-64 border border-slate-700 shadow-inner">
                                     <h4 class="text-xs font-bold text-slate-300 mb-2 text-center uppercase tracking-widest tooltip-trigger">Free Cash Flow (Triliun Rp)<span class="tooltip-text">Kas bersih riil dari hasil operasional.</span></h4>
                                     <div class="h-48 relative"><canvas id="fundaFcfChart"></canvas></div>
                                 </div>
                                 
-                                <div class="bg-slate-800/50 rounded-xl p-4 h-64 border border-slate-700">
+                                <div class="bg-slate-800/50 rounded-xl p-4 h-64 border border-slate-700 shadow-inner">
                                     <h4 class="text-xs font-bold text-slate-300 mb-2 text-center uppercase tracking-widest tooltip-trigger">Dividend Yield (%)<span class="tooltip-text">Besaran dividen yang dibagikan relatif terhadap harga pasar.</span></h4>
                                     <div class="h-48 relative"><canvas id="fundaDivChart"></canvas></div>
                                 </div>
@@ -2020,14 +2038,14 @@
 
         <section id="page-broker" class="page max-w-7xl mx-auto">
             <div class="max-w-6xl mx-auto">
-                <div class="premium-card overflow-hidden">
+                <div class="premium-card overflow-hidden shadow-xl">
                     <div class="p-6 md:p-12 bg-slate-900 text-white flex flex-col md:flex-row justify-between items-center gap-6 md:gap-8 border-slate-800">
                         <div class="text-center md:text-left">
                             <h3 class="text-2xl md:text-3xl font-black uppercase">Database Broker</h3>
                             <p class="text-xs md:text-sm text-slate-400 mt-1">Daftar 94 Anggota Bursa Efek Indonesia, lengkap dengan label kategori bandarmologi.</p>
                         </div>
                         <div class="flex flex-col md:flex-row gap-4 w-full md:w-auto">
-                            <select id="brokerFilter" onchange="searchBroker()" class="bg-white/10 border border-white/20 px-4 py-4 rounded-2xl text-xs md:text-sm font-bold outline-none focus:ring-4 focus:ring-blue-500/30 text-white h-[50px]">
+                            <select id="brokerFilter" onchange="searchBroker()" class="bg-white/10 border border-white/20 px-4 py-4 rounded-2xl text-xs md:text-sm font-bold outline-none focus:ring-4 focus:ring-blue-500/30 text-white h-[50px] shadow-sm">
                                 <option value="ALL" class="text-slate-900">Semua Tipe</option>
                                 <option value="Asing/Institusi" class="text-slate-900">Asing/Institusi</option>
                                 <option value="Dominan Ritel" class="text-slate-900">Dominan Ritel</option>
@@ -2035,11 +2053,11 @@
                             </select>
                             <div class="relative w-full md:w-64">
                                 <i class="fas fa-search absolute left-5 top-1/2 -translate-y-1/2 text-slate-400"></i>
-                                <input type="text" id="brokerSearch" onkeyup="searchBroker()" placeholder="Kode atau Nama..." class="w-full bg-white/10 border border-white/20 px-12 py-4 rounded-2xl text-xs md:text-sm font-bold outline-none focus:ring-4 focus:ring-blue-500/30 text-white h-[50px]">
+                                <input type="text" id="brokerSearch" onkeyup="searchBroker()" placeholder="Kode atau Nama..." class="w-full bg-white/10 border border-white/20 px-12 py-4 rounded-2xl text-xs md:text-sm font-bold outline-none focus:ring-4 focus:ring-blue-500/30 text-white h-[50px] shadow-sm">
                             </div>
                         </div>
                     </div>
-                    <div class="p-4 bg-slate-50 border-b border-slate-200 flex gap-4 text-xs font-bold text-slate-600 overflow-x-auto">
+                    <div class="p-4 bg-slate-50 border-b border-slate-200 flex gap-4 text-xs font-bold text-slate-600 overflow-x-auto shadow-inner">
                         <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-indigo-500 inline-block"></span> Institusi/Asing Besar</span>
                         <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-rose-500 inline-block"></span> Ritel Dominan</span>
                         <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-slate-300 inline-block"></span> Standar Lokal</span>
@@ -2068,7 +2086,7 @@
         <i class="fas fa-arrow-up"></i>
     </button>
 
-    <div class="md:hidden fixed bottom-0 left-0 right-0 z-[60] bg-white/95 backdrop-blur-md border-t border-slate-100 px-4 py-3 flex justify-between gap-1 bottom-nav">
+    <div class="md:hidden fixed bottom-0 left-0 right-0 z-[60] bg-white/95 backdrop-blur-xl border-t border-slate-200 px-4 py-3 flex justify-between gap-1 bottom-nav">
         <button onclick="showPage('home')" class="mobile-nav-btn active" id="m-nav-home">
             <i class="fas fa-home text-lg"></i>
             <span class="text-[9px] font-black uppercase">Home</span>
@@ -2855,11 +2873,13 @@
 
         window.tvWidgetInstance = null;
         window.currentTickerView = "";
+        
         function openTVChart(ticker) {
             const symbol = ticker.includes("IDX:") ? ticker : `IDX:${ticker}`;
             window.currentTickerView = symbol; 
             
-            document.getElementById('chart-active-ticker').innerText = symbol;
+            // Update UI Ticker Header
+            document.getElementById('chart-active-ticker-input').value = ticker.replace("IDX:", "");
 
             if(document.getElementById('tv-chart-wrapper')) {
                 document.getElementById('tv-chart-wrapper').classList.remove('hide');
@@ -2872,7 +2892,7 @@
             window.tvWidgetInstance = new TradingView.widget({
               "autosize": true,
               "symbol": symbol,
-              "interval": "D",
+              "interval": "D", 
               "timezone": "Asia/Jakarta",
               "theme": isDark ? "dark" : "light",
               "style": "1",
@@ -2880,7 +2900,7 @@
               "enable_publishing": false,
               "backgroundColor": isDark ? "#0f172a" : "rgba(255, 255, 255, 1)",
               "gridColor": isDark ? "#1e293b" : "rgba(241, 245, 249, 1)",
-              "hide_top_toolbar": false,
+              "hide_top_toolbar": false, 
               "hide_legend": false,
               "save_image": false,
               "container_id": "tv-chart-container",
@@ -3634,7 +3654,7 @@
                             <button onclick="showFunda('${stock.ticker}', '${stock.company}', '${stock.sector}')" class="flex-[3] bg-slate-900 text-white py-3 rounded-xl font-bold text-xs uppercase flex items-center justify-center gap-2 hover:bg-blue-600 transition-colors shadow-md">
                                 <i class="fas fa-chart-bar"></i> Analisis Fundamental PRO
                             </button>
-                            <button onclick="showPage('watchlist'); document.getElementById('wl-ticker').value='${stock.ticker}';" class="flex-1 bg-amber-100 text-amber-700 py-3 rounded-xl font-bold text-xs uppercase hover:bg-amber-200 transition-colors flex items-center justify-center tooltip-trigger">
+                            <button onclick="showPage('watchlist'); document.getElementById('wl-ticker').value='${stock.ticker}';" class="flex-1 bg-amber-100 text-amber-700 py-3 rounded-xl font-bold text-xs uppercase hover:bg-amber-200 transition-colors flex items-center justify-center tooltip-trigger shadow-sm">
                                 <i class="fas fa-star"></i><span class="tooltip-text">Kirim ke Watchlist</span>
                             </button>
                         </div>
@@ -4000,7 +4020,7 @@
                     <button onclick="clearHistory()" class="text-[10px] bg-red-50 text-red-600 px-3 py-1 rounded-lg font-bold hover:bg-red-100 transition-colors">CLEAR ALL</button>
                 </div>
             </div>` + history.map(res => `
-                <div class="border border-slate-100 rounded-2xl p-5 mb-4 bg-slate-50/50">
+                <div class="border border-slate-100 rounded-2xl p-5 mb-4 bg-white shadow-sm hover:shadow-md transition-shadow">
                     <div class="flex justify-between items-start mb-4">
                         <div>
                             <span class="text-xs font-black text-blue-600 bg-blue-50 px-2 py-1 rounded-lg">${res.emiten}</span>
@@ -4008,17 +4028,17 @@
                         </div>
                         <div class="flex gap-2">
                              <button onclick="shareWhatsAppBandar(${res.timestamp})" class="w-8 h-8 flex items-center justify-center bg-emerald-500 text-white rounded-lg shadow-sm hover:bg-emerald-600 transition-colors"><i class="fab fa-whatsapp"></i></button>
-                             <button onclick="copyRes(${res.timestamp})" class="w-8 h-8 flex items-center justify-center bg-white border border-slate-200 rounded-lg shadow-sm text-slate-400 hover:text-blue-600"><i class="fas fa-copy"></i></button>
-                             <button onclick="deleteItem(${res.timestamp})" class="w-8 h-8 flex items-center justify-center bg-white border border-slate-200 rounded-lg shadow-sm text-red-400 hover:text-red-600"><i class="fas fa-trash"></i></button>
+                             <button onclick="copyRes(${res.timestamp})" class="w-8 h-8 flex items-center justify-center bg-white border border-slate-200 rounded-lg shadow-sm text-slate-400 hover:text-blue-600 transition-colors"><i class="fas fa-copy"></i></button>
+                             <button onclick="deleteItem(${res.timestamp})" class="w-8 h-8 flex items-center justify-center bg-white border border-slate-200 rounded-lg shadow-sm text-red-400 hover:text-red-600 transition-colors"><i class="fas fa-trash"></i></button>
                         </div>
                     </div>
                     <div class="grid grid-cols-2 gap-4">
-                        <div class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 shadow-sm">
                             <p class="text-[9px] font-black text-slate-400 uppercase mb-1">Target Low</p>
                             <p class="text-lg font-black text-emerald-600">Rp ${formatNumber(res.targetLow)}</p>
                             <p class="text-[10px] font-bold text-emerald-500">+${res.percentLow.toFixed(2)}%</p>
                         </div>
-                        <div class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm">
+                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 shadow-sm">
                             <p class="text-[9px] font-black text-slate-400 uppercase mb-1">Target High</p>
                             <p class="text-lg font-black text-blue-600">Rp ${formatNumber(res.targetHigh)}</p>
                             <p class="text-[10px] font-bold text-blue-500">+${res.percentHigh.toFixed(2)}%</p>
@@ -4204,7 +4224,7 @@
 
         function renderBrokers(data = BROKERS) {
             document.getElementById('brokerTable').innerHTML = data.map(b => `
-                <tr class="hover:bg-slate-50 border-b border-slate-50">
+                <tr class="hover:bg-slate-50 border-b border-slate-100 bg-white transition-colors">
                     <td class="px-6 py-4 font-black text-blue-600 uppercase text-xs">${b.k}</td>
                     <td class="px-6 py-4 text-slate-700 font-extrabold text-xs">${b.n}</td>
                     <td class="px-6 py-4"><span class="stat-badge ${b.t === 'Asing' ? 'bg-amber-100 text-amber-700' : 'bg-slate-100 text-slate-500'}">${b.t}</span></td>
