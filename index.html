@@ -87,6 +87,37 @@
             border-color: #1e293b;
         }
 
+        /* --- UPGRADE: TOAST NOTIFICATIONS --- */
+        .toast {
+            min-width: 250px;
+            padding: 12px 20px;
+            border-radius: 12px;
+            background: white;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+            font-size: 13px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transform: translateX(120%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-left: 4px solid var(--accent);
+            z-index: 9999;
+        }
+        .toast.show {
+            transform: translateX(0);
+        }
+        .toast.success { border-left-color: #10b981; }
+        .toast.error { border-left-color: #ef4444; }
+        .toast.warning { border-left-color: #f59e0b; }
+        body.dark-mode-override .toast {
+            background: #1e293b;
+            color: white;
+            border-right: 1px solid #334155;
+            border-top: 1px solid #334155;
+            border-bottom: 1px solid #334155;
+        }
+
         /* --- FITUR KILLER: TOOLTIP EDUKASI --- */
         .tooltip-trigger {
             position: relative;
@@ -217,13 +248,11 @@
             margin-top: 0.5rem;
         }
 
-        /* We will toggle this class via JS to make click behavior robust */
         .dropdown-content.show-dropdown {
             display: block !important;
             animation: fadeIn 0.2s ease-out;
         }
         
-        /* Desktop hover as fallback/secondary */
         @media (min-width: 768px) {
             .group:hover .dropdown-content {
                 display: block;
@@ -319,6 +348,8 @@
     </style>
 </head>
 <body class="min-h-screen relative">
+
+    <div id="toast-container" class="fixed top-24 right-4 z-[9999] flex flex-col gap-2"></div>
 
     <div class="bg-slate-900 border-b border-slate-800 hidden md:block w-full">
         <div class="tradingview-widget-container">
@@ -759,7 +790,17 @@
                                     <i class="fas fa-filter text-amber-500 text-lg"></i>
                                     <h2 class="font-black text-slate-800 text-sm md:text-base">Market Screener Live</h2>
                                 </div>
-                                <span class="text-[10px] bg-emerald-100 text-emerald-700 px-2 py-1 rounded-full font-black tracking-widest uppercase animate-pulse">Connected</span>
+                                <div class="flex items-center gap-2">
+                                    <button onclick="exportScreenerWA()" class="w-8 h-8 md:w-auto md:px-3 py-1.5 rounded-lg md:rounded-xl bg-emerald-50 text-emerald-600 hover:bg-emerald-100 transition-colors flex items-center justify-center shadow-sm tooltip-trigger">
+                                        <i class="fab fa-whatsapp"></i><span class="hidden md:inline-block ml-1 text-[10px] font-black uppercase tracking-wider">WA</span>
+                                        <span class="tooltip-text">Kirim Hasil Screener (Watchlist) ke WA</span>
+                                    </button>
+                                    <button onclick="exportScreenerCSV()" class="w-8 h-8 md:w-auto md:px-3 py-1.5 rounded-lg md:rounded-xl bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors flex items-center justify-center shadow-sm tooltip-trigger">
+                                        <i class="fas fa-file-excel"></i><span class="hidden md:inline-block ml-1 text-[10px] font-black uppercase tracking-wider">Excel</span>
+                                        <span class="tooltip-text">Export Hasil Screener (Watchlist) ke CSV</span>
+                                    </button>
+                                    <span class="hidden lg:inline-block text-[10px] bg-emerald-100 text-emerald-700 px-2 py-1 rounded-full font-black tracking-widest uppercase animate-pulse">Connected</span>
+                                </div>
                             </div>
                             <div class="flex-1 w-full relative">
                                 <div class="tradingview-widget-container" style="height: 100%; width: 100%;">
@@ -2204,6 +2245,70 @@
     </div>
 
     <script>
+        // --- UPGRADE: FUNGSI TOAST NOTIFICATION MODERN ---
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            
+            let icon = 'fa-info-circle';
+            let iconColor = 'text-blue-500';
+            if (type === 'success') { icon = 'fa-check-circle'; iconColor = 'text-emerald-500'; }
+            if (type === 'error') { icon = 'fa-exclamation-circle'; iconColor = 'text-rose-500'; }
+            if (type === 'warning') { icon = 'fa-exclamation-triangle'; iconColor = 'text-amber-500'; }
+
+            toast.innerHTML = `<i class="fas ${icon} ${iconColor} text-lg"></i> <span>${message}</span>`;
+            
+            container.appendChild(toast);
+            
+            // Trigger reflow & animate
+            setTimeout(() => toast.classList.add('show'), 10);
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // --- UPGRADE: FUNGSI EXPORT MARKET SCREENER KE WA & EXCEL ---
+        // Penjelasan Teknis: Karena widget Screener menggunakan iframe langsung dari s3.tradingview.com, kebijakan CORS browser mencegah kita mengambil data secara langsung (scraping) dari dalam kotak.
+        // Solusi Workflow: Tombol ekspor menarik data dari "Pantau Saham Pribadi (Watchlist)" kamu yang merupakan hasil screening.
+        
+        function exportScreenerWA() {
+            if(watchlist.length === 0) {
+                showToast("Tambahkan saham dari Screener ke 'Pantau Saham Pribadi' (Watchlist) terlebih dahulu untuk diekspor!", "warning");
+                return;
+            }
+            let msg = "*HASIL SCREENING PASAR HARI INI*\n\n";
+            watchlist.forEach(w => {
+                msg += `• *${w.ticker}* - Target Beli: Rp ${Number(w.price).toLocaleString('id-ID')}\n  Catatan: ${w.note || '-'}\n`;
+                if(w.foreign) msg += `  Foreign: ${w.foreign}\n`;
+                msg += "\n";
+            });
+            msg += "_Data ditarik dari Watchlist Ewoks Academy Suite_";
+            window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`);
+        }
+
+        function exportScreenerCSV() {
+            if(watchlist.length === 0) {
+                showToast("Tambahkan saham dari Screener ke 'Pantau Saham Pribadi' (Watchlist) terlebih dahulu untuk diekspor!", "warning");
+                return;
+            }
+            let csv = "Kode Emiten,Target Beli,Catatan,Foreign Flow\n";
+            watchlist.forEach(w => {
+                csv += `${w.ticker},${w.price},"${w.note || '-'}","${w.foreign || '-'}"\n`;
+            });
+            const encoded = encodeURI("data:text/csv;charset=utf-8," + csv);
+            const link = document.createElement("a");
+            link.setAttribute("href", encoded);
+            link.setAttribute("download", `Screener_Watchlist_${new Date().toISOString().split('T')[0]}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            showToast("Hasil Export CSV Berhasil Diunduh!", "success");
+        }
+
+
         // --- EDUKASI SUB-TAB FUNCTION ---
         function switchEduTab(tabId) {
             document.querySelectorAll('.edu-tab-content').forEach(el => el.classList.add('hidden'));
@@ -2437,7 +2542,7 @@
                 stocks: [ 
                     { ticker: "BBCA", company: "PT Bank Central Asia Tbk", sector: "Perbankan", ownership: "Mayoritas saham (54.9%) dikuasai melalui PT Dwimuria Investama Andalan.", kepemilikan_persen: "54.9%", sejarah: "Diakuisisi Djarum pasca krisis 1998, kini menjadi bank dengan valuasi terbesar di RI.", tahun_masuk: "2002", broker_afiliasi: "RX, AK", free_float: "45.1%", avg_up: "9850", avg_down: "9500", support: "9300", resistance: "10200", last_update: "8 Mei 2026" }, 
                     { ticker: "BELI", company: "PT Global Digital Niaga Tbk", sector: "E-Commerce", ownership: "E-commerce (Blibli) dan tiket.com.", kepemilikan_persen: "83.0%", sejarah: "Grup Djarum mengkonsolidasikan bisnis digital mereka via Blibli.", tahun_masuk: "2022", broker_afiliasi: "BCA, YP", free_float: "17.0%", avg_up: "460", avg_down: "440", support: "420", resistance: "500", last_update: "8 Mei 2026" }, 
-                    { ticker: "DATA", company: "PT Remala Abadi Tbk / Keanggotaan Ekosistem", sector: "Pusat Data", ownership: "Investasi afiliasi Djarum dalam infrastruktur internet & cloud.", kepemilikan_persen: "Afiliasi (Kemitraan)", sejarah: "Kolaborasi infrastruktur jaringan bersama Otto Sugiri dan Salim.", tahun_masuk: "2020-an", broker_afiliasi: "RX, PD", free_float: "15.0%", avg_up: "38500", avg_down: "37000", support: "36000", resistance: "41000", last_update: "8 Mei 2026" },
+                    { ticker: "DATA", company: "PT Remala Abadi Tbk / Keanggotaan Ekosistem", sector: "Pusat Data", ownership: "Investasi afiliasi Djarum dalam infrastruktur internet & cloud.", kepemilikan_persen: "Afiliasi (Kemitraan)", sejarah: "Kolaborasi infrastruktur jaringan bersama Otto Sugiri dan Salim.", tahun_masuk: "2020-an", broker_afiliasi: "RX, PD", free_float: "15.0%", avg_up: "38500", avg_down: "37000", support: "36000", resistance: "41000", last_update: "8 Mei 2026"},
                     { ticker: "HEAL", company: "PT Medikaloka Hermina Tbk", sector: "Kesehatan", ownership: "Investasi strategis portofolio grup di sektor rumah sakit.", kepemilikan_persen: "Minoritas Strategis", sejarah: "Investasi ekosistem untuk diversifikasi portfolio Djarum ke healthcare.", tahun_masuk: "2021", broker_afiliasi: "RX, AK", free_float: "35.2%", avg_up: "1350", avg_down: "1280", support: "1200", resistance: "1500", last_update: "8 Mei 2026" },
                     { ticker: "IBST", company: "PT Inti Bangun Sejahtera Tbk", sector: "Infrastruktur Telekomunikasi", ownership: "Diakuisisi untuk memperkuat bisnis menara telekomunikasi grup.", kepemilikan_persen: "Mayoritas via TOWR", sejarah: "Konsolidasi bisnis tower Djarum.", tahun_masuk: "2024", broker_afiliasi: "BCA", free_float: "10.0%", avg_up: "6800", avg_down: "6500", support: "6200", resistance: "7500", last_update: "8 Mei 2026" },
                     { ticker: "RANC", company: "PT Supra Boga Lestari Tbk", sector: "Ritel Konsumsi", ownership: "Ritel supermarket (Ranch Market) bagian ekosistem Blibli.", kepemilikan_persen: "70.5% (via Blibli)", sejarah: "Diakuisisi Blibli untuk memperkuat bisnis O2O (Online to Offline).", tahun_masuk: "2021", broker_afiliasi: "BCA, YP", free_float: "29.5%", avg_up: "125", avg_down: "115", support: "100", resistance: "145", last_update: "8 Mei 2026" },
@@ -2853,6 +2958,7 @@
             a.download = `Ewoks_Backup_${new Date().toISOString().split('T')[0]}.json`;
             a.click();
             URL.revokeObjectURL(url);
+            showToast("Backup berhasil diunduh!", "success");
         }
 
         function importBackup(e) {
@@ -2869,7 +2975,7 @@
                     alert('Data berhasil di-import dan disinkronkan!');
                     location.reload();
                 } catch(err) {
-                    alert('Gagal memproses file. Pastikan file JSON formatnya benar.');
+                    showToast('Gagal memproses file. Pastikan file JSON formatnya benar.', 'error');
                 }
             };
             reader.readAsText(file);
@@ -3108,7 +3214,7 @@
             const foreign = document.getElementById('wl-foreign').value; 
             
             if(!ticker || !price || parseFloat(price) <= 0) {
-                alert("Kode Emiten dan Harga Target wajib diisi dengan valid!");
+                showToast("Kode Emiten dan Harga Target wajib diisi dengan valid!", "error");
                 return;
             }
             
@@ -3120,6 +3226,7 @@
             document.getElementById('wl-note').value = '';
             document.getElementById('wl-foreign').value = '';
             
+            showToast(`${ticker} berhasil ditambahkan ke Watchlist!`, "success");
             renderWatchlist();
         }
 
@@ -3128,6 +3235,7 @@
                 watchlist = [];
                 localStorage.removeItem('ewoks_watchlist');
                 renderWatchlist();
+                showToast("Watchlist berhasil dibersihkan", "success");
             }
         }
 
@@ -3194,6 +3302,7 @@
             watchlist = watchlist.filter(w => w.id !== id);
             localStorage.setItem('ewoks_watchlist', JSON.stringify(watchlist));
             renderWatchlist();
+            showToast("Item dihapus dari Watchlist", "success");
         }
         
         // --- MODULE: JURNAL TRADING & LOG BOOK ---
@@ -3233,11 +3342,11 @@
             const screenshot = document.getElementById('jr-screenshot').value.trim();
 
             if(!date || !ticker || !lot || !buy || !sell) {
-                alert("Semua kolom input bertanda wajib harus diisi!");
+                showToast("Semua kolom input bertanda wajib harus diisi!", "error");
                 return;
             }
             if(buy <= 0 || sell <= 0 || lot <= 0) {
-                alert("Kesalahan Validasi: Harga dan Lot tidak boleh bernilai negatif atau nol!");
+                showToast("Kesalahan Validasi: Harga dan Lot tidak boleh bernilai negatif atau nol!", "error");
                 return;
             }
 
@@ -3266,6 +3375,7 @@
             document.getElementById('jr-screenshot').value = '';
             document.getElementById('rr-indicator').innerHTML = '';
             
+            showToast("Catatan Trade berhasil disimpan ke Jurnal!", "success");
             renderJournal();
         }
 
@@ -3419,9 +3529,7 @@
         function saveMacroNotes() {
             const notes = document.getElementById('macro-notes').value;
             localStorage.setItem('ewoks_macro_notes', notes);
-            const status = document.getElementById('macro-save-status');
-            status.classList.remove('hidden');
-            setTimeout(() => status.classList.add('hidden'), 3000);
+            showToast('Catatan Sentimen Makro berhasil disimpan!', 'success');
         }
 
         function loadMacroNotes() {
@@ -3441,6 +3549,7 @@
             journal = journal.filter(j => j.id !== id);
             localStorage.setItem('ewoks_journal', JSON.stringify(journal));
             renderJournal(document.getElementById('jr-search').value);
+            showToast('Data trade berhasil dihapus', 'success');
         }
 
         function clearJournal() {
@@ -3449,11 +3558,12 @@
                 localStorage.removeItem('ewoks_journal');
                 document.getElementById('jr-search').value = '';
                 renderJournal();
+                showToast('Jurnal telah dibersihkan sepenuhnya', 'success');
             }
         }
 
         function exportJournalCSV() {
-            if(journal.length === 0) { alert('Jurnal masih kosong!'); return; }
+            if(journal.length === 0) { showToast('Jurnal masih kosong!', 'error'); return; }
             let csv = "Tanggal,Emiten,Lot,Buy,Sell,Fee(%),Alasan Entry,Psikologi/Emosi,Link Gambar,Net PnL,Status\n";
             journal.forEach(j => {
                 const status = j.isWin ? 'WIN' : 'LOSS';
@@ -3466,6 +3576,7 @@
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
+            showToast('File CSV berhasil diunduh', 'success');
         }
 
         // --- MODULE: KUIS PROFIL RISIKO ---
@@ -3726,7 +3837,7 @@
                             <button onclick="showFunda('${stock.ticker}', '${stock.company}', '${stock.sector}')" class="flex-[3] bg-slate-900 text-white py-3 rounded-xl font-bold text-xs uppercase flex items-center justify-center gap-2 hover:bg-blue-600 transition-colors shadow-md">
                                 <i class="fas fa-chart-bar"></i> Analisis Fundamental PRO
                             </button>
-                            <button onclick="showPage('watchlist'); document.getElementById('wl-ticker').value='${stock.ticker}';" class="flex-1 bg-amber-100 text-amber-700 py-3 rounded-xl font-bold text-xs uppercase hover:bg-amber-200 transition-colors flex items-center justify-center tooltip-trigger shadow-sm">
+                            <button onclick="showPage('watchlist'); document.getElementById('wl-ticker').value='${stock.ticker}'; showToast('Kode ditambahkan ke input Watchlist', 'success');" class="flex-1 bg-amber-100 text-amber-700 py-3 rounded-xl font-bold text-xs uppercase hover:bg-amber-200 transition-colors flex items-center justify-center tooltip-trigger shadow-sm">
                                 <i class="fas fa-star"></i><span class="tooltip-text">Kirim ke Watchlist</span>
                             </button>
                         </div>
@@ -4040,11 +4151,11 @@
             const totalOffer = Number(document.getElementById('totalOffer').value) || 0;
 
             if (!tanggal || !emiten || !broker || !buyLot || !buyAvg || !bidTerendah || !offerTertinggi) {
-                alert('Semua field bertanda * wajib diisi');
+                showToast('Semua field bertanda * wajib diisi', 'error');
                 return;
             }
             if(buyLot <= 0 || buyAvg <= 0) {
-                alert('Data Lot dan Harga tidak valid!');
+                showToast('Data Lot dan Harga tidak valid!', 'error');
                 return;
             }
 
@@ -4070,6 +4181,7 @@
 
             history.unshift(result);
             localStorage.setItem('calc_history', JSON.stringify(history));
+            showToast("Perhitungan Bandar selesai", "success");
             renderHistory();
         }
 
@@ -4078,6 +4190,7 @@
                 document.getElementById(id).value = id === 'tanggal' ? new Date().toISOString().split('T')[0] : '';
             });
             document.getElementById('broker-heatmap-badge').innerHTML = '';
+            showToast('Formulir direset', 'warning');
         }
 
         function renderHistory() {
@@ -4135,6 +4248,7 @@
         function deleteItem(ts) {
             history = history.filter(h => h.timestamp !== ts);
             localStorage.setItem('calc_history', JSON.stringify(history));
+            showToast('Riwayat Kalkulator dihapus', 'success');
             renderHistory();
         }
 
@@ -4142,13 +4256,14 @@
             if(confirm('Hapus semua riwayat?')) {
                 history = [];
                 localStorage.removeItem('calc_history');
+                showToast('Semua riwayat telah dibersihkan', 'success');
                 renderHistory();
             }
         }
 
         function exportHistoryCSV() {
             if (history.length === 0) {
-                alert("Tidak ada riwayat untuk diekspor.");
+                showToast("Tidak ada riwayat untuk diekspor.", "error");
                 return;
             }
             
@@ -4171,12 +4286,13 @@
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
+            showToast("Export riwayat bandar berhasil", "success");
         }
 
         function copyRes(ts) {
             const r = history.find(h => h.timestamp === ts);
             const text = `TARGET REALISTIS SAHAM ${r.emiten}\nTarget Low: Rp ${formatNumber(r.targetLow)} (+${r.percentLow.toFixed(2)}%)\nTarget High: Rp ${formatNumber(r.targetHigh)} (+${r.percentHigh.toFixed(2)}%)\n\nEwoks Academy Suite`;
-            navigator.clipboard.writeText(text).then(() => alert('Data disalin!'));
+            navigator.clipboard.writeText(text).then(() => showToast('Data disalin ke clipboard!', 'success'));
         }
 
         // --- MODULE: TRADING PLAN & SIZING ---
@@ -4214,7 +4330,7 @@
                 const box = document.getElementById('avg-result-box');
                 box.style.borderColor = type === 'up' ? '#10b981' : '#2563eb';
             } else {
-                alert("Mohon isi Harga Beli & Lot di menu Trading Plan serta input baru (tidak boleh minus/nol)!");
+                showToast("Mohon isi Harga Beli & Lot di menu Trading Plan serta input baru (tidak boleh minus/nol)!", "error");
             }
         }
 
@@ -4234,7 +4350,7 @@
                 document.getElementById('res-ps-lot').innerText = maxLot.toLocaleString('id-ID') + " Lot";
                 document.getElementById('res-ps-loss').innerText = "Rp " + Math.round(maxLossRp).toLocaleString('id-ID');
             } else {
-                alert("Data Sizing tidak valid. Pastikan Modal > 0 dan Entry Price lebih besar dari SL.");
+                showToast("Data Sizing tidak valid. Pastikan Modal > 0 dan Entry Price lebih besar dari SL.", "warning");
             }
         }
 
@@ -4245,7 +4361,7 @@
 
         function copyToClipboardCalc() {
             const text = `Plan: ${document.getElementById('calc-name').value}\nBuy: ${document.getElementById('calc-price').value}\nTP: ${document.getElementById('res-tp-price').innerText}\nSL: ${document.getElementById('res-sl-price').innerText}`;
-            navigator.clipboard.writeText(text).then(() => alert('Berhasil disalin!'));
+            navigator.clipboard.writeText(text).then(() => showToast('Berhasil disalin ke clipboard!', 'success'));
         }
 
         // --- MODULE: DANA PENSIUN ---
