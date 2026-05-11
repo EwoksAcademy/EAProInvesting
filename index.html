@@ -340,6 +340,11 @@
         .text-green { color: #22c55e; }
         .text-red { color: #ef4444; }
 
+        /* Style Tambahan Edukasi Fundamental internal tab */
+        .f-tab-active { border-bottom: 4px solid #2563eb; color: #2563eb; font-weight: bold; }
+        .f-tab-inactive { color: #64748b; border-bottom: 4px solid transparent; }
+        .f-tab-inactive:hover { color: #334155; border-color: #cbd5e1; }
+
         @media (max-width: 768px) {
             .hero-title { font-size: 2.25rem !important; line-height: 1.2; }
             .hero-card { padding: 2rem 1.5rem !important; border-radius: 2rem !important; }
@@ -1385,6 +1390,7 @@
 
                 <div class="flex overflow-x-auto gap-2 mb-6 no-scrollbar pb-2 border-b border-slate-200">
                     <button id="btn-edu-dasar" onclick="switchEduTab('edu-dasar')" class="edu-tab-btn whitespace-nowrap px-5 py-3 rounded-t-xl bg-blue-600 text-white font-bold text-xs transition-colors border-b-2 border-transparent shadow-sm"><i class="fas fa-chart-pie mr-2"></i>Dasar & Makro</button>
+                    <button id="btn-edu-fundamental" onclick="switchEduTab('edu-fundamental')" class="edu-tab-btn whitespace-nowrap px-5 py-3 rounded-t-xl bg-slate-100 text-slate-600 font-bold text-xs hover:bg-slate-200 transition-colors border-b-2 border-transparent shadow-sm"><i class="fas fa-chart-bar mr-2"></i>Analisis Fundamental</button>
                     <button id="btn-edu-profil" onclick="switchEduTab('edu-profil')" class="edu-tab-btn whitespace-nowrap px-5 py-3 rounded-t-xl bg-slate-100 text-slate-600 font-bold text-xs hover:bg-slate-200 transition-colors border-b-2 border-transparent"><i class="fas fa-users mr-2"></i>Profil Trader & Screener</button>
                     <button id="btn-edu-kamus" onclick="switchEduTab('edu-kamus')" class="edu-tab-btn whitespace-nowrap px-5 py-3 rounded-t-xl bg-slate-100 text-slate-600 font-bold text-xs hover:bg-slate-200 transition-colors border-b-2 border-transparent"><i class="fas fa-book mr-2"></i>Kamus & Regulasi</button>
                     <button id="btn-edu-teknikal" onclick="switchEduTab('edu-teknikal')" class="edu-tab-btn whitespace-nowrap px-5 py-3 rounded-t-xl bg-slate-100 text-slate-600 font-bold text-xs hover:bg-slate-200 transition-colors border-b-2 border-transparent"><i class="fas fa-chart-line mr-2"></i>Analisis Teknikal</button>
@@ -1505,6 +1511,314 @@
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <div id="edu-fundamental" class="edu-tab-content hidden space-y-8">
+                    
+                    <div class="premium-card p-6 md:p-10 shadow-sm border-slate-200 bg-white">
+                        <p class="text-blue-600 font-semibold tracking-wide uppercase text-sm mb-2">Fundamental 101</p>
+                        <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">Apa Itu Analisis Fundamental?</h2>
+                        <p class="text-sm md:text-base text-slate-600 mb-6 max-w-3xl leading-relaxed">
+                            Analisis fundamental adalah metode untuk mengevaluasi **nilai intrinsik** sebuah saham. Tujuannya adalah mencari tahu apakah harga saham saat ini sedang <i>undervalued</i> (murah) atau <i>overvalued</i> (mahal) dibandingkan dengan kinerja nyata bisnisnya. Jika Teknikal melihat "Harga & Volume", Fundamental melihat "Bisnis & Keuangan".
+                        </p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                            <div class="bg-slate-50 p-6 rounded-xl border border-slate-200">
+                                <div class="text-3xl mb-3">🏢</div>
+                                <h3 class="font-bold text-lg mb-2 text-slate-900">Kinerja Bisnis</h3>
+                                <p class="text-xs md:text-sm text-slate-600 leading-relaxed">Melihat seberapa pintar manajemen menghasilkan uang, mencetak laba, dan mengelola hutang.</p>
+                            </div>
+                            <div class="bg-slate-50 p-6 rounded-xl border border-slate-200">
+                                <div class="text-3xl mb-3">⚖️</div>
+                                <h3 class="font-bold text-lg mb-2 text-slate-900">Valuasi Saham</h3>
+                                <p class="text-xs md:text-sm text-slate-600 leading-relaxed">Menganalisis apakah harga yang ditawarkan pasar sepadan dengan nilai asli perusahaan tersebut.</p>
+                            </div>
+                            <div class="bg-slate-50 p-6 rounded-xl border border-slate-200">
+                                <div class="text-3xl mb-3">🌍</div>
+                                <h3 class="font-bold text-lg mb-2 text-slate-900">Kondisi Makro & Sentimen</h3>
+                                <p class="text-xs md:text-sm text-slate-600 leading-relaxed">Menganalisis faktor luar (suku bunga, inflasi, berita) yang mempengaruhi psikologi pasar dan kinerja sektor.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="premium-card p-6 md:p-10 shadow-sm border-slate-200 bg-white">
+                        <div class="mb-8">
+                            <p class="text-blue-600 font-semibold tracking-wide uppercase text-sm mb-2">Pilar 1</p>
+                            <h2 class="text-2xl md:text-3xl font-bold text-slate-900">Membaca Laporan Keuangan (Financial Statements)</h2>
+                            <p class="text-xs md:text-sm text-slate-600 mt-2 max-w-2xl leading-relaxed">Laporan keuangan adalah rapor perusahaan. Anda tidak perlu jadi akuntan, cukup pahami 3 komponen utama ini dan apa artinya bagi investor.</p>
+                        </div>
+
+                        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden dark-mode-card">
+                            <div class="flex flex-wrap border-b border-slate-200 bg-slate-50/50">
+                                <button onclick="switchLapkeuTab('f-tab-lr')" id="f-btn-lr" class="f-tab-active px-6 py-4 focus:outline-none transition-colors w-full sm:w-auto text-left sm:text-center text-xs md:text-sm">Laba Rugi (Income Statement)</button>
+                                <button onclick="switchLapkeuTab('f-tab-nr')" id="f-btn-nr" class="f-tab-inactive px-6 py-4 focus:outline-none transition-colors w-full sm:w-auto text-left sm:text-center text-xs md:text-sm">Neraca (Balance Sheet)</button>
+                                <button onclick="switchLapkeuTab('f-tab-ak')" id="f-btn-ak" class="f-tab-inactive px-6 py-4 focus:outline-none transition-colors w-full sm:w-auto text-left sm:text-center text-xs md:text-sm">Arus Kas (Cash Flow)</button>
+                            </div>
+
+                            <div class="p-6 md:p-8">
+                                <div id="f-tab-lr" class="block">
+                                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                                        <div>
+                                            <h3 class="text-xl md:text-2xl font-bold mb-4 flex items-center text-slate-900"><span class="mr-2 text-blue-600">💰</span> Laba Rugi (Income Statement)</h3>
+                                            <p class="text-xs md:text-sm text-slate-600 mb-4 leading-relaxed">Menunjukkan seberapa banyak pendapatan yang masuk dan berapa banyak biaya yang dikeluarkan dalam satu periode.</p>
+                                            <ul class="space-y-3 text-xs md:text-sm text-slate-700">
+                                                <li class="flex items-start">
+                                                    <span class="text-emerald-500 mr-2 font-bold">✓</span>
+                                                    <div><strong>Pendapatan (Revenue/Top Line):</strong> Uang kotor yang didapat dari jualan. Harus selalu naik dari tahun ke tahun.</div>
+                                                </li>
+                                                <li class="flex items-start">
+                                                    <span class="text-emerald-500 mr-2 font-bold">✓</span>
+                                                    <div><strong>Laba Kotor (Gross Profit):</strong> Pendapatan dikurangi modal pokok barang.</div>
+                                                </li>
+                                                <li class="flex items-start">
+                                                    <span class="text-emerald-500 mr-2 font-bold">✓</span>
+                                                    <div><strong>Laba Bersih (Net Income/Bottom Line):</strong> Keuntungan sisa setelah dipotong gaji, pajak, bunga, dll. Inilah uang sungguhan yang dicetak perusahaan.</div>
+                                                </li>
+                                            </ul>
+                                            <div class="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-100">
+                                                <p class="text-xs md:text-sm text-blue-800 leading-relaxed"><strong>💡 Tips Investor:</strong> Jangan hanya lihat "Pendapatan Naik". Pendapatan bisa naik, tapi kalau beban utang/biaya promosi bengkak, Laba Bersih bisa malah minus (Rugi).</p>
+                                            </div>
+                                        </div>
+                                        <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+                                            <h4 class="text-center font-semibold text-xs md:text-sm text-slate-500 mb-2">Ilustrasi: Pendapatan vs Laba Bersih (Miliar Rp)</h4>
+                                            <div class="chart-container !h-[250px]">
+                                                <canvas id="incomeChart"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="f-tab-nr" class="hidden">
+                                    <h3 class="text-xl md:text-2xl font-bold mb-4 flex items-center text-slate-900"><span class="mr-2 text-blue-600">⚖️</span> Neraca (Balance Sheet)</h3>
+                                    <p class="text-xs md:text-sm text-slate-600 mb-6 leading-relaxed">Potret kekayaan perusahaan pada satu hari tertentu. Terdiri dari Aset (Harta), Liabilitas (Hutang), dan Ekuitas (Modal Sendiri).</p>
+                                    
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                        <div class="bg-emerald-50 p-5 rounded-xl border border-emerald-100">
+                                            <div class="text-2xl mb-2">🏠</div>
+                                            <h4 class="font-bold text-emerald-900 mb-2 text-xs md:text-sm">Aset (Assets)</h4>
+                                            <p class="text-[11px] md:text-xs text-emerald-800 leading-relaxed">Semua yang dimiliki perusahaan (Kas, Pabrik, Piutang, Inventaris). Dibagi aset lancar (mudah dicairkan) & tidak lancar.</p>
+                                        </div>
+                                        <div class="bg-rose-50 p-5 rounded-xl border border-rose-100">
+                                            <div class="text-2xl mb-2">💳</div>
+                                            <h4 class="font-bold text-rose-900 mb-2 text-xs md:text-sm">Liabilitas (Liabilities)</h4>
+                                            <p class="text-[11px] md:text-xs text-rose-800 leading-relaxed">Semua hutang perusahaan kepada pihak luar (Bank, Supplier). Waspada jika hutang jangka pendek terlalu besar.</p>
+                                        </div>
+                                        <div class="bg-blue-50 p-5 rounded-xl border border-blue-100">
+                                            <div class="text-2xl mb-2">💼</div>
+                                            <h4 class="font-bold text-blue-900 mb-2 text-xs md:text-sm">Ekuitas (Equity)</h4>
+                                            <p class="text-[11px] md:text-xs text-blue-800 leading-relaxed">Nilai kekayaan bersih perusahaan.<br><strong>Rumus Pasti: Aset = Hutang + Ekuitas.</strong> Modal riil milik pemegang saham.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="f-tab-ak" class="hidden">
+                                    <h3 class="text-xl md:text-2xl font-bold mb-4 flex items-center text-slate-900"><span class="mr-2 text-blue-600">🌊</span> Arus Kas (Cash Flow)</h3>
+                                    <p class="text-xs md:text-sm text-slate-600 mb-6 max-w-3xl leading-relaxed">Laba di atas kertas (Income Statement) bisa dimanipulasi, tapi Kas (Uang Tunai) di bank tidak bisa bohong. Cash Flow melacak keluar masuknya uang tunai riil.</p>
+                                    
+                                    <div class="space-y-4">
+                                        <div class="p-4 border border-slate-200 rounded-lg flex flex-col md:flex-row md:items-center gap-4 bg-white">
+                                            <div class="bg-emerald-100 text-emerald-700 p-3 rounded-lg font-bold text-center w-full md:w-32 shrink-0 text-xs">CFO</div>
+                                            <div>
+                                                <h4 class="font-bold text-slate-900 text-xs md:text-sm">Cash From Operations (Aktivitas Operasi)</h4>
+                                                <p class="text-[11px] md:text-xs text-slate-600 leading-relaxed">Uang tunai dari bisnis inti. <strong>Paling Penting!</strong> Harus positif (+). Kalau negatif, berarti jualan tidak menghasilkan uang tunai (mungkin nyangkut di piutang).</p>
+                                            </div>
+                                        </div>
+                                        <div class="p-4 border border-slate-200 rounded-lg flex flex-col md:flex-row md:items-center gap-4 bg-white">
+                                            <div class="bg-blue-100 text-blue-700 p-3 rounded-lg font-bold text-center w-full md:w-32 shrink-0 text-xs">CFI</div>
+                                            <div>
+                                                <h4 class="font-bold text-slate-900 text-xs md:text-sm">Cash From Investing (Aktivitas Investasi)</h4>
+                                                <p class="text-[11px] md:text-xs text-slate-600 leading-relaxed">Uang untuk beli/jual aset tetap (pabrik, mesin). Biasanya negatif (-) karena perusahaan yang sehat terus berekspansi/beli alat baru.</p>
+                                            </div>
+                                        </div>
+                                        <div class="p-4 border border-slate-200 rounded-lg flex flex-col md:flex-row md:items-center gap-4 bg-white">
+                                            <div class="bg-purple-100 text-purple-700 p-3 rounded-lg font-bold text-center w-full md:w-32 shrink-0 text-xs">CFF</div>
+                                            <div>
+                                                <h4 class="font-bold text-slate-900 text-xs md:text-sm">Cash From Financing (Aktivitas Pendanaan)</h4>
+                                                <p class="text-[11px] md:text-xs text-slate-600 leading-relaxed">Uang dari ngutang, bayar utang, bagi dividen, atau right issue. Positif (+) berarti dapet suntikan dana, Negatif (-) berarti lagi bayar utang/bagi dividen.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="premium-card p-6 md:p-10 shadow-sm border-slate-200 bg-white">
+                        <div class="mb-8">
+                            <p class="text-emerald-600 font-semibold tracking-wide uppercase text-sm mb-2">Pilar 2</p>
+                            <h2 class="text-2xl md:text-3xl font-bold text-slate-900">Rasio Keuangan Wajib Tahu</h2>
+                            <p class="text-xs md:text-sm text-slate-600 mt-2 max-w-2xl leading-relaxed">Rasio digunakan untuk membandingkan perusahaan kecil vs besar secara adil, atau membandingkan harga saham dengan kinerja bisnisnya.</p>
+                        </div>
+
+                        <h3 class="text-lg md:text-xl font-bold text-slate-900 mb-4 border-b border-slate-200 pb-2">1. Rasio Valuasi (Apakah Saham Ini Murah?)</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+                            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow dark-mode-card">
+                                <div class="flex justify-between items-start mb-4">
+                                    <h4 class="font-bold text-sm md:text-lg text-blue-700">Price to Earning Ratio (PER)</h4>
+                                    <span class="bg-blue-100 text-blue-800 text-[10px] md:text-xs px-2 py-1 rounded font-bold">Harga vs Laba</span>
+                                </div>
+                                <p class="text-xs md:text-sm text-slate-600 mb-4 leading-relaxed">Mengukur berapa harga yang bersedia dibayar investor untuk setiap Rp1 laba perusahaan. Ibaratnya, butuh berapa tahun balik modal jika laba perusahaan stagnan.</p>
+                                <div class="bg-slate-50 p-3 rounded text-xs md:text-sm border border-slate-100">
+                                    <p class="font-mono"><strong>Rumus:</strong> Harga Saham / Laba per Saham (EPS)</p>
+                                    <p class="mt-1 text-emerald-700 font-medium"><strong>Cara Baca:</strong> PER kecil (&lt; 10-15x) = Murah. PER besar = Mahal / Pasar berekspektasi tinggi.</p>
+                                </div>
+                            </div>
+
+                            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow dark-mode-card">
+                                <div class="flex justify-between items-start mb-4">
+                                    <h4 class="font-bold text-sm md:text-lg text-blue-700">Price to Book Value (PBV)</h4>
+                                    <span class="bg-blue-100 text-blue-800 text-[10px] md:text-xs px-2 py-1 rounded font-bold">Harga vs Modal</span>
+                                </div>
+                                <p class="text-xs md:text-sm text-slate-600 mb-4 leading-relaxed">Membandingkan harga saham dengan nilai modal bersih (ekuitas) per saham. Sangat cocok untuk menilai saham bank atau properti.</p>
+                                <div class="bg-slate-50 p-3 rounded text-xs md:text-sm border border-slate-100">
+                                    <p class="font-mono"><strong>Rumus:</strong> Harga Saham / Nilai Buku per Saham</p>
+                                    <p class="mt-1 text-emerald-700 font-medium"><strong>Cara Baca:</strong> PBV &lt; 1 = Murah (dijual di bawah modal). PBV &gt; 1 = Dijual premium.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3 class="text-lg md:text-xl font-bold text-slate-900 mb-4 border-b border-slate-200 pb-2">2. Rasio Profitabilitas (Seberapa Cuan Bisnisnya?)</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+                            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 dark-mode-card">
+                                <h4 class="font-bold text-sm md:text-lg text-emerald-700 mb-2">Return on Equity (ROE)</h4>
+                                <p class="text-xs md:text-sm text-slate-600 mb-3 leading-relaxed">Seberapa efisien manajemen memutar uang investor menjadi laba.</p>
+                                <p class="text-xs md:text-sm bg-slate-50 p-2 rounded border border-slate-100 font-medium"><strong>Target:</strong> &gt; 15% konsisten. Makin tinggi makin bagus manajemennya.</p>
+                            </div>
+                            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 dark-mode-card">
+                                <h4 class="font-bold text-sm md:text-lg text-emerald-700 mb-2">Net Profit Margin (NPM)</h4>
+                                <p class="text-xs md:text-sm text-slate-600 mb-3 leading-relaxed">Dari Rp100 pendapatan kotor, berapa rupiah yang benar-benar masuk kantong sebagai laba bersih.</p>
+                                <p class="text-xs md:text-sm bg-slate-50 p-2 rounded border border-slate-100 font-medium"><strong>Target:</strong> Tergantung industri, tapi &gt; 10% dianggap sehat.</p>
+                            </div>
+                            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 dark-mode-card">
+                                <h4 class="font-bold text-sm md:text-lg text-emerald-700 mb-2">Return on Assets (ROA)</h4>
+                                <p class="text-xs md:text-sm text-slate-600 mb-3 leading-relaxed">Seberapa jago perusahaan mencetak laba menggunakan seluruh aset yang dimilikinya (termasuk aset dari hutang).</p>
+                                <p class="text-xs md:text-sm bg-slate-50 p-2 rounded border border-slate-100 font-medium"><strong>Target:</strong> &gt; 5-10%.</p>
+                            </div>
+                        </div>
+
+                        <h3 class="text-lg md:text-xl font-bold text-slate-900 mb-4 border-b border-slate-200 pb-2">3. Rasio Solvabilitas (Awas Perusahaan Bangkrut!)</h3>
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 dark-mode-card">
+                            <div class="flex justify-between items-start mb-4">
+                                <h4 class="font-bold text-sm md:text-lg text-rose-700">Debt to Equity Ratio (DER)</h4>
+                                <span class="bg-rose-100 text-rose-800 text-[10px] md:text-xs px-2 py-1 rounded font-bold">Hutang vs Modal</span>
+                            </div>
+                            <p class="text-xs md:text-sm text-slate-600 mb-4 max-w-3xl leading-relaxed">Membandingkan total hutang perusahaan dengan total modalnya sendiri. Hutang yang terlalu besar menggerus laba karena beban bunga dan memicu risiko kebangkrutan saat krisis.</p>
+                            <div class="flex flex-col sm:flex-row gap-4">
+                                <div class="flex-1 bg-slate-50 p-4 rounded-lg border border-slate-200">
+                                    <div class="text-lg md:text-xl mb-1 text-emerald-600">🛡️ Aman</div>
+                                    <p class="font-bold text-xs md:text-sm text-slate-900">DER &lt; 1 (atau &lt; 100%)</p>
+                                    <p class="text-[11px] md:text-xs text-slate-600 leading-relaxed mt-1">Modal lebih besar dari hutang. Perusahaan sangat sehat.</p>
+                                </div>
+                                <div class="flex-1 bg-slate-50 p-4 rounded-lg border border-slate-200">
+                                    <div class="text-lg md:text-xl mb-1 text-orange-500">⚠️ Waspada</div>
+                                    <p class="font-bold text-xs md:text-sm text-slate-900">DER 1 - 2</p>
+                                    <p class="text-[11px] md:text-xs text-slate-600 leading-relaxed mt-1">Hutang mulai membesar. Biasa terjadi di perusahaan infrastruktur.</p>
+                                </div>
+                                <div class="flex-1 bg-slate-50 p-4 rounded-lg border border-slate-200">
+                                    <div class="text-lg md:text-xl mb-1 text-rose-600">🚨 Bahaya</div>
+                                    <p class="font-bold text-xs md:text-sm text-slate-900">DER &gt; 2 (atau &gt; 200%)</p>
+                                    <p class="text-[11px] md:text-xs text-slate-600 leading-relaxed mt-1">Hutang dua kali lipat modal. Risiko gagal bayar tinggi (kecuali sektor Bank).</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="premium-card p-6 md:p-12 bg-slate-900 text-white shadow-xl border-slate-800">
+                        <div class="mb-8">
+                            <p class="text-blue-400 font-semibold tracking-wide uppercase text-sm mb-2">Pilar 3</p>
+                            <h2 class="text-2xl md:text-3xl font-bold mb-4 text-white">Kondisi Makroekonomi & Sentimen</h2>
+                            <p class="text-xs md:text-sm text-slate-300 max-w-3xl leading-relaxed">Laporan keuangan yang bagus tidak ada artinya jika badai ekonomi menghantam. Fundamental saham sangat dipengaruhi oleh "Cuaca" ekonomi makro dan psikologi pasar.</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div class="space-y-6">
+                                <h3 class="text-lg md:text-xl font-bold text-emerald-400 border-b border-slate-700 pb-2 flex items-center"><span class="text-2xl mr-2">🏦</span> Faktor Makro Ekonomi</h3>
+                                
+                                <div>
+                                    <h4 class="font-bold text-sm md:text-lg mb-1 text-white">1. Suku Bunga (Interest Rate)</h4>
+                                    <p class="text-xs md:text-sm text-slate-300 leading-relaxed"><strong>Hukum Besi Saham:</strong> Jika suku bunga bank (BI Rate) NAIK, saham cenderung TURUN (karena orang lebih suka deposito yang aman dan cicilan hutang perusahaan bengkak). Sebaliknya, Bunga TURUN = Saham NAIK.</p>
+                                </div>
+                                
+                                <div>
+                                    <h4 class="font-bold text-sm md:text-lg mb-1 text-white">2. Inflasi</h4>
+                                    <p class="text-xs md:text-sm text-slate-300 leading-relaxed">Inflasi normal itu bagus. Tapi hiperinflasi membuat daya beli masyarakat turun, akibatnya barang dagangan perusahaan tidak laku. Sektor Consumer Goods biasanya paling terdampak.</p>
+                                </div>
+
+                                <div>
+                                    <h4 class="font-bold text-sm md:text-lg mb-1 text-white">3. Nilai Tukar Rupiah (USD/IDR)</h4>
+                                    <p class="text-xs md:text-sm text-slate-300 leading-relaxed">Rupiah melemah (USD naik) berdampak buruk bagi perusahaan yang bahan bakunya import atau punya hutang dollar. Tapi sangat menguntungkan bagi perusahaan eksportir (seperti Batu Bara, CPO).</p>
+                                </div>
+                            </div>
+
+                            <div class="space-y-6">
+                                <h3 class="text-lg md:text-xl font-bold text-blue-400 border-b border-slate-700 pb-2 flex items-center"><span class="text-2xl mr-2">📰</span> Sentimen & Aksi Korporasi</h3>
+                                
+                                <div>
+                                    <h4 class="font-bold text-sm md:text-lg mb-1 text-white">Aksi Korporasi (Corporate Action)</h4>
+                                    <ul class="text-xs md:text-sm text-slate-300 list-disc pl-5 space-y-1.5 mt-1">
+                                        <li><strong>Dividen:</strong> Pembagian untung. Sentimen sangat positif.</li>
+                                        <li><strong>Right Issue:</strong> Minta tambahan modal ke investor. Bisa positif (untuk ekspansi) atau negatif (untuk bayar hutang).</li>
+                                        <li><strong>Stock Split:</strong> Memecah harga saham jadi murah. Secara fundamental tidak berubah, tapi sentimennya positif karena ritel bisa beli.</li>
+                                    </ul>
+                                </div>
+
+                                <div class="bg-slate-800/80 p-4 rounded-xl mt-4 border border-slate-700 shadow-inner">
+                                    <h4 class="font-bold text-orange-400 mb-2 flex items-center text-xs md:text-sm"><span class="mr-2">⚖️</span> Fakta Pasar</h4>
+                                    <p class="text-xs md:text-sm text-slate-300 italic leading-relaxed">"Harga saham dalam jangka pendek dipengaruhi oleh SENTIMEN dan Supply/Demand, tetapi dalam jangka panjang pasti akan mengikuti FUNDAMENTAL laba perusahaannya." - Peter Lynch</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="premium-card p-6 md:p-10 shadow-sm border-blue-200 bg-blue-50/10 dark-mode-card">
+                        <div class="text-center mb-10">
+                            <span class="inline-block bg-blue-100 text-blue-800 font-bold px-3 py-1 rounded-full text-[10px] md:text-xs mb-4 uppercase tracking-widest">Alat Analisis Interaktif</span>
+                            <h2 class="text-2xl md:text-3xl font-bold text-slate-900">Simulasi Komparasi Saham</h2>
+                            <p class="text-xs md:text-sm text-slate-600 mt-2 max-w-2xl mx-auto leading-relaxed">Pilih dan bandingkan kesehatan fundamental dua perusahaan dari sektor yang sama untuk menentukan mana yang lebih layak dibeli.</p>
+                        </div>
+
+                        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8 dark-mode-card">
+                            <div class="flex flex-col md:flex-row justify-center items-center gap-4 mb-8 bg-slate-50/80 p-4 rounded-xl border border-slate-200">
+                                <div class="w-full md:w-1/3">
+                                    <label class="block text-xs md:text-sm font-bold text-slate-700 mb-1 uppercase tracking-wider">Sektor Industri</label>
+                                    <select id="sim-sectorSelect" class="w-full border-slate-300 rounded-lg shadow-sm p-2.5 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none border bg-white font-medium text-xs md:text-sm" onchange="updateSimStocksList()">
+                                        <option value="bank">Perbankan</option>
+                                        <option value="consumer">Consumer Goods</option>
+                                    </select>
+                                </div>
+                                <span class="font-black text-slate-400 hidden md:block text-sm">VS</span>
+                                <div class="w-full md:w-1/3 flex gap-2">
+                                    <div class="w-1/2">
+                                        <label class="block text-xs md:text-sm font-bold text-blue-600 mb-1 uppercase tracking-wider">Saham A</label>
+                                        <select id="sim-stockA" class="w-full border-blue-300 rounded-lg shadow-sm p-2.5 bg-blue-50/50 focus:ring-2 focus:ring-blue-500 outline-none border font-bold text-xs md:text-sm text-slate-800" onchange="updateSimComparison()">
+                                            </select>
+                                    </div>
+                                    <div class="w-1/2">
+                                        <label class="block text-xs md:text-sm font-bold text-emerald-600 mb-1 uppercase tracking-wider">Saham B</label>
+                                        <select id="sim-stockB" class="w-full border-emerald-300 rounded-lg shadow-sm p-2.5 bg-emerald-50/50 focus:ring-2 focus:ring-emerald-500 outline-none border font-bold text-xs md:text-sm text-slate-800" onchange="updateSimComparison()">
+                                            </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+                                <div>
+                                    <h3 class="text-sm md:text-base font-black text-slate-800 mb-4 text-center uppercase tracking-wider">Visualisasi Rasio Utama</h3>
+                                    <div class="chart-container !h-[250px]">
+                                        <canvas id="comparisonChart"></canvas>
+                                    </div>
+                                    <p class="text-[10px] text-center text-slate-500 mt-4 italic">*Data bersifat simulasi untuk tujuan edukasi</p>
+                                </div>
+
+                                <div class="bg-slate-50 p-6 rounded-xl border border-slate-200 shadow-inner">
+                                    <h3 class="text-sm md:text-base font-black text-slate-900 mb-4 border-b border-slate-200 pb-2 uppercase tracking-wider">Kesimpulan Analisis Singkat</h3>
+                                    <div id="sim-analysisResult" class="space-y-4">
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
 
                 <div id="edu-profil" class="edu-tab-content hidden space-y-8">
@@ -3555,7 +3869,7 @@
                                         </td>
                                         <td class="p-4 align-top">
                                             <ul class="text-xs text-slate-600 space-y-1.5 list-disc pl-4">
-                                                <li><b>Rejection signal:</b> Wick panjang ke atas = seller menolak harga tinggi dengan agresif</li>
+                                                <li><b>Rejection signal:</b> Wick panjang ke atas = seller menolak harga tinggi dengan-agresif</li>
                                                 <li><b>Strong setup:</b> Pin bar di level S/R kunci = sinyal reversal paling reliable dalam Price Action</li>
                                                 <li><b>Context matters:</b> Pin bar bullish di uptrend lebih kuat dari di downtrend</li>
                                                 <li><b>Entry:</b> Beli setelah close candle konfirmasi atau pada 50% retracement pin bar</li>
@@ -5090,6 +5404,233 @@
             document.getElementById(tabId).classList.remove('hidden');
             document.getElementById('btn-' + tabId).classList.remove('bg-slate-100', 'text-slate-600');
             document.getElementById('btn-' + tabId).classList.add('bg-blue-600', 'text-white');
+
+            // --- INTEGRASI: Pemicu Render Otomatis Grafik Fundamental ---
+            if(tabId === 'edu-fundamental') {
+                setTimeout(() => {
+                    renderSimIncomeChart();
+                    updateSimStocksList();
+                }, 50);
+            }
+        }
+
+        // --- INTEGRASI: FUNGSI INTERNAL TABS LAPORAN KEUANGAN (FUNDAMENTAL MASTER) ---
+        function switchLapkeuTab(tabId) {
+            const tabs = ['f-tab-lr', 'f-tab-nr', 'f-tab-ak'];
+            const btns = ['f-btn-lr', 'f-btn-nr', 'f-btn-ak'];
+
+            tabs.forEach(id => {
+                document.getElementById(id).classList.add('hidden');
+                document.getElementById(id).classList.remove('block');
+            });
+            btns.forEach(id => {
+                const btn = document.getElementById(id);
+                btn.classList.remove('f-tab-active');
+                btn.classList.add('f-tab-inactive');
+            });
+            document.getElementById(tabId).classList.remove('hidden');
+            document.getElementById(tabId).classList.add('block');
+            
+            const btnId = 'f-btn-' + tabId.split('-')[2];
+            const activeBtn = document.getElementById(btnId);
+            if(activeBtn) {
+                activeBtn.classList.remove('f-tab-inactive');
+                activeBtn.classList.add('f-tab-active');
+            }
+        }
+
+        // --- INTEGRASI: RENDER CHART ILUSTRASI LABA RUGI (FUNDAMENTAL MASTER) ---
+        let simIncomeChartInstance = null;
+        function renderSimIncomeChart() {
+            const ctxEl = document.getElementById('incomeChart');
+            if(!ctxEl) return;
+            const ctx = ctxEl.getContext('2d');
+            if(simIncomeChartInstance) simIncomeChartInstance.destroy();
+
+            simIncomeChartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Tahun 1', 'Tahun 2', 'Tahun 3'],
+                    datasets: [
+                        {
+                            label: 'Pendapatan Kotor',
+                            data: [1000, 1200, 1500],
+                            backgroundColor: '#93c5fd', // blue-300
+                            borderRadius: 4
+                        },
+                        {
+                            label: 'Laba Bersih',
+                            data: [150, 180, 250],
+                            backgroundColor: '#2563eb', // blue-600
+                            borderRadius: 4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom' },
+                        tooltip: { mode: 'index', intersect: false }
+                    },
+                    scales: {
+                        y: { beginAtZero: true, grid: { color: 'rgba(226, 232, 240, 0.5)' } },
+                        x: { grid: { display: false } }
+                    }
+                }
+            });
+        }
+
+        // --- INTEGRASI: DATABASE SIMULASI KOMPARASI SAHAM (FUNDAMENTAL MASTER) ---
+        const simDB = {
+            bank: {
+                "BBCA": { name: "Bank BCA", per: 24.5, pbv: 4.8, roe: 22.1, der: 0.1, npm: 40.5, desc: "Valuasi premium (mahal) namun ROE sangat tinggi dan efisien." },
+                "BBRI": { name: "Bank BRI", per: 13.2, pbv: 2.3, roe: 18.5, der: 0.15, npm: 32.1, desc: "Valuasi lebih murah dari BCA, jangkauan luas (mikro), ROE solid." },
+                "BMRI": { name: "Bank Mandiri", per: 11.5, pbv: 2.1, roe: 19.2, der: 0.12, npm: 35.0, desc: "Valuasi atraktif (Paling murah di Big 4), ROE tinggi, fokus korporasi." }
+            },
+            consumer: {
+                "INDF": { name: "Indofood", per: 6.5, pbv: 1.0, roe: 15.2, der: 0.7, npm: 8.5, desc: "Valuasi sangat murah, market leader, namun pertumbuhan laba moderat." },
+                "ICBP": { name: "Indofood CBP", per: 15.0, pbv: 2.8, roe: 19.5, der: 0.6, npm: 12.0, desc: "Anak usaha INDF yang margin dan pertumbuhannya lebih tinggi, valuasi wajar." },
+                "MYOR": { name: "Mayora", per: 18.5, pbv: 3.5, roe: 21.0, der: 0.4, npm: 10.2, desc: "Valuasi agak premium namun ekspor kuat dan ROE sangat istimewa." }
+            }
+        };
+
+        let simCompChartInstance = null;
+
+        function updateSimStocksList() {
+            const sectorEl = document.getElementById('sim-sectorSelect');
+            if(!sectorEl) return;
+            const sector = sectorEl.value;
+            const selectA = document.getElementById('sim-stockA');
+            const selectB = document.getElementById('sim-stockB');
+            
+            selectA.innerHTML = '';
+            selectB.innerHTML = '';
+            
+            const stocks = Object.keys(simDB[sector]);
+            
+            stocks.forEach((ticker) => {
+                const optA = document.createElement('option');
+                optA.value = ticker;
+                optA.text = ticker;
+                selectA.add(optA);
+
+                const optB = document.createElement('option');
+                optB.value = ticker;
+                optB.text = ticker;
+                selectB.add(optB);
+            });
+
+            selectA.selectedIndex = 0;
+            selectB.selectedIndex = stocks.length > 1 ? 1 : 0;
+
+            updateSimComparison();
+        }
+
+        function updateSimComparison() {
+            const sector = document.getElementById('sim-sectorSelect').value;
+            const tickerA = document.getElementById('sim-stockA').value;
+            const tickerB = document.getElementById('sim-stockB').value;
+
+            const dataA = simDB[sector][tickerA];
+            const dataB = simDB[sector][tickerB];
+
+            updateSimChart(tickerA, dataA, tickerB, dataB);
+            updateSimAnalysisText(tickerA, dataA, tickerB, dataB);
+        }
+
+        function updateSimChart(tickerA, dataA, tickerB, dataB) {
+            const ctxEl = document.getElementById('comparisonChart');
+            if(!ctxEl) return;
+            const ctx = ctxEl.getContext('2d');
+            const chartData = {
+                labels: ['PER (x)', 'PBV (x)', 'ROE (%)', 'NPM (%)'],
+                datasets: [
+                    {
+                        label: tickerA,
+                        data: [dataA.per, dataA.pbv, dataA.roe, dataA.npm],
+                        backgroundColor: '#3b82f6', // blue-500
+                        borderRadius: 4
+                    },
+                    {
+                        label: tickerB,
+                        data: [dataB.per, dataB.pbv, dataB.roe, dataB.npm],
+                        backgroundColor: '#10b981', // emerald-500
+                        borderRadius: 4
+                    }
+                ]
+            };
+
+            if (simCompChartInstance) {
+                simCompChartInstance.data = chartData;
+                simCompChartInstance.update();
+            } else {
+                simCompChartInstance = new Chart(ctx, {
+                    type: 'bar',
+                    data: chartData,
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { position: 'top' },
+                            tooltip: { 
+                                callbacks: {
+                                    label: function(context) {
+                                        let label = context.dataset.label || '';
+                                        if (label) { label += ': '; }
+                                        if (context.dataIndex === 0 || context.dataIndex === 1) {
+                                            label += context.raw + 'x';
+                                        } else {
+                                            label += context.raw + '%';
+                                        }
+                                        return label;
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            y: { beginAtZero: true, grid: { color: 'rgba(226, 232, 240, 0.5)' } },
+                            x: { grid: { display: false } }
+                        }
+                    }
+                });
+            }
+        }
+
+        function updateSimAnalysisText(tickerA, dataA, tickerB, dataB) {
+            const container = document.getElementById('sim-analysisResult');
+            if(!container) return;
+            container.innerHTML = '';
+
+            if (tickerA === tickerB) {
+                container.innerHTML = `<p class="text-slate-500 italic font-medium">Silakan pilih dua saham yang berbeda untuk melihat perbandingan rasio komparatif secara akurat.</p>`;
+                return;
+            }
+
+            let valuasiWin = dataA.per < dataB.per ? tickerA : tickerB;
+            let kualitasWin = dataA.roe > dataB.roe ? tickerA : tickerB;
+            let html = `
+                <div class="flex flex-col gap-3">
+                    <div class="border-l-4 border-blue-500 pl-3 bg-white p-2.5 rounded-r-lg shadow-sm">
+                        <span class="font-black text-blue-700">${tickerA}</span>: <span class="text-xs md:text-sm text-slate-700">${dataA.desc}</span>
+                    </div>
+                    <div class="border-l-4 border-emerald-500 pl-3 bg-white p-2.5 rounded-r-lg shadow-sm">
+                        <span class="font-black text-emerald-700">${tickerB}</span>: <span class="text-xs md:text-sm text-slate-700">${dataB.desc}</span>
+                    </div>
+                    
+                    <div class="mt-4 pt-4 border-t border-slate-200">
+                        <h4 class="font-bold text-slate-900 mb-2 uppercase tracking-wider text-xs md:text-sm">Verdict (Penilaian Singkat):</h4>
+                        <ul class="space-y-2 text-xs md:text-sm text-slate-700 font-medium">
+                            <li class="bg-white p-2 rounded-lg border border-slate-100">🎯 <strong>Valuasi Lebih Murah:</strong> Saham <strong class="text-blue-600">${valuasiWin}</strong> (Berdasarkan PER lebih rendah, balik modal lebih cepat).</li>
+                            <li class="bg-white p-2 rounded-lg border border-slate-100">⭐ <strong>Kualitas Profitabilitas:</strong> Saham <strong class="text-emerald-600">${kualitasWin}</strong> (Berdasarkan ROE lebih tinggi, manajemen lebih jago memutar modal).</li>
+                            <li class="mt-3 text-rose-700 bg-rose-50 p-3 rounded-xl border border-rose-100 leading-relaxed font-bold">
+                                <strong>Ingat:</strong> Saham bagus yang dibeli di harga kemahalan bisa jadi investasi yang buruk. Saham biasa saja di harga sangat murah bisa jadi investasi menguntungkan (Value Investing).
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            `;
+            container.innerHTML = html;
         }
 
         // --- MODULE: DATA BROKER ---
