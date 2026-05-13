@@ -1,0 +1,8 @@
+[
+  { "ticker": "BBCA", "action": "Dividen Final", "kind": "dividen", "date": "2026-05-12", "dateLabel": "Cum Date" },
+  { "ticker": "ADRO", "action": "Dividen Interim", "kind": "dividen", "date": "2026-05-15", "dateLabel": "Cum Date" },
+  { "ticker": "TLKM", "action": "RUPS Tahunan", "kind": "rups", "date": "2026-05-20", "dateLabel": "Jadwal" },
+  { "ticker": "BMRI", "action": "Dividen Interim", "kind": "dividen", "date": "2026-05-28", "dateLabel": "Cum Date" },
+  { "ticker": "ASII", "action": "RUPS Tahunan", "kind": "rups", "date": "2026-06-12", "dateLabel": "Jadwal" },
+  { "ticker": "UNVR", "action": "Dividen Final", "kind": "dividen", "date": "2026-06-18", "dateLabel": "Cum Date" }
+]

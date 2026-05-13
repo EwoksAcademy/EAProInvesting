@@ -206,6 +206,218 @@ function openTVChart(ticker) {
 }
 
 // --- LIVE DATA & NEWS (WITH GOOGLE SHEETS FALLBACK) ---
+/** Tanggal kalendar (YYYY-MM-DD) di zona Asia/Jakarta — dipakai filter & cache-bust harian. */
+function getJakartaDateKey(date = new Date()) {
+    return new Intl.DateTimeFormat('en-CA', {
+        timeZone: 'Asia/Jakarta',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+    }).format(date);
+}
+
+const CORPORATE_CALENDAR_FALLBACK = [
+    { ticker: 'BBCA', action: 'Dividen Final', kind: 'dividen', date: '2026-05-12', dateLabel: 'Cum Date' },
+    { ticker: 'ADRO', action: 'Dividen Interim', kind: 'dividen', date: '2026-05-15', dateLabel: 'Cum Date' },
+    { ticker: 'TLKM', action: 'RUPS Tahunan', kind: 'rups', date: '2026-05-20', dateLabel: 'Jadwal' },
+    { ticker: 'BMRI', action: 'Dividen Interim', kind: 'dividen', date: '2026-05-28', dateLabel: 'Cum Date' },
+    { ticker: 'ASII', action: 'RUPS Tahunan', kind: 'rups', date: '2026-06-12', dateLabel: 'Jadwal' },
+    { ticker: 'UNVR', action: 'Dividen Final', kind: 'dividen', date: '2026-06-18', dateLabel: 'Cum Date' },
+];
+
+/** Emiten IDX (tanpa .JK) untuk tarik dividen via Finnhub jika token di-set — daftar bisa Anda sesuaikan. */
+const CORP_CAL_FINNHUB_TICKERS = [
+    'BBCA', 'BBRI', 'BMRI', 'BRIS', 'TLKM', 'ASII', 'UNVR', 'ADRO', 'ANTM', 'GOTO',
+];
+
+function addCalendarDaysToYmd(ymd, addDays) {
+    const p = String(ymd).split('-').map(Number);
+    if (p.length !== 3 || p.some((n) => !Number.isFinite(n))) return ymd;
+    const [y, m, d] = p;
+    const dt = new Date(y, m - 1, d + addDays);
+    const y2 = dt.getFullYear();
+    const m2 = String(dt.getMonth() + 1).padStart(2, '0');
+    const d2 = String(dt.getDate()).padStart(2, '0');
+    return `${y2}-${m2}-${d2}`;
+}
+
+/** Token Finnhub gratis: https://finnhub.io/register — set `window.EWOKS_FINNHUB_TOKEN` (script sebelum ewoks-core) atau localStorage `ewoks_finnhub_token`. */
+function getEwoksFinnhubToken() {
+    try {
+        if (typeof window !== 'undefined' && window.EWOKS_FINNHUB_TOKEN) {
+            const t = String(window.EWOKS_FINNHUB_TOKEN).trim();
+            if (t) return t;
+        }
+    } catch (_) {}
+    try {
+        const t = localStorage.getItem('ewoks_finnhub_token');
+        if (t && String(t).trim()) return String(t).trim();
+    } catch (_) {}
+    return '';
+}
+
+function dedupeCorpEventsPreserveFirst(events) {
+    const seen = new Set();
+    return events.filter((e) => {
+        if (!e || !e.ticker || !e.date) return false;
+        const k = `${String(e.ticker).toUpperCase()}|${e.date}`;
+        if (seen.has(k)) return false;
+        seen.add(k);
+        return true;
+    });
+}
+
+/** Dividen ex-date dari Finnhub (CORS *). Hanya dividen; RUPS dll. tetap dari JSON. */
+async function fetchFinnhubIdxDividendEvents(token) {
+    if (!token) return [];
+    const from = getJakartaDateKey();
+    const to = addCalendarDaysToYmd(from, 150);
+    const tasks = CORP_CAL_FINNHUB_TICKERS.map(async (sym) => {
+        try {
+            const symjk = `${sym}.JK`;
+            const u = `https://finnhub.io/api/v1/stock/dividend?symbol=${encodeURIComponent(symjk)}&from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}&token=${encodeURIComponent(token)}`;
+            const res = await fetch(u);
+            if (!res.ok) return [];
+            const rows = await res.json();
+            if (!Array.isArray(rows)) return [];
+            return rows
+                .filter((r) => r && r.date)
+                .map((r) => {
+                    const dateStr = String(r.date).slice(0, 10);
+                    let action = 'Dividen';
+                    if (r.amount != null && Number.isFinite(Number(r.amount))) {
+                        const cur = r.currency ? String(r.currency) : 'IDR';
+                        const amt = Number(r.amount).toLocaleString('id-ID', { maximumFractionDigits: 4 });
+                        action = `Dividen ${cur} ${amt}`;
+                    }
+                    return {
+                        ticker: sym,
+                        action,
+                        kind: 'dividen',
+                        date: dateStr,
+                        dateLabel: 'Ex-Date',
+                    };
+                });
+        } catch (_) {
+            return [];
+        }
+    });
+    return (await Promise.all(tasks)).flat();
+}
+
+function formatCorporateCalendarIdDate(ymd) {
+    const p = String(ymd).split('-').map(Number);
+    if (p.length !== 3 || p.some((n) => !Number.isFinite(n))) return ymd;
+    const [y, m, d] = p;
+    return new Date(y, m - 1, d).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+}
+
+function corporateCalendarBadgeClass(kind) {
+    if (kind === 'rups') return 'bg-blue-100 text-blue-700';
+    if (kind === 'dividen') return 'bg-emerald-100 text-emerald-700';
+    return 'bg-slate-100 text-slate-700';
+}
+
+function escapeHtml(str) {
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+}
+
+function normalizeCorporateCalendarPayload(data) {
+    if (Array.isArray(data)) return data;
+    if (data && Array.isArray(data.events)) return data.events;
+    return [];
+}
+
+function renderCorporateCalendar(events) {
+    const container = document.getElementById('corporate-calendar-container');
+    if (!container) return;
+
+    const today = getJakartaDateKey();
+    const upcoming = events
+        .filter((e) => e && e.date && e.ticker && String(e.date) >= today)
+        .sort((a, b) => String(a.date).localeCompare(String(b.date)))
+        .slice(0, 3);
+
+    if (upcoming.length === 0) {
+        container.innerHTML = `
+            <div class="bg-white p-4 rounded-xl border border-slate-100 text-center">
+                <p class="text-xs text-slate-600 leading-relaxed">Belum ada jadwal mendatang di daftar. Lihat kalender resmi IDX lewat tautan di bawah.</p>
+            </div>`;
+        return;
+    }
+
+    container.innerHTML = upcoming
+        .map((e) => {
+            const isToday = e.date === today;
+            const border = isToday ? 'border-amber-300 ring-1 ring-amber-200/60' : 'border-slate-100';
+            const todayTag = isToday
+                ? '<span class="text-[8px] bg-amber-200 text-amber-900 px-1.5 py-0.5 rounded font-black uppercase ml-1">Hari ini</span>'
+                : '';
+            const badge = corporateCalendarBadgeClass(e.kind);
+            const tk = escapeHtml(e.ticker);
+            const ac = escapeHtml(e.action);
+            const dl = escapeHtml(e.dateLabel || 'Jadwal');
+            return `
+            <div class="flex justify-between items-center bg-white p-4 rounded-xl border ${border} shadow-sm hover:border-amber-300 transition-colors">
+                <div>
+                    <span class="font-black text-slate-800 text-lg block leading-none mb-1">${tk}${todayTag}</span>
+                    <span class="text-[9px] ${badge} px-2 py-0.5 rounded font-bold uppercase tracking-widest">${ac}</span>
+                </div>
+                <div class="text-right">
+                    <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-0.5">${dl}</p>
+                    <p class="text-sm font-black text-slate-700">${formatCorporateCalendarIdDate(e.date)}</p>
+                </div>
+            </div>`;
+        })
+        .join('');
+}
+
+let __ewoksCorpCalFetchedForJakartaDate = null;
+
+async function fetchAndRenderCorporateCalendar() {
+    const container = document.getElementById('corporate-calendar-container');
+    if (!container) return;
+
+    const jakartaToday = getJakartaDateKey();
+    const url = new URL(`assets/data/corporate-calendar.json?v=${encodeURIComponent(jakartaToday)}`, document.baseURI || window.location.href).href;
+
+    let list = [...CORPORATE_CALENDAR_FALLBACK];
+    try {
+        const res = await fetch(url, { cache: 'no-store' });
+        if (res.ok) {
+            const data = await res.json();
+            const parsed = normalizeCorporateCalendarPayload(data);
+            if (parsed.length) list = [...parsed];
+        }
+    } catch (_) {
+        /* pakai fallback */
+    }
+
+    const finnhubToken = getEwoksFinnhubToken();
+    if (finnhubToken) {
+        try {
+            const apiEvents = await fetchFinnhubIdxDividendEvents(finnhubToken);
+            list = dedupeCorpEventsPreserveFirst([...list, ...apiEvents]);
+        } catch (_) {
+            /* tetap pakai list JSON/fallback */
+        }
+    }
+
+    __ewoksCorpCalFetchedForJakartaDate = jakartaToday;
+    renderCorporateCalendar(list);
+}
+
+function refreshCorporateCalendarIfJakartaDateChanged() {
+    const key = getJakartaDateKey();
+    if (key !== __ewoksCorpCalFetchedForJakartaDate) {
+        fetchAndRenderCorporateCalendar();
+    }
+}
+
 async function fetchNews() {
     const container = document.getElementById('news-container');
     if (!container) return;
@@ -415,6 +627,14 @@ window.addEventListener('load', () => {
     updateClock();
     fetchRealIHSG();
     fetchNews();
+
+    if (document.getElementById('corporate-calendar-container')) {
+        fetchAndRenderCorporateCalendar();
+        setInterval(refreshCorporateCalendarIfJakartaDateChanged, 60 * 1000);
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'visible') fetchAndRenderCorporateCalendar();
+        });
+    }
 
     setInterval(updateClock, 1000);
     setInterval(fetchRealIHSG, 5000);
