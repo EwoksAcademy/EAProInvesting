@@ -2001,7 +2001,9 @@
         let yieldChartRendered = false;
         function renderYieldChart() {
             if(yieldChartRendered) return;
-            const ctx = document.getElementById('yieldChart').getContext('2d');
+            const canvas = document.getElementById('yieldChart');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
             new Chart(ctx, {
                 type: 'scatter',
                 data: {
@@ -2040,7 +2042,9 @@
         let yieldCurveRendered = false;
         function renderYieldCurve() {
             if(yieldCurveRendered) return;
-            const ctx = document.getElementById('yieldCurveChart').getContext('2d');
+            const canvas = document.getElementById('yieldCurveChart');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
             new Chart(ctx, {
                 type: 'line',
                 data: {
@@ -2074,17 +2078,23 @@
         function calcSbn() {
             const sbnModal = document.getElementById('sbn-modal');
             if (!sbnModal) return;
+            const resEl = document.getElementById('sbn-res-month');
+            if (!resEl) return;
             const modal = parseFloat(sbnModal.value) || 0;
-            const yieldSBN = parseFloat(document.getElementById('sbn-yield-dash').innerText) / 100 || 0.065; 
+            const yieldDash = document.getElementById('sbn-yield-dash');
+            const yieldSBN = yieldDash
+                ? (parseFloat(yieldDash.innerText.replace(/,/g, '')) / 100 || 0.065)
+                : 0.065;
             const grossYearly = modal * yieldSBN;
-            const netYearly = grossYearly * 0.9; 
+            const netYearly = grossYearly * 0.9;
             const netMonthly = netYearly / 12;
-            document.getElementById('sbn-res-month').innerText = `Rp ${Math.round(netMonthly).toLocaleString('id-ID')}`;
+            resEl.innerText = `Rp ${Math.round(netMonthly).toLocaleString('id-ID')}`;
         }
 
         // --- PETA KONGLOMERAT ---
         function renderGrid(groups = dataGroups) {
             const gridContainer = document.getElementById('group-grid');
+            if (!gridContainer) return;
             gridContainer.innerHTML = '';
 
             if(groups.length === 0) {

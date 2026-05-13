@@ -166,11 +166,22 @@ function patchAppJs(raw) {
   );
 
   js = js.replace(
-    /function calcSbn\(\) \{\s*const modal = parseFloat\(document\.getElementById\('sbn-modal'\)\.value\) \|\| 0;/,
+    /function calcSbn\(\) \{[\s\S]*?document\.getElementById\('sbn-res-month'\)\.innerText = `Rp \$\{Math\.round\(netMonthly\)\.toLocaleString\('id-ID'\)\}`;\s*\}/,
     `function calcSbn() {
             const sbnModal = document.getElementById('sbn-modal');
             if (!sbnModal) return;
-            const modal = parseFloat(sbnModal.value) || 0;`
+            const resEl = document.getElementById('sbn-res-month');
+            if (!resEl) return;
+            const modal = parseFloat(sbnModal.value) || 0;
+            const yieldDash = document.getElementById('sbn-yield-dash');
+            const yieldSBN = yieldDash
+                ? (parseFloat(yieldDash.innerText.replace(/,/g, '')) / 100 || 0.065)
+                : 0.065;
+            const grossYearly = modal * yieldSBN;
+            const netYearly = grossYearly * 0.9;
+            const netMonthly = netYearly / 12;
+            resEl.innerText = \`Rp \${Math.round(netMonthly).toLocaleString('id-ID')}\`;
+        }`
   );
 
   const highlightFn = `
