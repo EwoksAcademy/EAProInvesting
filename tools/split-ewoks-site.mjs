@@ -330,7 +330,7 @@ function main() {
     console.log('Source: index.monolith.backup.html');
   } else {
     text = fs.readFileSync(SRC, 'utf8');
-    if (text.includes('assets/js/app.js')) {
+    if (text.includes('assets/js/ewoks-core.js')) {
       console.error('index.html looks already split. Put monolith at index.monolith.backup.html and retry.');
       process.exit(1);
     }
@@ -353,7 +353,9 @@ function main() {
   fs.mkdirSync(assetsCss, { recursive: true });
   fs.mkdirSync(assetsJs, { recursive: true });
   fs.writeFileSync(path.join(assetsCss, 'app.css'), css, 'utf8');
-  fs.writeFileSync(path.join(assetsJs, 'app.js'), jsOut, 'utf8');
+  // JS: situs memakai assets/js/ewoks-core.js + assets/js/pages/ (bukan satu app.js).
+  const legacyExtracted = path.join(assetsJs, '_extracted-from-monolith.script.txt');
+  fs.writeFileSync(legacyExtracted, jsOut, 'utf8');
 
   const headMeta = lines.slice(0, 3).join('\n') + '\n' + lines.slice(3, 9).join('\n');
   const headScripts = lines.slice(10, 14).join('\n');
@@ -385,7 +387,8 @@ ${sectionHtml}
 
 ${suffix}
 
-    <script src="assets/js/app.js"></script>
+    <script src="assets/js/ewoks-core.js"></script>
+    <!-- Per halaman: tambahkan assets/js/pages/page-*.js sesuai kebutuhan (lihat repo). -->
 </body>
 </html>
 `;
@@ -395,7 +398,7 @@ ${suffix}
     console.log('Wrote', p.file);
   }
 
-  console.log('Done. assets/css/app.css + assets/js/app.js');
+  console.log('Done. assets/css/app.css + assets/js/ewoks-core.js (+ page scripts per HTML)');
 }
 
 main();
