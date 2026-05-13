@@ -473,11 +473,11 @@
                             <button onclick="showPage('jurnal')" id="nav-jurnal" class="dropdown-item">
                                 <i class="fas fa-book w-5 text-purple-500"></i> Jurnal Trading
                             </button>
-                            <button onclick="showPage('kalkulator')" id="nav-kalkulator" class="dropdown-item border-t border-slate-100 mt-1 pt-2">
-                                <i class="fas fa-calculator w-5 text-blue-500"></i> Kalkulator Investasi
+                            <button onclick="showPage('pensiun')" id="nav-pensiun" class="dropdown-item border-t border-slate-100 mt-1 pt-2">
+                                <i class="fas fa-umbrella w-5 text-emerald-500"></i> Pensiun & Kalkulator
                             </button>
-                            <button onclick="showPage('pensiun')" id="nav-pensiun" class="dropdown-item">
-                                <i class="fas fa-umbrella w-5 text-emerald-500"></i> Dana Pensiun
+                            <button onclick="showPage('kalkulator')" id="nav-kalkulator" class="dropdown-item">
+                                <i class="fas fa-crosshairs w-5 text-blue-500"></i> Trading Plan & Sizing
                             </button>
                             <button onclick="showPage('bandar')" id="nav-bandar" class="dropdown-item border-t border-slate-100 mt-1 pt-2">
                                 <i class="fas fa-user-secret w-5 text-orange-500"></i> Kalkulator Bandar
@@ -518,7 +518,7 @@
                         <h2 class="text-3xl md:text-6xl font-black mb-6 leading-tight hero-title">Navigasi Cerdas di <br><span class="text-blue-500">Pasar Modal.</span></h2>
                         <p class="text-slate-400 text-sm md:text-lg mb-8 md:mb-10 max-w-lg">Analisis bandarmology, manajemen risiko presisi, kalkulator investasi lengkap, dan database terlengkap untuk trader profesional.</p>
                         <div class="flex flex-col sm:flex-row gap-4">
-                            <button onclick="showPage('kalkulator')" class="w-full sm:w-auto bg-blue-600 text-white px-8 py-4 rounded-2xl font-bold hover:bg-blue-700 transition-all shadow-lg shadow-blue-900/20">Kalkulator Investasi</button>
+                            <button onclick="showPage('pensiun')" class="w-full sm:w-auto bg-blue-600 text-white px-8 py-4 rounded-2xl font-bold hover:bg-blue-700 transition-all shadow-lg shadow-blue-900/20">Mulai Perencanaan</button>
                             <button onclick="showPage('watchlist')" class="w-full sm:w-auto bg-slate-800 text-white px-8 py-4 rounded-2xl font-bold hover:bg-slate-700 transition-all border border-slate-700"><i class="fas fa-star text-amber-400 mr-2"></i> Buka Terminal Live</button>
                         </div>
                     </div>
@@ -635,17 +635,17 @@
                         <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
                             <i class="fas fa-umbrella text-xl"></i>
                         </div>
-                        <h3 class="font-extrabold text-slate-900 mb-2">Dana Pensiun</h3>
-                        <p class="text-[11px] text-slate-500 leading-relaxed mb-4">Hitung kebutuhan masa depan terintegrasi dengan Live SBN Yield.</p>
+                        <h3 class="font-extrabold text-slate-900 mb-2">Pensiun & Finansial</h3>
+                        <p class="text-[11px] text-slate-500 leading-relaxed mb-4">Dana pensiun, dana darurat, dan kalkulator compounding interest.</p>
                         <span class="text-xs font-bold text-emerald-600">Buka <i class="fas fa-arrow-right ml-1"></i></span>
                     </div>
 
                     <div onclick="showPage('kalkulator')" class="premium-card p-6 cursor-pointer group hover:bg-blue-50/30 transition-all">
                         <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                            <i class="fas fa-calculator text-xl"></i>
+                            <i class="fas fa-crosshairs text-xl"></i>
                         </div>
-                        <h3 class="font-extrabold text-slate-900 mb-2">Kalkulator Utama</h3>
-                        <p class="text-[11px] text-slate-500 leading-relaxed mb-4">Trading Plan, Compounding, Dana Darurat, & Manajemen Risiko.</p>
+                        <h3 class="font-extrabold text-slate-900 mb-2">Trading Plan & Sizing</h3>
+                        <p class="text-[11px] text-slate-500 leading-relaxed mb-4">Atur taking profit, cut loss, average down/up dan position sizing lot.</p>
                         <span class="text-xs font-bold text-blue-600">Buka <i class="fas fa-arrow-right ml-1"></i></span>
                     </div>
 
@@ -654,7 +654,7 @@
                             <i class="fas fa-user-secret text-xl"></i>
                         </div>
                         <h3 class="font-extrabold text-slate-900 mb-2">Kalkulator Bandar</h3>
-                        <p class="text-[11px] text-slate-500 leading-relaxed mb-4">Analisis target realistis berdasar volume & papan harga.</p>
+                        <p class="text-[11px] text-slate-500 leading-relaxed mb-4">Analisis target realistis berdasar volume & papan harga bid/offer.</p>
                         <span class="text-xs font-bold text-orange-600">Buka <i class="fas fa-arrow-right ml-1"></i></span>
                     </div>
                     
@@ -683,7 +683,7 @@
                         <i class="fas fa-database text-xl"></i>
                     </div>
                     <h3 class="font-extrabold text-slate-900 mb-2">Broker Database</h3>
-                    <p class="text-xs text-slate-500 leading-relaxed mb-4">Akses data 94 broker resmi BEI. Kenali broker ritel vs asing.</p>
+                    <p class="text-xs text-slate-500 leading-relaxed mb-4">Akses data 94 broker resmi BEI. Kenali broker ritel vs asing vs lokal (bandar).</p>
                     <span class="text-xs font-bold text-slate-600">Cari Kode <i class="fas fa-arrow-right ml-1"></i></span>
                 </div>
             </div>
@@ -1245,8 +1245,8 @@
                             <i class="fas fa-search-dollar"></i>
                         </div>
                         <div>
-                            <h2 class="text-2xl md:text-3xl font-black text-white">Cheat Sheet Bandarmologi</h2>
-                            <p class="text-indigo-200 text-sm mt-1">Panduan visual membaca jejak institusi/bandar.</p>
+                            <h2 class="text-2xl md:text-3xl font-black text-white">Cheat Sheet Bandarmologi & Corporate Action</h2>
+                            <p class="text-indigo-200 text-sm mt-1">Panduan visual membaca jejak institusi/bandar di pasar modal.</p>
                         </div>
                     </div>
                 </div>
@@ -1306,6 +1306,65 @@
                         </ul>
                     </div>
                 </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
+                    <div class="premium-card p-6 shadow-sm bg-white dark-mode-card">
+                        <h3 class="text-xl font-black text-indigo-600 mb-4 flex items-center gap-2"><i class="fas fa-users-cog"></i> Karakteristik Tipe Broker</h3>
+                        <p class="text-xs text-slate-500 mb-4 border-b border-slate-200 pb-3">Memahami siapa di balik kode broker sangat penting. Setiap tipe punya gaya trading yang berbeda.</p>
+                        <ul class="space-y-4">
+                            <li class="flex gap-4 items-start">
+                                <div class="w-8 h-8 rounded bg-indigo-100 text-indigo-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-globe"></i></div>
+                                <div>
+                                    <p class="font-bold text-slate-800 text-sm">Broker Asing / Institusi (AK, BK, CS, KZ, RX)</p>
+                                    <p class="text-xs text-slate-500 mt-1">Modal raksasa (Triliunan). Bergerak pasif dan akumulasi dalam waktu lama (berminggu-minggu). Jika mereka konsisten *Net Buy* di suatu saham Bluechip, arah tren biasanya akan naik secara stabil (Foreign Flow).</p>
+                                </div>
+                            </li>
+                            <li class="flex gap-4 items-start">
+                                <div class="w-8 h-8 rounded bg-rose-100 text-rose-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-user-friends"></i></div>
+                                <div>
+                                    <p class="font-bold text-slate-800 text-sm">Broker Ritel Dominan (YP, PD, CC, NI, XC)</p>
+                                    <p class="text-xs text-slate-500 mt-1">Modal tersebar di banyak orang. Sifatnya reaktif, sering scalping harian, dan sangat FOMO terhadap berita/pom-pom. Jika broker ini mendominasi *Net Buy* sementara asing jualan, saham tersebut rawan dibanting turun.</p>
+                                </div>
+                            </li>
+                            <li class="flex gap-4 items-start">
+                                <div class="w-8 h-8 rounded bg-amber-100 text-amber-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-user-ninja"></i></div>
+                                <div>
+                                    <p class="font-bold text-slate-800 text-sm">Broker Lokal Agresif / "Bandar" (MG, dkk)</p>
+                                    <p class="text-xs text-slate-500 mt-1">Sering menjadi *Market Maker* di saham-saham 2nd atau 3rd liner (gorengan). Sangat agresif melakukan HAKA (Hajar Kanan) untuk mengerek harga dalam hitungan menit, namun bisa HAKI dengan sangat cepat.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="premium-card p-6 shadow-sm bg-white dark-mode-card border-t-4 border-t-blue-500">
+                        <h3 class="text-xl font-black text-blue-600 mb-4 flex items-center gap-2"><i class="fas fa-briefcase"></i> Aksi Korporasi & Trik Bandar</h3>
+                        <p class="text-xs text-slate-500 mb-4 border-b border-slate-200 pb-3">Bandar sering memanfaatkan Corporate Action untuk mendistribusikan barang ke ritel.</p>
+                        <ul class="space-y-4">
+                            <li class="flex gap-4 items-start">
+                                <div class="w-8 h-8 rounded bg-blue-100 text-blue-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-money-bill-wave"></i></div>
+                                <div>
+                                    <p class="font-bold text-slate-800 text-sm">Dividen Trap (Jebakan Dividen)</p>
+                                    <p class="text-[11px] text-slate-500 mt-1 mb-1">Bandar akumulasi jauh hari sebelum pengumuman. Menjelang *Cum-Date*, ritel FOMO membeli agar dapat dividen. Tepat saat *Ex-Date*, Bandar membuang barangnya secara masif hingga ARB.</p>
+                                    <p class="text-[10px] font-bold text-slate-600 bg-slate-50 p-2 rounded border border-slate-200">💡 Contoh: Ritel beli di Cum-Date demi dividen 10%, tapi di Ex-Date harga ARB -15%. Ritel justru rugi bersih -5% dan nyangkut.</p>
+                                </div>
+                            </li>
+                            <li class="flex gap-4 items-start">
+                                <div class="w-8 h-8 rounded bg-blue-100 text-blue-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-chart-pie"></i></div>
+                                <div>
+                                    <p class="font-bold text-slate-800 text-sm">Right Issue (HMETD)</p>
+                                    <p class="text-[11px] text-slate-500 mt-1 mb-1">Perusahaan minta tambahan modal. Terkadang, Bandar sengaja menekan harga saham di pasar reguler agar ritel tidak mau menebus Right Issue, sehingga Bandar bisa mengambil alih kepemilikan tersebut secara murah (Standby Buyer).</p>
+                                </div>
+                            </li>
+                            <li class="flex gap-4 items-start">
+                                <div class="w-8 h-8 rounded bg-blue-100 text-blue-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-cut"></i></div>
+                                <div>
+                                    <p class="font-bold text-slate-800 text-sm">Stock Split (Pemecahan Saham)</p>
+                                    <p class="text-[11px] text-slate-500 mt-1 mb-1">Harga saham Rp 10.000 dipecah jadi Rp 2.000 (1:5). Secara fundamental tidak ada yang berubah, namun ritel merasa harganya "sudah murah". Momentum ini sering dipakai Bandar untuk jualan ke Ritel yang baru sanggup beli.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -1313,8 +1372,8 @@
             <div class="max-w-5xl mx-auto">
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-4">
                     <div>
-                        <h2 class="text-2xl md:text-3xl font-black text-slate-900">Perencana Pensiun <span class="text-blue-600">Ewoks</span></h2>
-                        <p class="text-slate-500 font-medium">Simulasikan kemandirian finansial Anda di masa tua.</p>
+                        <h2 class="text-2xl md:text-3xl font-black text-slate-900">Perencana Finansial & <span class="text-blue-600">Pensiun</span></h2>
+                        <p class="text-slate-500 font-medium">Simulasikan kemandirian finansial Anda secara komprehensif.</p>
                     </div>
                     <div class="flex gap-3 w-full md:w-auto">
                         <button onclick="window.print()" class="btn-action bg-slate-800 text-white px-5 py-3 rounded-xl font-black text-xs flex items-center justify-center gap-2 shadow-md hover:bg-slate-700">
@@ -1374,6 +1433,112 @@
                             <p class="text-[10px] text-slate-500 font-bold mt-2 uppercase">Wajib disisihkan setiap bulan</p>
                         </div>
                     </div>
+                </div>
+
+                <hr class="my-10 border-slate-200 border-2 rounded-full">
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 items-start">
+                    
+                    <div class="premium-card p-6 md:p-8 border-t-4 border-amber-500 shadow-sm bg-white dark-mode-card">
+                        <div class="flex justify-between items-start mb-6">
+                            <div>
+                                <h3 class="text-xl font-black text-slate-900 mb-1 flex items-center gap-2">
+                                    <i class="fas fa-chart-line text-amber-500"></i> Bunga Majemuk (Compound)
+                                </h3>
+                                <p class="text-[11px] text-slate-500">Keajaiban bunga berbunga dari waktu ke waktu.</p>
+                            </div>
+                            <button onclick="shareWhatsAppCompound()" class="btn-action bg-emerald-50 text-emerald-600 px-3 py-2 rounded-xl font-black text-[10px] shadow-sm hover:bg-emerald-100 transition-colors flex items-center gap-1">
+                                <i class="fab fa-whatsapp text-sm"></i> SHARE WA
+                            </button>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <label class="text-[10px] font-black text-slate-400 uppercase mb-1 block">Modal Awal (Rp)</label>
+                                <input type="number" id="cmp-awal" placeholder="10000000" value="10000000" class="input-pro border border-slate-200 bg-white" oninput="calcCompound()">
+                            </div>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="text-[10px] font-black text-slate-400 uppercase mb-1 block">Setoran Bulanan (Rp)</label>
+                                    <input type="number" id="cmp-bulanan" placeholder="1000000" value="1000000" class="input-pro border border-slate-200 bg-white" oninput="calcCompound()">
+                                </div>
+                                <div>
+                                    <label class="text-[10px] font-black text-slate-400 uppercase mb-1 block">Durasi (Tahun)</label>
+                                    <input type="number" id="cmp-tahun" placeholder="10" value="10" class="input-pro border border-slate-200 bg-white" oninput="calcCompound()" min="1" max="50">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="text-[10px] font-black text-slate-400 uppercase mb-1 block">Asumsi Return / Tahun (%)</label>
+                                <input type="number" id="cmp-return" placeholder="10" value="10" step="0.5" class="input-pro border border-slate-200 bg-white" oninput="calcCompound()">
+                            </div>
+                        </div>
+
+                        <div class="mt-6 h-48 w-full border border-slate-100 rounded-xl p-2 bg-slate-50/50 shadow-inner">
+                            <canvas id="compoundChartCanvas"></canvas>
+                        </div>
+
+                        <div class="mt-6 bg-slate-900 text-white p-5 rounded-2xl border border-slate-800 shadow-inner">
+                            <div class="flex justify-between items-center mb-3 border-b border-slate-700 pb-3">
+                                <p class="text-[10px] font-bold text-slate-400 uppercase">Total Pokok yang Disetor:</p>
+                                <p class="text-sm font-black text-slate-200" id="res-cmp-pokok">Rp 130.000.000</p>
+                            </div>
+                            <div class="flex justify-between items-center mb-3 border-b border-slate-700 pb-3">
+                                <p class="text-[10px] font-bold text-slate-400 uppercase">Total Keuntungan Bunga:</p>
+                                <p class="text-sm font-black text-emerald-400" id="res-cmp-bunga">Rp 84.628.210</p>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <p class="text-[10px] font-bold text-slate-400 uppercase">Nilai Akhir (Future Value):</p>
+                                <p class="text-xl font-black text-white" id="res-cmp-total">Rp 214.628.210</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="premium-card p-6 md:p-8 border-t-4 border-indigo-500 shadow-sm bg-white dark-mode-card">
+                        <div class="flex justify-between items-start mb-6">
+                            <div>
+                                <h3 class="text-xl font-black text-slate-900 mb-1 flex items-center gap-2">
+                                    <i class="fas fa-medkit text-indigo-500"></i> Kalkulator Dana Darurat
+                                </h3>
+                                <p class="text-[11px] text-slate-500">Bantalan kas minimum sebelum investasi agresif.</p>
+                            </div>
+                            <button onclick="shareWhatsAppDarurat()" class="btn-action bg-emerald-50 text-emerald-600 px-3 py-2 rounded-xl font-black text-[10px] shadow-sm hover:bg-emerald-100 transition-colors flex items-center gap-1">
+                                <i class="fab fa-whatsapp text-sm"></i> SHARE WA
+                            </button>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <label class="text-[10px] font-black text-slate-400 uppercase mb-1 block">Total Pengeluaran Wajib / Bulan (Rp)</label>
+                                <input type="number" id="dar-expense" placeholder="5000000" value="5000000" class="input-pro border border-slate-200 bg-white" oninput="calcDarurat()">
+                            </div>
+                            <div>
+                                <label class="text-[10px] font-black text-slate-400 uppercase mb-1 block">Status Tanggungan</label>
+                                <select id="dar-status" class="input-pro border border-slate-200 bg-white" onchange="calcDarurat()">
+                                    <option value="6">Lajang / Belum Menikah (6x Pengeluaran)</option>
+                                    <option value="9">Menikah, Belum Punya Anak (9x Pengeluaran)</option>
+                                    <option value="12">Menikah, Punya Anak (12x Pengeluaran)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="text-[10px] font-black text-slate-400 uppercase mb-1 block">Saldo Dana Darurat Saat Ini (Opsional - Rp)</label>
+                                <input type="number" id="dar-current" placeholder="0" value="0" class="input-pro border border-slate-200 bg-white" oninput="calcDarurat()">
+                            </div>
+                        </div>
+
+                        <div class="mt-6 bg-indigo-50 border border-indigo-200 p-5 rounded-2xl shadow-inner">
+                            <p class="text-[10px] font-black text-indigo-600 uppercase mb-1 tracking-widest">Target Dana Darurat Anda:</p>
+                            <h4 class="text-3xl font-black text-slate-900 mb-4" id="res-dar-target">Rp 30.000.000</h4>
+                            
+                            <div class="flex justify-between items-center mb-1">
+                                <span class="text-[10px] font-bold text-slate-500">Progress: <span id="res-dar-pct" class="font-black text-indigo-600">0%</span></span>
+                                <span class="text-[10px] font-bold text-rose-500">Kekurangan: <span id="res-dar-kurang">Rp 30.000.000</span></span>
+                            </div>
+                            <div class="w-full bg-slate-200 rounded-full h-2.5">
+                                <div class="bg-indigo-600 h-2.5 rounded-full transition-all duration-500" id="res-dar-bar" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </section>
@@ -2884,111 +3049,6 @@
                                             <div class="flex flex-col gap-1 items-center">
                                                 <span class="bg-indigo-50 text-indigo-600 border border-indigo-100 px-2 py-1 rounded text-[9px] font-black uppercase w-full text-center">All TF</span>
                                                 <span class="bg-emerald-50 text-emerald-600 border border-emerald-100 px-2 py-1 rounded text-[9px] font-black uppercase w-full text-center">Swing</span>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr class="hover:bg-slate-50 transition-colors bg-white">
-                                        <td class="p-4 align-top">
-                                            <span class="font-black text-blue-600 text-sm block">Kaufman AMA</span>
-                                            <span class="text-[10px] text-slate-500 font-bold block">Kaufman Adaptive MA</span>
-                                            <div class="mt-2 bg-slate-100 text-slate-600 text-[9px] px-2 py-0.5 rounded inline-block font-mono border border-slate-200">Period 10, Fast 2, Slow 30</div>
-                                        </td>
-                                        <td class="p-4 align-top">
-                                            <ul class="text-xs text-slate-600 space-y-1.5 list-disc pl-4">
-                                                <li><b>Efficiency Ratio:</b> Mengukur seberapa directional pergerakan harga vs total jarak yang ditempuh</li>
-                                                <li><b>Slow saat sideways:</b> Hampir flat saat choppy = tidak banyak whipsaw signal palsu</li>
-                                                <li><b>Fast saat trending:</b> Sangat responsif saat pasar trending kuat = tidak tertinggal jauh</li>
-                                                <li>Solusi elegan untuk masalah klasik MA: lag vs noise tradeoff. Terbaik untuk trend following</li>
-                                            </ul>
-                                        </td>
-                                        <td class="p-4 align-top">
-                                            <div class="flex flex-col gap-1 items-center">
-                                                <span class="bg-indigo-50 text-indigo-600 border border-indigo-100 px-2 py-1 rounded text-[9px] font-black uppercase w-full text-center">All TF</span>
-                                                <span class="bg-emerald-50 text-emerald-600 border border-emerald-100 px-2 py-1 rounded text-[9px] font-black uppercase w-full text-center">Swing</span>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr class="hover:bg-slate-50 transition-colors bg-white">
-                                        <td class="p-4 align-top">
-                                            <span class="font-black text-blue-600 text-sm block">Connors RSI</span>
-                                            <span class="text-[10px] text-slate-500 font-bold block">CRSI — Triple Component</span>
-                                            <div class="mt-2 bg-slate-100 text-slate-600 text-[9px] px-2 py-0.5 rounded inline-block font-mono border border-slate-200">RSI(3) + Streak RSI + ROC%</div>
-                                        </td>
-                                        <td class="p-4 align-top">
-                                            <ul class="text-xs text-slate-600 space-y-1.5 list-disc pl-4">
-                                                <li><b>RSI(3):</b> RSI sangat cepat untuk tangkap oversold/overbought jangka pendek</li>
-                                                <li><b>Streak RSI:</b> Berapa hari berturut-turut harga naik/turun — mengukur kelelahan trend harian</li>
-                                                <li><b>ROC%:</b> Persentase perubahan dari beberapa hari lalu — magnitude sell-off atau rally</li>
-                                                <li>Dirancang khusus untuk mean reversion trading di saham — beli saat CRSI &lt;10, jual saat &gt;90</li>
-                                            </ul>
-                                        </td>
-                                        <td class="p-4 align-top">
-                                            <div class="flex flex-col gap-1 items-center">
-                                                <span class="bg-indigo-50 text-indigo-600 border border-indigo-100 px-2 py-1 rounded text-[9px] font-black uppercase w-full text-center">D1+</span>
-                                                <span class="bg-emerald-50 text-emerald-600 border border-emerald-100 px-2 py-1 rounded text-[9px] font-black uppercase w-full text-center">Swing</span>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr class="hover:bg-slate-50 transition-colors bg-white">
-                                        <td class="p-4 align-top">
-                                            <span class="font-black text-blue-600 text-sm block">Elder Ray Index</span>
-                                            <span class="text-[10px] text-slate-500 font-bold block">Bull Power + Bear Power</span>
-                                            <div class="mt-2 bg-slate-100 text-slate-600 text-[9px] px-2 py-0.5 rounded inline-block font-mono border border-slate-200">EMA 13, Bull = High-EMA, Bear = Low-EMA</div>
-                                        </td>
-                                        <td class="p-4 align-top">
-                                            <ul class="text-xs text-slate-600 space-y-1.5 list-disc pl-4">
-                                                <li><b>Bull Power positif:</b> High candle lebih tinggi dari EMA = bull masih dominan</li>
-                                                <li><b>Bear Power negatif:</b> Low candle di bawah EMA = bear masih menekan</li>
-                                                <li><b>Setup beli:</b> EMA naik (trend) + Bear Power negatif tapi naik (divergence) = entry paling kuat</li>
-                                                <li>Bagian dari Elder Triple Screen System yang menggunakan 3 timeframe sekaligus</li>
-                                            </ul>
-                                        </td>
-                                        <td class="p-4 align-top">
-                                            <div class="flex flex-col gap-1 items-center">
-                                                <span class="bg-indigo-50 text-indigo-600 border border-indigo-100 px-2 py-1 rounded text-[9px] font-black uppercase w-full text-center">D1+</span>
-                                                <span class="bg-emerald-50 text-emerald-600 border border-emerald-100 px-2 py-1 rounded text-[9px] font-black uppercase w-full text-center">Swing</span>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr class="hover:bg-slate-50 transition-colors bg-white">
-                                        <td class="p-4 align-top">
-                                            <span class="font-black text-blue-600 text-sm block">Quantitative Suite</span>
-                                            <span class="text-[10px] text-slate-500 font-bold block">Z-Score / Beta / Correlation</span>
-                                            <div class="mt-2 bg-slate-100 text-slate-600 text-[9px] px-2 py-0.5 rounded inline-block font-mono border border-slate-200">Rolling window 20–60</div>
-                                        </td>
-                                        <td class="p-4 align-top">
-                                            <ul class="text-xs text-slate-600 space-y-1.5 list-disc pl-4">
-                                                <li><b>Z-Score:</b> Deviasi harga dari mean dalam satuan standar deviasi — &gt;2 = overbought statistik</li>
-                                                <li><b>Beta:</b> Sensitivitas aset terhadap market — beta &gt;1 = lebih volatile dari market</li>
-                                                <li><b>Correlation:</b> Seberapa sinkron dua aset bergerak — untuk pairs trading dan hedging</li>
-                                                <li>Digunakan oleh quantitative trader dan portfolio manager, bukan untuk setups individual</li>
-                                            </ul>
-                                        </td>
-                                        <td class="p-4 align-top">
-                                            <div class="flex flex-col gap-1 items-center">
-                                                <span class="bg-indigo-50 text-indigo-600 border border-indigo-100 px-2 py-1 rounded text-[9px] font-black uppercase w-full text-center">D1+</span>
-                                                <span class="bg-emerald-50 text-emerald-600 border border-emerald-100 px-2 py-1 rounded text-[9px] font-black uppercase w-full text-center">Quant, Position</span>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr class="hover:bg-slate-50 transition-colors bg-white">
-                                        <td class="p-4 align-top">
-                                            <span class="font-black text-blue-600 text-sm block">Elder Triple Screen</span>
-                                            <span class="text-[10px] text-slate-500 font-bold block">3-Screen Trading System</span>
-                                            <div class="mt-2 bg-slate-100 text-slate-600 text-[9px] px-2 py-0.5 rounded inline-block font-mono border border-slate-200">HTF MACD + MTF Stoch + Entry candle</div>
-                                        </td>
-                                        <td class="p-4 align-top">
-                                            <ul class="text-xs text-slate-600 space-y-1.5 list-disc pl-4">
-                                                <li><b>Screen 1 (HTF):</b> Tentukan bias trend dengan MACD di TF 5× lebih besar</li>
-                                                <li><b>Screen 2 (MTF):</b> Cari entry dengan Stochastic/Force Index di TF trading</li>
-                                                <li><b>Screen 3 (ETF):</b> Buy stop sedikit di atas high kemarin untuk entry yang presisi</li>
-                                                <li>Framework lengkap yang menggabungkan 3 TF + 2 indikator berbeda secara terstruktur</li>
-                                            </ul>
-                                        </td>
-                                        <td class="p-4 align-top">
-                                            <div class="flex flex-col gap-1 items-center">
-                                                <span class="bg-indigo-50 text-indigo-600 border border-indigo-100 px-2 py-1 rounded text-[9px] font-black uppercase w-full text-center">H1–D1</span>
-                                                <span class="bg-emerald-50 text-emerald-600 border border-emerald-100 px-2 py-1 rounded text-[9px] font-black uppercase w-full text-center">Swing, Position</span>
                                             </div>
                                         </td>
                                     </tr>
@@ -4815,7 +4875,7 @@
                                         <td class="p-4 align-top">
                                             <div class="flex flex-col gap-1 items-center">
                                                 <span class="bg-indigo-50 text-indigo-600 border border-indigo-100 px-2 py-1 rounded text-[9px] font-black uppercase w-full text-center">M15+</span>
-                                                <span class="bg-emerald-50 text-emerald-600 border border-emerald-100 px-2 py-1 rounded text-[9px] font-black uppercase w-full text-center">Intraday]</span>
+                                                <span class="bg-emerald-50 text-emerald-600 border border-emerald-100 px-2 py-1 rounded text-[9px] font-black uppercase w-full text-center">Intraday</span>
                                             </div>
                                         </td>
                                     </tr>
@@ -4875,7 +4935,7 @@
                                         </td>
                                         <td class="p-4 align-top">
                                             <div class="flex flex-col gap-1 items-center">
-                                                <spanclass="bg-indigo-50 text-indigo-600 border border-indigo-100 px-2 py-1 rounded text-[9px] font-black uppercase w-full text-center">H4+</span>
+                                                <span class="bg-indigo-50 text-indigo-600 border border-indigo-100 px-2 py-1 rounded text-[9px] font-black uppercase w-full text-center">H4+</span>
                                                 <span class="bg-emerald-50 text-emerald-600 border border-emerald-100 px-2 py-1 rounded text-[9px] font-black uppercase w-full text-center">Swing, Position</span>
                                             </div>
                                         </td>
@@ -5007,7 +5067,7 @@
                 
                 <div class="text-center mb-8">
                     <h2 class="text-3xl md:text-4xl font-black text-slate-900 mb-2">Kalkulator <span class="text-blue-600">Investasi & Trading</span></h2>
-                    <p class="text-slate-500 text-sm">Alat bantu lengkap untuk menghitung manajemen risiko, pertumbuhan aset, hingga dana darurat.</p>
+                    <p class="text-slate-500 text-sm">Alat bantu lengkap untuk menghitung manajemen risiko, trading plan, dan average down/up saham.</p>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 items-start mb-8">
@@ -5135,94 +5195,6 @@
                             </button>
                         </div>
                     </div>
-                </div>
-
-                <hr class="my-10 border-slate-200 border-2 rounded-full">
-
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 items-start">
-                    
-                    <div class="premium-card p-6 md:p-8 border-t-4 border-amber-500 shadow-sm bg-white dark-mode-card">
-                        <h3 class="text-xl font-black text-slate-900 mb-2 flex items-center gap-2">
-                            <i class="fas fa-chart-line text-amber-500"></i> Bunga Majemuk (Compound)
-                        </h3>
-                        <p class="text-[11px] text-slate-500 mb-6">Hitung keajaiban bunga berbunga dari waktu ke waktu.</p>
-                        
-                        <div class="space-y-4">
-                            <div>
-                                <label class="text-[10px] font-black text-slate-400 uppercase mb-1 block">Modal Awal (Rp)</label>
-                                <input type="number" id="cmp-awal" placeholder="10000000" value="10000000" class="input-pro border border-slate-200 bg-white" oninput="calcCompound()">
-                            </div>
-                            <div class="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label class="text-[10px] font-black text-slate-400 uppercase mb-1 block">Setoran Bulanan (Rp)</label>
-                                    <input type="number" id="cmp-bulanan" placeholder="1000000" value="1000000" class="input-pro border border-slate-200 bg-white" oninput="calcCompound()">
-                                </div>
-                                <div>
-                                    <label class="text-[10px] font-black text-slate-400 uppercase mb-1 block">Durasi (Tahun)</label>
-                                    <input type="number" id="cmp-tahun" placeholder="10" value="10" class="input-pro border border-slate-200 bg-white" oninput="calcCompound()">
-                                </div>
-                            </div>
-                            <div>
-                                <label class="text-[10px] font-black text-slate-400 uppercase mb-1 block">Asumsi Return / Tahun (%)</label>
-                                <input type="number" id="cmp-return" placeholder="10" value="10" step="0.5" class="input-pro border border-slate-200 bg-white" oninput="calcCompound()">
-                            </div>
-                        </div>
-
-                        <div class="mt-6 bg-slate-900 text-white p-5 rounded-2xl border border-slate-800 shadow-inner">
-                            <div class="flex justify-between items-center mb-3 border-b border-slate-700 pb-3">
-                                <p class="text-[10px] font-bold text-slate-400 uppercase">Total Pokok yang Disetor:</p>
-                                <p class="text-sm font-black text-slate-200" id="res-cmp-pokok">Rp 130.000.000</p>
-                            </div>
-                            <div class="flex justify-between items-center mb-3 border-b border-slate-700 pb-3">
-                                <p class="text-[10px] font-bold text-slate-400 uppercase">Total Keuntungan Bunga:</p>
-                                <p class="text-sm font-black text-emerald-400" id="res-cmp-bunga">Rp 84.628.210</p>
-                            </div>
-                            <div class="flex justify-between items-center">
-                                <p class="text-[10px] font-bold text-slate-400 uppercase">Nilai Akhir (Future Value):</p>
-                                <p class="text-xl font-black text-white" id="res-cmp-total">Rp 214.628.210</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="premium-card p-6 md:p-8 border-t-4 border-indigo-500 shadow-sm bg-white dark-mode-card">
-                        <h3 class="text-xl font-black text-slate-900 mb-2 flex items-center gap-2">
-                            <i class="fas fa-medkit text-indigo-500"></i> Kalkulator Dana Darurat
-                        </h3>
-                        <p class="text-[11px] text-slate-500 mb-6">Hitung bantalan kas minimum sebelum Anda mulai investasi agresif.</p>
-                        
-                        <div class="space-y-4">
-                            <div>
-                                <label class="text-[10px] font-black text-slate-400 uppercase mb-1 block">Total Pengeluaran Wajib / Bulan (Rp)</label>
-                                <input type="number" id="dar-expense" placeholder="5000000" value="5000000" class="input-pro border border-slate-200 bg-white" oninput="calcDarurat()">
-                            </div>
-                            <div>
-                                <label class="text-[10px] font-black text-slate-400 uppercase mb-1 block">Status Tanggungan</label>
-                                <select id="dar-status" class="input-pro border border-slate-200 bg-white" onchange="calcDarurat()">
-                                    <option value="6">Lajang / Belum Menikah (6x Pengeluaran)</option>
-                                    <option value="9">Menikah, Belum Punya Anak (9x Pengeluaran)</option>
-                                    <option value="12">Menikah, Punya Anak (12x Pengeluaran)</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="text-[10px] font-black text-slate-400 uppercase mb-1 block">Saldo Dana Darurat Saat Ini (Opsional - Rp)</label>
-                                <input type="number" id="dar-current" placeholder="0" value="0" class="input-pro border border-slate-200 bg-white" oninput="calcDarurat()">
-                            </div>
-                        </div>
-
-                        <div class="mt-6 bg-indigo-50 border border-indigo-200 p-5 rounded-2xl shadow-inner">
-                            <p class="text-[10px] font-black text-indigo-600 uppercase mb-1 tracking-widest">Target Dana Darurat Anda:</p>
-                            <h4 class="text-3xl font-black text-slate-900 mb-4" id="res-dar-target">Rp 30.000.000</h4>
-                            
-                            <div class="flex justify-between items-center mb-1">
-                                <span class="text-[10px] font-bold text-slate-500">Progress: <span id="res-dar-pct" class="font-black text-indigo-600">0%</span></span>
-                                <span class="text-[10px] font-bold text-rose-500">Kekurangan: <span id="res-dar-kurang">Rp 30.000.000</span></span>
-                            </div>
-                            <div class="w-full bg-slate-200 rounded-full h-2.5">
-                                <div class="bg-indigo-600 h-2.5 rounded-full transition-all duration-500" id="res-dar-bar" style="width: 0%"></div>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
 
             </div>
@@ -5566,8 +5538,8 @@
             <div class="dropdown-content !bottom-full !top-auto !left-auto !right-0 mb-4 w-48 shadow-2xl">
                 <button onclick="showPage('watchlist')" class="dropdown-item text-amber-600"><i class="fas fa-star w-5"></i> Watchlist</button>
                 <button onclick="showPage('jurnal')" class="dropdown-item text-purple-500"><i class="fas fa-book w-5"></i> Jurnal Trading</button>
-                <button onclick="showPage('pensiun')" class="dropdown-item border-t border-slate-100"><i class="fas fa-umbrella w-5 text-emerald-500"></i> Dana Pensiun</button>
-                <button onclick="showPage('kalkulator')" class="dropdown-item"><i class="fas fa-calculator w-5 text-blue-500"></i> Kalkulator Investasi</button>
+                <button onclick="showPage('pensiun')" class="dropdown-item border-t border-slate-100"><i class="fas fa-umbrella w-5 text-emerald-500"></i> Pensiun & Kalkulator</button>
+                <button onclick="showPage('kalkulator')" class="dropdown-item"><i class="fas fa-crosshairs w-5 text-blue-500"></i> Trading Plan</button>
                 <button onclick="showPage('bandar')" class="dropdown-item"><i class="fas fa-user-secret w-5 text-orange-500"></i> Bandar</button>
             </div>
         </div>
@@ -6740,6 +6712,12 @@
                 setTimeout(renderYieldChart, 100);
                 setTimeout(renderYieldCurve, 100); 
             }
+
+            if(pageId === 'pensiun') {
+                setTimeout(() => {
+                    calcCompound(); // Force re-render the chart specifically when page opens
+                }, 100);
+            }
             
             if(pageId === 'jurnal') {
                 renderJournal();
@@ -7479,33 +7457,27 @@
             document.getElementById('quiz-intro').classList.add('active');
         }
 
-        // --- UPGRADE: GENERATE SERTIFIKAT KUIS (DENGAN NAMA PESERTA & FOUNDER) ---
         function generateCertificate() {
             const title = window.finalProfileResult || "KONSULTAN INVESTASI";
             const userName = userData.name.toUpperCase();
             const canvas = document.getElementById('certCanvas');
             const ctx = canvas.getContext('2d');
 
-            // Bersihkan kanvas
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Background
             ctx.fillStyle = '#0f172a'; // slate-900 
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            // Border Luar
             ctx.strokeStyle = '#3b82f6'; // blue-500
             ctx.lineWidth = 10;
             ctx.strokeRect(20, 20, canvas.width - 40, canvas.height - 40);
 
-            // Border Dalam
             ctx.fillStyle = '#1e293b'; // slate-800 
             ctx.fillRect(30, 30, canvas.width - 60, canvas.height - 60);
 
             ctx.fillStyle = '#f8fafc';
             ctx.textAlign = 'center';
 
-            // Title
             ctx.font = 'bold 36px "Plus Jakarta Sans", Arial, sans-serif';
             ctx.fillText('CERTIFICATE OF COMPLETION', canvas.width / 2, 100);
 
@@ -7513,12 +7485,10 @@
             ctx.fillStyle = '#94a3b8';
             ctx.fillText('Secara resmi diberikan kepada:', canvas.width / 2, 160);
 
-            // NAMA PESERTA
             ctx.font = 'bold 46px "Plus Jakarta Sans", Arial, sans-serif';
             ctx.fillStyle = '#10b981'; // emerald-500
             ctx.fillText(userName, canvas.width / 2, 230);
             
-            // Garis bawah nama
             ctx.beginPath();
             ctx.moveTo(canvas.width/2 - 200, 250);
             ctx.lineTo(canvas.width/2 + 200, 250);
@@ -7531,22 +7501,18 @@
             ctx.fillText('Atas kelulusannya menyelesaikan Uji Kompetensi 30 Pertanyaan', canvas.width / 2, 310);
             ctx.fillText('dan teridentifikasi memiliki Profil Risiko & Eksekusi:', canvas.width / 2, 340);
 
-            // HASIL PROFIL
             ctx.font = 'bold 32px "Plus Jakarta Sans", Arial, sans-serif';
             ctx.fillStyle = '#3b82f6';
             ctx.fillText(`"${title}"`, canvas.width / 2, 400);
 
-            // Tanda Tangan & Tanggal
             const date = new Date().toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' });
             
-            // Kiri: Tanggal
             ctx.textAlign = 'left';
             ctx.font = '16px "Plus Jakarta Sans", Arial, sans-serif';
             ctx.fillStyle = '#cbd5e1';
             ctx.fillText(`Diterbitkan: ${date}`, 80, 520);
             ctx.fillText(`ID Validasi: EA-${Date.now().toString().slice(-6)}`, 80, 545);
 
-            // Kanan: TTD Founder
             ctx.textAlign = 'right';
             ctx.font = 'italic 24px Georgia, serif';
             ctx.fillStyle = '#94a3b8';
@@ -7567,7 +7533,6 @@
             ctx.fillStyle = '#94a3b8';
             ctx.fillText('Rakaditya Septiawan.MOS.MCE.CEH (Founder)', canvas.width - 80, 555);
 
-            // Download Trigger
             const link = document.createElement('a');
             link.download = `Sertifikat_Ewoks_${userName.replace(/ /g, '_')}.png`;
             link.href = canvas.toDataURL('image/png');
@@ -8115,7 +8080,7 @@
             const fivePercent = buyAvg * 0.05;
 
             const targetHigh = buyAvg + fivePercent + (papanCountHigh * tick);
-            const targetLow = buyAvg + percentLow + (papanCountLow * tick); // Fallback percentage base
+            const targetLow = buyAvg + percentLow + (papanCountLow * tick); 
             const percentLow = ((targetLow - buyAvg) / buyAvg) * 100;
             const percentHigh = ((targetHigh - buyAvg) / buyAvg) * 100;
 
@@ -8302,6 +8267,8 @@
             }
         }
 
+        let compoundChartInstance = null;
+
         function calcCompound() {
             const modalAwal = parseFloat(document.getElementById('cmp-awal').value) || 0;
             const setoran = parseFloat(document.getElementById('cmp-bulanan').value) || 0;
@@ -8326,6 +8293,118 @@
             document.getElementById('res-cmp-pokok').innerText = "Rp " + Math.round(totalSetor).toLocaleString('id-ID');
             document.getElementById('res-cmp-bunga').innerText = "Rp " + Math.round(totalBunga).toLocaleString('id-ID');
             document.getElementById('res-cmp-total').innerText = "Rp " + Math.round(totalAkhir).toLocaleString('id-ID');
+
+            let labels = [];
+            let dataPokok = [];
+            let dataBunga = [];
+            
+            let currentPokok = modalAwal;
+            
+            for(let i=0; i<=tahun; i++) {
+                labels.push('Thn ' + i);
+                if(i === 0) {
+                    dataPokok.push(currentPokok);
+                    dataBunga.push(0);
+                } else {
+                    currentPokok += (setoran * 12);
+                    let fvThn = modalAwal * Math.pow(1 + rateBulan, i * 12);
+                    let fsThn = setoran * ((Math.pow(1 + rateBulan, i * 12) - 1) / rateBulan);
+                    if(rateBulan === 0) {
+                        fvThn = modalAwal;
+                        fsThn = setoran * i * 12;
+                    }
+                    let currentTotal = fvThn + fsThn;
+                    
+                    dataPokok.push(currentPokok);
+                    dataBunga.push(currentTotal - currentPokok);
+                }
+            }
+            
+            renderCompoundChart(labels, dataPokok, dataBunga);
+        }
+
+        function renderCompoundChart(labels, pokokData, bungaData) {
+            const canvasEl = document.getElementById('compoundChartCanvas');
+            if(!canvasEl) return;
+            const ctx = canvasEl.getContext('2d');
+            
+            if (compoundChartInstance) {
+                compoundChartInstance.destroy();
+            }
+            
+            const isDark = document.body.classList.contains('dark-mode-override');
+            
+            compoundChartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        {
+                            label: 'Modal Pokok',
+                            data: pokokData,
+                            backgroundColor: '#3b82f6', // blue-500
+                            stacked: true,
+                        },
+                        {
+                            label: 'Keuntungan Bunga',
+                            data: bungaData,
+                            backgroundColor: '#10b981', // emerald-500
+                            stacked: true,
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { 
+                            position: 'bottom', 
+                            labels: { 
+                                boxWidth: 12, 
+                                font: { size: 10 }, 
+                                color: isDark ? '#94a3b8' : '#64748b' 
+                            } 
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.dataset.label + ': Rp ' + Math.round(context.raw).toLocaleString('id-ID');
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: { 
+                            stacked: true, 
+                            ticks: { 
+                                font: { size: 9 }, 
+                                color: isDark ? '#94a3b8' : '#64748b' 
+                            }, 
+                            grid: { display: false } 
+                        },
+                        y: { 
+                            stacked: true, 
+                            ticks: { 
+                                font: { size: 9 }, 
+                                color: isDark ? '#94a3b8' : '#64748b',
+                                callback: function(value) { return 'Rp ' + formatAbbreviated(value); } 
+                            }, 
+                            grid: { 
+                                color: isDark ? 'rgba(51, 65, 85, 0.5)' : 'rgba(226, 232, 240, 0.5)' 
+                            } 
+                        }
+                    }
+                }
+            });
+        }
+
+        function shareWhatsAppCompound() {
+            const modalAwal = document.getElementById('cmp-awal').value;
+            const setoran = document.getElementById('cmp-bulanan').value;
+            const tahun = document.getElementById('cmp-tahun').value;
+            const totalAkhir = document.getElementById('res-cmp-total').innerText;
+            const msg = `*SIMULASI COMPOUNDING INTEREST*\n\nModal Awal: Rp ${Number(modalAwal).toLocaleString('id-ID')}\nSetoran Rutin: Rp ${Number(setoran).toLocaleString('id-ID')}/bln\nDurasi: ${tahun} Tahun\n\n🎯 *Nilai Akhir: ${totalAkhir}*\n\n_Ewoks Academy Pro_`;
+            window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`);
         }
 
         function calcDarurat() {
@@ -8346,14 +8425,11 @@
             document.getElementById('res-dar-bar').style.width = pct + "%";
         }
 
-        function shareWhatsAppCalc() {
-            const msg = `*TRADING PLAN*\nEmiten: ${document.getElementById('calc-name').value}\nBeli: ${document.getElementById('calc-price').value}\nTP: ${document.getElementById('res-tp-price').innerText}\nSL: ${document.getElementById('res-sl-price').innerText}`;
+        function shareWhatsAppDarurat() {
+            const target = document.getElementById('res-dar-target').innerText;
+            const pct = document.getElementById('res-dar-pct').innerText;
+            const msg = `*TARGET DANA DARURAT*\n\nTarget Dana Darurat saya adalah *${target}*.\nProgress saat ini: ${pct}\n\n_Dihitung via Ewoks Academy Pro_`;
             window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`);
-        }
-
-        function copyToClipboardCalc() {
-            const text = `Plan: ${document.getElementById('calc-name').value}\nBuy: ${document.getElementById('calc-price').value}\nTP: ${document.getElementById('res-tp-price').innerText}\nSL: ${document.getElementById('res-sl-price').innerText}`;
-            navigator.clipboard.writeText(text).then(() => showToast('Berhasil disalin ke clipboard!', 'success'));
         }
 
         // --- DANA PENSIUN ---
