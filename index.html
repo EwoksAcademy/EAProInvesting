@@ -1307,62 +1307,280 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
-                    <div class="premium-card p-6 shadow-sm bg-white dark-mode-card">
-                        <h3 class="text-xl font-black text-indigo-600 mb-4 flex items-center gap-2"><i class="fas fa-users-cog"></i> Karakteristik Tipe Broker</h3>
-                        <p class="text-xs text-slate-500 mb-4 border-b border-slate-200 pb-3">Memahami siapa di balik kode broker sangat penting. Setiap tipe punya gaya trading yang berbeda.</p>
-                        <ul class="space-y-4">
-                            <li class="flex gap-4 items-start">
-                                <div class="w-8 h-8 rounded bg-indigo-100 text-indigo-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-globe"></i></div>
-                                <div>
-                                    <p class="font-bold text-slate-800 text-sm">Broker Asing / Institusi (AK, BK, CS, KZ, RX)</p>
-                                    <p class="text-xs text-slate-500 mt-1">Modal raksasa (Triliunan). Bergerak pasif dan akumulasi dalam waktu lama (berminggu-minggu). Jika mereka konsisten *Net Buy* di suatu saham Bluechip, arah tren biasanya akan naik secara stabil (Foreign Flow).</p>
-                                </div>
-                            </li>
-                            <li class="flex gap-4 items-start">
-                                <div class="w-8 h-8 rounded bg-rose-100 text-rose-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-user-friends"></i></div>
-                                <div>
-                                    <p class="font-bold text-slate-800 text-sm">Broker Ritel Dominan (YP, PD, CC, NI, XC)</p>
-                                    <p class="text-xs text-slate-500 mt-1">Modal tersebar di banyak orang. Sifatnya reaktif, sering scalping harian, dan sangat FOMO terhadap berita/pom-pom. Jika broker ini mendominasi *Net Buy* sementara asing jualan, saham tersebut rawan dibanting turun.</p>
-                                </div>
-                            </li>
-                            <li class="flex gap-4 items-start">
-                                <div class="w-8 h-8 rounded bg-amber-100 text-amber-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-user-ninja"></i></div>
-                                <div>
-                                    <p class="font-bold text-slate-800 text-sm">Broker Lokal Agresif / "Bandar" (MG, dkk)</p>
-                                    <p class="text-xs text-slate-500 mt-1">Sering menjadi *Market Maker* di saham-saham 2nd atau 3rd liner (gorengan). Sangat agresif melakukan HAKA (Hajar Kanan) untuk mengerek harga dalam hitungan menit, namun bisa HAKI dengan sangat cepat.</p>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
+                <div class="premium-card p-6 shadow-sm bg-white dark-mode-card mb-8">
+                    <h3 class="text-xl font-black text-indigo-600 mb-4 flex items-center gap-2"><i class="fas fa-users-cog"></i> Karakteristik Tipe Broker</h3>
+                    <p class="text-xs text-slate-500 mb-4 border-b border-slate-200 pb-3">Memahami siapa di balik kode broker sangat penting. Setiap tipe punya gaya trading yang berbeda.</p>
+                    <ul class="space-y-4">
+                        <li class="flex gap-4 items-start">
+                            <div class="w-8 h-8 rounded bg-indigo-100 text-indigo-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-globe"></i></div>
+                            <div>
+                                <p class="font-bold text-slate-800 text-sm">Broker Asing / Institusi (AK, BK, CS, KZ, RX)</p>
+                                <p class="text-xs text-slate-500 mt-1">Modal raksasa (Triliunan). Bergerak pasif dan akumulasi dalam waktu lama (berminggu-minggu). Jika mereka konsisten *Net Buy* di suatu saham Bluechip, arah tren biasanya akan naik secara stabil (Foreign Flow).</p>
+                            </div>
+                        </li>
+                        <li class="flex gap-4 items-start">
+                            <div class="w-8 h-8 rounded bg-rose-100 text-rose-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-user-friends"></i></div>
+                            <div>
+                                <p class="font-bold text-slate-800 text-sm">Broker Ritel Dominan (YP, PD, CC, NI, XC)</p>
+                                <p class="text-xs text-slate-500 mt-1">Modal tersebar di banyak orang. Sifatnya reaktif, sering scalping harian, dan sangat FOMO terhadap berita/pom-pom. Jika broker ini mendominasi *Net Buy* sementara asing jualan, saham tersebut rawan dibanting turun.</p>
+                            </div>
+                        </li>
+                        <li class="flex gap-4 items-start">
+                            <div class="w-8 h-8 rounded bg-amber-100 text-amber-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-user-ninja"></i></div>
+                            <div>
+                                <p class="font-bold text-slate-800 text-sm">Broker Lokal Agresif / "Bandar" (MG, dkk)</p>
+                                <p class="text-xs text-slate-500 mt-1">Sering menjadi *Market Maker* di saham-saham 2nd atau 3rd liner (gorengan). Sangat agresif melakukan HAKA (Hajar Kanan) untuk mengerek harga dalam hitungan menit, namun bisa HAKI dengan sangat cepat.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
 
-                    <div class="premium-card p-6 shadow-sm bg-white dark-mode-card border-t-4 border-t-blue-500">
-                        <h3 class="text-xl font-black text-blue-600 mb-4 flex items-center gap-2"><i class="fas fa-briefcase"></i> Aksi Korporasi & Trik Bandar</h3>
-                        <p class="text-xs text-slate-500 mb-4 border-b border-slate-200 pb-3">Bandar sering memanfaatkan Corporate Action untuk mendistribusikan barang ke ritel.</p>
-                        <ul class="space-y-4">
-                            <li class="flex gap-4 items-start">
-                                <div class="w-8 h-8 rounded bg-blue-100 text-blue-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-money-bill-wave"></i></div>
-                                <div>
-                                    <p class="font-bold text-slate-800 text-sm">Dividen Trap (Jebakan Dividen)</p>
-                                    <p class="text-[11px] text-slate-500 mt-1 mb-1">Bandar akumulasi jauh hari sebelum pengumuman. Menjelang *Cum-Date*, ritel FOMO membeli agar dapat dividen. Tepat saat *Ex-Date*, Bandar membuang barangnya secara masif hingga ARB.</p>
-                                    <p class="text-[10px] font-bold text-slate-600 bg-slate-50 p-2 rounded border border-slate-200">💡 Contoh: Ritel beli di Cum-Date demi dividen 10%, tapi di Ex-Date harga ARB -15%. Ritel justru rugi bersih -5% dan nyangkut.</p>
+                <div class="premium-card p-6 md:p-8 shadow-sm bg-white dark-mode-card border-t-4 border-t-blue-500 mt-8">
+                    <h3 class="text-xl md:text-2xl font-black text-blue-600 mb-3 flex items-center gap-3"><i class="fas fa-briefcase"></i> Ensiklopedia Aksi Korporasi (Corporate Action) & Trik Bandar</h3>
+                    <p class="text-xs md:text-sm text-slate-500 mb-8 border-b border-slate-200 pb-4 leading-relaxed">Corporate Action (Aksi Korporasi) adalah langkah strategis yang dilakukan oleh perusahaan terbuka (Tbk) yang berdampak langsung pada pemegang saham maupun struktur modal perusahaan.</p>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        
+                        <div>
+                            <h4 class="text-lg font-black text-slate-800 mb-2 flex items-center gap-2 text-indigo-600"><i class="fas fa-file-invoice text-indigo-500"></i> 1. Aksi Terkait Saham</h4>
+                            <p class="text-xs text-slate-500 mb-4">Tujuan kategori ini biasanya untuk mengatur likuiditas saham di pasar atau menambah modal perusahaan.</p>
+                            <div class="space-y-4">
+                                <div class="bg-slate-50/50 p-4 rounded-xl border border-slate-100 hover:border-indigo-200 transition-colors">
+                                    <div class="flex gap-3 items-start">
+                                        <div class="w-8 h-8 rounded bg-indigo-100 text-indigo-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-cut"></i></div>
+                                        <div>
+                                            <p class="font-bold text-slate-800 text-sm">Stock Split</p>
+                                            <p class="text-[11px] text-slate-500 mt-1 mb-2 leading-relaxed">Memecah satu saham menjadi beberapa saham baru dengan nilai nominal yang lebih kecil guna meningkatkan likuiditas.</p>
+                                            <p class="text-[11px] text-slate-600 bg-rose-50 p-2 rounded border border-rose-100 mb-2"><span class="font-bold text-rose-600">Trik Bandar:</span> Harga saham yang dipecah tidak mengubah fundamental, namun ritel merasa harganya "sudah murah". Momentum ini sering dipakai Bandar untuk jualan ke Ritel yang baru sanggup beli.</p>
+                                            <p class="text-[10px] font-bold text-slate-600 bg-white p-2 rounded border border-slate-200"><i class="fas fa-lightbulb text-amber-500 mr-1"></i> Contoh: Saham BBCA melakukan pemecahan 1:5, sehingga harga Rp35.000 berubah menjadi Rp7.000 agar lebih terjangkau oleh investor ritel.</p>
+                                        </div>
+                                    </div>
                                 </div>
-                            </li>
-                            <li class="flex gap-4 items-start">
-                                <div class="w-8 h-8 rounded bg-blue-100 text-blue-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-chart-pie"></i></div>
-                                <div>
-                                    <p class="font-bold text-slate-800 text-sm">Right Issue (HMETD)</p>
-                                    <p class="text-[11px] text-slate-500 mt-1 mb-1">Perusahaan minta tambahan modal. Terkadang, Bandar sengaja menekan harga saham di pasar reguler agar ritel tidak mau menebus Right Issue, sehingga Bandar bisa mengambil alih kepemilikan tersebut secara murah (Standby Buyer).</p>
+                                <div class="bg-slate-50/50 p-4 rounded-xl border border-slate-100 hover:border-indigo-200 transition-colors">
+                                    <div class="flex gap-3 items-start">
+                                        <div class="w-8 h-8 rounded bg-indigo-100 text-indigo-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-compress-arrows-alt"></i></div>
+                                        <div>
+                                            <p class="font-bold text-slate-800 text-sm">Reverse Stock Split</p>
+                                            <p class="text-[11px] text-slate-500 mt-1 mb-2 leading-relaxed">Kebalikan dari stock split, yaitu menggabungkan beberapa saham menjadi satu untuk menaikkan harga saham yang sudah terlalu rendah.</p>
+                                            <p class="text-[10px] font-bold text-slate-600 bg-white p-2 rounded border border-slate-200"><i class="fas fa-lightbulb text-amber-500 mr-1"></i> Contoh: Perusahaan menggabungkan 10 saham seharga Rp50 menjadi 1 saham seharga Rp500.</p>
+                                        </div>
+                                    </div>
                                 </div>
-                            </li>
-                            <li class="flex gap-4 items-start">
-                                <div class="w-8 h-8 rounded bg-blue-100 text-blue-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-cut"></i></div>
-                                <div>
-                                    <p class="font-bold text-slate-800 text-sm">Stock Split (Pemecahan Saham)</p>
-                                    <p class="text-[11px] text-slate-500 mt-1 mb-1">Harga saham Rp 10.000 dipecah jadi Rp 2.000 (1:5). Secara fundamental tidak ada yang berubah, namun ritel merasa harganya "sudah murah". Momentum ini sering dipakai Bandar untuk jualan ke Ritel yang baru sanggup beli.</p>
+                                <div class="bg-slate-50/50 p-4 rounded-xl border border-slate-100 hover:border-indigo-200 transition-colors">
+                                    <div class="flex gap-3 items-start">
+                                        <div class="w-8 h-8 rounded bg-indigo-100 text-indigo-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-chart-pie"></i></div>
+                                        <div>
+                                            <p class="font-bold text-slate-800 text-sm">Right Issue (HMETD)</p>
+                                            <p class="text-[11px] text-slate-500 mt-1 mb-2 leading-relaxed">Hak memesan efek terlebih dahulu yang diberikan kepada pemegang saham lama untuk membeli saham baru yang diterbitkan.</p>
+                                            <p class="text-[11px] text-slate-600 bg-rose-50 p-2 rounded border border-rose-100 mb-2"><span class="font-bold text-rose-600">Trik Bandar:</span> Perusahaan minta tambahan modal. Terkadang, Bandar sengaja menekan harga saham di pasar reguler agar ritel tidak mau menebus Right Issue, sehingga Bandar bisa mengambil alih kepemilikan tersebut secara murah (Standby Buyer).</p>
+                                            <p class="text-[10px] font-bold text-slate-600 bg-white p-2 rounded border border-slate-200"><i class="fas fa-lightbulb text-amber-500 mr-1"></i> Contoh: BBRI melakukan right issue untuk memperkuat modal melalui pembentukan holding ultra mikro.</p>
+                                        </div>
+                                    </div>
                                 </div>
-                            </li>
-                        </ul>
+                                <div class="bg-slate-50/50 p-4 rounded-xl border border-slate-100 hover:border-indigo-200 transition-colors">
+                                    <div class="flex gap-3 items-start">
+                                        <div class="w-8 h-8 rounded bg-indigo-100 text-indigo-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-user-tie"></i></div>
+                                        <div>
+                                            <p class="font-bold text-slate-800 text-sm">Private Placement</p>
+                                            <p class="text-[11px] text-slate-500 mt-1 mb-2 leading-relaxed">Penerbitan saham baru yang langsung dijual kepada investor tertentu (tanpa ditawarkan secara umum).</p>
+                                            <p class="text-[10px] font-bold text-slate-600 bg-white p-2 rounded border border-slate-200"><i class="fas fa-lightbulb text-amber-500 mr-1"></i> Contoh: BUMI melakukan private placement kepada investor strategis untuk melunasi utang.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bg-slate-50/50 p-4 rounded-xl border border-slate-100 hover:border-indigo-200 transition-colors">
+                                    <div class="flex gap-3 items-start">
+                                        <div class="w-8 h-8 rounded bg-indigo-100 text-indigo-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-ticket-alt"></i></div>
+                                        <div>
+                                            <p class="font-bold text-slate-800 text-sm">Warrant</p>
+                                            <p class="text-[11px] text-slate-500 mt-1 mb-2 leading-relaxed">Hak yang diberikan kepada pemegang saham untuk membeli saham baru pada harga dan jangka waktu tertentu.</p>
+                                            <p class="text-[10px] font-bold text-slate-600 bg-white p-2 rounded border border-slate-200"><i class="fas fa-lightbulb text-amber-500 mr-1"></i> Contoh: Sering diberikan secara gratis sebagai bonus saat IPO untuk menarik minat investor.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bg-slate-50/50 p-4 rounded-xl border border-slate-100 hover:border-indigo-200 transition-colors">
+                                    <div class="flex gap-3 items-start">
+                                        <div class="w-8 h-8 rounded bg-indigo-100 text-indigo-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-users"></i></div>
+                                        <div>
+                                            <p class="font-bold text-slate-800 text-sm">MESOP (Management and Employee Stock Option Plan)</p>
+                                            <p class="text-[11px] text-slate-500 mt-1 mb-2 leading-relaxed">Program kepemilikan saham untuk karyawan dan manajemen sebagai bentuk insentif.</p>
+                                            <p class="text-[10px] font-bold text-slate-600 bg-white p-2 rounded border border-slate-200"><i class="fas fa-lightbulb text-amber-500 mr-1"></i> Contoh: Karyawan GOTO diberikan hak untuk membeli saham perusahaan pada harga diskon.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bg-slate-50/50 p-4 rounded-xl border border-slate-100 hover:border-indigo-200 transition-colors">
+                                    <div class="flex gap-3 items-start">
+                                        <div class="w-8 h-8 rounded bg-indigo-100 text-indigo-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-undo"></i></div>
+                                        <div>
+                                            <p class="font-bold text-slate-800 text-sm">Buyback</p>
+                                            <p class="text-[11px] text-slate-500 mt-1 mb-2 leading-relaxed">Perusahaan membeli kembali sahamnya sendiri dari pasar publik.</p>
+                                            <p class="text-[10px] font-bold text-slate-600 bg-white p-2 rounded border border-slate-200"><i class="fas fa-lightbulb text-amber-500 mr-1"></i> Contoh: ASII melakukan buyback saham ketika merasa harga pasar saat ini sudah terlalu murah dibandingkan nilai intrinsiknya.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bg-slate-50/50 p-4 rounded-xl border border-slate-100 hover:border-indigo-200 transition-colors">
+                                    <div class="flex gap-3 items-start">
+                                        <div class="w-8 h-8 rounded bg-indigo-100 text-indigo-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-handshake"></i></div>
+                                        <div>
+                                            <p class="font-bold text-slate-800 text-sm">Repo (Repurchase Agreement)</p>
+                                            <p class="text-[11px] text-slate-500 mt-1 mb-2 leading-relaxed">Pinjaman dana dengan jaminan saham, di mana pemilik saham setuju membelinya kembali di masa depan pada harga yang disepakati.</p>
+                                            <p class="text-[10px] font-bold text-slate-600 bg-white p-2 rounded border border-slate-200"><i class="fas fa-lightbulb text-amber-500 mr-1"></i> Contoh: Seorang pemilik perusahaan menjaminkan sahamnya ke sekuritas untuk mendapatkan pinjaman modal kerja.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-8">
+                            <div>
+                                <h4 class="text-lg font-black text-slate-800 mb-2 flex items-center gap-2 text-emerald-600"><i class="fas fa-money-bill-wave text-emerald-500"></i> 2. Aksi Terkait Dividen</h4>
+                                <p class="text-xs text-slate-500 mb-4">Merupakan cara perusahaan membagikan keuntungan kepada pemegang sahamnya.</p>
+                                <div class="space-y-4">
+                                    <div class="bg-slate-50/50 p-4 rounded-xl border border-slate-100 hover:border-emerald-200 transition-colors">
+                                        <div class="flex gap-3 items-start">
+                                            <div class="w-8 h-8 rounded bg-emerald-100 text-emerald-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-coins"></i></div>
+                                            <div>
+                                                <p class="font-bold text-slate-800 text-sm">Dividen Tunai</p>
+                                                <p class="text-[11px] text-slate-500 mt-1 mb-2 leading-relaxed">Pembagian laba dalam bentuk uang tunai per lembar saham.</p>
+                                                <p class="text-[10px] font-bold text-slate-600 bg-white p-2 rounded border border-slate-200"><i class="fas fa-lightbulb text-amber-500 mr-1"></i> Contoh: PTBA membagikan Rp1.000 per lembar saham langsung ke rekening dana nasabah (RDN) investor.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bg-slate-50/50 p-4 rounded-xl border border-slate-100 hover:border-emerald-200 transition-colors">
+                                        <div class="flex gap-3 items-start">
+                                            <div class="w-8 h-8 rounded bg-emerald-100 text-emerald-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-copy"></i></div>
+                                            <div>
+                                                <p class="font-bold text-slate-800 text-sm">Dividen Saham</p>
+                                                <p class="text-[11px] text-slate-500 mt-1 mb-2 leading-relaxed">Pembagian laba dalam bentuk saham tambahan, bukan uang tunai.</p>
+                                                <p class="text-[10px] font-bold text-slate-600 bg-white p-2 rounded border border-slate-200"><i class="fas fa-lightbulb text-amber-500 mr-1"></i> Contoh: Setiap pemilik 10 saham mendapatkan bonus 1 saham baru dari laba ditahan perusahaan.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bg-slate-50/50 p-4 rounded-xl border border-slate-100 hover:border-emerald-200 transition-colors">
+                                        <div class="flex gap-3 items-start">
+                                            <div class="w-8 h-8 rounded bg-emerald-100 text-emerald-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-skull-crossbones"></i></div>
+                                            <div>
+                                                <p class="font-bold text-slate-800 text-sm">Dividen Trap (Jebakan Dividen)</p>
+                                                <p class="text-[11px] text-slate-600 bg-rose-50 p-2 rounded border border-rose-100 mb-2"><span class="font-bold text-rose-600">Trik Bandar:</span> Bandar akumulasi jauh hari sebelum pengumuman. Menjelang Cum-Date, ritel FOMO membeli agar dapat dividen. Tepat saat Ex-Date, Bandar membuang barangnya secara masif hingga ARB.</p>
+                                                <p class="text-[10px] font-bold text-slate-600 bg-white p-2 rounded border border-slate-200"><i class="fas fa-lightbulb text-amber-500 mr-1"></i> Contoh: Ritel beli di Cum-Date demi dividen 10%, tapi di Ex-Date harga ARB -15%. Ritel justru rugi bersih -5% dan nyangkut.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h4 class="text-lg font-black text-slate-800 mb-2 flex items-center gap-2 text-rose-600"><i class="fas fa-credit-card text-rose-500"></i> 3. Aksi Terkait Utang</h4>
+                                <p class="text-xs text-slate-500 mb-4">Langkah perusahaan dalam mengelola kewajiban finansialnya.</p>
+                                <div class="space-y-4">
+                                    <div class="bg-slate-50/50 p-4 rounded-xl border border-slate-100 hover:border-rose-200 transition-colors">
+                                        <div class="flex gap-3 items-start">
+                                            <div class="w-8 h-8 rounded bg-rose-100 text-rose-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-file-contract"></i></div>
+                                            <div>
+                                                <p class="font-bold text-slate-800 text-sm">Penerbitan Obligasi</p>
+                                                <p class="text-[11px] text-slate-500 mt-1 mb-2 leading-relaxed">Perusahaan menerbitkan surat utang kepada publik untuk mendapatkan pendanaan jangka panjang.</p>
+                                                <p class="text-[10px] font-bold text-slate-600 bg-white p-2 rounded border border-slate-200"><i class="fas fa-lightbulb text-amber-500 mr-1"></i> Contoh: Indofood menerbitkan obligasi senilai Rp2 Triliun dengan bunga (kupon) tetap 7% per tahun.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bg-slate-50/50 p-4 rounded-xl border border-slate-100 hover:border-rose-200 transition-colors">
+                                        <div class="flex gap-3 items-start">
+                                            <div class="w-8 h-8 rounded bg-rose-100 text-rose-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-tools"></i></div>
+                                            <div>
+                                                <p class="font-bold text-slate-800 text-sm">Debt Restructuring</p>
+                                                <p class="text-[11px] text-slate-500 mt-1 mb-2 leading-relaxed">Penataan ulang beban utang agar perusahaan lebih mampu membayar (misal: memperpanjang tenor).</p>
+                                                <p class="text-[10px] font-bold text-slate-600 bg-white p-2 rounded border border-slate-200"><i class="fas fa-lightbulb text-amber-500 mr-1"></i> Contoh: Garuda Indonesia menegosiasikan cicilan utang pesawatnya agar tidak bangkrut.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bg-slate-50/50 p-4 rounded-xl border border-slate-100 hover:border-rose-200 transition-colors">
+                                        <div class="flex gap-3 items-start">
+                                            <div class="w-8 h-8 rounded bg-rose-100 text-rose-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-exchange-alt"></i></div>
+                                            <div>
+                                                <p class="font-bold text-slate-800 text-sm">Convertible Bonds</p>
+                                                <p class="text-[11px] text-slate-500 mt-1 mb-2 leading-relaxed">Surat utang yang dapat dikonversi menjadi saham pada waktu tertentu.</p>
+                                                <p class="text-[10px] font-bold text-slate-600 bg-white p-2 rounded border border-slate-200"><i class="fas fa-lightbulb text-amber-500 mr-1"></i> Contoh: Investor memegang obligasi yang pada tahun ketiga bisa diubah menjadi kepemilikan saham di perusahaan tersebut.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bg-slate-50/50 p-4 rounded-xl border border-slate-100 hover:border-rose-200 transition-colors">
+                                        <div class="flex gap-3 items-start">
+                                            <div class="w-8 h-8 rounded bg-rose-100 text-rose-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-sync"></i></div>
+                                            <div>
+                                                <p class="font-bold text-slate-800 text-sm">OWK (Obligasi Wajib Konversi)</p>
+                                                <p class="text-[11px] text-slate-500 mt-1 mb-2 leading-relaxed">Obligasi yang wajib diubah menjadi saham pada saat jatuh tempo.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h4 class="text-lg font-black text-slate-800 mb-2 flex items-center gap-2 text-amber-600"><i class="fas fa-sitemap text-amber-500"></i> 4. Aksi Struktur Perusahaan</h4>
+                                <p class="text-xs text-slate-500 mb-4">Perubahan besar yang melibatkan bentuk organisasi atau eksistensi perusahaan di bursa.</p>
+                                <div class="space-y-4">
+                                    <div class="bg-slate-50/50 p-4 rounded-xl border border-slate-100 hover:border-amber-200 transition-colors">
+                                        <div class="flex gap-3 items-start">
+                                            <div class="w-8 h-8 rounded bg-amber-100 text-amber-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-object-group"></i></div>
+                                            <div>
+                                                <p class="font-bold text-slate-800 text-sm">Merger dan Akuisisi</p>
+                                                <p class="text-[11px] text-slate-500 mt-1 mb-2 leading-relaxed">Merger adalah penggabungan dua perusahaan, sedangkan akuisisi adalah pengambilalihan kontrol perusahaan lain.</p>
+                                                <p class="text-[10px] font-bold text-slate-600 bg-white p-2 rounded border border-slate-200"><i class="fas fa-lightbulb text-amber-500 mr-1"></i> Contoh: Penggabungan Gojek dan Tokopedia menjadi GoTo.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bg-slate-50/50 p-4 rounded-xl border border-slate-100 hover:border-amber-200 transition-colors">
+                                        <div class="flex gap-3 items-start">
+                                            <div class="w-8 h-8 rounded bg-amber-100 text-amber-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-object-ungroup"></i></div>
+                                            <div>
+                                                <p class="font-bold text-slate-800 text-sm">Spin-off</p>
+                                                <p class="text-[11px] text-slate-500 mt-1 mb-2 leading-relaxed">Memisahkan satu divisi perusahaan menjadi entitas mandiri yang baru.</p>
+                                                <p class="text-[10px] font-bold text-slate-600 bg-white p-2 rounded border border-slate-200"><i class="fas fa-lightbulb text-amber-500 mr-1"></i> Contoh: Sebuah bank besar memisahkan unit Syariah-nya menjadi bank tersendiri.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bg-slate-50/50 p-4 rounded-xl border border-slate-100 hover:border-amber-200 transition-colors">
+                                        <div class="flex gap-3 items-start">
+                                            <div class="w-8 h-8 rounded bg-amber-100 text-amber-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-minus-circle"></i></div>
+                                            <div>
+                                                <p class="font-bold text-slate-800 text-sm">Divestment</p>
+                                                <p class="text-[11px] text-slate-500 mt-1 mb-2 leading-relaxed">Menjual aset, anak perusahaan, atau lini bisnis tertentu.</p>
+                                                <p class="text-[10px] font-bold text-slate-600 bg-white p-2 rounded border border-slate-200"><i class="fas fa-lightbulb text-amber-500 mr-1"></i> Contoh: Perusahaan tambang menjual divisi logistiknya agar bisa lebih fokus pada inti bisnis tambang.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bg-slate-50/50 p-4 rounded-xl border border-slate-100 hover:border-amber-200 transition-colors">
+                                        <div class="flex gap-3 items-start">
+                                            <div class="w-8 h-8 rounded bg-amber-100 text-amber-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-user-lock"></i></div>
+                                            <div>
+                                                <p class="font-bold text-slate-800 text-sm">Go Private</p>
+                                                <p class="text-[11px] text-slate-500 mt-1 mb-2 leading-relaxed">Mengubah status perusahaan dari terbuka (Tbk) menjadi tertutup dan keluar dari bursa saham.</p>
+                                                <p class="text-[10px] font-bold text-slate-600 bg-white p-2 rounded border border-slate-200"><i class="fas fa-lightbulb text-amber-500 mr-1"></i> Contoh: Bentoel Internasional Investama (RMBA) yang melakukan delisting dari Bursa Efek Indonesia.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bg-slate-50/50 p-4 rounded-xl border border-slate-100 hover:border-amber-200 transition-colors">
+                                        <div class="flex gap-3 items-start">
+                                            <div class="w-8 h-8 rounded bg-amber-100 text-amber-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-door-open"></i></div>
+                                            <div>
+                                                <p class="font-bold text-slate-800 text-sm">IPO (Initial Public Offering)</p>
+                                                <p class="text-[11px] text-slate-500 mt-1 mb-2 leading-relaxed">Penjualan saham pertama kali kepada masyarakat umum.</p>
+                                                <p class="text-[10px] font-bold text-slate-600 bg-white p-2 rounded border border-slate-200"><i class="fas fa-lightbulb text-amber-500 mr-1"></i> Contoh: Bukalapak masuk ke bursa untuk pertama kalinya pada tahun 2021.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bg-slate-50/50 p-4 rounded-xl border border-slate-100 hover:border-amber-200 transition-colors">
+                                        <div class="flex gap-3 items-start">
+                                            <div class="w-8 h-8 rounded bg-amber-100 text-amber-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-sign-in-alt"></i></div>
+                                            <div>
+                                                <p class="font-bold text-slate-800 text-sm">Backdoor Listing</p>
+                                                <p class="text-[11px] text-slate-500 mt-1 mb-2 leading-relaxed">Cara masuk ke bursa dengan mengakuisisi perusahaan yang sudah terdaftar (perusahaan cangkang).</p>
+                                                <p class="text-[10px] font-bold text-slate-600 bg-white p-2 rounded border border-slate-200"><i class="fas fa-lightbulb text-amber-500 mr-1"></i> Contoh: Perusahaan swasta besar membeli perusahaan publik kecil yang sudah "mati suri" agar bisa langsung menjadi perusahaan Tbk tanpa proses IPO yang panjang.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
