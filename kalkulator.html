@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ewoks Academy Pro - Platform edukasi investasi, analisis fundamental, teknikal, dan bandarmologi saham terbaik dengan tools kalkulator, jurnal, dan database terlengkap.">
+    <meta name="keywords" content="saham, investasi, bandarmologi, fundamental, teknikal, kalkulator investasi, bunga majemuk, edukasi saham, IHSG">
+    <meta name="author" content="Ewoks Academy">
+    
+    <title>Trading Plan & Kalkulator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+    <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body class="min-h-screen relative flex flex-col" data-page="kalkulator">
+
+
+    <div id="edu-quiz-modal" class="fixed inset-0 z-[100] bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-2xl overflow-hidden transform scale-95 transition-transform duration-300 dark-mode-card border border-slate-200" id="edu-quiz-card">
+            </div>
+    </div>
+
+    <div id="toast-container" class="fixed top-24 right-4 z-[9999] flex flex-col gap-2"></div>
+
+    <div class="bg-slate-900 border-b border-slate-800 hidden md:block w-full">
+        <div class="tradingview-widget-container">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+            {
+            "symbols": [
+                {
+                "proName": "IDX:COMPOSITE",
+                "title": "IHSG"
+                },
+                {
+                "proName": "FX_IDC:USDIDR",
+                "title": "USD/IDR"
+                },
+                {
+                "description": "SBN 10Y Yield",
+                "proName": "TVC:ID10Y"
+                },
+                {
+                "description": "BBCA",
+                "proName": "IDX:BBCA"
+                },
+                {
+                "description": "BMRI",
+                "proName": "IDX:BMRI"
+                },
+                {
+                "description": "BREN",
+                "proName": "IDX:BREN"
+                }
+            ],
+            "showSymbolLogo": true,
+            "isTransparent": true,
+            "displayMode": "regular",
+            "colorTheme": "dark",
+            "locale": "id"
+            }
+            </script>
+        </div>
+    </div>
+    
+    <div id="market-ticker-content" class="hidden"></div>
+
+    <header class="md:hidden sticky top-0 z-50 bg-white/90 backdrop-blur-xl border-b border-slate-100 px-4 py-3">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-slate-900 rounded-lg flex items-center justify-center text-white">
+                    <i class="fas fa-chart-line text-sm"></i>
+                </div>
+                <h1 class="text-lg font-black tracking-tight text-slate-900">Ewoks<span class="text-blue-600">Academy</span></h1>
+            </div>
+            <button onclick="toggleDarkMode()" class="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center text-slate-600">
+                <i class="fas fa-moon" id="theme-icon-m"></i>
+            </button>
+        </div>
+    </header>
+
+    <header class="hidden md:block sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-100 transition-colors">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-slate-900 rounded-xl flex items-center justify-center text-white shadow-lg shadow-slate-200 transition-all">
+                    <i class="fas fa-chart-line text-lg"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-extrabold tracking-tight text-slate-900">Ewoks<span class="text-blue-600">Academy</span></h1>
+                    <p class="text-[10px] font-bold text-blue-600 tracking-[0.2em] uppercase">Professional Suite</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-4">
+                <div id="liveClock" class="hidden lg:flex items-center gap-2 text-[10px] font-bold text-slate-700 bg-white px-3 py-1.5 rounded-lg border border-slate-200 shadow-sm transition-colors">
+                    <i class="fas fa-clock text-blue-500"></i> <span id="clockText">--:--:-- WIB</span>
+                </div>
+                <nav class="flex items-center gap-2">
+                    <button onclick="showPage('home')" id="nav-home" class="nav-link active"><i class="fas fa-home"></i> Beranda</button>
+                    
+                    <div class="relative group">
+                        <button class="nav-link" id="nav-edu-parent">
+                            <i class="fas fa-book-open"></i> Edukasi <i class="fas fa-chevron-down text-[10px] ml-1"></i>
+                        </button>
+                        <div class="dropdown-content">
+                            <button onclick="showPage('edukasi')" id="nav-edukasi" class="dropdown-item">
+                                <i class="fas fa-chart-pie w-5 text-blue-500"></i> Makro & Saham
+                            </button>
+                            <button onclick="showPage('fixed-income')" id="nav-fixed-income" class="dropdown-item">
+                                <i class="fas fa-coins w-5 text-amber-500"></i> SBN, ETF, Reksadana
+                            </button>
+                            <button onclick="showPage('bandarmology-edu')" id="nav-bandarmology-edu" class="dropdown-item">
+                                <i class="fas fa-search-dollar w-5 text-indigo-500"></i> Cheat Sheet Bandar
+                            </button>
+                            <button onclick="showPage('quiz')" id="nav-quiz" class="dropdown-item border-t border-slate-100 mt-1 pt-2">
+                                <i class="fas fa-clipboard-list w-5 text-emerald-500"></i> Kuis Profil Risiko
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="relative group">
+                        <button class="nav-link" id="nav-tools-parent">
+                            <i class="fas fa-toolbox"></i> Analisis Tools <i class="fas fa-chevron-down text-[10px] ml-1"></i>
+                        </button>
+                        <div class="dropdown-content">
+                            <button onclick="showPage('watchlist')" id="nav-watchlist" class="dropdown-item">
+                                <i class="fas fa-star w-5 text-amber-400"></i> Terminal & Watchlist
+                            </button>
+                            <button onclick="showPage('jurnal')" id="nav-jurnal" class="dropdown-item">
+                                <i class="fas fa-book w-5 text-purple-500"></i> Jurnal Trading
+                            </button>
+                            <button onclick="showPage('pensiun')" id="nav-pensiun" class="dropdown-item border-t border-slate-100 mt-1 pt-2">
+                                <i class="fas fa-umbrella w-5 text-emerald-500"></i> Pensiun & Kalkulator
+                            </button>
+                            <button onclick="showPage('kalkulator')" id="nav-kalkulator" class="dropdown-item">
+                                <i class="fas fa-crosshairs w-5 text-blue-500"></i> Trading Plan & Sizing
+                            </button>
+                            <button onclick="showPage('bandar')" id="nav-bandar" class="dropdown-item border-t border-slate-100 mt-1 pt-2">
+                                <i class="fas fa-user-secret w-5 text-orange-500"></i> Kalkulator Bandar
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="relative group">
+                        <button class="nav-link" id="nav-database-parent">
+                            <i class="fas fa-database"></i> Database <i class="fas fa-chevron-down text-[10px] ml-1"></i>
+                        </button>
+                        <div class="dropdown-content">
+                            <button onclick="showPage('konglo')" id="nav-konglo" class="dropdown-item">
+                                <i class="fas fa-project-diagram w-5 text-indigo-500"></i> Peta Konglomerat
+                            </button>
+                            <button onclick="showPage('broker')" id="nav-broker" class="dropdown-item">
+                                <i class="fas fa-building w-5 text-slate-500"></i> Broker Database
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <button onclick="toggleDarkMode()" class="ml-2 w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center text-slate-600 hover:bg-slate-200 transition-colors">
+                        <i class="fas fa-moon" id="theme-icon"></i>
+                    </button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+
+    <main class="flex-grow max-w-[1600px] w-full mx-auto px-4 md:px-6 py-6 md:py-8">
+
+        <section id="page-kalkulator" class="max-w-7xl mx-auto">
+            <div class="max-w-6xl mx-auto">
+                
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl md:text-4xl font-black text-slate-900 mb-2">Kalkulator <span class="text-blue-600">Investasi & Trading</span></h2>
+                    <p class="text-slate-500 text-sm">Alat bantu lengkap untuk menghitung manajemen risiko, trading plan, dan average down/up saham.</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 items-start mb-8">
+                    <div class="space-y-6">
+                        <div class="premium-card p-6 md:p-8 shadow-sm border-blue-200 bg-blue-50/20">
+                            <h3 class="text-xl font-black text-slate-900 mb-6 uppercase flex items-center gap-2"><i class="fas fa-crosshairs text-blue-600"></i> Trading Plan</h3>
+                            <div class="grid grid-cols-2 gap-4 md:gap-6">
+                                <div class="col-span-2">
+                                    <label class="text-[10px] font-black text-slate-400 uppercase mb-2 block">EMITEN</label>
+                                    <input type="text" id="calc-name" placeholder="BBCA" class="input-pro border border-slate-200 bg-white uppercase">
+                                </div>
+                                <div>
+                                    <label class="text-[10px] font-black text-slate-400 uppercase mb-2 block">HARGA BELI</label>
+                                    <input type="number" id="calc-price" placeholder="0" class="input-pro border border-slate-200 bg-white" oninput="runSimpleCalc()" min="1">
+                                </div>
+                                <div>
+                                    <label class="text-[10px] font-black text-slate-400 uppercase mb-2 block">JUMLAH LOT</label>
+                                    <input type="number" id="calc-lot" placeholder="0" class="input-pro border border-slate-200 bg-white" oninput="runSimpleCalc()" min="1">
+                                </div>
+                                <div>
+                                    <label class="text-[10px] font-black text-emerald-600 uppercase mb-2 block">TP (%)</label>
+                                    <input type="number" id="calc-tp" value="5" class="input-pro border !border-emerald-200 bg-emerald-50/30" oninput="runSimpleCalc()" min="0.1" step="0.1">
+                                </div>
+                                <div>
+                                    <label class="text-[10px] font-black text-rose-600 uppercase mb-2 block">SL (%)</label>
+                                    <input type="number" id="calc-sl" value="3" class="input-pro border !border-rose-200 bg-rose-50/30" oninput="runSimpleCalc()" min="0.1" step="0.1">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="premium-card p-6 bg-slate-50 border-purple-200 shadow-sm">
+                            <h4 class="text-xs font-black text-slate-900 mb-4 uppercase tracking-widest flex items-center gap-2">
+                                <i class="fas fa-shield-alt text-purple-600"></i> Position Sizing
+                                <span class="tooltip-trigger ml-auto"><i class="fas fa-info-circle text-slate-400"></i><span class="tooltip-text">Ketahui Lot Maksimal untuk membatasi risiko kerugian!</span></span>
+                            </h4>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="col-span-2">
+                                    <label class="text-[10px] font-black text-slate-400 uppercase mb-2 block">MODAL TRADING (Rp)</label>
+                                    <input type="number" id="ps-modal" placeholder="10000000" class="input-pro bg-white border border-slate-200" min="1">
+                                </div>
+                                <div>
+                                    <label class="text-[10px] font-black text-slate-400 uppercase mb-2 block">RISIKO MAKS (%)</label>
+                                    <input type="number" id="ps-risk" value="1" step="0.5" class="input-pro bg-white border border-purple-200" min="0.1">
+                                </div>
+                                <div>
+                                    <label class="text-[10px] font-black text-slate-400 uppercase mb-2 block">ENTRY PRICE</label>
+                                    <input type="number" id="ps-entry" placeholder="1000" class="input-pro bg-white border border-slate-200" min="1">
+                                </div>
+                                <div>
+                                    <label class="text-[10px] font-black text-slate-400 uppercase mb-2 block">STOP LOSS PRICE</label>
+                                    <input type="number" id="ps-sl" placeholder="950" class="input-pro bg-white border border-rose-200" min="1">
+                                </div>
+                                <div class="flex items-end">
+                                    <button onclick="calculateSizing()" class="w-full bg-purple-600 text-white py-3.5 rounded-xl font-bold text-[10px] hover:bg-purple-700 transition-colors uppercase shadow-md">Hitung Lot</button>
+                                </div>
+                            </div>
+                            <div id="ps-result" class="hidden mt-4 p-4 border-l-[4px] border-purple-600 bg-white shadow-sm flex justify-between items-center rounded-r-xl">
+                                 <div>
+                                     <p class="text-[10px] text-slate-400 font-bold uppercase">MAKSIMAL BELI:</p>
+                                     <p class="text-xl font-black text-slate-900" id="res-ps-lot">0 Lot</p>
+                                 </div>
+                                 <div class="text-right">
+                                    <p class="text-[10px] text-slate-400 font-bold uppercase">RUGI MAKSIMAL:</p>
+                                    <p class="text-sm font-bold text-rose-500" id="res-ps-loss">Rp 0</p>
+                                 </div>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="premium-card p-6 bg-slate-50 border-slate-200 shadow-sm hover:border-blue-300 transition-colors">
+                                <h4 class="text-xs font-black text-slate-900 mb-4 uppercase tracking-widest flex items-center gap-2">
+                                    <i class="fas fa-layer-group text-blue-600"></i> Average Down
+                                </h4>
+                                <div class="space-y-3">
+                                    <input type="number" id="avg-down-price" class="input-pro bg-white border border-slate-200 !py-3 !text-sm" placeholder="Harga Baru" min="1">
+                                    <input type="number" id="avg-down-lot" class="input-pro bg-white border border-slate-200 !py-3 !text-sm" placeholder="Lot Baru" min="1">
+                                    <button onclick="calculateAvg('down')" class="w-full bg-slate-900 text-white py-3 rounded-xl font-bold text-[10px] uppercase shadow-md hover:bg-blue-600 transition-colors">Hitung</button>
+                                </div>
+                            </div>
+                            <div class="premium-card p-6 bg-slate-50 border-slate-200 shadow-sm hover:border-emerald-300 transition-colors">
+                                <h4 class="text-xs font-black text-slate-900 mb-4 uppercase tracking-widest flex items-center gap-2">
+                                    <i class="fas fa-arrow-trend-up text-emerald-600"></i> Average Up
+                                </h4>
+                                <div class="space-y-3">
+                                    <input type="number" id="avg-up-price" class="input-pro bg-white border border-slate-200 !py-3 !text-sm" placeholder="Harga Baru" min="1">
+                                    <input type="number" id="avg-up-lot" class="input-pro bg-white border border-slate-200 !py-3 !text-sm" placeholder="Lot Baru" min="1">
+                                    <button onclick="calculateAvg('up')" class="w-full bg-emerald-600 text-white py-3 rounded-xl font-bold text-[10px] uppercase shadow-md hover:bg-emerald-700 transition-colors">Hitung</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="avg-result-box" class="hidden premium-card p-4 border-l-4 border-blue-600 bg-white shadow-sm rounded-r-xl">
+                             <div class="flex justify-between items-center">
+                                <div>
+                                    <p class="text-[10px] text-slate-400 font-bold uppercase" id="avg-type-label">AVG BARU:</p>
+                                    <p class="text-xl font-black text-slate-900" id="res-avg-combined">Rp 0</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-[10px] text-slate-400 font-bold uppercase">TOTAL LOT:</p>
+                                    <p class="text-sm font-black text-slate-700" id="res-avg-total-lot">0 Lot</p>
+                                </div>
+                             </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6 lg:sticky lg:top-24">
+                        <div class="premium-card p-6 md:p-8 border-l-[6px] border-emerald-500 shadow-sm">
+                            <span class="text-[10px] font-black text-emerald-600 uppercase mb-2 block">Estimasi Profit</span>
+                            <h4 class="text-3xl md:text-4xl font-black text-slate-900 mb-4">Rp <span id="res-gain">0</span></h4>
+                            <div class="bg-emerald-50 border border-emerald-200 px-4 py-2 rounded-lg text-xs md:text-sm font-black text-emerald-700 inline-block shadow-inner" id="res-tp-price">@0</div>
+                        </div>
+                        
+                        <div class="premium-card p-6 md:p-8 border-l-[6px] border-rose-500 shadow-sm">
+                            <span class="text-[10px] font-black text-rose-600 uppercase mb-2 block">Risiko Maksimal</span>
+                            <h4 class="text-3xl md:text-4xl font-black text-slate-900 mb-4">Rp <span id="res-risk">0</span></h4>
+                            <div class="bg-rose-50 border border-rose-200 px-4 py-2 rounded-lg text-xs md:text-sm font-black text-rose-700 inline-block shadow-inner" id="res-sl-price">@0</div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <button onclick="shareWhatsAppCalc()" class="btn-action bg-emerald-600 text-white py-4 md:py-5 rounded-2xl font-black text-xs uppercase flex items-center justify-center gap-3 shadow-lg hover:bg-emerald-700 transition-colors">
+                                <i class="fab fa-whatsapp text-lg"></i> SHARE WA
+                            </button>
+                            <button onclick="copyToClipboardCalc()" class="btn-action bg-slate-900 text-white py-4 md:py-5 rounded-2xl font-black text-xs uppercase flex items-center justify-center gap-3 shadow-lg hover:bg-slate-800 transition-colors">
+                                <i class="fas fa-copy text-lg"></i> COPY DATA
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+
+    </main>
+
+    <footer class="bg-slate-900 border-t border-slate-800 text-slate-400 py-10 mt-12 w-full shrink-0">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div>
+                <h3 class="text-white font-black text-lg mb-4 flex items-center gap-2"><i class="fas fa-chart-line text-blue-500"></i> Ewoks Academy</h3>
+                <p class="text-xs leading-relaxed">Platform edukasi dan analisis pasar modal yang didedikasikan untuk membentuk trader dan investor ritel yang rasional, mandiri, dan berbasis data.</p>
+            </div>
+            <div>
+                <h4 class="text-white font-bold text-sm mb-4">Pintasan Cepat</h4>
+                <ul class="text-xs space-y-2">
+                    <li><a href="#" onclick="showPage('watchlist')" class="hover:text-blue-400 transition-colors">Terminal & Watchlist</a></li>
+                    <li><a href="#" onclick="showPage('kalkulator')" class="hover:text-blue-400 transition-colors">Kalkulator Investasi</a></li>
+                    <li><a href="#" onclick="showPage('edukasi')" class="hover:text-blue-400 transition-colors">Modul Edukasi Lengkap</a></li>
+                    <li><a href="#" onclick="showPage('konglo')" class="hover:text-blue-400 transition-colors">Database Bandar & Konglo</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-bold text-sm mb-4"><i class="fas fa-exclamation-triangle text-amber-500"></i> Disclaimer (Peringatan Risiko)</h4>
+                <p class="text-[10px] leading-relaxed italic border-l-2 border-slate-700 pl-3">Semua data, harga, analisis, fundamental, dan simulasi di website ini murni disediakan untuk <b>tujuan edukasi dan pembelajaran</b>. Kami tidak memberikan nasihat keuangan profesional, ajakan, atau rekomendasi untuk membeli/menjual instrumen investasi apapun. Segala risiko keuntungan dan kerugian di pasar modal adalah tanggung jawab pribadi masing-masing investor. Selalu lakukan riset Anda sendiri <i>(Do Your Own Research - DYOR)</i>.</p>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-6 mt-8 pt-8 border-t border-slate-800 text-center text-[10px] text-slate-500 font-bold uppercase tracking-wider">
+            &copy; 2026 Ewoks Academy Pro. All Rights Reserved.
+        </div>
+    </footer>
+
+    <button id="scrollTopBtn" onclick="scrollToTop()" class="fixed bottom-24 md:bottom-10 right-6 bg-blue-600 text-white w-12 h-12 rounded-2xl shadow-xl flex items-center justify-center opacity-0 pointer-events-none transition-all duration-300 z-50 hover:bg-blue-700 hover:-translate-y-1">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <div class="md:hidden fixed bottom-0 left-0 right-0 z-[60] bg-white/95 backdrop-blur-xl border-t border-slate-200 px-4 py-3 flex justify-between gap-1 bottom-nav">
+        <button onclick="showPage('home')" class="mobile-nav-btn active" id="m-nav-home">
+            <i class="fas fa-home text-lg"></i>
+            <span class="text-[9px] font-black uppercase">Home</span>
+        </button>
+        
+        <div class="relative flex-1 group">
+            <button class="mobile-nav-btn w-full" id="m-nav-edu-parent">
+                <i class="fas fa-book-open text-lg"></i>
+                <span class="text-[9px] font-black uppercase">Edukasi</span>
+            </button>
+            <div class="dropdown-content !bottom-full !top-auto !left-0 !right-auto mb-4 w-48 shadow-2xl">
+                <button onclick="showPage('edukasi')" class="dropdown-item">Makro & Saham</button>
+                <button onclick="showPage('fixed-income')" class="dropdown-item">Fixed Income (SBN)</button>
+                <button onclick="showPage('bandarmology-edu')" class="dropdown-item">Cheat Sheet Bandar</button>
+                <button onclick="showPage('quiz')" class="dropdown-item border-t border-slate-100">Kuis Profil Risiko</button>
+            </div>
+        </div>
+        
+        <div class="relative flex-1 group">
+            <button class="mobile-nav-btn w-full" id="m-nav-tools">
+                <i class="fas fa-toolbox text-lg"></i>
+                <span class="text-[9px] font-black uppercase">Tools</span>
+            </button>
+            <div class="dropdown-content !bottom-full !top-auto !left-auto !right-0 mb-4 w-48 shadow-2xl">
+                <button onclick="showPage('watchlist')" class="dropdown-item text-amber-600"><i class="fas fa-star w-5"></i> Watchlist</button>
+                <button onclick="showPage('jurnal')" class="dropdown-item text-purple-500"><i class="fas fa-book w-5"></i> Jurnal Trading</button>
+                <button onclick="showPage('pensiun')" class="dropdown-item border-t border-slate-100"><i class="fas fa-umbrella w-5 text-emerald-500"></i> Pensiun & Kalkulator</button>
+                <button onclick="showPage('kalkulator')" class="dropdown-item"><i class="fas fa-crosshairs w-5 text-blue-500"></i> Trading Plan</button>
+                <button onclick="showPage('bandar')" class="dropdown-item"><i class="fas fa-user-secret w-5 text-orange-500"></i> Bandar</button>
+            </div>
+        </div>
+
+        <div class="relative flex-1 group">
+            <button class="mobile-nav-btn w-full" id="m-nav-database-parent">
+                <i class="fas fa-database text-lg"></i>
+                <span class="text-[9px] font-black uppercase">Database</span>
+            </button>
+            <div class="dropdown-content !bottom-full !top-auto !left-auto !right-0 mb-4 w-48 shadow-2xl">
+                <button onclick="showPage('konglo')" class="dropdown-item"><i class="fas fa-project-diagram w-5 text-indigo-500"></i> Peta Konglo</button>
+                <button onclick="showPage('broker')" class="dropdown-item"><i class="fas fa-building w-5 text-slate-500"></i> Broker DB</button>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="assets/js/app.js"></script>
+</body>
+</html>

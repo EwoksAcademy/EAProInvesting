@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ewoks Academy Pro - Platform edukasi investasi, analisis fundamental, teknikal, dan bandarmologi saham terbaik dengan tools kalkulator, jurnal, dan database terlengkap.">
+    <meta name="keywords" content="saham, investasi, bandarmologi, fundamental, teknikal, kalkulator investasi, bunga majemuk, edukasi saham, IHSG">
+    <meta name="author" content="Ewoks Academy">
+    
+    <title>Cheat Sheet Bandar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+    <link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body class="min-h-screen relative flex flex-col" data-page="bandarmology-edu">
+
+
+    <div id="edu-quiz-modal" class="fixed inset-0 z-[100] bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-2xl overflow-hidden transform scale-95 transition-transform duration-300 dark-mode-card border border-slate-200" id="edu-quiz-card">
+            </div>
+    </div>
+
+    <div id="toast-container" class="fixed top-24 right-4 z-[9999] flex flex-col gap-2"></div>
+
+    <div class="bg-slate-900 border-b border-slate-800 hidden md:block w-full">
+        <div class="tradingview-widget-container">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+            {
+            "symbols": [
+                {
+                "proName": "IDX:COMPOSITE",
+                "title": "IHSG"
+                },
+                {
+                "proName": "FX_IDC:USDIDR",
+                "title": "USD/IDR"
+                },
+                {
+                "description": "SBN 10Y Yield",
+                "proName": "TVC:ID10Y"
+                },
+                {
+                "description": "BBCA",
+                "proName": "IDX:BBCA"
+                },
+                {
+                "description": "BMRI",
+                "proName": "IDX:BMRI"
+                },
+                {
+                "description": "BREN",
+                "proName": "IDX:BREN"
+                }
+            ],
+            "showSymbolLogo": true,
+            "isTransparent": true,
+            "displayMode": "regular",
+            "colorTheme": "dark",
+            "locale": "id"
+            }
+            </script>
+        </div>
+    </div>
+    
+    <div id="market-ticker-content" class="hidden"></div>
+
+    <header class="md:hidden sticky top-0 z-50 bg-white/90 backdrop-blur-xl border-b border-slate-100 px-4 py-3">
+        <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-slate-900 rounded-lg flex items-center justify-center text-white">
+                    <i class="fas fa-chart-line text-sm"></i>
+                </div>
+                <h1 class="text-lg font-black tracking-tight text-slate-900">Ewoks<span class="text-blue-600">Academy</span></h1>
+            </div>
+            <button onclick="toggleDarkMode()" class="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center text-slate-600">
+                <i class="fas fa-moon" id="theme-icon-m"></i>
+            </button>
+        </div>
+    </header>
+
+    <header class="hidden md:block sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-100 transition-colors">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-slate-900 rounded-xl flex items-center justify-center text-white shadow-lg shadow-slate-200 transition-all">
+                    <i class="fas fa-chart-line text-lg"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-extrabold tracking-tight text-slate-900">Ewoks<span class="text-blue-600">Academy</span></h1>
+                    <p class="text-[10px] font-bold text-blue-600 tracking-[0.2em] uppercase">Professional Suite</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-4">
+                <div id="liveClock" class="hidden lg:flex items-center gap-2 text-[10px] font-bold text-slate-700 bg-white px-3 py-1.5 rounded-lg border border-slate-200 shadow-sm transition-colors">
+                    <i class="fas fa-clock text-blue-500"></i> <span id="clockText">--:--:-- WIB</span>
+                </div>
+                <nav class="flex items-center gap-2">
+                    <button onclick="showPage('home')" id="nav-home" class="nav-link active"><i class="fas fa-home"></i> Beranda</button>
+                    
+                    <div class="relative group">
+                        <button class="nav-link" id="nav-edu-parent">
+                            <i class="fas fa-book-open"></i> Edukasi <i class="fas fa-chevron-down text-[10px] ml-1"></i>
+                        </button>
+                        <div class="dropdown-content">
+                            <button onclick="showPage('edukasi')" id="nav-edukasi" class="dropdown-item">
+                                <i class="fas fa-chart-pie w-5 text-blue-500"></i> Makro & Saham
+                            </button>
+                            <button onclick="showPage('fixed-income')" id="nav-fixed-income" class="dropdown-item">
+                                <i class="fas fa-coins w-5 text-amber-500"></i> SBN, ETF, Reksadana
+                            </button>
+                            <button onclick="showPage('bandarmology-edu')" id="nav-bandarmology-edu" class="dropdown-item">
+                                <i class="fas fa-search-dollar w-5 text-indigo-500"></i> Cheat Sheet Bandar
+                            </button>
+                            <button onclick="showPage('quiz')" id="nav-quiz" class="dropdown-item border-t border-slate-100 mt-1 pt-2">
+                                <i class="fas fa-clipboard-list w-5 text-emerald-500"></i> Kuis Profil Risiko
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="relative group">
+                        <button class="nav-link" id="nav-tools-parent">
+                            <i class="fas fa-toolbox"></i> Analisis Tools <i class="fas fa-chevron-down text-[10px] ml-1"></i>
+                        </button>
+                        <div class="dropdown-content">
+                            <button onclick="showPage('watchlist')" id="nav-watchlist" class="dropdown-item">
+                                <i class="fas fa-star w-5 text-amber-400"></i> Terminal & Watchlist
+                            </button>
+                            <button onclick="showPage('jurnal')" id="nav-jurnal" class="dropdown-item">
+                                <i class="fas fa-book w-5 text-purple-500"></i> Jurnal Trading
+                            </button>
+                            <button onclick="showPage('pensiun')" id="nav-pensiun" class="dropdown-item border-t border-slate-100 mt-1 pt-2">
+                                <i class="fas fa-umbrella w-5 text-emerald-500"></i> Pensiun & Kalkulator
+                            </button>
+                            <button onclick="showPage('kalkulator')" id="nav-kalkulator" class="dropdown-item">
+                                <i class="fas fa-crosshairs w-5 text-blue-500"></i> Trading Plan & Sizing
+                            </button>
+                            <button onclick="showPage('bandar')" id="nav-bandar" class="dropdown-item border-t border-slate-100 mt-1 pt-2">
+                                <i class="fas fa-user-secret w-5 text-orange-500"></i> Kalkulator Bandar
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="relative group">
+                        <button class="nav-link" id="nav-database-parent">
+                            <i class="fas fa-database"></i> Database <i class="fas fa-chevron-down text-[10px] ml-1"></i>
+                        </button>
+                        <div class="dropdown-content">
+                            <button onclick="showPage('konglo')" id="nav-konglo" class="dropdown-item">
+                                <i class="fas fa-project-diagram w-5 text-indigo-500"></i> Peta Konglomerat
+                            </button>
+                            <button onclick="showPage('broker')" id="nav-broker" class="dropdown-item">
+                                <i class="fas fa-building w-5 text-slate-500"></i> Broker Database
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <button onclick="toggleDarkMode()" class="ml-2 w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center text-slate-600 hover:bg-slate-200 transition-colors">
+                        <i class="fas fa-moon" id="theme-icon"></i>
+                    </button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+
+    <main class="flex-grow max-w-[1600px] w-full mx-auto px-4 md:px-6 py-6 md:py-8">
+
+        <section id="page-bandarmology-edu" class="max-w-7xl mx-auto">
+            <div class="max-w-6xl mx-auto space-y-8">
+                <div class="premium-card p-6 md:p-10 overflow-hidden relative bg-slate-900 text-white shadow-xl">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div class="w-12 h-12 bg-indigo-500/20 text-indigo-400 rounded-xl flex items-center justify-center text-xl">
+                            <i class="fas fa-search-dollar"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-2xl md:text-3xl font-black text-white">Cheat Sheet Bandarmologi & Corporate Action</h2>
+                            <p class="text-indigo-200 text-sm mt-1">Panduan visual membaca jejak institusi/bandar di pasar modal.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="premium-card p-6 border-emerald-300 shadow-sm hover:shadow-md transition-shadow">
+                        <h3 class="text-xl font-black text-emerald-600 mb-4 flex items-center gap-2"><i class="fas fa-arrow-trend-up"></i> Ciri Akumulasi (Koleksi)</h3>
+                        <ul class="space-y-4">
+                            <li class="flex gap-4 items-start">
+                                <div class="w-8 h-8 rounded bg-emerald-100 text-emerald-600 flex items-center justify-center font-black shrink-0">1</div>
+                                <div>
+                                    <p class="font-bold text-slate-800 text-sm">Volume Beli Terpusat (Top 1-3 Broker)</p>
+                                    <p class="text-xs text-slate-500 mt-1">Broker besar (seperti AK, BK, KZ, RX) memborong saham, sementara volume jual menyebar di banyak broker ritel (YP, PD, CC).</p>
+                                </div>
+                            </li>
+                            <li class="flex gap-4 items-start">
+                                <div class="w-8 h-8 rounded bg-emerald-100 text-emerald-600 flex items-center justify-center font-black shrink-0">2</div>
+                                <div>
+                                    <p class="font-bold text-slate-800 text-sm">Harga Sideways, Volume Stabil</p>
+                                    <p class="text-xs text-slate-500 mt-1">Bandar menjaga harga tidak naik drastis agar bisa mengumpulkan barang (akumulasi senyap).</p>
+                                </div>
+                            </li>
+                            <li class="flex gap-4 items-start">
+                                <div class="w-8 h-8 rounded bg-emerald-100 text-emerald-600 flex items-center justify-center font-black shrink-0">3</div>
+                                <div>
+                                    <p class="font-bold text-slate-800 text-sm tooltip-trigger">Fake Offer di Papan Order <span class="tooltip-text">Antrean Jual palsu untuk menakut-nakuti Ritel</span></p>
+                                    <p class="text-xs text-slate-500 mt-1">Offer ditebalkan untuk menakuti ritel agar menjual barangnya ke harga bid yang sudah dijaga bandar.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="premium-card p-6 border-rose-300 shadow-sm hover:shadow-md transition-shadow">
+                        <h3 class="text-xl font-black text-rose-600 mb-4 flex items-center gap-2"><i class="fas fa-arrow-trend-down"></i> Ciri Distribusi (Jualan)</h3>
+                        <ul class="space-y-4">
+                            <li class="flex gap-4 items-start">
+                                <div class="w-8 h-8 rounded bg-rose-100 text-rose-600 flex items-center justify-center font-black shrink-0">1</div>
+                                <div>
+                                    <p class="font-bold text-slate-800 text-sm tooltip-trigger">Broker Ritel Mendominasi Net Buy <span class="tooltip-text">Net Buy adalah selisih Lot Beli & Jual</span></p>
+                                    <p class="text-xs text-slate-500 mt-1">Top Buyer dikuasai broker ritel (YP, PD, NI), sedangkan Top Seller dikuasai 1 atau 2 broker institusi asing/lokal.</p>
+                                </div>
+                            </li>
+                            <li class="flex gap-4 items-start">
+                                <div class="w-8 h-8 rounded bg-rose-100 text-rose-600 flex items-center justify-center font-black shrink-0">2</div>
+                                <div>
+                                    <p class="font-bold text-slate-800 text-sm">Harga Naik Tinggi, Namun Mulai Stagnan</p>
+                                    <p class="text-xs text-slate-500 mt-1">Sering dibarengi berita bagus (Good News) sebagai alat memancing ritel membeli di harga pucuk.</p>
+                                </div>
+                            </li>
+                            <li class="flex gap-4 items-start">
+                                <div class="w-8 h-8 rounded bg-rose-100 text-rose-600 flex items-center justify-center font-black shrink-0">3</div>
+                                <div>
+                                    <p class="font-bold text-slate-800 text-sm">Fake Bid di Papan Order</p>
+                                    <p class="text-xs text-slate-500 mt-1">Antrean beli sangat tebal untuk memberi ilusi "banyak yang antre", tapi bandar perlahan membuang barang (HAKI) ke ritel.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="premium-card p-6 shadow-sm bg-white dark-mode-card mb-8">
+                    <h3 class="text-xl font-black text-indigo-600 mb-4 flex items-center gap-2"><i class="fas fa-users-cog"></i> Karakteristik Tipe Broker</h3>
+                    <p class="text-xs text-slate-500 mb-4 border-b border-slate-200 pb-3">Memahami siapa di balik kode broker sangat penting. Setiap tipe punya gaya trading yang berbeda.</p>
+                    <ul class="space-y-4">
+                        <li class="flex gap-4 items-start">
+                            <div class="w-8 h-8 rounded bg-indigo-100 text-indigo-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-globe"></i></div>
+                            <div>
+                                <p class="font-bold text-slate-800 text-sm">Broker Asing / Institusi (AK, BK, CS, KZ, RX)</p>
+                                <p class="text-xs text-slate-500 mt-1">Modal raksasa (Triliunan). Bergerak pasif dan akumulasi dalam waktu lama (berminggu-minggu). Jika mereka konsisten *Net Buy* di suatu saham Bluechip, arah tren biasanya akan naik secara stabil (Foreign Flow).</p>
+                            </div>
+                        </li>
+                        <li class="flex gap-4 items-start">
+                            <div class="w-8 h-8 rounded bg-rose-100 text-rose-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-user-friends"></i></div>
+                            <div>
+                                <p class="font-bold text-slate-800 text-sm">Broker Ritel Dominan (YP, PD, CC, NI, XC)</p>
+                                <p class="text-xs text-slate-500 mt-1">Modal tersebar di banyak orang. Sifatnya reaktif, sering scalping harian, dan sangat FOMO terhadap berita/pom-pom. Jika broker ini mendominasi *Net Buy* sementara asing jualan, saham tersebut rawan dibanting turun.</p>
+                            </div>
+                        </li>
+                        <li class="flex gap-4 items-start">
+                            <div class="w-8 h-8 rounded bg-amber-100 text-amber-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-user-ninja"></i></div>
+                            <div>
+                                <p class="font-bold text-slate-800 text-sm">Broker Lokal Agresif / "Bandar" (MG, dkk)</p>
+                                <p class="text-xs text-slate-500 mt-1">Sering menjadi *Market Maker* di saham-saham 2nd atau 3rd liner (gorengan). Sangat agresif melakukan HAKA (Hajar Kanan) untuk mengerek harga dalam hitungan menit, namun bisa HAKI dengan sangat cepat.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="premium-card p-6 md:p-8 shadow-sm bg-white dark-mode-card border-t-4 border-t-blue-500 mt-8">
+                    <h3 class="text-xl md:text-2xl font-black text-blue-600 mb-3 flex items-center gap-3"><i class="fas fa-briefcase"></i> Ensiklopedia Aksi Korporasi (Corporate Action) & Trik Bandar</h3>
+                    <p class="text-xs md:text-sm text-slate-500 mb-8 border-b border-slate-200 pb-4 leading-relaxed">Corporate Action (Aksi Korporasi) adalah langkah strategis yang dilakukan oleh perusahaan terbuka (Tbk) yang berdampak langsung pada pemegang saham maupun struktur modal perusahaan.</p>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        
+                        <div>
+                            <h4 class="text-lg font-black text-slate-800 mb-2 flex items-center gap-2 text-indigo-600"><i class="fas fa-file-invoice text-indigo-500"></i> 1. Aksi Terkait Saham</h4>
+                            <p class="text-xs text-slate-500 mb-4">Tujuan kategori ini biasanya untuk mengatur likuiditas saham di pasar atau menambah modal perusahaan.</p>
+                            <div class="space-y-4">
+                                <div class="bg-slate-50/50 p-4 rounded-xl border border-slate-100 hover:border-indigo-200 transition-colors">
+                                    <div class="flex gap-3 items-start">
+                                        <div class="w-8 h-8 rounded bg-indigo-100 text-indigo-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-cut"></i></div>
+                                        <div>
+                                            <p class="font-bold text-slate-800 text-sm">Stock Split</p>
+                                            <p class="text-[11px] text-slate-500 mt-1 mb-2 leading-relaxed">Memecah satu saham menjadi beberapa saham baru dengan nilai nominal yang lebih kecil guna meningkatkan likuiditas.</p>
+                                            <p class="text-[11px] text-slate-600 bg-rose-50 p-2 rounded border border-rose-100 mb-2"><span class="font-bold text-rose-600">Trik Bandar:</span> Harga saham yang dipecah tidak mengubah fundamental, namun ritel merasa harganya "sudah murah". Momentum ini sering dipakai Bandar untuk jualan ke Ritel yang baru sanggup beli.</p>
+                                            <p class="text-[10px] font-bold text-slate-600 bg-white p-2 rounded border border-slate-200"><i class="fas fa-lightbulb text-amber-500 mr-1"></i> Contoh: Saham BBCA melakukan pemecahan 1:5, sehingga harga Rp35.000 berubah menjadi Rp7.000 agar lebih terjangkau oleh investor ritel.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bg-slate-50/50 p-4 rounded-xl border border-slate-100 hover:border-indigo-200 transition-colors">
+                                    <div class="flex gap-3 items-start">
+                                        <div class="w-8 h-8 rounded bg-indigo-100 text-indigo-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-compress-arrows-alt"></i></div>
+                                        <div>
+                                            <p class="font-bold text-slate-800 text-sm">Reverse Stock Split</p>
+                                            <p class="text-[11px] text-slate-500 mt-1 mb-2 leading-relaxed">Kebalikan dari stock split, yaitu menggabungkan beberapa saham menjadi satu untuk menaikkan harga saham yang sudah terlalu rendah.</p>
+                                            <p class="text-[10px] font-bold text-slate-600 bg-white p-2 rounded border border-slate-200"><i class="fas fa-lightbulb text-amber-500 mr-1"></i> Contoh: Perusahaan menggabungkan 10 saham seharga Rp50 menjadi 1 saham seharga Rp500.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bg-slate-50/50 p-4 rounded-xl border border-slate-100 hover:border-indigo-200 transition-colors">
+                                    <div class="flex gap-3 items-start">
+                                        <div class="w-8 h-8 rounded bg-indigo-100 text-indigo-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-chart-pie"></i></div>
+                                        <div>
+                                            <p class="font-bold text-slate-800 text-sm">Right Issue (HMETD)</p>
+                                            <p class="text-[11px] text-slate-500 mt-1 mb-2 leading-relaxed">Hak memesan efek terlebih dahulu yang diberikan kepada pemegang saham lama untuk membeli saham baru yang diterbitkan.</p>
+                                            <p class="text-[11px] text-slate-600 bg-rose-50 p-2 rounded border border-rose-100 mb-2"><span class="font-bold text-rose-600">Trik Bandar:</span> Perusahaan minta tambahan modal. Terkadang, Bandar sengaja menekan harga saham di pasar reguler agar ritel tidak mau menebus Right Issue, sehingga Bandar bisa mengambil alih kepemilikan tersebut secara murah (Standby Buyer).</p>
+                                            <p class="text-[10px] font-bold text-slate-600 bg-white p-2 rounded border border-slate-200"><i class="fas fa-lightbulb text-amber-500 mr-1"></i> Contoh: BBRI melakukan right issue untuk memperkuat modal melalui pembentukan holding ultra mikro.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bg-slate-50/50 p-4 rounded-xl border border-slate-100 hover:border-indigo-200 transition-colors">
+                                    <div class="flex gap-3 items-start">
+                                        <div class="w-8 h-8 rounded bg-indigo-100 text-indigo-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-user-tie"></i></div>
+                                        <div>
+                                            <p class="font-bold text-slate-800 text-sm">Private Placement</p>
+                                            <p class="text-[11px] text-slate-500 mt-1 mb-2 leading-relaxed">Penerbitan saham baru yang langsung dijual kepada investor tertentu (tanpa ditawarkan secara umum).</p>
+                                            <p class="text-[10px] font-bold text-slate-600 bg-white p-2 rounded border border-slate-200"><i class="fas fa-lightbulb text-amber-500 mr-1"></i> Contoh: BUMI melakukan private placement kepada investor strategis untuk melunasi utang.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bg-slate-50/50 p-4 rounded-xl border border-slate-100 hover:border-indigo-200 transition-colors">
+                                    <div class="flex gap-3 items-start">
+                                        <div class="w-8 h-8 rounded bg-indigo-100 text-indigo-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-ticket-alt"></i></div>
+                                        <div>
+                                            <p class="font-bold text-slate-800 text-sm">Warrant</p>
+                                            <p class="text-[11px] text-slate-500 mt-1 mb-2 leading-relaxed">Hak yang diberikan kepada pemegang saham untuk membeli saham baru pada harga dan jangka waktu tertentu.</p>
+                                            <p class="text-[10px] font-bold text-slate-600 bg-white p-2 rounded border border-slate-200"><i class="fas fa-lightbulb text-amber-500 mr-1"></i> Contoh: Sering diberikan secara gratis sebagai bonus saat IPO untuk menarik minat investor.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bg-slate-50/50 p-4 rounded-xl border border-slate-100 hover:border-indigo-200 transition-colors">
+                                    <div class="flex gap-3 items-start">
+                                        <div class="w-8 h-8 rounded bg-indigo-100 text-indigo-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-users"></i></div>
+                                        <div>
+                                            <p class="font-bold text-slate-800 text-sm">MESOP (Management and Employee Stock Option Plan)</p>
+                                            <p class="text-[11px] text-slate-500 mt-1 mb-2 leading-relaxed">Program kepemilikan saham untuk karyawan dan manajemen sebagai bentuk insentif.</p>
+                                            <p class="text-[10px] font-bold text-slate-600 bg-white p-2 rounded border border-slate-200"><i class="fas fa-lightbulb text-amber-500 mr-1"></i> Contoh: Karyawan GOTO diberikan hak untuk membeli saham perusahaan pada harga diskon.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bg-slate-50/50 p-4 rounded-xl border border-slate-100 hover:border-indigo-200 transition-colors">
+                                    <div class="flex gap-3 items-start">
+                                        <div class="w-8 h-8 rounded bg-indigo-100 text-indigo-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-undo"></i></div>
+                                        <div>
+                                            <p class="font-bold text-slate-800 text-sm">Buyback</p>
+                                            <p class="text-[11px] text-slate-500 mt-1 mb-2 leading-relaxed">Perusahaan membeli kembali sahamnya sendiri dari pasar publik.</p>
+                                            <p class="text-[10px] font-bold text-slate-600 bg-white p-2 rounded border border-slate-200"><i class="fas fa-lightbulb text-amber-500 mr-1"></i> Contoh: ASII melakukan buyback saham ketika merasa harga pasar saat ini sudah terlalu murah dibandingkan nilai intrinsiknya.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="bg-slate-50/50 p-4 rounded-xl border border-slate-100 hover:border-indigo-200 transition-colors">
+                                    <div class="flex gap-3 items-start">
+                                        <div class="w-8 h-8 rounded bg-indigo-100 text-indigo-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-handshake"></i></div>
+                                        <div>
+                                            <p class="font-bold text-slate-800 text-sm">Repo (Repurchase Agreement)</p>
+                                            <p class="text-[11px] text-slate-500 mt-1 mb-2 leading-relaxed">Pinjaman dana dengan jaminan saham, di mana pemilik saham setuju membelinya kembali di masa depan pada harga yang disepakati.</p>
+                                            <p class="text-[10px] font-bold text-slate-600 bg-white p-2 rounded border border-slate-200"><i class="fas fa-lightbulb text-amber-500 mr-1"></i> Contoh: Seorang pemilik perusahaan menjaminkan sahamnya ke sekuritas untuk mendapatkan pinjaman modal kerja.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="space-y-8">
+                            <div>
+                                <h4 class="text-lg font-black text-slate-800 mb-2 flex items-center gap-2 text-emerald-600"><i class="fas fa-money-bill-wave text-emerald-500"></i> 2. Aksi Terkait Dividen</h4>
+                                <p class="text-xs text-slate-500 mb-4">Merupakan cara perusahaan membagikan keuntungan kepada pemegang sahamnya.</p>
+                                <div class="space-y-4">
+                                    <div class="bg-slate-50/50 p-4 rounded-xl border border-slate-100 hover:border-emerald-200 transition-colors">
+                                        <div class="flex gap-3 items-start">
+                                            <div class="w-8 h-8 rounded bg-emerald-100 text-emerald-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-coins"></i></div>
+                                            <div>
+                                                <p class="font-bold text-slate-800 text-sm">Dividen Tunai</p>
+                                                <p class="text-[11px] text-slate-500 mt-1 mb-2 leading-relaxed">Pembagian laba dalam bentuk uang tunai per lembar saham.</p>
+                                                <p class="text-[10px] font-bold text-slate-600 bg-white p-2 rounded border border-slate-200"><i class="fas fa-lightbulb text-amber-500 mr-1"></i> Contoh: PTBA membagikan Rp1.000 per lembar saham langsung ke rekening dana nasabah (RDN) investor.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bg-slate-50/50 p-4 rounded-xl border border-slate-100 hover:border-emerald-200 transition-colors">
+                                        <div class="flex gap-3 items-start">
+                                            <div class="w-8 h-8 rounded bg-emerald-100 text-emerald-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-copy"></i></div>
+                                            <div>
+                                                <p class="font-bold text-slate-800 text-sm">Dividen Saham</p>
+                                                <p class="text-[11px] text-slate-500 mt-1 mb-2 leading-relaxed">Pembagian laba dalam bentuk saham tambahan, bukan uang tunai.</p>
+                                                <p class="text-[10px] font-bold text-slate-600 bg-white p-2 rounded border border-slate-200"><i class="fas fa-lightbulb text-amber-500 mr-1"></i> Contoh: Setiap pemilik 10 saham mendapatkan bonus 1 saham baru dari laba ditahan perusahaan.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bg-slate-50/50 p-4 rounded-xl border border-slate-100 hover:border-emerald-200 transition-colors">
+                                        <div class="flex gap-3 items-start">
+                                            <div class="w-8 h-8 rounded bg-emerald-100 text-emerald-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-skull-crossbones"></i></div>
+                                            <div>
+                                                <p class="font-bold text-slate-800 text-sm">Dividen Trap (Jebakan Dividen)</p>
+                                                <p class="text-[11px] text-slate-600 bg-rose-50 p-2 rounded border border-rose-100 mb-2"><span class="font-bold text-rose-600">Trik Bandar:</span> Bandar akumulasi jauh hari sebelum pengumuman. Menjelang Cum-Date, ritel FOMO membeli agar dapat dividen. Tepat saat Ex-Date, Bandar membuang barangnya secara masif hingga ARB.</p>
+                                                <p class="text-[10px] font-bold text-slate-600 bg-white p-2 rounded border border-slate-200"><i class="fas fa-lightbulb text-amber-500 mr-1"></i> Contoh: Ritel beli di Cum-Date demi dividen 10%, tapi di Ex-Date harga ARB -15%. Ritel justru rugi bersih -5% dan nyangkut.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h4 class="text-lg font-black text-slate-800 mb-2 flex items-center gap-2 text-rose-600"><i class="fas fa-credit-card text-rose-500"></i> 3. Aksi Terkait Utang</h4>
+                                <p class="text-xs text-slate-500 mb-4">Langkah perusahaan dalam mengelola kewajiban finansialnya.</p>
+                                <div class="space-y-4">
+                                    <div class="bg-slate-50/50 p-4 rounded-xl border border-slate-100 hover:border-rose-200 transition-colors">
+                                        <div class="flex gap-3 items-start">
+                                            <div class="w-8 h-8 rounded bg-rose-100 text-rose-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-file-contract"></i></div>
+                                            <div>
+                                                <p class="font-bold text-slate-800 text-sm">Penerbitan Obligasi</p>
+                                                <p class="text-[11px] text-slate-500 mt-1 mb-2 leading-relaxed">Perusahaan menerbitkan surat utang kepada publik untuk mendapatkan pendanaan jangka panjang.</p>
+                                                <p class="text-[10px] font-bold text-slate-600 bg-white p-2 rounded border border-slate-200"><i class="fas fa-lightbulb text-amber-500 mr-1"></i> Contoh: Indofood menerbitkan obligasi senilai Rp2 Triliun dengan bunga (kupon) tetap 7% per tahun.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bg-slate-50/50 p-4 rounded-xl border border-slate-100 hover:border-rose-200 transition-colors">
+                                        <div class="flex gap-3 items-start">
+                                            <div class="w-8 h-8 rounded bg-rose-100 text-rose-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-tools"></i></div>
+                                            <div>
+                                                <p class="font-bold text-slate-800 text-sm">Debt Restructuring</p>
+                                                <p class="text-[11px] text-slate-500 mt-1 mb-2 leading-relaxed">Penataan ulang beban utang agar perusahaan lebih mampu membayar (misal: memperpanjang tenor).</p>
+                                                <p class="text-[10px] font-bold text-slate-600 bg-white p-2 rounded border border-slate-200"><i class="fas fa-lightbulb text-amber-500 mr-1"></i> Contoh: Garuda Indonesia menegosiasikan cicilan utang pesawatnya agar tidak bangkrut.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bg-slate-50/50 p-4 rounded-xl border border-slate-100 hover:border-rose-200 transition-colors">
+                                        <div class="flex gap-3 items-start">
+                                            <div class="w-8 h-8 rounded bg-rose-100 text-rose-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-exchange-alt"></i></div>
+                                            <div>
+                                                <p class="font-bold text-slate-800 text-sm">Convertible Bonds</p>
+                                                <p class="text-[11px] text-slate-500 mt-1 mb-2 leading-relaxed">Surat utang yang dapat dikonversi menjadi saham pada waktu tertentu.</p>
+                                                <p class="text-[10px] font-bold text-slate-600 bg-white p-2 rounded border border-slate-200"><i class="fas fa-lightbulb text-amber-500 mr-1"></i> Contoh: Investor memegang obligasi yang pada tahun ketiga bisa diubah menjadi kepemilikan saham di perusahaan tersebut.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bg-slate-50/50 p-4 rounded-xl border border-slate-100 hover:border-rose-200 transition-colors">
+                                        <div class="flex gap-3 items-start">
+                                            <div class="w-8 h-8 rounded bg-rose-100 text-rose-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-sync"></i></div>
+                                            <div>
+                                                <p class="font-bold text-slate-800 text-sm">OWK (Obligasi Wajib Konversi)</p>
+                                                <p class="text-[11px] text-slate-500 mt-1 mb-2 leading-relaxed">Obligasi yang wajib diubah menjadi saham pada saat jatuh tempo.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h4 class="text-lg font-black text-slate-800 mb-2 flex items-center gap-2 text-amber-600"><i class="fas fa-sitemap text-amber-500"></i> 4. Aksi Struktur Perusahaan</h4>
+                                <p class="text-xs text-slate-500 mb-4">Perubahan besar yang melibatkan bentuk organisasi atau eksistensi perusahaan di bursa.</p>
+                                <div class="space-y-4">
+                                    <div class="bg-slate-50/50 p-4 rounded-xl border border-slate-100 hover:border-amber-200 transition-colors">
+                                        <div class="flex gap-3 items-start">
+                                            <div class="w-8 h-8 rounded bg-amber-100 text-amber-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-object-group"></i></div>
+                                            <div>
+                                                <p class="font-bold text-slate-800 text-sm">Merger dan Akuisisi</p>
+                                                <p class="text-[11px] text-slate-500 mt-1 mb-2 leading-relaxed">Merger adalah penggabungan dua perusahaan, sedangkan akuisisi adalah pengambilalihan kontrol perusahaan lain.</p>
+                                                <p class="text-[10px] font-bold text-slate-600 bg-white p-2 rounded border border-slate-200"><i class="fas fa-lightbulb text-amber-500 mr-1"></i> Contoh: Penggabungan Gojek dan Tokopedia menjadi GoTo.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bg-slate-50/50 p-4 rounded-xl border border-slate-100 hover:border-amber-200 transition-colors">
+                                        <div class="flex gap-3 items-start">
+                                            <div class="w-8 h-8 rounded bg-amber-100 text-amber-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-object-ungroup"></i></div>
+                                            <div>
+                                                <p class="font-bold text-slate-800 text-sm">Spin-off</p>
+                                                <p class="text-[11px] text-slate-500 mt-1 mb-2 leading-relaxed">Memisahkan satu divisi perusahaan menjadi entitas mandiri yang baru.</p>
+                                                <p class="text-[10px] font-bold text-slate-600 bg-white p-2 rounded border border-slate-200"><i class="fas fa-lightbulb text-amber-500 mr-1"></i> Contoh: Sebuah bank besar memisahkan unit Syariah-nya menjadi bank tersendiri.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bg-slate-50/50 p-4 rounded-xl border border-slate-100 hover:border-amber-200 transition-colors">
+                                        <div class="flex gap-3 items-start">
+                                            <div class="w-8 h-8 rounded bg-amber-100 text-amber-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-minus-circle"></i></div>
+                                            <div>
+                                                <p class="font-bold text-slate-800 text-sm">Divestment</p>
+                                                <p class="text-[11px] text-slate-500 mt-1 mb-2 leading-relaxed">Menjual aset, anak perusahaan, atau lini bisnis tertentu.</p>
+                                                <p class="text-[10px] font-bold text-slate-600 bg-white p-2 rounded border border-slate-200"><i class="fas fa-lightbulb text-amber-500 mr-1"></i> Contoh: Perusahaan tambang menjual divisi logistiknya agar bisa lebih fokus pada inti bisnis tambang.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bg-slate-50/50 p-4 rounded-xl border border-slate-100 hover:border-amber-200 transition-colors">
+                                        <div class="flex gap-3 items-start">
+                                            <div class="w-8 h-8 rounded bg-amber-100 text-amber-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-user-lock"></i></div>
+                                            <div>
+                                                <p class="font-bold text-slate-800 text-sm">Go Private</p>
+                                                <p class="text-[11px] text-slate-500 mt-1 mb-2 leading-relaxed">Mengubah status perusahaan dari terbuka (Tbk) menjadi tertutup dan keluar dari bursa saham.</p>
+                                                <p class="text-[10px] font-bold text-slate-600 bg-white p-2 rounded border border-slate-200"><i class="fas fa-lightbulb text-amber-500 mr-1"></i> Contoh: Bentoel Internasional Investama (RMBA) yang melakukan delisting dari Bursa Efek Indonesia.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bg-slate-50/50 p-4 rounded-xl border border-slate-100 hover:border-amber-200 transition-colors">
+                                        <div class="flex gap-3 items-start">
+                                            <div class="w-8 h-8 rounded bg-amber-100 text-amber-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-door-open"></i></div>
+                                            <div>
+                                                <p class="font-bold text-slate-800 text-sm">IPO (Initial Public Offering)</p>
+                                                <p class="text-[11px] text-slate-500 mt-1 mb-2 leading-relaxed">Penjualan saham pertama kali kepada masyarakat umum.</p>
+                                                <p class="text-[10px] font-bold text-slate-600 bg-white p-2 rounded border border-slate-200"><i class="fas fa-lightbulb text-amber-500 mr-1"></i> Contoh: Bukalapak masuk ke bursa untuk pertama kalinya pada tahun 2021.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="bg-slate-50/50 p-4 rounded-xl border border-slate-100 hover:border-amber-200 transition-colors">
+                                        <div class="flex gap-3 items-start">
+                                            <div class="w-8 h-8 rounded bg-amber-100 text-amber-600 flex items-center justify-center font-black shrink-0"><i class="fas fa-sign-in-alt"></i></div>
+                                            <div>
+                                                <p class="font-bold text-slate-800 text-sm">Backdoor Listing</p>
+                                                <p class="text-[11px] text-slate-500 mt-1 mb-2 leading-relaxed">Cara masuk ke bursa dengan mengakuisisi perusahaan yang sudah terdaftar (perusahaan cangkang).</p>
+                                                <p class="text-[10px] font-bold text-slate-600 bg-white p-2 rounded border border-slate-200"><i class="fas fa-lightbulb text-amber-500 mr-1"></i> Contoh: Perusahaan swasta besar membeli perusahaan publik kecil yang sudah "mati suri" agar bisa langsung menjadi perusahaan Tbk tanpa proses IPO yang panjang.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+    </main>
+
+    <footer class="bg-slate-900 border-t border-slate-800 text-slate-400 py-10 mt-12 w-full shrink-0">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div>
+                <h3 class="text-white font-black text-lg mb-4 flex items-center gap-2"><i class="fas fa-chart-line text-blue-500"></i> Ewoks Academy</h3>
+                <p class="text-xs leading-relaxed">Platform edukasi dan analisis pasar modal yang didedikasikan untuk membentuk trader dan investor ritel yang rasional, mandiri, dan berbasis data.</p>
+            </div>
+            <div>
+                <h4 class="text-white font-bold text-sm mb-4">Pintasan Cepat</h4>
+                <ul class="text-xs space-y-2">
+                    <li><a href="#" onclick="showPage('watchlist')" class="hover:text-blue-400 transition-colors">Terminal & Watchlist</a></li>
+                    <li><a href="#" onclick="showPage('kalkulator')" class="hover:text-blue-400 transition-colors">Kalkulator Investasi</a></li>
+                    <li><a href="#" onclick="showPage('edukasi')" class="hover:text-blue-400 transition-colors">Modul Edukasi Lengkap</a></li>
+                    <li><a href="#" onclick="showPage('konglo')" class="hover:text-blue-400 transition-colors">Database Bandar & Konglo</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-bold text-sm mb-4"><i class="fas fa-exclamation-triangle text-amber-500"></i> Disclaimer (Peringatan Risiko)</h4>
+                <p class="text-[10px] leading-relaxed italic border-l-2 border-slate-700 pl-3">Semua data, harga, analisis, fundamental, dan simulasi di website ini murni disediakan untuk <b>tujuan edukasi dan pembelajaran</b>. Kami tidak memberikan nasihat keuangan profesional, ajakan, atau rekomendasi untuk membeli/menjual instrumen investasi apapun. Segala risiko keuntungan dan kerugian di pasar modal adalah tanggung jawab pribadi masing-masing investor. Selalu lakukan riset Anda sendiri <i>(Do Your Own Research - DYOR)</i>.</p>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-6 mt-8 pt-8 border-t border-slate-800 text-center text-[10px] text-slate-500 font-bold uppercase tracking-wider">
+            &copy; 2026 Ewoks Academy Pro. All Rights Reserved.
+        </div>
+    </footer>
+
+    <button id="scrollTopBtn" onclick="scrollToTop()" class="fixed bottom-24 md:bottom-10 right-6 bg-blue-600 text-white w-12 h-12 rounded-2xl shadow-xl flex items-center justify-center opacity-0 pointer-events-none transition-all duration-300 z-50 hover:bg-blue-700 hover:-translate-y-1">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <div class="md:hidden fixed bottom-0 left-0 right-0 z-[60] bg-white/95 backdrop-blur-xl border-t border-slate-200 px-4 py-3 flex justify-between gap-1 bottom-nav">
+        <button onclick="showPage('home')" class="mobile-nav-btn active" id="m-nav-home">
+            <i class="fas fa-home text-lg"></i>
+            <span class="text-[9px] font-black uppercase">Home</span>
+        </button>
+        
+        <div class="relative flex-1 group">
+            <button class="mobile-nav-btn w-full" id="m-nav-edu-parent">
+                <i class="fas fa-book-open text-lg"></i>
+                <span class="text-[9px] font-black uppercase">Edukasi</span>
+            </button>
+            <div class="dropdown-content !bottom-full !top-auto !left-0 !right-auto mb-4 w-48 shadow-2xl">
+                <button onclick="showPage('edukasi')" class="dropdown-item">Makro & Saham</button>
+                <button onclick="showPage('fixed-income')" class="dropdown-item">Fixed Income (SBN)</button>
+                <button onclick="showPage('bandarmology-edu')" class="dropdown-item">Cheat Sheet Bandar</button>
+                <button onclick="showPage('quiz')" class="dropdown-item border-t border-slate-100">Kuis Profil Risiko</button>
+            </div>
+        </div>
+        
+        <div class="relative flex-1 group">
+            <button class="mobile-nav-btn w-full" id="m-nav-tools">
+                <i class="fas fa-toolbox text-lg"></i>
+                <span class="text-[9px] font-black uppercase">Tools</span>
+            </button>
+            <div class="dropdown-content !bottom-full !top-auto !left-auto !right-0 mb-4 w-48 shadow-2xl">
+                <button onclick="showPage('watchlist')" class="dropdown-item text-amber-600"><i class="fas fa-star w-5"></i> Watchlist</button>
+                <button onclick="showPage('jurnal')" class="dropdown-item text-purple-500"><i class="fas fa-book w-5"></i> Jurnal Trading</button>
+                <button onclick="showPage('pensiun')" class="dropdown-item border-t border-slate-100"><i class="fas fa-umbrella w-5 text-emerald-500"></i> Pensiun & Kalkulator</button>
+                <button onclick="showPage('kalkulator')" class="dropdown-item"><i class="fas fa-crosshairs w-5 text-blue-500"></i> Trading Plan</button>
+                <button onclick="showPage('bandar')" class="dropdown-item"><i class="fas fa-user-secret w-5 text-orange-500"></i> Bandar</button>
+            </div>
+        </div>
+
+        <div class="relative flex-1 group">
+            <button class="mobile-nav-btn w-full" id="m-nav-database-parent">
+                <i class="fas fa-database text-lg"></i>
+                <span class="text-[9px] font-black uppercase">Database</span>
+            </button>
+            <div class="dropdown-content !bottom-full !top-auto !left-auto !right-0 mb-4 w-48 shadow-2xl">
+                <button onclick="showPage('konglo')" class="dropdown-item"><i class="fas fa-project-diagram w-5 text-indigo-500"></i> Peta Konglo</button>
+                <button onclick="showPage('broker')" class="dropdown-item"><i class="fas fa-building w-5 text-slate-500"></i> Broker DB</button>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="assets/js/app.js"></script>
+</body>
+</html>

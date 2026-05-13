@@ -1,0 +1,342 @@
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+        
+        :root {
+            --primary: #0f172a;
+            --accent: #2563eb;
+            --success: #10b981;
+            --danger: #ef4444;
+            --bg-main: #fcfdfe;
+        }
+
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background-color: var(--bg-main);
+            color: #1e293b;
+            padding-bottom: 100px; 
+            transition: background-color 0.3s ease, color 0.3s ease;
+            overflow-x: hidden;
+        }
+
+        /* --- FITUR KILLER: DARK MODE OVERRIDES --- */
+        body.dark-mode-override {
+            background-color: #020617; /* Slate 950 */
+            color: #f8fafc;
+        }
+        body.dark-mode-override .bg-white, 
+        body.dark-mode-override .bg-slate-50, 
+        body.dark-mode-override .bg-emerald-50, 
+        body.dark-mode-override .bg-blue-50, 
+        body.dark-mode-override .bg-rose-50,
+        body.dark-mode-override .bg-amber-50,
+        body.dark-mode-override .bg-indigo-50,
+        body.dark-mode-override .bg-slate-100 {
+            background-color: #0f172a !important; /* Slate 900 */
+            border-color: #1e293b !important; /* Slate 800 */
+        }
+        body.dark-mode-override .text-slate-900,
+        body.dark-mode-override .text-slate-800,
+        body.dark-mode-override .text-slate-700 {
+            color: #f1f5f9 !important; /* Slate 100 */
+        }
+        body.dark-mode-override .text-slate-600,
+        body.dark-mode-override .text-slate-500 {
+            color: #94a3b8 !important; /* Slate 400 */
+        }
+        body.dark-mode-override .premium-card {
+            background: #0f172a;
+            border-color: #1e293b;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+        }
+        body.dark-mode-override .bottom-nav,
+        body.dark-mode-override header,
+        body.dark-mode-override footer {
+            background-color: rgba(2, 6, 23, 0.9) !important;
+            border-color: #1e293b !important;
+        }
+        body.dark-mode-override .dropdown-content {
+            background-color: #0f172a;
+            border-color: #1e293b;
+        }
+        body.dark-mode-override .dropdown-item:hover {
+            background-color: #1e293b;
+        }
+        body.dark-mode-override .input-pro {
+            background-color: #020617 !important;
+            color: #f8fafc;
+            border-color: #1e293b;
+        }
+        
+        /* OVERRIDE KHUSUS CHART GLASS CARD & NEW TERMINAL */
+        body.dark-mode-override .glass-card,
+        body.dark-mode-override .dark-mode-card {
+            background-color: #0f172a;
+            border-color: #1e293b;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+        }
+        body.dark-mode-override .chart-wrapper {
+            border-color: #1e293b;
+        }
+
+        /* --- UPGRADE: TOAST NOTIFICATIONS --- */
+        .toast {
+            min-width: 250px;
+            padding: 12px 20px;
+            border-radius: 12px;
+            background: white;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+            font-size: 13px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transform: translateX(120%);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-left: 4px solid var(--accent);
+            z-index: 9999;
+        }
+        .toast.show {
+            transform: translateX(0);
+        }
+        .toast.success { border-left-color: #10b981; }
+        .toast.error { border-left-color: #ef4444; }
+        .toast.warning { border-left-color: #f59e0b; }
+        body.dark-mode-override .toast {
+            background: #1e293b;
+            color: white;
+            border-right: 1px solid #334155;
+            border-top: 1px solid #334155;
+            border-bottom: 1px solid #334155;
+        }
+
+        /* --- FITUR KILLER: TOOLTIP EDUKASI --- */
+        .tooltip-trigger {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            cursor: help;
+            border-bottom: 1px dotted #94a3b8;
+        }
+        .tooltip-text {
+            visibility: hidden;
+            background-color: #1e293b;
+            color: #fff;
+            text-align: center;
+            border-radius: 8px;
+            padding: 8px 12px;
+            position: absolute;
+            z-index: 100;
+            bottom: 130%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s, transform 0.3s;
+            font-size: 11px;
+            font-weight: 600;
+            white-space: nowrap;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.2);
+            pointer-events: none;
+        }
+        .tooltip-text::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #1e293b transparent transparent transparent;
+        }
+        .tooltip-trigger:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+            transform: translateX(-50%) translateY(-5px);
+        }
+
+        .page { display: none; }
+        .page.active { display: block; animation: slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .premium-card {
+            background: white;
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.02), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+            transition: all 0.3s ease;
+        }
+
+        .premium-card:hover {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
+            border-color: var(--accent);
+        }
+
+        .glass-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .nav-link {
+            padding: 0.6rem 1.2rem;
+            font-weight: 600;
+            color: #64748b;
+            transition: all 0.2s;
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+
+        .nav-link:hover {
+            color: var(--accent);
+            background: #f1f5f9;
+        }
+        body.dark-mode-override .nav-link:hover {
+            background: #1e293b;
+        }
+
+        .nav-link.active {
+            color: white;
+            background: var(--accent);
+        }
+
+        /* Dropdown Style - FIXED */
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            min-width: 220px;
+            background-color: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+            padding: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .dropdown-content.show-dropdown {
+            display: block !important;
+            animation: fadeIn 0.2s ease-out;
+        }
+        
+        @media (min-width: 768px) {
+            .group:hover .dropdown-content {
+                display: block;
+                animation: fadeIn 0.2s ease-out;
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            color: #64748b;
+            font-weight: 600;
+            font-size: 0.875rem;
+            border-radius: 0.5rem;
+            transition: all 0.2s;
+            width: 100%;
+            text-align: left;
+        }
+
+        .dropdown-item:hover {
+            background-color: #f1f5f9;
+            color: var(--accent);
+        }
+
+        .dropdown-item.active {
+            color: var(--accent);
+            background-color: #eff6ff;
+        }
+
+        .input-pro {
+            width: 100%;
+            background: #f8fafc;
+            border: 2px solid transparent;
+            padding: 0.875rem 1.25rem;
+            border-radius: 1rem;
+            font-weight: 600;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .input-pro:focus {
+            border-color: var(--accent);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+        }
+
+        .bottom-nav { box-shadow: 0 -4px 12px rgba(0,0,0,0.05); }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        .stat-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .btn-action { transition: transform 0.1s active; }
+        .btn-action:active { transform: scale(0.95); }
+
+        .wa-floating-card { background: linear-gradient(135deg, #10b981 0%, #059669 100%); }
+        .gradient-text { background: linear-gradient(to right, #2563eb, #7c3aed); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        .chart-container { position: relative; width: 100%; max-width: 500px; margin-left: auto; margin-right: auto; height: 300px; max-height: 350px; }
+        .hide { display: none !important; }
+        .card-hover:hover { transform: translateY(-4px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); border-color: var(--accent); }
+
+        /* Funda Styles */
+        .glass-panel { background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(51, 65, 85, 0.5); border-radius: 1rem; }
+        .funda-tab-btn { padding: 0.75rem 1.25rem; font-size: 0.875rem; color: #94a3b8; border-bottom: 2px solid transparent; cursor: pointer; transition: all 0.2s; white-space: nowrap; font-weight: 600; }
+        .funda-tab-btn.active { border-bottom: 2px solid #3b82f6; color: #60a5fa; }
+        .funda-tab-content { display: none; animation: fadeIn 0.3s ease; }
+        .funda-tab-content.active { display: block; }
+        .funda-table { width: 100%; text-align: left; border-collapse: collapse; }
+        .funda-table th, .funda-table td { padding: 0.875rem 1rem; border-bottom: 1px solid #334155; font-size: 0.875rem; }
+        .funda-table th { color: #94a3b8; font-weight: 700; background-color: rgba(15, 23, 42, 0.5); }
+        .text-green { color: #22c55e; }
+        .text-red { color: #ef4444; }
+
+        /* Style Tambahan Edukasi Fundamental internal tab */
+        .f-tab-active { border-bottom: 4px solid #2563eb; color: #2563eb; font-weight: bold; }
+        .f-tab-inactive { color: #64748b; border-bottom: 4px solid transparent; }
+        .f-tab-inactive:hover { color: #334155; border-color: #cbd5e1; }
+
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2.25rem !important; line-height: 1.2; }
+            .hero-card { padding: 2rem 1.5rem !important; border-radius: 2rem !important; }
+            .funda-table th, .funda-table td { padding: 0.5rem; font-size: 0.75rem; }
+        }
