@@ -143,7 +143,9 @@ function hideDetail() {
 
 // --- FUNDAMENTAL PRO: metrik turunan dari laporan keuangan ---
 const FUNDA_YEAR_LABELS = ['2020', '2021', '2022', '2023', '2024', '2025', 'YTD 2026'];
+const FUNDA_EMPTY = '(-)';
 const FUNDA_MIN_TRILIUN = 0.05;
+const FUNDA_MIN_MILIAR = 0.001;
 const FUNDA_MAX_NPM = 85;
 const FUNDA_MAX_ROE = 80;
 const FUNDA_MAX_ROA = 35;
@@ -151,6 +153,37 @@ const FUNDA_MAX_ROA = 35;
 function fundaNum(v) {
     const n = parseFloat(v);
     return Number.isFinite(n) ? n : 0;
+}
+
+/** Nilai disimpan dalam triliun Rp; tampilkan triliun atau miliar. */
+function formatFundaAmount(triliunVal) {
+    const n = fundaNum(triliunVal);
+    const abs = Math.abs(n);
+    if (abs < FUNDA_MIN_MILIAR) return FUNDA_EMPTY;
+    const sign = n < 0 ? '-' : '';
+    if (abs >= 1) return `${sign}${abs.toFixed(1)} triliun`;
+    return `${sign}${(abs * 1000).toFixed(1)} miliar`;
+}
+
+function formatFundaAmountExpense(triliunVal) {
+    const n = fundaNum(triliunVal);
+    if (Math.abs(n) < FUNDA_MIN_MILIAR) return FUNDA_EMPTY;
+    const formatted = formatFundaAmount(Math.abs(n));
+    return formatted === FUNDA_EMPTY ? FUNDA_EMPTY : `-${formatted}`;
+}
+
+function fmtFundaCell(v, i, opts = {}) {
+    const n = fundaNum(v);
+    if (i === 6 && Math.abs(n) < FUNDA_MIN_MILIAR) return FUNDA_EMPTY;
+    if (Math.abs(n) < FUNDA_MIN_MILIAR) return FUNDA_EMPTY;
+    return opts.expense ? formatFundaAmountExpense(v) : formatFundaAmount(v);
+}
+
+function fmtFundaGross(d, i, isBank) {
+    const rev = fundaNum(d.rev[i]);
+    if (rev < FUNDA_MIN_MILIAR) return FUNDA_EMPTY;
+    const gross = isBank ? rev : rev - Math.abs(fundaNum(d.cogs[i]));
+    return formatFundaAmount(gross);
 }
 
 function fundaYearHasData(d, i) {
@@ -209,7 +242,7 @@ function computeKongloDerivedMetrics(d, sector) {
             grossMargin.push(null);
             roe.push(null);
             roa.push(null);
-            leverage.push('—');
+            leverage.push(FUNDA_EMPTY);
             continue;
         }
 
@@ -226,10 +259,10 @@ function computeKongloDerivedMetrics(d, sector) {
 
         if (isBank) {
             const em = fundaPct(asset, eq, 50);
-            leverage.push(em != null ? `${(asset / eq).toFixed(2)}x` : '—');
+            leverage.push(em != null ? `${(asset / eq).toFixed(2)}x` : FUNDA_EMPTY);
         } else {
             const liab = Math.max(0, asset - eq);
-            leverage.push(eq >= FUNDA_MIN_TRILIUN ? `${(liab / eq).toFixed(2)}x` : '—');
+            leverage.push(eq >= FUNDA_MIN_TRILIUN ? `${(liab / eq).toFixed(2)}x` : FUNDA_EMPTY);
         }
     }
 
@@ -286,21 +319,21 @@ function computeKongloDerivedMetrics(d, sector) {
                     name: `Bisnis Inti (${sector})`,
                     method: 'PER × Laba Bersih',
                     multiple: `${mult.per}× (${mult.label})`,
-                    detail: `${netLi.toFixed(1)}T × ${mult.per}`,
+                    detail: `${formatFundaAmount(netLi)} × ${mult.per}`,
                     value: sotpCore
                 },
                 {
                     name: 'Nilai Buku Ekuitas (Fair PBV)',
                     method: 'PBV × Total Ekuitas',
                     multiple: `${mult.pbv}×`,
-                    detail: `${eqLi.toFixed(1)}T × ${mult.pbv}`,
+                    detail: `${formatFundaAmount(eqLi)} × ${mult.pbv}`,
                     value: sotpBook
                 },
                 {
                     name: 'Aset Surplus / Non-Operasi',
                     method: 'Diskon 15% (Aset−Ekuitas)',
-                    multiple: '—',
-                    detail: `${surplusAssets.toFixed(1)}T × 0.15`,
+                    multiple: FUNDA_EMPTY,
+                    detail: `${formatFundaAmount(surplusAssets)} × 0.15`,
                     value: sotpInvest
                 }
             ],
@@ -319,7 +352,7 @@ function fundaMetricCells(values, opts = {}) {
         .map((val, i) => {
             const hi = highlightLast && i === 6;
             if (val == null || val === '' || (typeof val === 'number' && !Number.isFinite(val))) {
-                return `<td class="${hi ? 'text-blue-300' : 'text-slate-500'}">—</td>`;
+                return `<td class="${hi ? 'text-blue-300' : 'text-slate-500'}">${FUNDA_EMPTY}</td>`;
             }
             const text = pct ? `${val}%` : `${val}${suffix}`;
             return `<td class="${hi ? 'text-blue-300 font-bold' : ''}">${text}</td>`;
@@ -343,7 +376,7 @@ function showFunda(ticker, company, sector) {
         badge.className = 'text-[10px] font-bold px-2 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40';
         badge.innerText = 'Memuat data…';
     }
-    if (updatedEl) updatedEl.innerText = '—';
+    if (updatedEl) updatedEl.innerText = FUNDA_EMPTY;
     if (loadingEl) loadingEl.classList.remove('hidden');
 
     resolveKongloFunda(ticker, sector)
@@ -372,53 +405,43 @@ function showFunda(ticker, company, sector) {
 function renderFundaView(d, ticker, company, sector) {
     const isBank = sector.includes("Perbankan");
     const m = computeKongloDerivedMetrics(d, sector);
-    const mos = m.mosCalc != null ? m.mosCalc : '—';
+    const mos = m.mosCalc != null ? m.mosCalc : FUNDA_EMPTY;
     const zscore = m.zscore != null ? m.zscore : d.zscore;
     const li = m.latestIdx;
-
-    const fmtT = (v, i) => {
-        const n = fundaNum(v);
-        if (n < FUNDA_MIN_TRILIUN && i < 6) return '—';
-        if (n === 0 && i === 6) return '—';
-        return v;
-    };
 
     const lBody = document.getElementById('funda-lapkeu-body');
     lBody.innerHTML = `
         <tr>
             <td class="font-bold text-slate-300">Pendapatan Bersih / Bunga</td>
-            ${d.rev.map((v,i) => `<td class="${i===6?'text-blue-300':''}">${fmtT(v,i)}</td>`).join('')}
+            ${d.rev.map((v, i) => `<td class="${i === 6 ? 'text-blue-300' : ''}">${fmtFundaCell(v, i)}</td>`).join('')}
         </tr>
         <tr>
             <td class="font-bold text-slate-300">Beban Pokok</td>
-            ${d.cogs.map((v,i) => `<td class="${i===6?'text-blue-300':''}">${v}</td>`).join('')}
+            ${d.cogs.map((v, i) => `<td class="${i === 6 ? 'text-blue-300' : ''}">${fmtFundaCell(v, i, { expense: true })}</td>`).join('')}
         </tr>
         <tr class="bg-slate-800/50">
             <td class="font-bold text-blue-400">Laba Kotor</td>
-            ${d.rev.map((v,i) => {
-                let k = isBank ? v : (parseFloat(v) - Math.abs(parseFloat(d.cogs[i]))).toFixed(1);
-                return `<td class="text-blue-400 font-bold">${k}</td>`;
-            }).join('')}
+            ${d.rev.map((v, i) => `<td class="text-blue-400 font-bold">${fmtFundaGross(d, i, isBank)}</td>`).join('')}
         </tr>
         <tr>
             <td class="font-bold text-rose-400">Beban Bunga (Hutang)</td>
-            ${d.interest.map((v,i) => `<td class="text-rose-400 ${i===6?'text-rose-300':''}">-${v}</td>`).join('')}
+            ${d.interest.map((v, i) => `<td class="text-rose-400 ${i === 6 ? 'text-rose-300' : ''}">${fmtFundaCell(v, i, { expense: true })}</td>`).join('')}
         </tr>
         <tr>
             <td class="font-bold text-rose-400">Beban Pajak</td>
-            ${d.tax.map((v,i) => `<td class="text-rose-400 ${i===6?'text-rose-300':''}">-${v}</td>`).join('')}
+            ${d.tax.map((v, i) => `<td class="text-rose-400 ${i === 6 ? 'text-rose-300' : ''}">${fmtFundaCell(v, i, { expense: true })}</td>`).join('')}
         </tr>
         <tr class="bg-slate-800/50 border-t border-slate-600">
             <td class="font-bold text-emerald-400">Laba Bersih (Entitas Induk)</td>
-            ${d.net.map((v,i) => `<td class="text-emerald-400 font-bold">${fmtT(v,i)}</td>`).join('')}
+            ${d.net.map((v, i) => `<td class="text-emerald-400 font-bold">${fmtFundaCell(v, i)}</td>`).join('')}
         </tr>
         <tr>
             <td class="font-bold text-slate-300">Total Aset</td>
-            ${d.asset.map((v,i) => `<td class="${i===6?'text-blue-300':''}">${v}</td>`).join('')}
+            ${d.asset.map((v, i) => `<td class="${i === 6 ? 'text-blue-300' : ''}">${fmtFundaCell(v, i)}</td>`).join('')}
         </tr>
         <tr>
             <td class="font-bold text-slate-300">Total Ekuitas</td>
-            ${d.eq.map((v,i) => `<td class="${i===6?'text-blue-300':''}">${v}</td>`).join('')}
+            ${d.eq.map((v, i) => `<td class="${i === 6 ? 'text-blue-300' : ''}">${fmtFundaCell(v, i)}</td>`).join('')}
         </tr>
     `;
 
@@ -430,32 +453,32 @@ function renderFundaView(d, ticker, company, sector) {
             <td class="text-slate-300">${seg.name}</td>
             <td>${seg.method}<br><span class="text-[10px] text-slate-500">${seg.detail}</span></td>
             <td>${seg.multiple}</td>
-            <td class="font-bold text-emerald-400">${seg.value.toFixed(1)}</td>
+            <td class="font-bold text-emerald-400">${formatFundaAmount(seg.value)}</td>
         </tr>`
         )
         .join('');
     sBody.innerHTML = `
         ${sotpRows}
         <tr class="bg-slate-800/80 font-bold border-t-2 border-slate-600">
-            <td colspan="3" class="text-right text-blue-400">Total SOTP (Triliun Rp)<br><span class="text-[10px] font-normal text-slate-400">Bobot 55% operasi + 35% buku + 10% surplus · tahun ${m.latestYear}</span></td>
-            <td class="text-blue-400 text-lg">${m.sotp.total.toFixed(1)}</td>
+            <td colspan="3" class="text-right text-blue-400">Total SOTP<br><span class="text-[10px] font-normal text-slate-400">Bobot 55% operasi + 35% buku + 10% surplus · tahun ${m.latestYear}</span></td>
+            <td class="text-blue-400 text-lg">${formatFundaAmount(m.sotp.total)}</td>
         </tr>
         <tr class="border-t border-slate-700">
-            <td colspan="4" class="text-[10px] text-slate-500 pt-2">Referensi LK: Laba ${parseFloat(d.net[li]).toFixed(1)}T · Ekuitas ${parseFloat(d.eq[li]).toFixed(1)}T · Aset ${parseFloat(d.asset[li]).toFixed(1)}T</td>
+            <td colspan="4" class="text-[10px] text-slate-500 pt-2">Referensi LK: Laba ${formatFundaAmount(d.net[li])} · Ekuitas ${formatFundaAmount(d.eq[li])} · Aset ${formatFundaAmount(d.asset[li])}</td>
         </tr>
     `;
 
     const dash = document.getElementById('funda-valuation-dashboard');
     let zStatus = zscore >= 3 ? "Aman (Green Zone)" : (zscore >= 1.8 ? "Waspada (Grey Zone)" : "Bahaya (Red Zone)");
     let zColor = zscore >= 3 ? "text-emerald-400" : (zscore >= 1.8 ? "text-amber-400" : "text-rose-400");
-    const npmLatest = m.latestNpm != null ? `${m.latestNpm}%` : '—';
-    const roeLatest = m.latestRoe != null ? `${m.latestRoe}%` : '—';
-    const divLatest = parseFloat(d.divYield[li]) > 0 ? `${d.divYield[li]}%` : '—';
+    const npmLatest = m.latestNpm != null ? `${m.latestNpm}%` : FUNDA_EMPTY;
+    const roeLatest = m.latestRoe != null ? `${m.latestRoe}%` : FUNDA_EMPTY;
+    const divLatest = parseFloat(d.divYield[li]) > 0 ? `${d.divYield[li]}%` : FUNDA_EMPTY;
 
     dash.innerHTML = `
         <div class="bg-slate-800 border border-slate-700 rounded-xl p-4 text-center shadow-lg hover:border-emerald-500 transition-colors">
             <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1 flex items-center justify-center gap-1"><i class="fas fa-shield-alt text-emerald-500"></i> Margin of Safety</p>
-            <p class="text-2xl md:text-3xl font-black text-emerald-400 my-1">${mos}${mos === '—' ? '' : '%'}</p>
+            <p class="text-2xl md:text-3xl font-black text-emerald-400 my-1">${mos}${mos === FUNDA_EMPTY ? '' : '%'}</p>
             <p class="text-[10px] text-slate-500">Dari SOTP vs nilai buku ekuitas</p>
         </div>
         <div class="bg-slate-800 border border-slate-700 rounded-xl p-4 text-center shadow-lg hover:border-blue-500 transition-colors">
@@ -499,19 +522,15 @@ function renderFundaView(d, ticker, company, sector) {
             ${fundaMetricCells(m.leverage, { highlightLast: true })}
         </tr>
         <tr class="hover:bg-slate-800/30">
-            <td class="text-left font-bold text-slate-300">Free Cash Flow (Triliun)</td>
-            ${d.fcf.map((v, i) => {
-                const n = parseFloat(v);
-                const empty = !Number.isFinite(n) || n === 0;
-                return `<td class="${i === 6 ? 'text-blue-300 font-bold' : 'text-emerald-400'}">${empty ? '—' : v}</td>`;
-            }).join('')}
+            <td class="text-left font-bold text-slate-300">Free Cash Flow</td>
+            ${d.fcf.map((v, i) => `<td class="${i === 6 ? 'text-blue-300 font-bold' : 'text-emerald-400'}">${fmtFundaCell(v, i)}</td>`).join('')}
         </tr>
         <tr class="hover:bg-slate-800/30">
             <td class="text-left font-bold text-slate-300">Dividend Yield (%)</td>
             ${d.divYield.map((v, i) => {
                 const n = parseFloat(v);
                 const empty = !Number.isFinite(n) || n === 0;
-                return `<td class="${i === 6 ? 'text-blue-300 font-bold' : 'text-purple-400'}">${empty ? '—' : `${v}%`}</td>`;
+                return `<td class="${i === 6 ? 'text-blue-300 font-bold' : 'text-purple-400'}">${empty ? FUNDA_EMPTY : `${v}%`}</td>`;
             }).join('')}
         </tr>
     `;
@@ -520,18 +539,12 @@ function renderFundaView(d, ticker, company, sector) {
     if (npmBody) {
         npmBody.innerHTML = `
             <tr class="hover:bg-slate-800/30">
-                <td class="text-left font-bold text-slate-300">Pendapatan (Triliun)</td>
-                ${d.rev.map((v, i) => {
-                    const n = parseFloat(v);
-                    return `<td class="${i === 6 ? 'text-blue-300' : ''}">${n > 0 ? v : '—'}</td>`;
-                }).join('')}
+                <td class="text-left font-bold text-slate-300">Pendapatan</td>
+                ${d.rev.map((v, i) => `<td class="${i === 6 ? 'text-blue-300' : ''}">${fmtFundaCell(v, i)}</td>`).join('')}
             </tr>
             <tr class="hover:bg-slate-800/30">
-                <td class="text-left font-bold text-emerald-400">Laba Bersih (Triliun)</td>
-                ${d.net.map((v, i) => {
-                    const n = parseFloat(v);
-                    return `<td class="${i === 6 ? 'text-blue-300' : 'text-emerald-400'}">${n > 0 ? v : '—'}</td>`;
-                }).join('')}
+                <td class="text-left font-bold text-emerald-400">Laba Bersih</td>
+                ${d.net.map((v, i) => `<td class="${i === 6 ? 'text-blue-300' : 'text-emerald-400'}">${fmtFundaCell(v, i)}</td>`).join('')}
             </tr>
             <tr class="bg-slate-800/50 border-t border-slate-600">
                 <td class="text-left font-bold text-blue-400">NPM (%)</td>
@@ -620,7 +633,7 @@ function renderFundaCharts(fcfData, divData, npmData, ticker) {
         type: 'bar',
         data: {
             labels: labels,
-            datasets: [{ label: 'FCF (Triliun Rp)', data: fcfData, backgroundColor: '#10b981', borderRadius: 4 }]
+            datasets: [{ label: 'FCF (triliun / miliar Rp)', data: fcfData, backgroundColor: '#10b981', borderRadius: 4 }]
         },
         options: { ...commonOptions, plugins: { legend: { display: false } } }
     });
