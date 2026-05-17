@@ -1,5 +1,5 @@
 ﻿/** Versi aset — naikkan setelah deploy agar GitHub Pages tidak pakai cache JS/CSS lama. */
-window.EWOKS_ASSET_V = '20260517b';
+window.EWOKS_ASSET_V = '20260517c';
 
 // --- FUNGSI TOAST NOTIFICATION MODERN ---
 function showToast(message, type = 'success') {
@@ -627,8 +627,9 @@ window.addEventListener('load', () => {
     if (typeof calcDarurat === 'function' && document.getElementById('dar-expense')) calcDarurat();
 
     const page = EwoksSiteContext.page;
-    if (page === 'konglo' && typeof renderChart === 'function') {
-        setTimeout(renderChart, 100);
+    if (page === 'konglo') {
+        if (typeof initKongloFinnhubTokenField === 'function') initKongloFinnhubTokenField();
+        if (typeof renderChart === 'function') setTimeout(renderChart, 100);
     }
     if (page === 'fixed-income') {
         setTimeout(() => { if (typeof renderYieldChart === 'function') renderYieldChart(); }, 100);

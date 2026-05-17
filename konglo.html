@@ -176,6 +176,15 @@
                         <p class="text-sm md:text-base text-slate-500 leading-relaxed">
                             Aplikasi interaktif ini memetakan portofolio emiten yang dikendalikan atau dimiliki secara signifikan oleh tokoh-tokoh utama, konglomerat, dan <i>market maker</i> (bandar) di Bursa Efek Indonesia (BEI).
                         </p>
+                        <div class="mt-6 p-4 rounded-2xl bg-indigo-50 border border-indigo-200 text-left max-w-2xl mx-auto">
+                            <p class="text-[11px] font-bold text-indigo-800 uppercase tracking-wider mb-2"><i class="fas fa-database text-indigo-500"></i> Sinkron laporan keuangan (IDX)</p>
+                            <p class="text-xs text-indigo-900/80 mb-3">Agar angka laporan keuangan sama dengan data broker/pasar, isi token API gratis Finnhub (sumber data emiten BEI). Tanpa token, hanya emiten berikut yang memakai data referensi; sisanya estimasi.</p>
+                            <div class="flex flex-col sm:flex-row gap-2">
+                                <input type="password" id="konglo-finnhub-token" placeholder="Tempel token Finnhub di sini" class="input-pro flex-1 border border-indigo-200 bg-white text-sm" autocomplete="off">
+                                <button type="button" onclick="saveKongloFinnhubToken()" class="bg-indigo-600 text-white px-4 py-2.5 rounded-xl font-bold text-xs uppercase hover:bg-indigo-700 transition-colors shrink-0">Simpan Token</button>
+                            </div>
+                            <p class="text-[10px] text-indigo-700/70 mt-2">Daftar gratis: <a href="https://finnhub.io/register" target="_blank" rel="noopener" class="underline font-bold">finnhub.io/register</a> — sama seperti fitur Kalender Korporasi di beranda.</p>
+                        </div>
                     </section>
 
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
@@ -229,12 +238,17 @@
                             </button>
                             <h1 class="text-2xl md:text-3xl font-black text-blue-500"><span id="funda-ticker">TICKER</span> <span class="text-white text-[10px] bg-blue-600 px-2 py-1 rounded ml-2 align-middle tooltip-trigger shadow-md">PRO<span class="tooltip-text">Akses Data Proyection Tersedia</span></span></h1>
                             <p class="text-slate-400 text-xs md:text-sm mt-1" id="funda-company">Nama Perusahaan</p>
+                            <p class="mt-2"><span id="funda-source-badge" class="text-[10px] font-bold px-2 py-1 rounded-full bg-slate-700 text-slate-300 border border-slate-600">Sumber data</span></p>
                         </div>
                         <div class="text-left md:text-right">
                             <p class="text-xs text-slate-400">Update Terakhir</p>
-                            <p class="text-sm font-semibold text-slate-200">Hari Ini, WIB</p>
+                            <p class="text-sm font-semibold text-slate-200" id="funda-updated-at">—</p>
                         </div>
                     </header>
+
+                    <div id="funda-loading" class="hidden mb-4 p-4 rounded-xl bg-blue-500/10 border border-blue-500/30 text-blue-200 text-xs font-bold flex items-center gap-2">
+                        <i class="fas fa-spinner fa-spin"></i> Mengambil laporan keuangan dari sumber data pasar…
+                    </div>
 
                     <div class="glass-panel p-5">
                         <div class="flex border-b border-slate-700 mb-5 overflow-x-auto no-scrollbar">
@@ -266,7 +280,7 @@
 
                         <div id="tab-sotp" class="funda-tab-content overflow-x-auto">
                             <h3 class="text-lg font-bold mb-2 text-white">Sum of The Parts (SOTP) Valuation</h3>
-                            <p class="text-xs text-slate-400 mb-4">Estimasi Nilai Intrinsik berdasarkan segmen bisnis (Data Proyeksi).</p>
+                            <p class="text-xs text-slate-400 mb-4">Estimasi nilai intrinsik berdasarkan ekuitas &amp; data laporan keuangan terbaru.</p>
                             <table class="funda-table min-w-full">
                                 <thead>
                                     <tr>
@@ -410,8 +424,9 @@
     </div>
 
 
-    <script src="assets/js/ewoks-core.js?v=20260517b"></script>
-    <script src="assets/js/pages/page-konglo-data-funda.js?v=20260517b"></script>
-    <script src="assets/js/pages/page-konglo-ui.js?v=20260517b"></script>
+    <script src="assets/js/ewoks-core.js?v=20260517c"></script>
+    <script src="assets/js/pages/page-konglo-data-funda.js?v=20260517c"></script>
+    <script src="assets/js/pages/page-konglo-funda-fetch.js?v=20260517c"></script>
+    <script src="assets/js/pages/page-konglo-ui.js?v=20260517c"></script>
 </body>
 </html>

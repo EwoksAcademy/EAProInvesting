@@ -146,11 +146,44 @@ function showFunda(ticker, company, sector) {
     document.getElementById('konglo-detail-view').classList.add('hide');
     document.getElementById('konglo-funda-view').classList.remove('hide');
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    
+
     document.getElementById('funda-ticker').innerText = ticker;
     document.getElementById('funda-company').innerText = company;
-    
-    const d = generateFunda(ticker, sector);
+
+    const badge = document.getElementById('funda-source-badge');
+    const updatedEl = document.getElementById('funda-updated-at');
+    const loadingEl = document.getElementById('funda-loading');
+    if (badge) {
+        badge.className = 'text-[10px] font-bold px-2 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40';
+        badge.innerText = 'Memuat data…';
+    }
+    if (updatedEl) updatedEl.innerText = '—';
+    if (loadingEl) loadingEl.classList.remove('hidden');
+
+    resolveKongloFunda(ticker, sector)
+        .then(({ data: d, sourceLabel, source }) => {
+            if (loadingEl) loadingEl.classList.add('hidden');
+            if (badge) {
+                const cls = source === 'finnhub' || source === 'curated' || source === 'bundle'
+                    ? 'text-[10px] font-bold px-2 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
+                    : source === 'estimate'
+                        ? 'text-[10px] font-bold px-2 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40'
+                        : 'text-[10px] font-bold px-2 py-1 rounded-full bg-slate-600 text-slate-200 border border-slate-500';
+                badge.className = cls;
+                badge.innerText = sourceLabel || source;
+            }
+            if (updatedEl) updatedEl.innerText = d.updated || 'Hari ini';
+            renderFundaView(d, ticker, company, sector);
+        })
+        .catch(() => {
+            if (loadingEl) loadingEl.classList.add('hidden');
+            const d = generateFunda(ticker, sector);
+            renderFundaView(d, ticker, company, sector);
+            if (typeof showToast === 'function') showToast('Gagal memuat data live. Menampilkan estimasi.', 'warning');
+        });
+}
+
+function renderFundaView(d, ticker, company, sector) {
     const isBank = sector.includes("Perbankan");
     
     const lBody = document.getElementById('funda-lapkeu-body');
@@ -266,8 +299,40 @@ function showFunda(ticker, company, sector) {
         </tr>
     `;
 
-    let npmArr = d.net.map((n, i) => ((parseFloat(n) / parseFloat(d.rev[i]))*100).toFixed(1));
+    let npmArr = d.net.map((n, i) => {
+        const rev = parseFloat(d.rev[i]);
+        return rev ? ((parseFloat(n) / rev) * 100).toFixed(1) : '0';
+    });
     renderFundaCharts(d.fcf, d.divYield, npmArr, ticker);
+}
+
+function saveKongloFinnhubToken() {
+    const input = document.getElementById('konglo-finnhub-token');
+    if (!input) return;
+    const token = String(input.value || '').trim();
+    if (!token) {
+        if (typeof showToast === 'function') showToast('Token Finnhub kosong.', 'warning');
+        return;
+    }
+    try {
+        localStorage.setItem('ewoks_finnhub_token', token);
+        window.EWOKS_FINNHUB_TOKEN = token;
+        Object.keys(localStorage)
+            .filter((k) => k.startsWith('ewoks_funda_v2_'))
+            .forEach((k) => localStorage.removeItem(k));
+    } catch (_) {}
+    if (typeof showToast === 'function') showToast('Token Finnhub disimpan. Buka ulang laporan keuangan emiten untuk sinkron data.', 'success');
+}
+
+function initKongloFinnhubTokenField() {
+    const input = document.getElementById('konglo-finnhub-token');
+    if (!input) return;
+    let token = '';
+    try {
+        if (window.EWOKS_FINNHUB_TOKEN) token = String(window.EWOKS_FINNHUB_TOKEN).trim();
+        if (!token) token = localStorage.getItem('ewoks_finnhub_token') || '';
+    } catch (_) {}
+    if (token) input.placeholder = 'Token tersimpan (••••••)';
 }
 
 function hideFunda() {
