@@ -51,16 +51,31 @@ async function getUsdIdrRate() {
     return usdIdrRate;
 }
 
-function toTriliun(raw, currencyCode, fxUsdIdr) {
+/** Parse Yahoo reportedValue.fmt ("57.54T", "800.31B") → triliun IDR. */
+function parseFmtToTriliun(fmt, currencyCode, fxUsdIdr) {
+    if (!fmt) return null;
+    const s = String(fmt).replace(/,/g, '').trim();
+    const m = s.match(/^(-?[\d.]+)\s*([KMBT])?$/i);
+    if (!m) return null;
+    let n = parseFloat(m[1]);
+    if (!Number.isFinite(n)) return null;
+    const unit = (m[2] || '').toUpperCase();
+    const mult = { K: 1e3, M: 1e6, B: 1e9, T: 1e12 }[unit] || 1;
+    let idr = n * mult;
+    if (String(currencyCode).toUpperCase() === 'USD') idr *= fxUsdIdr;
+    return +(idr / 1e12).toFixed(1);
+}
+
+function toTriliunFromRow(row, fxUsdIdr) {
+    if (!row?.reportedValue) return null;
+    const cc = row.currencyCode || 'IDR';
+    const fromFmt = parseFmtToTriliun(row.reportedValue.fmt, cc, fxUsdIdr);
+    if (fromFmt != null) return fromFmt;
+    const raw = row.reportedValue.raw;
     if (raw == null || !Number.isFinite(Number(raw))) return null;
     const n = Number(raw);
-    if (String(currencyCode).toUpperCase() === 'USD') {
-        return +((n * fxUsdIdr) / 1e12).toFixed(1);
-    }
-    const abs = Math.abs(n);
-    if (abs >= 1e12) return +(n / 1e12).toFixed(1);
-    if (abs >= 1e6) return +(n / 1e9).toFixed(1);
-    return +n.toFixed(1);
+    if (String(cc).toUpperCase() === 'USD') return +((n * fxUsdIdr) / 1e12).toFixed(1);
+    return +(n / 1e12).toFixed(1);
 }
 
 function yearFromAsOf(asOf) {
@@ -68,20 +83,20 @@ function yearFromAsOf(asOf) {
 }
 
 function seriesByYear(rows, fxUsdIdr) {
-    const currency = rows?.[0]?.currencyCode || 'IDR';
     const map = {};
     for (const row of rows || []) {
         const y = yearFromAsOf(row.asOfDate);
         if (!YEARS.includes(y)) continue;
-        const cc = row.currencyCode || currency;
-        map[y] = toTriliun(row.reportedValue?.raw, cc, fxUsdIdr);
+        map[y] = toTriliunFromRow(row, fxUsdIdr);
     }
     return YEARS.map((y) => map[y] ?? null);
 }
 
+/** Isi tahun kosong; jangan salin ke kolom YTD 2026. */
 function fillForward(arr) {
     let last = 0;
-    return arr.map((v) => {
+    return arr.map((v, i) => {
+        if (i === arr.length - 1) return v ?? 0;
         if (v != null && !Number.isNaN(v)) {
             last = v;
             return v;

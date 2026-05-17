@@ -143,12 +143,39 @@ function hideDetail() {
 
 // --- FUNDAMENTAL PRO: metrik turunan dari laporan keuangan ---
 const FUNDA_YEAR_LABELS = ['2020', '2021', '2022', '2023', '2024', '2025', 'YTD 2026'];
+const FUNDA_MIN_TRILIUN = 0.05;
+const FUNDA_MAX_NPM = 85;
+const FUNDA_MAX_ROE = 80;
+const FUNDA_MAX_ROA = 35;
+
+function fundaNum(v) {
+    const n = parseFloat(v);
+    return Number.isFinite(n) ? n : 0;
+}
+
+function fundaYearHasData(d, i) {
+    const rev = fundaNum(d.rev[i]);
+    const net = fundaNum(d.net[i]);
+    const eq = fundaNum(d.eq[i]);
+    return rev >= FUNDA_MIN_TRILIUN || (net >= FUNDA_MIN_TRILIUN && eq >= FUNDA_MIN_TRILIUN);
+}
 
 function fundaLatestIdx(d, keys = ['net']) {
     for (let i = 6; i >= 0; i--) {
-        if (keys.some((k) => parseFloat(d[k]?.[i]) > 0)) return i;
+        if (i === 6 && !fundaYearHasData(d, i)) continue;
+        if (keys.some((k) => fundaNum(d[k]?.[i]) >= FUNDA_MIN_TRILIUN)) return i;
+    }
+    for (let i = 5; i >= 0; i--) {
+        if (fundaYearHasData(d, i)) return i;
     }
     return 5;
+}
+
+function fundaPct(numer, denom, maxAbs = 150) {
+    if (denom < FUNDA_MIN_TRILIUN || Math.abs(numer) < 1e-6) return null;
+    const p = (numer / denom) * 100;
+    if (!Number.isFinite(p) || Math.abs(p) > maxAbs) return null;
+    return +p.toFixed(1);
 }
 
 function fundaGrossProfit(d, i, isBank) {
@@ -177,22 +204,32 @@ function computeKongloDerivedMetrics(d, sector) {
     const leverage = [];
 
     for (let i = 0; i < 7; i++) {
-        const rev = parseFloat(d.rev[i]) || 0;
-        const net = parseFloat(d.net[i]) || 0;
-        const asset = parseFloat(d.asset[i]) || 0;
-        const eq = parseFloat(d.eq[i]) || 0;
+        if (!fundaYearHasData(d, i)) {
+            npm.push(null);
+            grossMargin.push(null);
+            roe.push(null);
+            roa.push(null);
+            leverage.push('—');
+            continue;
+        }
+
+        const rev = fundaNum(d.rev[i]);
+        const net = fundaNum(d.net[i]);
+        const asset = fundaNum(d.asset[i]);
+        const eq = fundaNum(d.eq[i]);
         const gross = fundaGrossProfit(d, i, isBank);
 
-        npm.push(rev > 0 && net !== 0 ? +((net / rev) * 100).toFixed(1) : null);
-        grossMargin.push(rev > 0 ? +((gross / rev) * 100).toFixed(1) : null);
-        roe.push(eq > 0 && net !== 0 ? +((net / eq) * 100).toFixed(1) : null);
-        roa.push(asset > 0 && net !== 0 ? +((net / asset) * 100).toFixed(1) : null);
+        npm.push(fundaPct(net, rev, FUNDA_MAX_NPM));
+        grossMargin.push(fundaPct(gross, rev, FUNDA_MAX_NPM));
+        roe.push(fundaPct(net, eq, FUNDA_MAX_ROE));
+        roa.push(fundaPct(net, asset, FUNDA_MAX_ROA));
 
         if (isBank) {
-            leverage.push(eq > 0 && asset > 0 ? `${(asset / eq).toFixed(2)}x` : '—');
+            const em = fundaPct(asset, eq, 50);
+            leverage.push(em != null ? `${(asset / eq).toFixed(2)}x` : '—');
         } else {
             const liab = Math.max(0, asset - eq);
-            leverage.push(eq > 0 ? `${(liab / eq).toFixed(2)}x` : '—');
+            leverage.push(eq >= FUNDA_MIN_TRILIUN ? `${(liab / eq).toFixed(2)}x` : '—');
         }
     }
 
@@ -203,9 +240,10 @@ function computeKongloDerivedMetrics(d, sector) {
         : 0;
 
     const mult = getKongloSectorMultiples(sector);
-    const netLi = parseFloat(d.net[li]) || 0;
-    const eqLi = parseFloat(d.eq[li]) || 0;
-    const assetLi = parseFloat(d.asset[li]) || 0;
+    const netLi = fundaNum(d.net[li]);
+    const eqLi = fundaNum(d.eq[li]);
+    const assetLi = fundaNum(d.asset[li]);
+    const revLi = fundaNum(d.rev[li]);
 
     const sotpCore = netLi * mult.per;
     const sotpBook = eqLi * mult.pbv;
@@ -214,10 +252,22 @@ function computeKongloDerivedMetrics(d, sector) {
     const totalSotp = sotpCore * 0.55 + sotpBook * 0.35 + sotpInvest * 0.1;
 
     const intrinsic = totalSotp;
-    const mosCalc =
-        eqLi > 0 && intrinsic > 0
-            ? +((Math.max(0, intrinsic - eqLi) / intrinsic) * 100).toFixed(1)
-            : null;
+    let mosCalc = null;
+    if (eqLi >= FUNDA_MIN_TRILIUN && intrinsic > eqLi) {
+        mosCalc = +Math.min(50, Math.max(0, ((intrinsic - eqLi) / intrinsic) * 100)).toFixed(1);
+    } else if (eqLi >= FUNDA_MIN_TRILIUN && intrinsic > 0) {
+        mosCalc = 0;
+    }
+
+    let zscore = 3.5;
+    if (!isBank && assetLi >= FUNDA_MIN_TRILIUN && eqLi >= FUNDA_MIN_TRILIUN) {
+        const tl = Math.max(assetLi - eqLi, assetLi * 0.01);
+        const wc = assetLi * 0.1;
+        const re = netLi / assetLi;
+        const ebit = netLi * 1.15;
+        zscore = 1.2 * (wc / assetLi) + 1.4 * re + 3.3 * (ebit / assetLi) + 0.6 * (eqLi / tl) + 1.0 * (revLi / assetLi);
+        zscore = +Math.min(6, Math.max(0.5, zscore)).toFixed(2);
+    }
 
     return {
         isBank,
@@ -257,6 +307,7 @@ function computeKongloDerivedMetrics(d, sector) {
             total: totalSotp
         },
         mosCalc,
+        zscore,
         latestNpm: npm[li],
         latestRoe: roe[li]
     };
@@ -321,14 +372,22 @@ function showFunda(ticker, company, sector) {
 function renderFundaView(d, ticker, company, sector) {
     const isBank = sector.includes("Perbankan");
     const m = computeKongloDerivedMetrics(d, sector);
-    const mos = m.mosCalc != null ? m.mosCalc : d.mos;
+    const mos = m.mosCalc != null ? m.mosCalc : '—';
+    const zscore = m.zscore != null ? m.zscore : d.zscore;
     const li = m.latestIdx;
+
+    const fmtT = (v, i) => {
+        const n = fundaNum(v);
+        if (n < FUNDA_MIN_TRILIUN && i < 6) return '—';
+        if (n === 0 && i === 6) return '—';
+        return v;
+    };
 
     const lBody = document.getElementById('funda-lapkeu-body');
     lBody.innerHTML = `
         <tr>
             <td class="font-bold text-slate-300">Pendapatan Bersih / Bunga</td>
-            ${d.rev.map((v,i) => `<td class="${i===6?'text-blue-300':''}">${v}</td>`).join('')}
+            ${d.rev.map((v,i) => `<td class="${i===6?'text-blue-300':''}">${fmtT(v,i)}</td>`).join('')}
         </tr>
         <tr>
             <td class="font-bold text-slate-300">Beban Pokok</td>
@@ -351,7 +410,7 @@ function renderFundaView(d, ticker, company, sector) {
         </tr>
         <tr class="bg-slate-800/50 border-t border-slate-600">
             <td class="font-bold text-emerald-400">Laba Bersih (Entitas Induk)</td>
-            ${d.net.map((v,i) => `<td class="text-emerald-400 font-bold">${v}</td>`).join('')}
+            ${d.net.map((v,i) => `<td class="text-emerald-400 font-bold">${fmtT(v,i)}</td>`).join('')}
         </tr>
         <tr>
             <td class="font-bold text-slate-300">Total Aset</td>
@@ -387,8 +446,8 @@ function renderFundaView(d, ticker, company, sector) {
     `;
 
     const dash = document.getElementById('funda-valuation-dashboard');
-    let zStatus = d.zscore >= 3 ? "Aman (Green Zone)" : (d.zscore >= 1.8 ? "Waspada (Grey Zone)" : "Bahaya (Red Zone)");
-    let zColor = d.zscore >= 3 ? "text-emerald-400" : (d.zscore >= 1.8 ? "text-amber-400" : "text-rose-400");
+    let zStatus = zscore >= 3 ? "Aman (Green Zone)" : (zscore >= 1.8 ? "Waspada (Grey Zone)" : "Bahaya (Red Zone)");
+    let zColor = zscore >= 3 ? "text-emerald-400" : (zscore >= 1.8 ? "text-amber-400" : "text-rose-400");
     const npmLatest = m.latestNpm != null ? `${m.latestNpm}%` : '—';
     const roeLatest = m.latestRoe != null ? `${m.latestRoe}%` : '—';
     const divLatest = parseFloat(d.divYield[li]) > 0 ? `${d.divYield[li]}%` : '—';
@@ -396,12 +455,12 @@ function renderFundaView(d, ticker, company, sector) {
     dash.innerHTML = `
         <div class="bg-slate-800 border border-slate-700 rounded-xl p-4 text-center shadow-lg hover:border-emerald-500 transition-colors">
             <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1 flex items-center justify-center gap-1"><i class="fas fa-shield-alt text-emerald-500"></i> Margin of Safety</p>
-            <p class="text-2xl md:text-3xl font-black text-emerald-400 my-1">${mos}%</p>
+            <p class="text-2xl md:text-3xl font-black text-emerald-400 my-1">${mos}${mos === '—' ? '' : '%'}</p>
             <p class="text-[10px] text-slate-500">Dari SOTP vs nilai buku ekuitas</p>
         </div>
         <div class="bg-slate-800 border border-slate-700 rounded-xl p-4 text-center shadow-lg hover:border-blue-500 transition-colors">
             <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1 flex items-center justify-center gap-1"><i class="fas fa-heartbeat text-blue-500"></i> Altman Z-Score</p>
-            <p class="text-2xl md:text-3xl font-black ${zColor} my-1">${d.zscore}</p>
+            <p class="text-2xl md:text-3xl font-black ${zColor} my-1">${zscore}</p>
             <p class="text-[10px] text-slate-500">${zStatus}</p>
         </div>
         <div class="bg-slate-800 border border-slate-700 rounded-xl p-4 text-center shadow-lg hover:border-indigo-500 transition-colors">
