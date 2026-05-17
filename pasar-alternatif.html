@@ -7,14 +7,14 @@
     <meta name="keywords" content="saham, investasi, bandarmologi, fundamental, teknikal, kalkulator investasi, bunga majemuk, edukasi saham, IHSG">
     <meta name="author" content="Ewoks Academy">
     
-    <title>Kuis Profil Risiko</title>
+    <title>Database Obligasi, RD & ETF</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-    <link rel="stylesheet" href="assets/css/app.css?v=20260517b">
+    <link rel="stylesheet" href="assets/css/app.css?v=20260517i">
 </head>
-<body class="min-h-screen relative flex flex-col" data-page="quiz">
+<body class="min-h-screen relative flex flex-col" data-page="pasar-alternatif">
 
 
     <div id="edu-quiz-modal" class="fixed inset-0 z-[100] bg-slate-900/80 backdrop-blur-sm hidden flex items-center justify-center p-4 opacity-0 transition-opacity duration-300">
@@ -171,69 +171,50 @@
 
     <main class="flex-grow max-w-[1600px] w-full mx-auto px-4 md:px-6 py-6 md:py-8">
 
-        <section id="page-quiz" class="max-w-7xl mx-auto">
-            <div class="max-w-3xl mx-auto">
-                <div class="text-center mb-10">
-                    <h2 class="text-2xl md:text-4xl font-black text-slate-900 mb-4">Kenali <span class="text-emerald-500">Profil Risiko</span> Anda</h2>
-                    <p class="text-slate-500 text-sm">3 Level Evaluasi Komprehensif. Dapatkan rekomendasi alokasi investasi berdasarkan kesehatan finansial dan toleransi risiko Anda secara eksklusif.</p>
-                </div>
-
-                <div id="quiz-container" class="premium-card p-6 md:p-10 shadow-sm relative min-h-[400px]">
-                    <div id="quiz-intro" class="quiz-step active">
-                        <div class="mb-6 border-b border-slate-200 pb-4">
-                            <h3 class="text-xl font-bold text-slate-800">Langkah Awal: Data Diri & Finansial</h3>
-                            <p class="text-xs text-slate-500 mt-1">Data Anda tidak disimpan di server, hanya digunakan untuk analisis rekomendasi pada sesi ini.</p>
+                <section id="page-pasar-alternatif" class="max-w-7xl mx-auto space-y-6">
+            <div class="premium-card overflow-hidden shadow-xl">
+                <div class="p-6 md:p-10 bg-gradient-to-br from-slate-900 via-emerald-950 to-slate-900 text-white">
+                    <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
+                        <div>
+                            <p class="text-[10px] font-black text-emerald-400 uppercase tracking-widest mb-2"><i class="fas fa-database mr-1"></i> Database Investasi</p>
+                            <h2 class="text-2xl md:text-4xl font-black">Obligasi · Reksa Dana · ETF Global</h2>
+                            <p class="text-sm text-slate-300 mt-2 max-w-2xl">Perbandingan kinerja ~10 tahun (CAGR) dan return per tahun — opsi investasi selain saham.</p>
                         </div>
-                        <div class="space-y-4">
-                            <div>
-                                <label class="text-xs font-black text-slate-600 uppercase mb-2 block">Nama Lengkap (Untuk Sertifikat)</label>
-                                <input type="text" id="qz-name" placeholder="Rakaditya Septiawan" class="input-pro border border-slate-200 bg-white" required>
-                            </div>
-                            <div>
-                                <label class="text-xs font-black text-slate-600 uppercase mb-2 block">Total Dana Investasi Anda Saat Ini (Rp)</label>
-                                <input type="number" id="qz-capital" placeholder="Contoh: 10000000" class="input-pro border border-slate-200 bg-white" min="0" required>
-                            </div>
-                            <div>
-                                <label class="text-xs font-black text-slate-600 uppercase mb-2 block">Pengeluaran Pokok / Tanggungan Per Bulan (Rp)</label>
-                                <input type="number" id="qz-expense" placeholder="Contoh: 5000000" class="input-pro border border-slate-200 bg-white" min="0" required>
-                            </div>
-                            <button onclick="startComplexQuiz()" class="w-full mt-4 bg-emerald-600 text-white px-6 py-4 rounded-xl font-bold hover:bg-emerald-700 transition-colors shadow-md">
-                                Mulai Asesmen (30 Pertanyaan) <i class="fas fa-arrow-right ml-2"></i>
-                            </button>
+                        <div class="relative w-full lg:w-72">
+                            <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                            <input type="text" id="pasarSearch" onkeyup="renderPasarTable()" placeholder="Cari nama / ticker..." class="w-full bg-white/10 border border-white/20 pl-11 pr-4 py-3 rounded-xl text-sm font-bold text-white outline-none focus:ring-2 focus:ring-emerald-500/50">
                         </div>
                     </div>
-
-                    <div id="quiz-dynamic-container"></div>
-
-                    <div id="quiz-result" class="hidden text-center py-8">
-                        <div id="res-icon" class="w-20 h-20 mx-auto rounded-full flex items-center justify-center text-4xl mb-6"></div>
-                        <h3 class="text-xs font-black text-slate-400 uppercase tracking-widest mb-2">Profil & Status Kesehatan Finansial Anda:</h3>
-                        <h2 id="res-title" class="text-3xl font-black text-slate-900 mb-4">Tipe Profil</h2>
-                        <p id="res-desc" class="text-slate-600 max-w-lg mx-auto mb-8 leading-relaxed font-medium">Deskripsi</p>
-                        
-                        <div class="bg-slate-50 p-6 rounded-2xl text-left border border-slate-200 shadow-sm max-w-xl mx-auto mb-8">
-                            <h4 class="font-bold text-slate-800 mb-4 border-b border-slate-200 pb-2"><i class="fas fa-chart-pie text-blue-500 mr-2"></i>Rekomendasi Alokasi Aset Spesifik Anda:</h4>
-                            <ul id="res-allocation" class="space-y-3 text-sm font-bold text-slate-700"></ul>
-                        </div>
-
-                        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-6">
-                            <button onclick="generateCertificate()" class="bg-blue-600 text-white px-6 py-3 rounded-xl font-bold text-sm shadow-md hover:bg-blue-700 transition-colors flex items-center gap-2">
-                                <i class="fas fa-certificate"></i> Download Sertifikat
-                            </button>
-                            <button onclick="resetQuiz()" class="text-slate-500 font-bold hover:text-blue-600 underline">Ulangi Asesmen</button>
-                        </div>
-
-                        <div class="text-left mt-8 max-w-xl mx-auto border-t border-slate-200 pt-6">
-                            <h4 class="font-bold text-slate-800 mb-2"><i class="fas fa-lightbulb text-amber-500 mr-2"></i> Feedback Pembelajaran Ewoks:</h4>
-                            <p class="text-xs text-slate-600 leading-relaxed">Penting untuk dicatat bahwa dalam berinvestasi, <b>Risiko selalu berbanding lurus dengan Return</b>. Rekomendasi di atas disesuaikan tidak hanya dengan mental psikologi Anda, tetapi juga memperhitungkan *ketahanan napas* (dana darurat vs modal investasi) yang Anda miliki saat ini.</p>
-                        </div>
+                    <p id="pasarMetaText" class="text-[10px] text-slate-400 mt-4 leading-relaxed border-t border-white/10 pt-3"></p>
+                </div>
+            </div>
+            <div id="pasarSummaryCards" class="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4"></div>
+            <div class="flex flex-wrap gap-2">
+                <button type="button" data-pasar-tab="etf" onclick="setPasarTab('etf')" class="px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wide bg-slate-900 text-white"><i class="fas fa-globe-americas mr-1"></i> ETF Global</button>
+                <button type="button" data-pasar-tab="reksadana" onclick="setPasarTab('reksadana')" class="px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wide bg-white text-slate-600 border border-slate-200"><i class="fas fa-chart-pie mr-1"></i> Reksa Dana</button>
+                <button type="button" data-pasar-tab="obligasi" onclick="setPasarTab('obligasi')" class="px-4 py-2 rounded-xl text-xs font-black uppercase tracking-wide bg-white text-slate-600 border border-slate-200"><i class="fas fa-landmark mr-1"></i> Obligasi</button>
+            </div>
+            <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+                <div class="xl:col-span-2 premium-card overflow-hidden">
+                    <div class="overflow-x-auto max-h-[520px] no-scrollbar">
+                        <table class="w-full border-collapse text-sm">
+                            <thead class="sticky top-0 z-10 bg-slate-100 shadow-sm" id="pasarTableHead"></thead>
+                            <tbody id="pasarTableBody"></tbody>
+                        </table>
                     </div>
                 </div>
-
-                <canvas id="certCanvas" width="800" height="600" class="hidden"></canvas>
+                <div class="space-y-4">
+                    <div class="premium-card p-5">
+                        <h3 class="text-xs font-black text-slate-500 uppercase tracking-widest mb-3"><i class="fas fa-list-ol text-blue-500"></i> Return Per Tahun</h3>
+                        <div id="pasarDetailPanel" class="min-h-[120px]"></div>
+                    </div>
+                    <div class="premium-card p-5">
+                        <h3 class="text-xs font-black text-slate-500 uppercase tracking-widest mb-3"><i class="fas fa-chart-bar text-emerald-500"></i> Grafik Tahunan</h3>
+                        <div class="h-48"><canvas id="pasarYearlyChart"></canvas></div>
+                    </div>
+                </div>
             </div>
         </section>
-
 
     </main>
 
@@ -307,13 +288,12 @@
             <div class="dropdown-content !bottom-full !top-auto !left-auto !right-0 mb-4 w-48 shadow-2xl">
                 <button onclick="showPage('konglo')" class="dropdown-item"><i class="fas fa-project-diagram w-5 text-indigo-500"></i> Peta Konglo</button>
                 <button onclick="showPage('broker')" class="dropdown-item"><i class="fas fa-building w-5 text-slate-500"></i> Broker DB</button>
-                <button onclick="showPage('pasar-alternatif')" class="dropdown-item"><i class="fas fa-layer-group w-5 text-emerald-500"></i> Obligasi & ETF</button>
             </div>
         </div>
     </div>
 
 
-    <script src="assets/js/ewoks-core.js?v=20260517b"></script>
-    <script src="assets/js/pages/page-quiz.js?v=20260517b"></script>
+    <script src="assets/js/ewoks-core.js?v=20260517i"></script>
+    <script src="assets/js/pages/page-pasar-alternatif.js?v=20260517i"></script>
 </body>
 </html>

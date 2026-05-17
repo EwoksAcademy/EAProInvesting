@@ -1,0 +1,1539 @@
+{
+  "meta": {
+    "built": "2026-05-17",
+    "period": "~10 tahun",
+    "disclaimer": "Kinerja masa lalu tidak menjamin hasil masa depan. ETF dari Yahoo Finance (USD). Obligasi & reksadana Indonesia berbasis estimasi/referensi — periksa prospektus resmi.",
+    "benchmark": {
+      "label": "IHSG (ilustrasi)",
+      "cagr10y": 5.5
+    }
+  },
+  "obligasi": [
+    {
+      "id": "corp-id-ig",
+      "name": "Obligasi Korporasi IG (Indonesia)",
+      "type": "Obligasi Korporasi",
+      "currency": "IDR",
+      "focus": "Perusahaan investment grade",
+      "cagr10y": 8.5,
+      "yieldNow": 7.2,
+      "yearly": [
+        {
+          "year": 2016,
+          "return": 10.5
+        },
+        {
+          "year": 2017,
+          "return": 7
+        },
+        {
+          "year": 2018,
+          "return": 5
+        },
+        {
+          "year": 2019,
+          "return": 8.5
+        },
+        {
+          "year": 2020,
+          "return": 7.5
+        },
+        {
+          "year": 2021,
+          "return": 4
+        },
+        {
+          "year": 2022,
+          "return": -4.5
+        },
+        {
+          "year": 2023,
+          "return": 8
+        },
+        {
+          "year": 2024,
+          "return": 6.5
+        },
+        {
+          "year": 2025,
+          "return": 7.8
+        }
+      ],
+      "note": "Spread di atas SBN; risiko kredit emiten.",
+      "source": "referensi"
+    },
+    {
+      "id": "sbn-10y",
+      "name": "Surat Utang Negara (SBN) — tenor panjang",
+      "type": "Obligasi Negara",
+      "currency": "IDR",
+      "focus": "Pendapatan tetap, risiko kredit negara rendah",
+      "cagr10y": 7.2,
+      "yieldNow": 6.65,
+      "yearly": [
+        {
+          "year": 2016,
+          "return": 12.5
+        },
+        {
+          "year": 2017,
+          "return": 5.8
+        },
+        {
+          "year": 2018,
+          "return": 4.2
+        },
+        {
+          "year": 2019,
+          "return": 8.1
+        },
+        {
+          "year": 2020,
+          "return": 9.5
+        },
+        {
+          "year": 2021,
+          "return": 2.1
+        },
+        {
+          "year": 2022,
+          "return": -8.5
+        },
+        {
+          "year": 2023,
+          "return": 6.8
+        },
+        {
+          "year": 2024,
+          "return": 5.2
+        },
+        {
+          "year": 2025,
+          "return": 7
+        }
+      ],
+      "note": "Estimasi total return (kupon + perubahan harga) obligasi pemerintah ID; yield 10Y referensi BI.",
+      "source": "referensi"
+    },
+    {
+      "id": "fr-bi",
+      "name": "Obligasi Negara (FR) — sekunder BI",
+      "type": "Obligasi Negara",
+      "currency": "IDR",
+      "focus": "Likuiditas pasar sekunder",
+      "cagr10y": 7,
+      "yieldNow": 6.55,
+      "yearly": [
+        {
+          "year": 2016,
+          "return": 11
+        },
+        {
+          "year": 2017,
+          "return": 6
+        },
+        {
+          "year": 2018,
+          "return": 4.5
+        },
+        {
+          "year": 2019,
+          "return": 7.8
+        },
+        {
+          "year": 2020,
+          "return": 9
+        },
+        {
+          "year": 2021,
+          "return": 1.8
+        },
+        {
+          "year": 2022,
+          "return": -9.2
+        },
+        {
+          "year": 2023,
+          "return": 7.2
+        },
+        {
+          "year": 2024,
+          "return": 5
+        },
+        {
+          "year": 2025,
+          "return": 6.8
+        }
+      ],
+      "note": "Estimasi dari pergerakan yield SBN & kupon.",
+      "source": "referensi"
+    },
+    {
+      "id": "ori-ritel",
+      "name": "Obligasi Ritel Indonesia (ORI)",
+      "type": "Obligasi Negara Ritel",
+      "currency": "IDR",
+      "focus": "Investor ritel, kupon tetap",
+      "cagr10y": 6.8,
+      "yieldNow": 6.35,
+      "yearly": [
+        {
+          "year": 2016,
+          "return": 8
+        },
+        {
+          "year": 2017,
+          "return": 6.5
+        },
+        {
+          "year": 2018,
+          "return": 5.5
+        },
+        {
+          "year": 2019,
+          "return": 7.2
+        },
+        {
+          "year": 2020,
+          "return": 8.8
+        },
+        {
+          "year": 2021,
+          "return": 3.5
+        },
+        {
+          "year": 2022,
+          "return": -5
+        },
+        {
+          "year": 2023,
+          "return": 6
+        },
+        {
+          "year": 2024,
+          "return": 5.8
+        },
+        {
+          "year": 2025,
+          "return": 6.5
+        }
+      ],
+      "note": "Rata-rata historis seri ORI; per seri berbeda.",
+      "source": "referensi"
+    },
+    {
+      "id": "usd-treasury",
+      "name": "US Treasury 7–10Y (proxy ETF)",
+      "type": "Obligasi Negara AS",
+      "currency": "USD",
+      "focus": "Safe haven USD",
+      "cagr10y": -1.9,
+      "yieldNow": 4.35,
+      "yahooSymbol": "IEF",
+      "note": "CAGR diisi otomatis dari Yahoo jika tersedia.",
+      "yearly": [
+        {
+          "year": 2017,
+          "return": 0.7
+        },
+        {
+          "year": 2018,
+          "return": -1.3
+        },
+        {
+          "year": 2019,
+          "return": 5.8
+        },
+        {
+          "year": 2020,
+          "return": 8.8
+        },
+        {
+          "year": 2021,
+          "return": -4.1
+        },
+        {
+          "year": 2022,
+          "return": -16.7
+        },
+        {
+          "year": 2023,
+          "return": 0.6
+        },
+        {
+          "year": 2024,
+          "return": -4.1
+        },
+        {
+          "year": 2025,
+          "return": 4
+        },
+        {
+          "year": 2026,
+          "return": -2.8
+        }
+      ],
+      "source": "yahoo"
+    }
+  ],
+  "reksadana": [
+    {
+      "id": "schroder-istimewa",
+      "name": "Schroder Dana Istimewa",
+      "manager": "Schroder Investment Management",
+      "type": "Saham",
+      "currency": "IDR",
+      "focus": "Quality growth Indonesia",
+      "cagr10y": 13.1,
+      "yearly": [
+        {
+          "year": 2016,
+          "return": 22
+        },
+        {
+          "year": 2017,
+          "return": 15.5
+        },
+        {
+          "year": 2018,
+          "return": -7
+        },
+        {
+          "year": 2019,
+          "return": 8
+        },
+        {
+          "year": 2020,
+          "return": -4
+        },
+        {
+          "year": 2021,
+          "return": 26.5
+        },
+        {
+          "year": 2022,
+          "return": 5.5
+        },
+        {
+          "year": 2023,
+          "return": 10.2
+        },
+        {
+          "year": 2024,
+          "return": 4
+        },
+        {
+          "year": 2025,
+          "return": 13
+        }
+      ],
+      "note": "Estimasi kinerja historis; kinerja masa lalu tidak menjamin masa depan.",
+      "source": "referensi"
+    },
+    {
+      "id": "mi-utama",
+      "name": "Mandiri Investa Utama",
+      "manager": "Mandiri Manajemen Investasi",
+      "type": "Saham",
+      "currency": "IDR",
+      "focus": "Large cap Indonesia",
+      "cagr10y": 12.4,
+      "yearly": [
+        {
+          "year": 2016,
+          "return": 20.1
+        },
+        {
+          "year": 2017,
+          "return": 14
+        },
+        {
+          "year": 2018,
+          "return": -10.2
+        },
+        {
+          "year": 2019,
+          "return": 5.5
+        },
+        {
+          "year": 2020,
+          "return": -6.8
+        },
+        {
+          "year": 2021,
+          "return": 24
+        },
+        {
+          "year": 2022,
+          "return": 6.2
+        },
+        {
+          "year": 2023,
+          "return": 9.1
+        },
+        {
+          "year": 2024,
+          "return": 2.8
+        },
+        {
+          "year": 2025,
+          "return": 11.5
+        }
+      ],
+      "note": "Estimasi dari NAV historis / factsheet (periksa prospektus terbaru).",
+      "source": "referensi"
+    },
+    {
+      "id": "rd-saham-top",
+      "name": "RD Saham (Top Quartile ID)",
+      "manager": "Rata-rata reksa saham terbaik",
+      "type": "Saham",
+      "currency": "IDR",
+      "focus": "Ekuitas Indonesia aktif",
+      "cagr10y": 11.8,
+      "yearly": [
+        {
+          "year": 2016,
+          "return": 18.2
+        },
+        {
+          "year": 2017,
+          "return": 12.5
+        },
+        {
+          "year": 2018,
+          "return": -8.5
+        },
+        {
+          "year": 2019,
+          "return": 6.2
+        },
+        {
+          "year": 2020,
+          "return": -5.1
+        },
+        {
+          "year": 2021,
+          "return": 22.4
+        },
+        {
+          "year": 2022,
+          "return": 4.8
+        },
+        {
+          "year": 2023,
+          "return": 8.5
+        },
+        {
+          "year": 2024,
+          "return": 3.2
+        },
+        {
+          "year": 2025,
+          "return": 12
+        }
+      ],
+      "note": "Ilustrasi quartile atas kategori RD Saham (OJK); bukan satu produk.",
+      "source": "referensi"
+    },
+    {
+      "id": "trimegah-saham",
+      "name": "Trimegah Asset Management — Saham",
+      "manager": "Trimegah Asset Management",
+      "type": "Saham",
+      "currency": "IDR",
+      "focus": "Saham terpilih IDX",
+      "cagr10y": 11.2,
+      "yearly": [
+        {
+          "year": 2016,
+          "return": 17
+        },
+        {
+          "year": 2017,
+          "return": 11
+        },
+        {
+          "year": 2018,
+          "return": -9.5
+        },
+        {
+          "year": 2019,
+          "return": 4
+        },
+        {
+          "year": 2020,
+          "return": -7.5
+        },
+        {
+          "year": 2021,
+          "return": 21
+        },
+        {
+          "year": 2022,
+          "return": 3.5
+        },
+        {
+          "year": 2023,
+          "return": 7.8
+        },
+        {
+          "year": 2024,
+          "return": 2
+        },
+        {
+          "year": 2025,
+          "return": 10.5
+        }
+      ],
+      "note": "Estimasi; bandingkan NAV resmi di KSEI/OJK.",
+      "source": "referensi"
+    },
+    {
+      "id": "rd-campuran",
+      "name": "RD Campuran (Top Quartile ID)",
+      "manager": "Rata-rata reksa campuran terbaik",
+      "type": "Campuran",
+      "currency": "IDR",
+      "focus": "Saham + obligasi",
+      "cagr10y": 9.5,
+      "yearly": [
+        {
+          "year": 2016,
+          "return": 14
+        },
+        {
+          "year": 2017,
+          "return": 10
+        },
+        {
+          "year": 2018,
+          "return": -4
+        },
+        {
+          "year": 2019,
+          "return": 6.5
+        },
+        {
+          "year": 2020,
+          "return": 0.5
+        },
+        {
+          "year": 2021,
+          "return": 16
+        },
+        {
+          "year": 2022,
+          "return": 2
+        },
+        {
+          "year": 2023,
+          "return": 7
+        },
+        {
+          "year": 2024,
+          "return": 4.5
+        },
+        {
+          "year": 2025,
+          "return": 8.5
+        }
+      ],
+      "note": "Ilustrasi kategori RD Campuran.",
+      "source": "referensi"
+    },
+    {
+      "id": "rd-pendapatan-tetap",
+      "name": "RD Pendapatan Tetap (Top Quartile ID)",
+      "manager": "Rata-rata reksa pendapatan tetap",
+      "type": "Pendapatan Tetap",
+      "currency": "IDR",
+      "focus": "Obligasi & SBN",
+      "cagr10y": 7.8,
+      "yearly": [
+        {
+          "year": 2016,
+          "return": 10
+        },
+        {
+          "year": 2017,
+          "return": 6.5
+        },
+        {
+          "year": 2018,
+          "return": 4
+        },
+        {
+          "year": 2019,
+          "return": 7.5
+        },
+        {
+          "year": 2020,
+          "return": 8
+        },
+        {
+          "year": 2021,
+          "return": 3
+        },
+        {
+          "year": 2022,
+          "return": -3.5
+        },
+        {
+          "year": 2023,
+          "return": 6.5
+        },
+        {
+          "year": 2024,
+          "return": 5.5
+        },
+        {
+          "year": 2025,
+          "return": 6.8
+        }
+      ],
+      "note": "Ilustrasi kategori RD Pendapatan Tetap.",
+      "source": "referensi"
+    },
+    {
+      "id": "sucor-mm",
+      "name": "Sucorinvest Money Market Fund",
+      "manager": "Sucorinvest Asset Management",
+      "type": "Pasar Uang",
+      "currency": "IDR",
+      "focus": "Instrumen pasar uang",
+      "cagr10y": 5.9,
+      "yearly": [
+        {
+          "year": 2016,
+          "return": 6.8
+        },
+        {
+          "year": 2017,
+          "return": 6.2
+        },
+        {
+          "year": 2018,
+          "return": 6.5
+        },
+        {
+          "year": 2019,
+          "return": 6.8
+        },
+        {
+          "year": 2020,
+          "return": 5.5
+        },
+        {
+          "year": 2021,
+          "return": 4.2
+        },
+        {
+          "year": 2022,
+          "return": 5.8
+        },
+        {
+          "year": 2023,
+          "return": 6.5
+        },
+        {
+          "year": 2024,
+          "return": 6.2
+        },
+        {
+          "year": 2025,
+          "return": 5.5
+        }
+      ],
+      "note": "Stabil; return lebih rendah, volatilitas rendah.",
+      "source": "referensi"
+    },
+    {
+      "id": "bahana-lancar",
+      "name": "Bahana Dana Lancar",
+      "manager": "Bahana TCW Investment Management",
+      "type": "Pasar Uang",
+      "currency": "IDR",
+      "focus": "Likuiditas tinggi",
+      "cagr10y": 5.7,
+      "yearly": [
+        {
+          "year": 2016,
+          "return": 6.5
+        },
+        {
+          "year": 2017,
+          "return": 6
+        },
+        {
+          "year": 2018,
+          "return": 6.3
+        },
+        {
+          "year": 2019,
+          "return": 6.6
+        },
+        {
+          "year": 2020,
+          "return": 5.4
+        },
+        {
+          "year": 2021,
+          "return": 4
+        },
+        {
+          "year": 2022,
+          "return": 5.6
+        },
+        {
+          "year": 2023,
+          "return": 6.3
+        },
+        {
+          "year": 2024,
+          "return": 6
+        },
+        {
+          "year": 2025,
+          "return": 5.3
+        }
+      ],
+      "note": "Cocok untuk dana darurat jangka pendek.",
+      "source": "referensi"
+    }
+  ],
+  "etf": [
+    {
+      "id": "smh",
+      "symbol": "SMH",
+      "name": "VanEck Semiconductor ETF",
+      "market": "AS",
+      "focus": "Semikonduktor Global",
+      "currency": "USD",
+      "cagr10y": 34.6,
+      "yearly": [
+        {
+          "year": 2017,
+          "return": 36.5
+        },
+        {
+          "year": 2018,
+          "return": -10.8
+        },
+        {
+          "year": 2019,
+          "return": 62
+        },
+        {
+          "year": 2020,
+          "return": 54.5
+        },
+        {
+          "year": 2021,
+          "return": 41.4
+        },
+        {
+          "year": 2022,
+          "return": -34.3
+        },
+        {
+          "year": 2023,
+          "return": 72.3
+        },
+        {
+          "year": 2024,
+          "return": 38.5
+        },
+        {
+          "year": 2025,
+          "return": 48.7
+        },
+        {
+          "year": 2026,
+          "return": 54.5
+        }
+      ],
+      "source": "yahoo"
+    },
+    {
+      "id": "qqq",
+      "symbol": "QQQ",
+      "name": "Invesco QQQ Trust",
+      "market": "AS",
+      "focus": "Saham AS — Teknologi",
+      "currency": "USD",
+      "cagr10y": 20.8,
+      "yearly": [
+        {
+          "year": 2017,
+          "return": 31.5
+        },
+        {
+          "year": 2018,
+          "return": -1
+        },
+        {
+          "year": 2019,
+          "return": 37.8
+        },
+        {
+          "year": 2020,
+          "return": 47.6
+        },
+        {
+          "year": 2021,
+          "return": 26.8
+        },
+        {
+          "year": 2022,
+          "return": -33.1
+        },
+        {
+          "year": 2023,
+          "return": 53.8
+        },
+        {
+          "year": 2024,
+          "return": 24.8
+        },
+        {
+          "year": 2025,
+          "return": 20.2
+        },
+        {
+          "year": 2026,
+          "return": 15.4
+        }
+      ],
+      "source": "yahoo"
+    },
+    {
+      "id": "spy",
+      "symbol": "SPY",
+      "name": "SPDR S&P 500 ETF",
+      "market": "AS",
+      "focus": "Saham AS — Large Cap",
+      "currency": "USD",
+      "cagr10y": 13.4,
+      "yearly": [
+        {
+          "year": 2017,
+          "return": 19.4
+        },
+        {
+          "year": 2018,
+          "return": -6.3
+        },
+        {
+          "year": 2019,
+          "return": 28.8
+        },
+        {
+          "year": 2020,
+          "return": 16.2
+        },
+        {
+          "year": 2021,
+          "return": 27
+        },
+        {
+          "year": 2022,
+          "return": -19.5
+        },
+        {
+          "year": 2023,
+          "return": 24.3
+        },
+        {
+          "year": 2024,
+          "return": 23.3
+        },
+        {
+          "year": 2025,
+          "return": 16.4
+        },
+        {
+          "year": 2026,
+          "return": 8.4
+        }
+      ],
+      "source": "yahoo"
+    },
+    {
+      "id": "vti",
+      "symbol": "VTI",
+      "name": "Vanguard Total Stock Market",
+      "market": "AS",
+      "focus": "Saham AS — Total Market",
+      "currency": "USD",
+      "cagr10y": 13,
+      "yearly": [
+        {
+          "year": 2017,
+          "return": 19
+        },
+        {
+          "year": 2018,
+          "return": -7
+        },
+        {
+          "year": 2019,
+          "return": 28.2
+        },
+        {
+          "year": 2020,
+          "return": 19
+        },
+        {
+          "year": 2021,
+          "return": 24
+        },
+        {
+          "year": 2022,
+          "return": -20.8
+        },
+        {
+          "year": 2023,
+          "return": 24.1
+        },
+        {
+          "year": 2024,
+          "return": 22.2
+        },
+        {
+          "year": 2025,
+          "return": 15.7
+        },
+        {
+          "year": 2026,
+          "return": 8.2
+        }
+      ],
+      "source": "yahoo"
+    },
+    {
+      "id": "gld",
+      "symbol": "GLD",
+      "name": "SPDR Gold Shares",
+      "market": "Komoditas",
+      "focus": "Emas",
+      "currency": "USD",
+      "cagr10y": 12.7,
+      "yearly": [
+        {
+          "year": 2017,
+          "return": 12.8
+        },
+        {
+          "year": 2018,
+          "return": -1.9
+        },
+        {
+          "year": 2019,
+          "return": 17.9
+        },
+        {
+          "year": 2020,
+          "return": 24.8
+        },
+        {
+          "year": 2021,
+          "return": -4.1
+        },
+        {
+          "year": 2022,
+          "return": -0.8
+        },
+        {
+          "year": 2023,
+          "return": 12.7
+        },
+        {
+          "year": 2024,
+          "return": 26.7
+        },
+        {
+          "year": 2025,
+          "return": 63.7
+        },
+        {
+          "year": 2026,
+          "return": 5.3
+        }
+      ],
+      "source": "yahoo"
+    },
+    {
+      "id": "vt",
+      "symbol": "VT",
+      "name": "Vanguard Total World Stock",
+      "market": "Global",
+      "focus": "Saham Dunia",
+      "currency": "USD",
+      "cagr10y": 10.2,
+      "yearly": [
+        {
+          "year": 2017,
+          "return": 21.7
+        },
+        {
+          "year": 2018,
+          "return": -11.9
+        },
+        {
+          "year": 2019,
+          "return": 23.7
+        },
+        {
+          "year": 2020,
+          "return": 14.3
+        },
+        {
+          "year": 2021,
+          "return": 16
+        },
+        {
+          "year": 2022,
+          "return": -19.8
+        },
+        {
+          "year": 2023,
+          "return": 19.4
+        },
+        {
+          "year": 2024,
+          "return": 14.2
+        },
+        {
+          "year": 2025,
+          "return": 20.1
+        },
+        {
+          "year": 2026,
+          "return": 8.8
+        }
+      ],
+      "source": "yahoo"
+    },
+    {
+      "id": "schd",
+      "symbol": "SCHD",
+      "name": "Schwab US Dividend Equity",
+      "market": "AS",
+      "focus": "Dividen AS",
+      "currency": "USD",
+      "cagr10y": 8.7,
+      "yearly": [
+        {
+          "year": 2017,
+          "return": 17.4
+        },
+        {
+          "year": 2018,
+          "return": -8.2
+        },
+        {
+          "year": 2019,
+          "return": 23.3
+        },
+        {
+          "year": 2020,
+          "return": 10.7
+        },
+        {
+          "year": 2021,
+          "return": 26
+        },
+        {
+          "year": 2022,
+          "return": -6.5
+        },
+        {
+          "year": 2023,
+          "return": 0.8
+        },
+        {
+          "year": 2024,
+          "return": 7.7
+        },
+        {
+          "year": 2025,
+          "return": 0.4
+        },
+        {
+          "year": 2026,
+          "return": 15.6
+        }
+      ],
+      "source": "yahoo"
+    },
+    {
+      "id": "eem",
+      "symbol": "EEM",
+      "name": "iShares MSCI Emerging Markets",
+      "market": "Emerging",
+      "focus": "Saham Pasar Emerging",
+      "currency": "USD",
+      "cagr10y": 6.6,
+      "yearly": [
+        {
+          "year": 2017,
+          "return": 34.6
+        },
+        {
+          "year": 2018,
+          "return": -17.1
+        },
+        {
+          "year": 2019,
+          "return": 14.9
+        },
+        {
+          "year": 2020,
+          "return": 15.2
+        },
+        {
+          "year": 2021,
+          "return": -5.5
+        },
+        {
+          "year": 2022,
+          "return": -22.4
+        },
+        {
+          "year": 2023,
+          "return": 6.1
+        },
+        {
+          "year": 2024,
+          "return": 4
+        },
+        {
+          "year": 2025,
+          "return": 30.8
+        },
+        {
+          "year": 2026,
+          "return": 18.9
+        }
+      ],
+      "source": "yahoo"
+    },
+    {
+      "id": "ixc",
+      "symbol": "IXC",
+      "name": "iShares Global Energy",
+      "market": "Sektor",
+      "focus": "Energi Global",
+      "currency": "USD",
+      "cagr10y": 5.7,
+      "yearly": [
+        {
+          "year": 2017,
+          "return": 2.2
+        },
+        {
+          "year": 2018,
+          "return": -17.4
+        },
+        {
+          "year": 2019,
+          "return": 5
+        },
+        {
+          "year": 2020,
+          "return": -34.1
+        },
+        {
+          "year": 2021,
+          "return": 35.5
+        },
+        {
+          "year": 2022,
+          "return": 41.7
+        },
+        {
+          "year": 2023,
+          "return": 0.3
+        },
+        {
+          "year": 2024,
+          "return": -2.4
+        },
+        {
+          "year": 2025,
+          "return": 9.8
+        },
+        {
+          "year": 2026,
+          "return": 33.7
+        }
+      ],
+      "source": "yahoo"
+    },
+    {
+      "id": "vwo",
+      "symbol": "VWO",
+      "name": "Vanguard FTSE Emerging Markets",
+      "market": "Emerging",
+      "focus": "Saham Emerging (FTSE)",
+      "currency": "USD",
+      "cagr10y": 5.2,
+      "yearly": [
+        {
+          "year": 2017,
+          "return": 28.3
+        },
+        {
+          "year": 2018,
+          "return": -17
+        },
+        {
+          "year": 2019,
+          "return": 16.7
+        },
+        {
+          "year": 2020,
+          "return": 12.7
+        },
+        {
+          "year": 2021,
+          "return": -1.3
+        },
+        {
+          "year": 2022,
+          "return": -21.2
+        },
+        {
+          "year": 2023,
+          "return": 5.4
+        },
+        {
+          "year": 2024,
+          "return": 7.2
+        },
+        {
+          "year": 2025,
+          "return": 22.1
+        },
+        {
+          "year": 2026,
+          "return": 8.7
+        }
+      ],
+      "source": "yahoo"
+    },
+    {
+      "id": "vnq",
+      "symbol": "VNQ",
+      "name": "Vanguard Real Estate ETF",
+      "market": "AS",
+      "focus": "Properti / REIT AS",
+      "currency": "USD",
+      "cagr10y": 0.6,
+      "yearly": [
+        {
+          "year": 2017,
+          "return": 0.5
+        },
+        {
+          "year": 2018,
+          "return": -10.1
+        },
+        {
+          "year": 2019,
+          "return": 24.4
+        },
+        {
+          "year": 2020,
+          "return": -8.5
+        },
+        {
+          "year": 2021,
+          "return": 36.6
+        },
+        {
+          "year": 2022,
+          "return": -28.9
+        },
+        {
+          "year": 2023,
+          "return": 7.1
+        },
+        {
+          "year": 2024,
+          "return": 0.8
+        },
+        {
+          "year": 2025,
+          "return": -0.7
+        },
+        {
+          "year": 2026,
+          "return": 6.1
+        }
+      ],
+      "source": "yahoo"
+    },
+    {
+      "id": "hyg",
+      "symbol": "HYG",
+      "name": "iShares High Yield Corporate",
+      "market": "AS",
+      "focus": "Obligasi High Yield AS",
+      "currency": "USD",
+      "cagr10y": -0.6,
+      "yearly": [
+        {
+          "year": 2017,
+          "return": 0.8
+        },
+        {
+          "year": 2018,
+          "return": -7.1
+        },
+        {
+          "year": 2019,
+          "return": 8.4
+        },
+        {
+          "year": 2020,
+          "return": -0.7
+        },
+        {
+          "year": 2021,
+          "return": -0.3
+        },
+        {
+          "year": 2022,
+          "return": -15.4
+        },
+        {
+          "year": 2023,
+          "return": 5.1
+        },
+        {
+          "year": 2024,
+          "return": 1.6
+        },
+        {
+          "year": 2025,
+          "return": 2.5
+        },
+        {
+          "year": 2026,
+          "return": -1.5
+        }
+      ],
+      "source": "yahoo"
+    },
+    {
+      "id": "lqd",
+      "symbol": "LQD",
+      "name": "iShares Investment Grade Corporate",
+      "market": "AS",
+      "focus": "Obligasi Korporat IG AS",
+      "currency": "USD",
+      "cagr10y": -1.3,
+      "yearly": [
+        {
+          "year": 2017,
+          "return": 3.7
+        },
+        {
+          "year": 2018,
+          "return": -7.2
+        },
+        {
+          "year": 2019,
+          "return": 13.4
+        },
+        {
+          "year": 2020,
+          "return": 7.9
+        },
+        {
+          "year": 2021,
+          "return": -4.1
+        },
+        {
+          "year": 2022,
+          "return": -20.4
+        },
+        {
+          "year": 2023,
+          "return": 5
+        },
+        {
+          "year": 2024,
+          "return": -3.5
+        },
+        {
+          "year": 2025,
+          "return": 3.1
+        },
+        {
+          "year": 2026,
+          "return": -2.1
+        }
+      ],
+      "source": "yahoo"
+    },
+    {
+      "id": "agg",
+      "symbol": "AGG",
+      "name": "iShares Core US Aggregate Bond",
+      "market": "AS",
+      "focus": "Obligasi AS — Aggregat",
+      "currency": "USD",
+      "cagr10y": -1.4,
+      "yearly": [
+        {
+          "year": 2017,
+          "return": 1.2
+        },
+        {
+          "year": 2018,
+          "return": -2.6
+        },
+        {
+          "year": 2019,
+          "return": 5.5
+        },
+        {
+          "year": 2020,
+          "return": 5.2
+        },
+        {
+          "year": 2021,
+          "return": -3.5
+        },
+        {
+          "year": 2022,
+          "return": -15
+        },
+        {
+          "year": 2023,
+          "return": 2.3
+        },
+        {
+          "year": 2024,
+          "return": -2.4
+        },
+        {
+          "year": 2025,
+          "return": 3.1
+        },
+        {
+          "year": 2026,
+          "return": -1.9
+        }
+      ],
+      "source": "yahoo"
+    },
+    {
+      "id": "tlt",
+      "symbol": "TLT",
+      "name": "iShares 20+ Year Treasury Bond",
+      "market": "AS",
+      "focus": "Obligasi AS — Treasuries Panjang",
+      "currency": "USD",
+      "cagr10y": -4.9,
+      "yearly": [
+        {
+          "year": 2017,
+          "return": 6.5
+        },
+        {
+          "year": 2018,
+          "return": -4.2
+        },
+        {
+          "year": 2019,
+          "return": 11.5
+        },
+        {
+          "year": 2020,
+          "return": 16.4
+        },
+        {
+          "year": 2021,
+          "return": -6
+        },
+        {
+          "year": 2022,
+          "return": -32.8
+        },
+        {
+          "year": 2023,
+          "return": -0.7
+        },
+        {
+          "year": 2024,
+          "return": -11.7
+        },
+        {
+          "year": 2025,
+          "return": -0.2
+        },
+        {
+          "year": 2026,
+          "return": -4
+        }
+      ],
+      "source": "yahoo"
+    },
+    {
+      "id": "eido",
+      "symbol": "EIDO",
+      "name": "iShares MSCI Indonesia ETF",
+      "market": "Indonesia",
+      "focus": "Saham Indonesia (NYSE)",
+      "currency": "USD",
+      "cagr10y": -5.3,
+      "yearly": [
+        {
+          "year": 2017,
+          "return": 17.8
+        },
+        {
+          "year": 2018,
+          "return": -12.7
+        },
+        {
+          "year": 2019,
+          "return": 3.4
+        },
+        {
+          "year": 2020,
+          "return": -8.7
+        },
+        {
+          "year": 2021,
+          "return": -1.9
+        },
+        {
+          "year": 2022,
+          "return": -2.5
+        },
+        {
+          "year": 2023,
+          "return": -0.3
+        },
+        {
+          "year": 2024,
+          "return": -17.2
+        },
+        {
+          "year": 2025,
+          "return": 1.2
+        },
+        {
+          "year": 2026,
+          "return": -24.4
+        }
+      ],
+      "source": "yahoo"
+    }
+  ]
+}

@@ -112,7 +112,7 @@ function highlightNavForCurrentPage() {
 
     const edu = ['edukasi', 'fixed-income', 'bandarmology-edu', 'quiz'];
     const tools = ['watchlist', 'jurnal', 'pensiun', 'kalkulator', 'bandar'];
-    const db = ['konglo', 'broker'];
+    const db = ['konglo', 'broker', 'pasar-alternatif'];
 
     if (page === 'home') {
         document.getElementById('nav-home')?.classList.add('active');
@@ -172,7 +172,8 @@ function showPage(pageId) {
         kalkulator: 'kalkulator.html',
         bandar: 'bandar.html',
         konglo: 'konglo.html',
-        broker: 'broker.html'
+        broker: 'broker.html',
+        'pasar-alternatif': 'pasar-alternatif.html'
     };
     const url = routes[pageId];
     if (url) window.location.href = EwoksSiteContext.basePath + url;

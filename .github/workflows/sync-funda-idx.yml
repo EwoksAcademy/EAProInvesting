@@ -33,6 +33,9 @@ jobs:
       - name: Build funda-idx.json from Yahoo
         run: node tools/build-funda-idx.mjs --force
 
+      - name: Build pasar-alternatif.json from Yahoo
+        run: node tools/build-pasar-alternatif.mjs
+
       - name: Bump cache version
         run: node tools/bump-asset-version.mjs
 
@@ -40,7 +43,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add assets/data/funda-idx.json assets/js/ewoks-core.js konglo.html
+          git add assets/data/funda-idx.json assets/data/pasar-alternatif.json assets/js/ewoks-core.js konglo.html
           if git diff --staged --quiet; then
             echo "Tidak ada perubahan data — skip commit."
             exit 0
