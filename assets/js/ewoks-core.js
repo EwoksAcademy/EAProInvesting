@@ -536,16 +536,33 @@ function getBrokerBadge(kode) {
 
 
 // --- UTILITIES & SYSTEM ---
+function formatAbbreviated(num) {
+    const n = Number(num) || 0;
+    if (n >= 1000000000) return (n / 1000000000).toFixed(2) + ' Miliar';
+    if (n >= 1000000) return (n / 1000000).toFixed(2) + ' Juta';
+    if (n >= 1000) return (n / 1000).toFixed(1) + ' Ribu';
+    return Math.round(n).toLocaleString('id-ID');
+}
+
 function updateClock() {
     const now = new Date();
-    const timeString = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' WIB';
+    let timeString = '--:--:-- WIB';
+    try {
+        timeString = now.toLocaleTimeString('id-ID', {
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false,
+            timeZone: 'Asia/Jakarta'
+        }) + ' WIB';
+    } catch (_) {
+        const pad = (v) => String(v).padStart(2, '0');
+        const utc = now.getTime() + now.getTimezoneOffset() * 60000;
+        const wib = new Date(utc + 7 * 3600000);
+        timeString = `${pad(wib.getHours())}:${pad(wib.getMinutes())}:${pad(wib.getSeconds())} WIB`;
+    }
     const clockEl = document.getElementById('clockText');
     if (clockEl) clockEl.innerText = timeString;
-
-    const clockContainer = document.getElementById('liveClock');
-    if (clockContainer && clockContainer.classList.contains('hidden')) {
-        clockContainer.classList.remove('hidden');
-    }
 }
 
 window.addEventListener('scroll', () => {
@@ -588,6 +605,7 @@ window.addEventListener('load', () => {
         setTimeout(() => { if (typeof renderYieldCurve === 'function') renderYieldCurve(); }, 100);
     }
     if (page === 'pensiun') setTimeout(() => { if (typeof calcCompound === 'function') calcCompound(); }, 100);
+    if (page === 'kalkulator' && typeof runSimpleCalc === 'function' && document.getElementById('calc-price')) runSimpleCalc();
     if (page === 'jurnal' && typeof renderJournal === 'function') renderJournal();
     if (page === 'watchlist' && typeof openTVChart === 'function' && !window.tvWidgetInstance) {
         openTVChart('IDX:COMPOSITE');

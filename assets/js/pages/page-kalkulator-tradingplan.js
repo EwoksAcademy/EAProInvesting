@@ -57,3 +57,54 @@ function calculateSizing() {
     }
 }
 
+function buildTradingPlanShareText() {
+    runSimpleCalc();
+    const emiten = (document.getElementById('calc-name')?.value || '-').trim().toUpperCase() || '-';
+    const price = parseFloat(document.getElementById('calc-price')?.value) || 0;
+    const lot = parseFloat(document.getElementById('calc-lot')?.value) || 0;
+    const tpPct = document.getElementById('calc-tp')?.value || '0';
+    const slPct = document.getElementById('calc-sl')?.value || '0';
+    const gain = document.getElementById('res-gain')?.innerText || '0';
+    const risk = document.getElementById('res-risk')?.innerText || '0';
+    const tpPrice = document.getElementById('res-tp-price')?.innerText || '@0';
+    const slPrice = document.getElementById('res-sl-price')?.innerText || '@0';
+
+    return {
+        wa: `*TRADING PLAN — ${emiten}*\n\nHarga Beli: Rp ${price.toLocaleString('id-ID')}\nLot: ${lot}\nTake Profit: ${tpPct}% (${tpPrice})\nStop Loss: ${slPct}% (${slPrice})\n\n✅ *Estimasi Profit: Rp ${gain}*\n⚠️ *Risiko Maksimal: Rp ${risk}*\n\n_Dihitung via Ewoks Academy Pro_`,
+        plain: `TRADING PLAN — ${emiten}\nHarga Beli: Rp ${price.toLocaleString('id-ID')}\nLot: ${lot}\nTake Profit: ${tpPct}% (${tpPrice})\nStop Loss: ${slPct}% (${slPrice})\nEstimasi Profit: Rp ${gain}\nRisiko Maksimal: Rp ${risk}\n\nEwoks Academy Pro`
+    };
+}
+
+function shareWhatsAppCalc() {
+    const { wa } = buildTradingPlanShareText();
+    window.open(`https://wa.me/?text=${encodeURIComponent(wa)}`, '_blank', 'noopener,noreferrer');
+}
+
+function copyToClipboardCalc() {
+    const { plain } = buildTradingPlanShareText();
+    if (navigator.clipboard?.writeText) {
+        navigator.clipboard.writeText(plain)
+            .then(() => showToast('Data trading plan disalin ke clipboard!', 'success'))
+            .catch(() => fallbackCopyTradingPlan(plain));
+    } else {
+        fallbackCopyTradingPlan(plain);
+    }
+}
+
+function fallbackCopyTradingPlan(text) {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly', '');
+    ta.style.position = 'fixed';
+    ta.style.left = '-9999px';
+    document.body.appendChild(ta);
+    ta.select();
+    try {
+        document.execCommand('copy');
+        showToast('Data trading plan disalin ke clipboard!', 'success');
+    } catch (_) {
+        showToast('Gagal menyalin. Salin manual dari pesan share.', 'error');
+    }
+    document.body.removeChild(ta);
+}
+

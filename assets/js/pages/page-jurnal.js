@@ -70,13 +70,6 @@ function addJournal() {
     renderJournal();
 }
 
-function formatAbbreviated(num) {
-    if (num >= 1000000000) return (num / 1000000000).toFixed(2) + ' Miliar';
-    if (num >= 1000000) return (num / 1000000).toFixed(2) + ' Juta';
-    if (num >= 1000) return (num / 1000).toFixed(1) + ' Ribu';
-    return Math.round(num).toLocaleString('id-ID');
-}
-
 function renderJurnalCharts(journalData) {
     if(!journalData || journalData.length === 0) return;
 

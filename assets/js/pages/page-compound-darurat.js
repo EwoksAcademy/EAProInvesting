@@ -56,15 +56,18 @@ function calcCompound() {
 
 function renderCompoundChart(labels, pokokData, bungaData) {
     const canvasEl = document.getElementById('compoundChartCanvas');
-    if(!canvasEl) return;
+    if (!canvasEl || typeof Chart === 'undefined') return;
     const ctx = canvasEl.getContext('2d');
-    
+    const abbrev = typeof formatAbbreviated === 'function'
+        ? formatAbbreviated
+        : (n) => Math.round(Number(n) || 0).toLocaleString('id-ID');
+
     if (compoundChartInstance) {
         compoundChartInstance.destroy();
     }
-    
+
     const isDark = document.body.classList.contains('dark-mode-override');
-    
+
     compoundChartInstance = new Chart(ctx, {
         type: 'bar',
         data: {
@@ -118,7 +121,7 @@ function renderCompoundChart(labels, pokokData, bungaData) {
                     ticks: { 
                         font: { size: 9 }, 
                         color: isDark ? '#94a3b8' : '#64748b',
-                        callback: function(value) { return 'Rp ' + formatAbbreviated(value); } 
+                        callback: function(value) { return 'Rp ' + abbrev(value); } 
                     }, 
                     grid: { 
                         color: isDark ? 'rgba(51, 65, 85, 0.5)' : 'rgba(226, 232, 240, 0.5)' 
