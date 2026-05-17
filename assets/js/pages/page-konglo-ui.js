@@ -190,7 +190,12 @@ function fundaYearHasData(d, i) {
     const rev = fundaNum(d.rev[i]);
     const net = fundaNum(d.net[i]);
     const eq = fundaNum(d.eq[i]);
-    return rev >= FUNDA_MIN_TRILIUN || (net >= FUNDA_MIN_TRILIUN && eq >= FUNDA_MIN_TRILIUN);
+    const asset = fundaNum(d.asset[i]);
+    return (
+        rev >= FUNDA_MIN_TRILIUN ||
+        net >= FUNDA_MIN_TRILIUN ||
+        (eq >= FUNDA_MIN_TRILIUN && asset >= FUNDA_MIN_TRILIUN)
+    );
 }
 
 function fundaLatestIdx(d, keys = ['net']) {
@@ -212,9 +217,12 @@ function fundaPct(numer, denom, maxAbs = 150) {
 }
 
 function fundaGrossProfit(d, i, isBank) {
-    const rev = parseFloat(d.rev[i]) || 0;
-    if (isBank) return rev;
-    return rev - Math.abs(parseFloat(d.cogs[i]) || 0);
+    const rev = fundaNum(d.rev[i]);
+    if (isBank) {
+        const intExp = Math.abs(fundaNum(d.interest[i]));
+        return rev >= FUNDA_MIN_MILIAR ? rev - intExp : 0;
+    }
+    return rev - Math.abs(fundaNum(d.cogs[i]));
 }
 
 function getKongloSectorMultiples(sector) {
@@ -228,8 +236,19 @@ function getKongloSectorMultiples(sector) {
     return { per: 12, pbv: 1.5, label: 'Industri' };
 }
 
+function bundleMetricSeries(d, key) {
+    const arr = d[key];
+    if (!Array.isArray(arr) || arr.length < 7) return null;
+    return arr.map((v) => (v === null || v === undefined || v === '' ? null : fundaNum(v) || null));
+}
+
 function computeKongloDerivedMetrics(d, sector) {
     const isBank = String(sector).includes('Perbankan');
+    const bundledNpm = bundleMetricSeries(d, 'npm');
+    const bundledGm = bundleMetricSeries(d, 'grossMargin');
+    const bundledRoe = bundleMetricSeries(d, 'roe');
+    const bundledRoa = bundleMetricSeries(d, 'roa');
+
     const npm = [];
     const roe = [];
     const roa = [];
@@ -251,15 +270,32 @@ function computeKongloDerivedMetrics(d, sector) {
         const asset = fundaNum(d.asset[i]);
         const eq = fundaNum(d.eq[i]);
         const gross = fundaGrossProfit(d, i, isBank);
+        const annualize = i === 6 ? 4 : 1;
 
-        npm.push(fundaPct(net, rev, FUNDA_MAX_NPM));
-        grossMargin.push(fundaPct(gross, rev, FUNDA_MAX_NPM));
-        roe.push(fundaPct(net, eq, FUNDA_MAX_ROE));
-        roa.push(fundaPct(net, asset, FUNDA_MAX_ROA));
+        const npmVal =
+            bundledNpm?.[i] != null && Number.isFinite(bundledNpm[i])
+                ? bundledNpm[i]
+                : fundaPct(net, rev, FUNDA_MAX_NPM);
+        const gmVal =
+            bundledGm?.[i] != null && Number.isFinite(bundledGm[i])
+                ? bundledGm[i]
+                : fundaPct(gross, rev, FUNDA_MAX_NPM);
+        const roeVal =
+            bundledRoe?.[i] != null && Number.isFinite(bundledRoe[i])
+                ? bundledRoe[i]
+                : fundaPct(net * annualize, eq, FUNDA_MAX_ROE);
+        const roaVal =
+            bundledRoa?.[i] != null && Number.isFinite(bundledRoa[i])
+                ? bundledRoa[i]
+                : fundaPct(net * annualize, asset, FUNDA_MAX_ROA);
+
+        npm.push(npmVal);
+        grossMargin.push(gmVal);
+        roe.push(roeVal);
+        roa.push(roaVal);
 
         if (isBank) {
-            const em = fundaPct(asset, eq, 50);
-            leverage.push(em != null ? `${(asset / eq).toFixed(2)}x` : FUNDA_EMPTY);
+            leverage.push(eq >= FUNDA_MIN_TRILIUN ? `${(asset / eq).toFixed(2)}x` : FUNDA_EMPTY);
         } else {
             const liab = Math.max(0, asset - eq);
             leverage.push(eq >= FUNDA_MIN_TRILIUN ? `${(liab / eq).toFixed(2)}x` : FUNDA_EMPTY);
@@ -522,7 +558,11 @@ function renderFundaView(d, ticker, company, sector) {
             ${fundaMetricCells(m.leverage, { highlightLast: true })}
         </tr>
         <tr class="hover:bg-slate-800/30">
-            <td class="text-left font-bold text-slate-300">Free Cash Flow</td>
+            <td class="text-left font-bold text-slate-300">Arus Kas Operasi (OCF)</td>
+            ${(d.ocf || d.fcf.map(() => 0)).map((v, i) => `<td class="${i === 6 ? 'text-blue-300 font-bold' : 'text-cyan-400'}">${fmtFundaCell(v, i)}</td>`).join('')}
+        </tr>
+        <tr class="hover:bg-slate-800/30">
+            <td class="text-left font-bold text-slate-300">Free Cash Flow (FCF)</td>
             ${d.fcf.map((v, i) => `<td class="${i === 6 ? 'text-blue-300 font-bold' : 'text-emerald-400'}">${fmtFundaCell(v, i)}</td>`).join('')}
         </tr>
         <tr class="hover:bg-slate-800/30">

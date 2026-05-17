@@ -19,6 +19,7 @@ const IDX_Q1 = 6;
 const ANNUAL_TYPES = [
     'annualTotalRevenue',
     'annualNetInterestIncome',
+    'annualInterestIncome',
     'annualNetIncome',
     'annualCostOfRevenue',
     'annualTotalAssets',
@@ -33,6 +34,7 @@ const ANNUAL_TYPES = [
 const QUARTERLY_TYPES = [
     'quarterlyTotalRevenue',
     'quarterlyNetInterestIncome',
+    'quarterlyInterestIncome',
     'quarterlyNetIncome',
     'quarterlyCostOfRevenue',
     'quarterlyTotalAssets',
@@ -43,6 +45,11 @@ const QUARTERLY_TYPES = [
     'quarterlyOperatingCashFlow',
     'quarterlyCapitalExpenditure'
 ];
+
+const MIN_TRIL = 0.05;
+const MAX_NPM = 85;
+const MAX_ROE = 80;
+const MAX_ROA = 35;
 
 const ALL_TYPES = [...ANNUAL_TYPES, ...QUARTERLY_TYPES].join(',');
 
@@ -138,6 +145,100 @@ function fillForward(arr) {
         }
         return last;
     });
+}
+
+/** Referensi historis 2020–2021 (Yahoo IDX sering tidak punya tahunan lengkap). */
+function loadFundaRealDB() {
+    try {
+        const text = fs.readFileSync(srcPath, 'utf8');
+        const start = text.indexOf('const fundaRealDB = ');
+        if (start < 0) return {};
+        const brace = text.indexOf('{', start);
+        let depth = 0;
+        let end = brace;
+        for (let i = brace; i < text.length; i++) {
+            if (text[i] === '{') depth++;
+            if (text[i] === '}') {
+                depth--;
+                if (depth === 0) {
+                    end = i + 1;
+                    break;
+                }
+            }
+        }
+        return Function(`"use strict"; return (${text.slice(brace, end)});`)();
+    } catch (_) {
+        return {};
+    }
+}
+
+function legacyNum(v) {
+    if (v == null) return null;
+    const n = parseFloat(String(v).replace(/[()]/g, ''));
+    return Number.isFinite(n) ? Math.abs(n) : null;
+}
+
+/** Isi slot kosong dari referensi (indeks 0–5); Q1 tetap dari Yahoo. */
+function mergeLegacySeries(yahooArr, legacyArr, q1FromYahoo) {
+    const out = [...yahooArr];
+    if (!legacyArr?.length) return out;
+    for (let i = 0; i < 6; i++) {
+        const y = out[i];
+        const missing = y == null || y === 0 || Number.isNaN(y);
+        if (!missing) continue;
+        const leg = legacyNum(legacyArr[i]);
+        if (leg != null && leg >= MIN_TRIL) out[i] = leg;
+    }
+    if (q1FromYahoo != null && !Number.isNaN(q1FromYahoo)) out[IDX_Q1] = q1FromYahoo;
+    return out;
+}
+
+function pctRatio(numer, denom, maxAbs) {
+    if (denom < MIN_TRIL || Math.abs(numer) < 1e-6) return null;
+    const p = (numer / denom) * 100;
+    if (!Number.isFinite(p) || Math.abs(p) > maxAbs) return null;
+    return +p.toFixed(1);
+}
+
+/** NPM, margin bunga/kotor, ROE, ROA per kolom (ROE/ROA Q1 = annualized). */
+function computeDerivedMetrics(row, isBank) {
+    const npm = [];
+    const grossMargin = [];
+    const roe = [];
+    const roa = [];
+
+    for (let i = 0; i < 7; i++) {
+        const rev = row.rev[i] || 0;
+        const net = row.net[i] || 0;
+        const asset = row.asset[i] || 0;
+        const eq = row.eq[i] || 0;
+        const intExp = Math.abs(row.interest[i] || 0);
+        const hasFlow = rev >= MIN_TRIL || net >= MIN_TRIL;
+        const hasBs = asset >= MIN_TRIL && eq >= MIN_TRIL;
+
+        if (!hasFlow && !hasBs) {
+            npm.push(null);
+            grossMargin.push(null);
+            roe.push(null);
+            roa.push(null);
+            continue;
+        }
+
+        npm.push(pctRatio(net, rev, MAX_NPM));
+
+        if (isBank) {
+            grossMargin.push(rev >= MIN_TRIL ? pctRatio(rev - intExp, rev, MAX_NPM) : null);
+        } else {
+            const cogs = Math.abs(row.cogs[i] || 0);
+            grossMargin.push(rev >= MIN_TRIL ? pctRatio(rev - cogs, rev, MAX_NPM) : null);
+        }
+
+        const annualize = i === IDX_Q1 ? 4 : 1;
+        roe.push(hasBs && net >= MIN_TRIL ? pctRatio(net * annualize, eq, MAX_ROE) : null);
+        roa.push(hasBs && net >= MIN_TRIL ? pctRatio(net * annualize, asset, MAX_ROA) : null);
+    }
+
+    return { npm, grossMargin, roe, roa };
 }
 
 function altmanZ(asset, eq, rev, net, isBank) {
@@ -244,7 +345,7 @@ async function fetchDividendYieldSeries(ticker) {
     return yields;
 }
 
-function normalize(ticker, byType, isBank, fxUsdIdr, divYield) {
+function normalize(ticker, byType, isBank, fxUsdIdr, divYield, legacy) {
     const revInterestA = seriesByYear(byType.annualNetInterestIncome, fxUsdIdr);
     const revTotalA = seriesByYear(byType.annualTotalRevenue, fxUsdIdr);
     let rev = isBank
@@ -287,13 +388,13 @@ function normalize(ticker, byType, isBank, fxUsdIdr, divYield) {
     });
 
     let fcfQ = pickQ12026(byType.quarterlyFreeCashFlow, fxUsdIdr);
-    if (fcfQ == null) {
-        const ocfQ = pickQ12026(byType.quarterlyOperatingCashFlow, fxUsdIdr);
+    const ocfQ = pickQ12026(byType.quarterlyOperatingCashFlow, fxUsdIdr);
+    if (fcfQ == null && ocfQ != null) {
         const capQ = pickQ12026(byType.quarterlyCapitalExpenditure, fxUsdIdr);
-        if (ocfQ != null) fcfQ = +(ocfQ + (capQ || 0)).toFixed(1);
+        fcfQ = +(ocfQ + (capQ || 0)).toFixed(1);
     }
 
-    const out = {
+    let out = {
         rev: fillForward(mergeQ1(rev, revQ)),
         cogs: fillForward(mergeQ1(cogsA, cogsQ != null ? -Math.abs(cogsQ) : isBank ? 0 : null)),
         net: fillForward(mergeQ1(netA, netQ)),
@@ -302,11 +403,34 @@ function normalize(ticker, byType, isBank, fxUsdIdr, divYield) {
         interest: fillForward(mergeQ1(interestA, interestQ)),
         tax: fillForward(mergeQ1(taxA, taxQ)),
         fcf: fillForward(mergeQ1(fcfAnnual, fcfQ)),
+        ocf: fillForward(mergeQ1(ocfA, ocfQ)),
         divYield: divYield || YEARS.map(() => 0),
         source: 'yahoo',
         sourceLabel: 'Yahoo Finance (tahunan + Q1 2026)',
         updated: new Date().toISOString().slice(0, 10)
     };
+
+    if (legacy) {
+        out.rev = mergeLegacySeries(out.rev, legacy.rev, revQ);
+        out.net = mergeLegacySeries(out.net, legacy.net, netQ);
+        out.asset = mergeLegacySeries(out.asset, legacy.asset, assetQ);
+        out.eq = mergeLegacySeries(out.eq, legacy.eq, eqQ);
+        out.interest = mergeLegacySeries(out.interest, legacy.interest, interestQ);
+        out.tax = mergeLegacySeries(out.tax, legacy.tax, taxQ);
+        out.fcf = mergeLegacySeries(out.fcf, legacy.fcf, fcfQ);
+        if (legacy.ocf) out.ocf = mergeLegacySeries(out.ocf, legacy.ocf, ocfQ);
+        for (let i = 0; i < 7; i++) {
+            const dy = parseFloat(legacy.divYield?.[i]);
+            if (i < 6 && (!out.divYield[i] || out.divYield[i] === 0) && dy > 0) out.divYield[i] = dy;
+        }
+        out.sourceLabel = 'Yahoo Finance + referensi historis (2020–2026)';
+    }
+
+    const derived = computeDerivedMetrics(out, isBank);
+    out.npm = derived.npm;
+    out.grossMargin = derived.grossMargin;
+    out.roe = derived.roe;
+    out.roa = derived.roa;
 
     const zIdx = out.net[5] > 0 ? 5 : out.net[IDX_Q1] > 0 ? IDX_Q1 : 5;
     out.zscore = altmanZ(out.asset[zIdx], out.eq[zIdx], out.rev[zIdx], out.net[zIdx], isBank);
@@ -330,10 +454,12 @@ async function main() {
         existing = old.tickers || old;
     } catch (_) {}
 
+    const legacyDb = loadFundaRealDB();
+
     const out = {
         meta: {
-            source: 'Yahoo Finance — tahunan + Q1 2026 + dividend yield',
-            unit: 'triliun IDR (kolom Q1 2026 = kuartal)',
+            source: 'Yahoo Finance — tahunan + Q1 2026 + metrik turunan',
+            unit: 'triliun IDR (kolom Q1 2026 = kuartal; ROE/ROA Q1 annualized)',
             built: new Date().toISOString()
         },
         tickers: { ...existing }
@@ -347,7 +473,12 @@ async function main() {
     let fail = 0;
 
     for (const ticker of tickers) {
-        if (!force && out.tickers[ticker]?.source === 'yahoo' && out.tickers[ticker]?.rev?.[IDX_Q1] > 0) {
+        if (
+            !force &&
+            out.tickers[ticker]?.source === 'yahoo' &&
+            out.tickers[ticker]?.rev?.[IDX_Q1] > 0 &&
+            Array.isArray(out.tickers[ticker]?.npm)
+        ) {
             skip++;
             continue;
         }
@@ -356,7 +487,7 @@ async function main() {
         try {
             const byType = await fetchYahooTimeseries(ticker);
             const divYield = await fetchDividendYieldSeries(ticker);
-            out.tickers[ticker] = normalize(ticker, byType, isBank, fxUsdIdr, divYield);
+            out.tickers[ticker] = normalize(ticker, byType, isBank, fxUsdIdr, divYield, legacyDb[ticker]);
             ok++;
             const q1 = out.tickers[ticker].rev[IDX_Q1];
             const dy = out.tickers[ticker].divYield[IDX_Q1];
