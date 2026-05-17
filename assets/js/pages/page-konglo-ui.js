@@ -141,6 +141,141 @@ function hideDetail() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
+// --- FUNDAMENTAL PRO: metrik turunan dari laporan keuangan ---
+const FUNDA_YEAR_LABELS = ['2020', '2021', '2022', '2023', '2024', '2025', 'YTD 2026'];
+
+function fundaLatestIdx(d, keys = ['net']) {
+    for (let i = 6; i >= 0; i--) {
+        if (keys.some((k) => parseFloat(d[k]?.[i]) > 0)) return i;
+    }
+    return 5;
+}
+
+function fundaGrossProfit(d, i, isBank) {
+    const rev = parseFloat(d.rev[i]) || 0;
+    if (isBank) return rev;
+    return rev - Math.abs(parseFloat(d.cogs[i]) || 0);
+}
+
+function getKongloSectorMultiples(sector) {
+    const s = String(sector || '');
+    if (s.includes('Perbankan')) return { per: 14, pbv: 2.2, label: 'Perbankan' };
+    if (s.includes('Pertambangan')) return { per: 8, pbv: 1.2, label: 'Pertambangan' };
+    if (s.includes('Properti')) return { per: 10, pbv: 0.95, label: 'Properti' };
+    if (s.includes('Teknologi') || s.includes('E-Commerce')) return { per: 22, pbv: 2.8, label: 'Teknologi' };
+    if (s.includes('Energi')) return { per: 9, pbv: 1.1, label: 'Energi' };
+    if (s.includes('Konsumsi') || s.includes('FMCG') || s.includes('Ritel')) return { per: 16, pbv: 2.0, label: 'Konsumsi' };
+    return { per: 12, pbv: 1.5, label: 'Industri' };
+}
+
+function computeKongloDerivedMetrics(d, sector) {
+    const isBank = String(sector).includes('Perbankan');
+    const npm = [];
+    const roe = [];
+    const roa = [];
+    const grossMargin = [];
+    const leverage = [];
+
+    for (let i = 0; i < 7; i++) {
+        const rev = parseFloat(d.rev[i]) || 0;
+        const net = parseFloat(d.net[i]) || 0;
+        const asset = parseFloat(d.asset[i]) || 0;
+        const eq = parseFloat(d.eq[i]) || 0;
+        const gross = fundaGrossProfit(d, i, isBank);
+
+        npm.push(rev > 0 && net !== 0 ? +((net / rev) * 100).toFixed(1) : null);
+        grossMargin.push(rev > 0 ? +((gross / rev) * 100).toFixed(1) : null);
+        roe.push(eq > 0 && net !== 0 ? +((net / eq) * 100).toFixed(1) : null);
+        roa.push(asset > 0 && net !== 0 ? +((net / asset) * 100).toFixed(1) : null);
+
+        if (isBank) {
+            leverage.push(eq > 0 && asset > 0 ? `${(asset / eq).toFixed(2)}x` : '—');
+        } else {
+            const liab = Math.max(0, asset - eq);
+            leverage.push(eq > 0 ? `${(liab / eq).toFixed(2)}x` : '—');
+        }
+    }
+
+    const li = fundaLatestIdx(d, ['net', 'eq', 'rev']);
+    const fcfVals = d.fcf.map((v) => parseFloat(v)).filter((v) => Number.isFinite(v) && v !== 0);
+    const avgFcf = fcfVals.length
+        ? +(fcfVals.reduce((a, b) => a + b, 0) / fcfVals.length).toFixed(1)
+        : 0;
+
+    const mult = getKongloSectorMultiples(sector);
+    const netLi = parseFloat(d.net[li]) || 0;
+    const eqLi = parseFloat(d.eq[li]) || 0;
+    const assetLi = parseFloat(d.asset[li]) || 0;
+
+    const sotpCore = netLi * mult.per;
+    const sotpBook = eqLi * mult.pbv;
+    const surplusAssets = Math.max(0, assetLi - eqLi);
+    const sotpInvest = surplusAssets * 0.15;
+    const totalSotp = sotpCore * 0.55 + sotpBook * 0.35 + sotpInvest * 0.1;
+
+    const intrinsic = totalSotp;
+    const mosCalc =
+        eqLi > 0 && intrinsic > 0
+            ? +((Math.max(0, intrinsic - eqLi) / intrinsic) * 100).toFixed(1)
+            : null;
+
+    return {
+        isBank,
+        latestIdx: li,
+        latestYear: FUNDA_YEAR_LABELS[li],
+        npm,
+        roe,
+        roa,
+        grossMargin,
+        leverage,
+        avgFcf,
+        mult,
+        sotp: {
+            segments: [
+                {
+                    name: `Bisnis Inti (${sector})`,
+                    method: 'PER × Laba Bersih',
+                    multiple: `${mult.per}× (${mult.label})`,
+                    detail: `${netLi.toFixed(1)}T × ${mult.per}`,
+                    value: sotpCore
+                },
+                {
+                    name: 'Nilai Buku Ekuitas (Fair PBV)',
+                    method: 'PBV × Total Ekuitas',
+                    multiple: `${mult.pbv}×`,
+                    detail: `${eqLi.toFixed(1)}T × ${mult.pbv}`,
+                    value: sotpBook
+                },
+                {
+                    name: 'Aset Surplus / Non-Operasi',
+                    method: 'Diskon 15% (Aset−Ekuitas)',
+                    multiple: '—',
+                    detail: `${surplusAssets.toFixed(1)}T × 0.15`,
+                    value: sotpInvest
+                }
+            ],
+            total: totalSotp
+        },
+        mosCalc,
+        latestNpm: npm[li],
+        latestRoe: roe[li]
+    };
+}
+
+function fundaMetricCells(values, opts = {}) {
+    const { suffix = '', pct = false, highlightLast = true } = opts;
+    return values
+        .map((val, i) => {
+            const hi = highlightLast && i === 6;
+            if (val == null || val === '' || (typeof val === 'number' && !Number.isFinite(val))) {
+                return `<td class="${hi ? 'text-blue-300' : 'text-slate-500'}">—</td>`;
+            }
+            const text = pct ? `${val}%` : `${val}${suffix}`;
+            return `<td class="${hi ? 'text-blue-300 font-bold' : ''}">${text}</td>`;
+        })
+        .join('');
+}
+
 // --- FUNDAMENTAL PRO VIEW ---
 function showFunda(ticker, company, sector) {
     document.getElementById('konglo-detail-view').classList.add('hide');
@@ -185,7 +320,10 @@ function showFunda(ticker, company, sector) {
 
 function renderFundaView(d, ticker, company, sector) {
     const isBank = sector.includes("Perbankan");
-    
+    const m = computeKongloDerivedMetrics(d, sector);
+    const mos = m.mosCalc != null ? m.mosCalc : d.mos;
+    const li = m.latestIdx;
+
     const lBody = document.getElementById('funda-lapkeu-body');
     lBody.innerHTML = `
         <tr>
@@ -226,35 +364,40 @@ function renderFundaView(d, ticker, company, sector) {
     `;
 
     const sBody = document.getElementById('funda-sotp-body');
-    let totalSotp = parseFloat(d.eq[5]) * 1.5; 
+    const sotpRows = m.sotp.segments
+        .map(
+            (seg) => `
+        <tr>
+            <td class="text-slate-300">${seg.name}</td>
+            <td>${seg.method}<br><span class="text-[10px] text-slate-500">${seg.detail}</span></td>
+            <td>${seg.multiple}</td>
+            <td class="font-bold text-emerald-400">${seg.value.toFixed(1)}</td>
+        </tr>`
+        )
+        .join('');
     sBody.innerHTML = `
-        <tr>
-            <td class="text-slate-300">Bisnis Inti (${sector})</td>
-            <td>Target PER/PBV</td>
-            <td>Industri Avg</td>
-            <td>${(totalSotp * 0.8).toFixed(1)}</td>
-        </tr>
-        <tr>
-            <td class="text-slate-300">Investasi & Aset Anak Usaha</td>
-            <td>Market Value (-15% disc)</td>
-            <td>-</td>
-            <td>${(totalSotp * 0.2).toFixed(1)}</td>
-        </tr>
+        ${sotpRows}
         <tr class="bg-slate-800/80 font-bold border-t-2 border-slate-600">
-            <td colspan="3" class="text-right text-blue-400">Total SOTP Value (Triliun)</td>
-            <td class="text-blue-400">${totalSotp.toFixed(1)}</td>
+            <td colspan="3" class="text-right text-blue-400">Total SOTP (Triliun Rp)<br><span class="text-[10px] font-normal text-slate-400">Bobot 55% operasi + 35% buku + 10% surplus · tahun ${m.latestYear}</span></td>
+            <td class="text-blue-400 text-lg">${m.sotp.total.toFixed(1)}</td>
+        </tr>
+        <tr class="border-t border-slate-700">
+            <td colspan="4" class="text-[10px] text-slate-500 pt-2">Referensi LK: Laba ${parseFloat(d.net[li]).toFixed(1)}T · Ekuitas ${parseFloat(d.eq[li]).toFixed(1)}T · Aset ${parseFloat(d.asset[li]).toFixed(1)}T</td>
         </tr>
     `;
 
     const dash = document.getElementById('funda-valuation-dashboard');
     let zStatus = d.zscore >= 3 ? "Aman (Green Zone)" : (d.zscore >= 1.8 ? "Waspada (Grey Zone)" : "Bahaya (Red Zone)");
     let zColor = d.zscore >= 3 ? "text-emerald-400" : (d.zscore >= 1.8 ? "text-amber-400" : "text-rose-400");
-    
+    const npmLatest = m.latestNpm != null ? `${m.latestNpm}%` : '—';
+    const roeLatest = m.latestRoe != null ? `${m.latestRoe}%` : '—';
+    const divLatest = parseFloat(d.divYield[li]) > 0 ? `${d.divYield[li]}%` : '—';
+
     dash.innerHTML = `
         <div class="bg-slate-800 border border-slate-700 rounded-xl p-4 text-center shadow-lg hover:border-emerald-500 transition-colors">
             <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1 flex items-center justify-center gap-1"><i class="fas fa-shield-alt text-emerald-500"></i> Margin of Safety</p>
-            <p class="text-2xl md:text-3xl font-black text-emerald-400 my-1">${d.mos}%</p>
-            <p class="text-[10px] text-slate-500">Diskon dari Nilai Intrinsik</p>
+            <p class="text-2xl md:text-3xl font-black text-emerald-400 my-1">${mos}%</p>
+            <p class="text-[10px] text-slate-500">Dari SOTP vs nilai buku ekuitas</p>
         </div>
         <div class="bg-slate-800 border border-slate-700 rounded-xl p-4 text-center shadow-lg hover:border-blue-500 transition-colors">
             <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1 flex items-center justify-center gap-1"><i class="fas fa-heartbeat text-blue-500"></i> Altman Z-Score</p>
@@ -262,48 +405,84 @@ function renderFundaView(d, ticker, company, sector) {
             <p class="text-[10px] text-slate-500">${zStatus}</p>
         </div>
         <div class="bg-slate-800 border border-slate-700 rounded-xl p-4 text-center shadow-lg hover:border-indigo-500 transition-colors">
-            <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1 flex items-center justify-center gap-1"><i class="fas fa-money-bill-wave text-indigo-500"></i> Avg FCF/Year</p>
-            <p class="text-2xl md:text-3xl font-black text-blue-400 my-1">${d.fcf[5]} T</p>
-            <p class="text-[10px] text-slate-500">Estimasi Kas Bebas 2025</p>
+            <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1 flex items-center justify-center gap-1"><i class="fas fa-chart-line text-indigo-500"></i> NPM (${m.latestYear})</p>
+            <p class="text-2xl md:text-3xl font-black text-blue-400 my-1">${npmLatest}</p>
+            <p class="text-[10px] text-slate-500">Laba bersih ÷ pendapatan</p>
         </div>
         <div class="bg-slate-800 border border-slate-700 rounded-xl p-4 text-center shadow-lg hover:border-purple-500 transition-colors">
-            <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1 flex items-center justify-center gap-1"><i class="fas fa-gift text-purple-500"></i> Est. Div Yield</p>
-            <p class="text-2xl md:text-3xl font-black text-purple-400 my-1">${d.divYield[5]}%</p>
-            <p class="text-[10px] text-slate-500">Berdasarkan EPS Terakhir</p>
+            <p class="text-[9px] font-black text-slate-400 uppercase tracking-widest mb-1 flex items-center justify-center gap-1"><i class="fas fa-percentage text-purple-500"></i> ROE (${m.latestYear})</p>
+            <p class="text-2xl md:text-3xl font-black text-purple-400 my-1">${roeLatest}</p>
+            <p class="text-[10px] text-slate-500">Laba bersih ÷ ekuitas · Div ${divLatest}</p>
         </div>
     `;
 
+    const levLabel = m.isBank ? 'Equity Multiplier (Aset/Ekuitas)' : 'DER (Hutang/Ekuitas)';
     const mBody = document.getElementById('funda-metrics-body');
     mBody.innerHTML = `
         <tr class="hover:bg-slate-800/30">
-            <td class="text-left font-bold text-slate-300">DER / LDR</td>
-            ${d.eq.map((v,i) => {
-                let ratio = isBank ? "85%" : (parseFloat(d.asset[i]) / parseFloat(v)).toFixed(2) + "x";
-                return `<td class="${i===6?'text-blue-300':''}">${ratio}</td>`;
-            }).join('')}
+            <td class="text-left font-bold text-slate-300">Net Profit Margin (NPM)</td>
+            ${fundaMetricCells(m.npm, { pct: true })}
         </tr>
         <tr class="hover:bg-slate-800/30">
-            <td class="text-left font-bold text-slate-300">Est. ROE (%)</td>
-            ${d.net.map((v,i) => {
-                let roe = ((parseFloat(v) / parseFloat(d.eq[i])) * 100).toFixed(1) + "%";
-                return `<td class="${i===6?'text-blue-300':''}">${roe}</td>`;
-            }).join('')}
+            <td class="text-left font-bold text-slate-300">${m.isBank ? 'Margin Pendapatan Bunga' : 'Laba Kotor Margin'}</td>
+            ${fundaMetricCells(m.grossMargin, { pct: true })}
+        </tr>
+        <tr class="hover:bg-slate-800/30">
+            <td class="text-left font-bold text-slate-300">ROE (%)</td>
+            ${fundaMetricCells(m.roe, { pct: true })}
+        </tr>
+        <tr class="hover:bg-slate-800/30">
+            <td class="text-left font-bold text-slate-300">ROA (%)</td>
+            ${fundaMetricCells(m.roa, { pct: true })}
+        </tr>
+        <tr class="hover:bg-slate-800/30">
+            <td class="text-left font-bold text-slate-300">${levLabel}</td>
+            ${fundaMetricCells(m.leverage, { highlightLast: true })}
         </tr>
         <tr class="hover:bg-slate-800/30">
             <td class="text-left font-bold text-slate-300">Free Cash Flow (Triliun)</td>
-            ${d.fcf.map((v,i) => `<td class="${i===6?'text-blue-300 font-bold':'text-emerald-400'}">${v}</td>`).join('')}
+            ${d.fcf.map((v, i) => {
+                const n = parseFloat(v);
+                const empty = !Number.isFinite(n) || n === 0;
+                return `<td class="${i === 6 ? 'text-blue-300 font-bold' : 'text-emerald-400'}">${empty ? '—' : v}</td>`;
+            }).join('')}
         </tr>
         <tr class="hover:bg-slate-800/30">
             <td class="text-left font-bold text-slate-300">Dividend Yield (%)</td>
-            ${d.divYield.map((v,i) => `<td class="${i===6?'text-blue-300 font-bold':'text-purple-400'}">${v}%</td>`).join('')}
+            ${d.divYield.map((v, i) => {
+                const n = parseFloat(v);
+                const empty = !Number.isFinite(n) || n === 0;
+                return `<td class="${i === 6 ? 'text-blue-300 font-bold' : 'text-purple-400'}">${empty ? '—' : `${v}%`}</td>`;
+            }).join('')}
         </tr>
     `;
 
-    let npmArr = d.net.map((n, i) => {
-        const rev = parseFloat(d.rev[i]);
-        return rev ? ((parseFloat(n) / rev) * 100).toFixed(1) : '0';
-    });
-    renderFundaCharts(d.fcf, d.divYield, npmArr, ticker);
+    const npmBody = document.getElementById('funda-npm-body');
+    if (npmBody) {
+        npmBody.innerHTML = `
+            <tr class="hover:bg-slate-800/30">
+                <td class="text-left font-bold text-slate-300">Pendapatan (Triliun)</td>
+                ${d.rev.map((v, i) => {
+                    const n = parseFloat(v);
+                    return `<td class="${i === 6 ? 'text-blue-300' : ''}">${n > 0 ? v : '—'}</td>`;
+                }).join('')}
+            </tr>
+            <tr class="hover:bg-slate-800/30">
+                <td class="text-left font-bold text-emerald-400">Laba Bersih (Triliun)</td>
+                ${d.net.map((v, i) => {
+                    const n = parseFloat(v);
+                    return `<td class="${i === 6 ? 'text-blue-300' : 'text-emerald-400'}">${n > 0 ? v : '—'}</td>`;
+                }).join('')}
+            </tr>
+            <tr class="bg-slate-800/50 border-t border-slate-600">
+                <td class="text-left font-bold text-blue-400">NPM (%)</td>
+                ${fundaMetricCells(m.npm, { pct: true })}
+            </tr>
+        `;
+    }
+
+    const npmChartData = m.npm.map((v) => (v != null ? v : null));
+    renderFundaCharts(d.fcf, d.divYield, npmChartData, ticker);
 }
 
 function saveKongloFinnhubToken() {
@@ -371,7 +550,7 @@ function renderFundaCharts(fcfData, divData, npmData, ticker) {
         type: 'line',
         data: {
             labels: labels,
-            datasets: [{ label: `NPM ${ticker} (%)`, data: npmData, borderColor: '#3b82f6', backgroundColor: 'rgba(59, 130, 246, 0.2)', fill: true, tension: 0.3, borderWidth: 2 }]
+            datasets: [{ label: `NPM ${ticker} (%)`, data: npmData, borderColor: '#3b82f6', backgroundColor: 'rgba(59, 130, 246, 0.2)', fill: true, tension: 0.3, borderWidth: 2, spanGaps: true }]
         },
         options: { ...commonOptions, plugins: { legend: { display: false } } }
     });

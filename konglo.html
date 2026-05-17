@@ -280,7 +280,7 @@
 
                         <div id="tab-sotp" class="funda-tab-content overflow-x-auto">
                             <h3 class="text-lg font-bold mb-2 text-white">Sum of The Parts (SOTP) Valuation</h3>
-                            <p class="text-xs text-slate-400 mb-4">Estimasi nilai intrinsik berdasarkan ekuitas &amp; data laporan keuangan terbaru.</p>
+                            <p class="text-xs text-slate-400 mb-4">Nilai wajar dari laba bersih, ekuitas, dan aset surplus — angka mengacu ke tab Laporan Keuangan.</p>
                             <table class="funda-table min-w-full">
                                 <thead>
                                     <tr>
@@ -297,14 +297,32 @@
 
                         <div id="tab-npm" class="funda-tab-content">
                             <h3 class="text-lg font-bold mb-2 text-white">Net Profit Margin (NPM) Keseluruhan</h3>
-                            <p class="text-xs text-slate-400 mb-4">Tren profitabilitas historis perusahaan (2020 - 2026).</p>
-                            <div class="h-72 w-full">
+                            <p class="text-xs text-slate-400 mb-4">Dihitung dari laporan keuangan: laba bersih ÷ pendapatan (sinkron dengan tab Laporan Keuangan).</p>
+                            <div class="h-72 w-full mb-6">
                                 <canvas id="fundaNpmChart"></canvas>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="funda-table min-w-full text-center">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-left">Komponen</th>
+                                            <th>2020</th>
+                                            <th>2021</th>
+                                            <th>2022</th>
+                                            <th>2023</th>
+                                            <th>2024</th>
+                                            <th>2025</th>
+                                            <th class="text-blue-400">2026 (YTD)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="funda-npm-body"></tbody>
+                                </table>
                             </div>
                         </div>
 
                         <div id="tab-metrics" class="funda-tab-content">
-                            <h3 class="text-lg font-bold mb-4 text-white">Key Ratios & Insight Valuasi (2020 - 2026)</h3>
+                            <h3 class="text-lg font-bold mb-4 text-white">Metrik Utama &amp; Insight Valuasi (2020 - 2026)</h3>
+                            <p class="text-xs text-slate-400 mb-4 -mt-2">NPM, ROE, ROA, DER, FCF — dihitung otomatis dari baris laporan keuangan yang sama.</p>
                             
                             <div id="funda-valuation-dashboard" class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
                                 </div>
@@ -425,9 +443,9 @@
 
 
     <script>window.EWOKS_FINNHUB_TOKEN = "d84ntb9r01qutij9jpfgd84ntb9r01qutij9jpg0";</script>
-    <script src="assets/js/ewoks-core.js?v=20260517d"></script>
-    <script src="assets/js/pages/page-konglo-data-funda.js?v=20260517d"></script>
-    <script src="assets/js/pages/page-konglo-funda-fetch.js?v=20260517d"></script>
-    <script src="assets/js/pages/page-konglo-ui.js?v=20260517d"></script>
+    <script src="assets/js/ewoks-core.js?v=20260517e"></script>
+    <script src="assets/js/pages/page-konglo-data-funda.js?v=20260517e"></script>
+    <script src="assets/js/pages/page-konglo-funda-fetch.js?v=20260517e"></script>
+    <script src="assets/js/pages/page-konglo-ui.js?v=20260517e"></script>
 </body>
 </html>
