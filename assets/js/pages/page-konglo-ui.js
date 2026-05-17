@@ -142,7 +142,7 @@ function hideDetail() {
 }
 
 // --- FUNDAMENTAL PRO: metrik turunan dari laporan keuangan ---
-const FUNDA_YEAR_LABELS = ['2020', '2021', '2022', '2023', '2024', '2025', 'YTD 2026'];
+const FUNDA_YEAR_LABELS = ['2020', '2021', '2022', '2023', '2024', '2025', 'Q1 2026'];
 const FUNDA_EMPTY = '(-)';
 const FUNDA_MIN_TRILIUN = 0.05;
 const FUNDA_MIN_MILIAR = 0.001;
@@ -605,7 +605,7 @@ function openFundaTab(evt, tabName) {
 }
 
 function renderFundaCharts(fcfData, divData, npmData, ticker) {
-    const labels = ['2020', '2021', '2022', '2023', '2024', '2025', 'YTD 2026'];
+    const labels = ['2020', '2021', '2022', '2023', '2024', '2025', 'Q1 2026'];
     const commonOptions = { 
         responsive: true, maintainAspectRatio: false, 
         color: '#cbd5e1',

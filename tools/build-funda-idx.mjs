@@ -1,7 +1,8 @@
 /**
- * Bangun assets/data/funda-idx.json dari Yahoo Finance fundamentals-timeseries (.JK).
- * Jalankan di komputer dev: node tools/build-funda-idx.mjs
- * Hasil JSON di-commit — GitHub Pages tidak perlu install apa pun.
+ * Bangun assets/data/funda-idx.json dari Yahoo Finance (.JK).
+ * Kolom 2020–2025: laporan tahunan. Kolom Q1 2026: kuartal terbaru (Mar 2026).
+ * Dividend yield: historis per tahun + TTM.
+ * Jalankan: node tools/build-funda-idx.mjs --force
  */
 import fs from 'fs';
 import path from 'path';
@@ -13,7 +14,9 @@ const srcPath = path.join(root, 'assets/js/pages/page-konglo-data-funda.js');
 const outPath = path.join(root, 'assets/data/funda-idx.json');
 
 const YEARS = [2020, 2021, 2022, 2023, 2024, 2025, 2026];
-const YAHOO_TYPES = [
+const IDX_Q1 = 6;
+
+const ANNUAL_TYPES = [
     'annualTotalRevenue',
     'annualNetInterestIncome',
     'annualNetIncome',
@@ -25,7 +28,23 @@ const YAHOO_TYPES = [
     'annualFreeCashFlow',
     'annualOperatingCashFlow',
     'annualCapitalExpenditure'
-].join(',');
+];
+
+const QUARTERLY_TYPES = [
+    'quarterlyTotalRevenue',
+    'quarterlyNetInterestIncome',
+    'quarterlyNetIncome',
+    'quarterlyCostOfRevenue',
+    'quarterlyTotalAssets',
+    'quarterlyStockholdersEquity',
+    'quarterlyInterestExpense',
+    'quarterlyTaxProvision',
+    'quarterlyFreeCashFlow',
+    'quarterlyOperatingCashFlow',
+    'quarterlyCapitalExpenditure'
+];
+
+const ALL_TYPES = [...ANNUAL_TYPES, ...QUARTERLY_TYPES].join(',');
 
 const src = fs.readFileSync(srcPath, 'utf8');
 const tickers = [...new Set([...src.matchAll(/ticker:\s*"([A-Z0-9]+)"/g)].map((m) => m[1]))].sort();
@@ -51,7 +70,6 @@ async function getUsdIdrRate() {
     return usdIdrRate;
 }
 
-/** Parse Yahoo reportedValue.fmt ("57.54T", "800.31B") → triliun IDR. */
 function parseFmtToTriliun(fmt, currencyCode, fxUsdIdr) {
     if (!fmt) return null;
     const s = String(fmt).replace(/,/g, '').trim();
@@ -86,17 +104,34 @@ function seriesByYear(rows, fxUsdIdr) {
     const map = {};
     for (const row of rows || []) {
         const y = yearFromAsOf(row.asOfDate);
-        if (!YEARS.includes(y)) continue;
+        if (!YEARS.includes(y) || y === 2026) continue;
         map[y] = toTriliunFromRow(row, fxUsdIdr);
     }
-    return YEARS.map((y) => map[y] ?? null);
+    return YEARS.map((y) => (y === 2026 ? null : map[y] ?? null));
 }
 
-/** Isi tahun kosong; jangan salin ke kolom YTD 2026. */
+/** Q1 2026: periode berakhir Maret 2026, atau kuartal pertama tahun 2026. */
+function pickQ12026(rows, fxUsdIdr) {
+    if (!rows?.length) return null;
+    const sorted = [...rows].sort((a, b) => String(b.asOfDate).localeCompare(String(a.asOfDate)));
+    let row = sorted.find((r) => String(r.asOfDate).startsWith('2026-03'));
+    if (!row) row = sorted.find((r) => String(r.asOfDate).startsWith('2026-06'));
+    if (!row) row = sorted.find((r) => yearFromAsOf(r.asOfDate) === 2026);
+    if (!row) return null;
+    return toTriliunFromRow(row, fxUsdIdr);
+}
+
+function mergeQ1(seriesAnnual, q1Value) {
+    const out = [...seriesAnnual];
+    if (q1Value != null && !Number.isNaN(q1Value)) out[IDX_Q1] = q1Value;
+    else out[IDX_Q1] = 0;
+    return out;
+}
+
 function fillForward(arr) {
     let last = 0;
     return arr.map((v, i) => {
-        if (i === arr.length - 1) return v ?? 0;
+        if (i === IDX_Q1) return v ?? 0;
         if (v != null && !Number.isNaN(v)) {
             last = v;
             return v;
@@ -126,7 +161,7 @@ async function fetchYahooTimeseries(ticker) {
     const period2 = Math.floor(Date.now() / 1000) + 86400 * 400;
     const url =
         `https://query2.finance.yahoo.com/ws/fundamentals-timeseries/v1/finance/timeseries/${sym}` +
-        `?symbol=${encodeURIComponent(sym)}&type=${YAHOO_TYPES}&period1=${period1}&period2=${period2}`;
+        `?symbol=${encodeURIComponent(sym)}&type=${ALL_TYPES}&period1=${period1}&period2=${period2}`;
     const res = await fetch(url, {
         headers: {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
@@ -145,47 +180,136 @@ async function fetchYahooTimeseries(ticker) {
     return byType;
 }
 
-function normalize(ticker, byType, isBank, fxUsdIdr) {
-    const revInterest = seriesByYear(byType.annualNetInterestIncome, fxUsdIdr);
-    const revTotal = seriesByYear(byType.annualTotalRevenue, fxUsdIdr);
-    const rev = isBank
-        ? revInterest.map((v, i) => (v != null ? v : revTotal[i]))
-        : revTotal;
+function closePriceNearYearEnd(timestamps, closes, year) {
+    let bestPrice = null;
+    let bestTs = 0;
+    for (let i = 0; i < timestamps.length; i++) {
+        const ts = timestamps[i];
+        if (!ts) continue;
+        const y = new Date(ts * 1000).getFullYear();
+        if (y !== year) continue;
+        const c = closes[i];
+        if (c != null && Number.isFinite(c) && ts >= bestTs) {
+            bestTs = ts;
+            bestPrice = c;
+        }
+    }
+    return bestPrice;
+}
 
-    const net = seriesByYear(byType.annualNetIncome, fxUsdIdr);
-    const cogs = isBank
-        ? YEARS.map(() => 0)
+
+async function fetchDividendYieldSeries(ticker) {
+    const sym = `${ticker}.JK`;
+    const url = `https://query2.finance.yahoo.com/v8/finance/chart/${sym}?interval=1d&range=5y&events=div`;
+    const yields = YEARS.map(() => 0);
+    try {
+        const res = await fetch(url, {
+            headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' }
+        });
+        if (!res.ok) return yields;
+        const json = await res.json();
+        const result = json?.chart?.result?.[0];
+        if (!result) return yields;
+
+        const dividends = result.events?.dividends || {};
+        const timestamps = result.timestamp || [];
+        const closes = result.indicators?.quote?.[0]?.close || [];
+        const nowPrice = result.meta?.regularMarketPrice;
+
+        const divByYear = {};
+        for (const [ts, div] of Object.entries(dividends)) {
+            const y = new Date(Number(ts) * 1000).getFullYear();
+            if (!YEARS.includes(y)) continue;
+            divByYear[y] = (divByYear[y] || 0) + (div.amount || 0);
+        }
+
+        for (let i = 0; i < YEARS.length; i++) {
+            const y = YEARS[i];
+            const divSum = divByYear[y] || 0;
+            let price = closePriceNearYearEnd(timestamps, closes, y);
+            if (y === 2026 && nowPrice > 0) price = nowPrice;
+            if (divSum > 0 && price > 0) {
+                yields[i] = +((divSum / price) * 100).toFixed(1);
+            }
+        }
+
+        const ttmDiv = Object.entries(dividends)
+            .filter(([ts]) => Number(ts) * 1000 >= Date.now() - 365 * 86400 * 1000)
+            .reduce((s, [, d]) => s + (d.amount || 0), 0);
+        if (ttmDiv > 0 && nowPrice > 0) {
+            yields[IDX_Q1] = +((ttmDiv / nowPrice) * 100).toFixed(1);
+            if (!yields[5]) yields[5] = yields[IDX_Q1];
+        }
+    } catch (_) {}
+    return yields;
+}
+
+function normalize(ticker, byType, isBank, fxUsdIdr, divYield) {
+    const revInterestA = seriesByYear(byType.annualNetInterestIncome, fxUsdIdr);
+    const revTotalA = seriesByYear(byType.annualTotalRevenue, fxUsdIdr);
+    let rev = isBank
+        ? revInterestA.map((v, i) => (v != null ? v : revTotalA[i]))
+        : revTotalA;
+
+    const revQ = isBank
+        ? pickQ12026(byType.quarterlyNetInterestIncome, fxUsdIdr) ??
+          pickQ12026(byType.quarterlyTotalRevenue, fxUsdIdr)
+        : pickQ12026(byType.quarterlyTotalRevenue, fxUsdIdr);
+
+    const netA = seriesByYear(byType.annualNetIncome, fxUsdIdr);
+    const netQ = pickQ12026(byType.quarterlyNetIncome, fxUsdIdr);
+
+    const cogsA = isBank
+        ? YEARS.map((y) => (y === 2026 ? null : 0))
         : seriesByYear(byType.annualCostOfRevenue, fxUsdIdr).map((v) => (v != null ? -Math.abs(v) : null));
-    const asset = seriesByYear(byType.annualTotalAssets, fxUsdIdr);
-    const eq = seriesByYear(byType.annualStockholdersEquity, fxUsdIdr);
-    const interest = seriesByYear(byType.annualInterestExpense, fxUsdIdr);
-    const tax = seriesByYear(byType.annualTaxProvision, fxUsdIdr);
+    const cogsQ = isBank ? 0 : pickQ12026(byType.quarterlyCostOfRevenue, fxUsdIdr);
 
-    const fcfDirect = seriesByYear(byType.annualFreeCashFlow, fxUsdIdr);
-    const ocf = seriesByYear(byType.annualOperatingCashFlow, fxUsdIdr);
-    const capex = seriesByYear(byType.annualCapitalExpenditure, fxUsdIdr);
-    const fcf = fcfDirect.map((v, i) => {
+    const assetA = seriesByYear(byType.annualTotalAssets, fxUsdIdr);
+    const assetQ = pickQ12026(byType.quarterlyTotalAssets, fxUsdIdr);
+
+    const eqA = seriesByYear(byType.annualStockholdersEquity, fxUsdIdr);
+    const eqQ = pickQ12026(byType.quarterlyStockholdersEquity, fxUsdIdr);
+
+    const interestA = seriesByYear(byType.annualInterestExpense, fxUsdIdr);
+    const interestQ = pickQ12026(byType.quarterlyInterestExpense, fxUsdIdr);
+
+    const taxA = seriesByYear(byType.annualTaxProvision, fxUsdIdr);
+    const taxQ = pickQ12026(byType.quarterlyTaxProvision, fxUsdIdr);
+
+    const fcfA = seriesByYear(byType.annualFreeCashFlow, fxUsdIdr);
+    const ocfA = seriesByYear(byType.annualOperatingCashFlow, fxUsdIdr);
+    const capexA = seriesByYear(byType.annualCapitalExpenditure, fxUsdIdr);
+    const fcfAnnual = fcfA.map((v, i) => {
+        if (i === IDX_Q1) return null;
         if (v != null) return v;
-        if (ocf[i] != null) return +(ocf[i] + (capex[i] || 0)).toFixed(1);
+        if (ocfA[i] != null) return +(ocfA[i] + (capexA[i] || 0)).toFixed(1);
         return null;
     });
 
+    let fcfQ = pickQ12026(byType.quarterlyFreeCashFlow, fxUsdIdr);
+    if (fcfQ == null) {
+        const ocfQ = pickQ12026(byType.quarterlyOperatingCashFlow, fxUsdIdr);
+        const capQ = pickQ12026(byType.quarterlyCapitalExpenditure, fxUsdIdr);
+        if (ocfQ != null) fcfQ = +(ocfQ + (capQ || 0)).toFixed(1);
+    }
+
     const out = {
-        rev: fillForward(rev),
-        cogs: fillForward(cogs),
-        net: fillForward(net),
-        asset: fillForward(asset),
-        eq: fillForward(eq),
-        interest: fillForward(interest.map((v) => v ?? 0)),
-        tax: fillForward(tax.map((v) => v ?? 0)),
-        fcf: fillForward(fcf.map((v) => v ?? 0)),
-        divYield: YEARS.map(() => 0),
+        rev: fillForward(mergeQ1(rev, revQ)),
+        cogs: fillForward(mergeQ1(cogsA, cogsQ != null ? -Math.abs(cogsQ) : isBank ? 0 : null)),
+        net: fillForward(mergeQ1(netA, netQ)),
+        asset: fillForward(mergeQ1(assetA, assetQ)),
+        eq: fillForward(mergeQ1(eqA, eqQ)),
+        interest: fillForward(mergeQ1(interestA, interestQ)),
+        tax: fillForward(mergeQ1(taxA, taxQ)),
+        fcf: fillForward(mergeQ1(fcfAnnual, fcfQ)),
+        divYield: divYield || YEARS.map(() => 0),
         source: 'yahoo',
-        sourceLabel: 'Yahoo Finance (data pasar .JK)',
+        sourceLabel: 'Yahoo Finance (tahunan + Q1 2026)',
         updated: new Date().toISOString().slice(0, 10)
     };
 
-    out.zscore = altmanZ(out.asset[5], out.eq[5], out.rev[5], out.net[5], isBank);
+    const zIdx = out.net[5] > 0 ? 5 : out.net[IDX_Q1] > 0 ? IDX_Q1 : 5;
+    out.zscore = altmanZ(out.asset[zIdx], out.eq[zIdx], out.rev[zIdx], out.net[zIdx], isBank);
     out.mos = computeMos(out.zscore);
 
     const hasData = out.net.some((v) => v > 0) || out.rev.some((v) => v > 0);
@@ -208,8 +332,8 @@ async function main() {
 
     const out = {
         meta: {
-            source: 'Yahoo Finance fundamentals-timeseries (.JK)',
-            unit: 'triliun IDR',
+            source: 'Yahoo Finance — tahunan + Q1 2026 + dividend yield',
+            unit: 'triliun IDR (kolom Q1 2026 = kuartal)',
             built: new Date().toISOString()
         },
         tickers: { ...existing }
@@ -223,7 +347,7 @@ async function main() {
     let fail = 0;
 
     for (const ticker of tickers) {
-        if (!force && out.tickers[ticker]?.source === 'yahoo' && out.tickers[ticker]?.rev?.[5]) {
+        if (!force && out.tickers[ticker]?.source === 'yahoo' && out.tickers[ticker]?.rev?.[IDX_Q1] > 0) {
             skip++;
             continue;
         }
@@ -231,14 +355,17 @@ async function main() {
         const isBank = sector.includes('Perbankan');
         try {
             const byType = await fetchYahooTimeseries(ticker);
-            out.tickers[ticker] = normalize(ticker, byType, isBank, fxUsdIdr);
+            const divYield = await fetchDividendYieldSeries(ticker);
+            out.tickers[ticker] = normalize(ticker, byType, isBank, fxUsdIdr, divYield);
             ok++;
-            process.stdout.write(`OK ${ticker}\n`);
+            const q1 = out.tickers[ticker].rev[IDX_Q1];
+            const dy = out.tickers[ticker].divYield[IDX_Q1];
+            process.stdout.write(`OK ${ticker} Q1rev=${q1} div=${dy}%\n`);
         } catch (e) {
             fail++;
             process.stdout.write(`SKIP ${ticker}: ${e.message}\n`);
         }
-        await sleep(280);
+        await sleep(320);
     }
 
     fs.mkdirSync(path.dirname(outPath), { recursive: true });
