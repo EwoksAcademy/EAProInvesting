@@ -1,0 +1,49 @@
+# Sinkron laporan keuangan Konglo dari Yahoo Finance — jadwal tiap tanggal 5 (09:00 WIB).
+# Bisa juga dijalankan manual: Actions → Sync funda-idx → Run workflow
+
+name: Sync funda-idx
+
+on:
+  schedule:
+    # 02:00 UTC = 09:00 WIB, tanggal 5 setiap bulan
+    - cron: '0 2 5 * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-funda-idx
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Build funda-idx.json from Yahoo
+        run: node tools/build-funda-idx.mjs --force
+
+      - name: Bump cache version
+        run: node tools/bump-asset-version.mjs
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add assets/data/funda-idx.json assets/js/ewoks-core.js konglo.html
+          if git diff --staged --quiet; then
+            echo "Tidak ada perubahan data — skip commit."
+            exit 0
+          fi
+          git commit -m "chore(data): sync funda-idx from Yahoo (scheduled monthly)"
+          git push
