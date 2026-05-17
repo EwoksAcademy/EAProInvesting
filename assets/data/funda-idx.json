@@ -2,7 +2,7 @@
   "meta": {
     "source": "Yahoo Finance — tahunan + Q1 2026 + metrik turunan",
     "unit": "triliun IDR (kolom Q1 2026 = kuartal; ROE/ROA Q1 annualized)",
-    "built": "2026-05-17T09:40:53.172Z"
+    "built": "2026-05-17T09:50:31.978Z"
   },
   "tickers": {
     "BBCA": {
@@ -21554,7 +21554,7 @@
         0,
         0,
         0.5,
-        0.7,
+        0.6,
         0.2,
         0.4,
         0.1
