@@ -1,4 +1,7 @@
-﻿// --- FUNGSI TOAST NOTIFICATION MODERN ---
+﻿/** Versi aset — naikkan setelah deploy agar GitHub Pages tidak pakai cache JS/CSS lama. */
+window.EWOKS_ASSET_V = '20260517b';
+
+// --- FUNGSI TOAST NOTIFICATION MODERN ---
 function showToast(message, type = 'success') {
     const container = document.getElementById('toast-container');
     if (!container) return;
@@ -73,6 +76,33 @@ class EwoksSiteContext {
     static is(pageKey) {
         return EwoksSiteContext.page === pageKey;
     }
+    /** Base path GitHub Pages project site, mis. /EAProInvesting/ */
+    static get basePath() {
+        const path = window.location.pathname || '/';
+        const parts = path.split('/').filter(Boolean);
+        if (parts.length >= 2 && !parts[0].endsWith('.html')) {
+            return '/' + parts[0] + '/';
+        }
+        if (path.includes('.html')) {
+            return path.replace(/[^/]+$/, '');
+        }
+        return path.endsWith('/') ? path : path + '/';
+    }
+}
+
+/** Tunggu Chart.js dari CDN (sering telat di GitHub Pages vs buka file lokal). */
+function whenChartReady(callback, attempt = 0) {
+    if (typeof Chart !== 'undefined') {
+        callback();
+        return;
+    }
+    if (attempt >= 50) return;
+    setTimeout(() => whenChartReady(callback, attempt + 1), 120);
+}
+
+function initCompoundIfPresent() {
+    if (typeof calcCompound !== 'function' || !document.getElementById('compoundChartCanvas')) return;
+    whenChartReady(() => calcCompound());
 }
 
 /** Navigasi multi-halaman: penanda aktif dari data-page pada <body> */
@@ -145,7 +175,7 @@ function showPage(pageId) {
         broker: 'broker.html'
     };
     const url = routes[pageId];
-    if (url) window.location.href = url;
+    if (url) window.location.href = EwoksSiteContext.basePath + url;
 }
 
 window.tvWidgetInstance = null;
@@ -593,7 +623,7 @@ window.addEventListener('load', () => {
     if (typeof renderJournal === 'function' && (document.getElementById('journal-empty') || document.getElementById('jr-date'))) renderJournal();
     if (typeof calcSbn === 'function') calcSbn();
     if (typeof calculateRetirement === 'function' && document.getElementById('p-age-retire')) calculateRetirement();
-    if (typeof calcCompound === 'function' && document.getElementById('compoundChartCanvas')) calcCompound();
+    initCompoundIfPresent();
     if (typeof calcDarurat === 'function' && document.getElementById('dar-expense')) calcDarurat();
 
     const page = EwoksSiteContext.page;
@@ -604,7 +634,7 @@ window.addEventListener('load', () => {
         setTimeout(() => { if (typeof renderYieldChart === 'function') renderYieldChart(); }, 100);
         setTimeout(() => { if (typeof renderYieldCurve === 'function') renderYieldCurve(); }, 100);
     }
-    if (page === 'pensiun') setTimeout(() => { if (typeof calcCompound === 'function') calcCompound(); }, 100);
+    if (page === 'pensiun') setTimeout(initCompoundIfPresent, 100);
     if (page === 'kalkulator' && typeof runSimpleCalc === 'function' && document.getElementById('calc-price')) runSimpleCalc();
     if (page === 'jurnal' && typeof renderJournal === 'function') renderJournal();
     if (page === 'watchlist' && typeof openTVChart === 'function' && !window.tvWidgetInstance) {

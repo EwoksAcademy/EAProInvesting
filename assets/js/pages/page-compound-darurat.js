@@ -1,4 +1,5 @@
 ﻿let compoundChartInstance = null;
+let compoundChartRetry = 0;
 
 function calcCompound() {
     const modalAwal = parseFloat(document.getElementById('cmp-awal').value) || 0;
@@ -56,7 +57,15 @@ function calcCompound() {
 
 function renderCompoundChart(labels, pokokData, bungaData) {
     const canvasEl = document.getElementById('compoundChartCanvas');
-    if (!canvasEl || typeof Chart === 'undefined') return;
+    if (!canvasEl) return;
+    if (typeof Chart === 'undefined') {
+        if (compoundChartRetry < 50) {
+            compoundChartRetry += 1;
+            setTimeout(() => renderCompoundChart(labels, pokokData, bungaData), 120);
+        }
+        return;
+    }
+    compoundChartRetry = 0;
     const ctx = canvasEl.getContext('2d');
     const abbrev = typeof formatAbbreviated === 'function'
         ? formatAbbreviated
