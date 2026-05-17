@@ -22,7 +22,7 @@ for (const [k, v] of Object.entries(fundaRealDB)) {
 
 const out = {
     meta: {
-        source: 'Ewoks curated + Finnhub live',
+        source: 'Yahoo Finance fundamentals-timeseries (.JK)',
         unit: 'triliun IDR',
         built: new Date().toISOString()
     },

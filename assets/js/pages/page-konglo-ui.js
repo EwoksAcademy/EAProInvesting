@@ -1,4 +1,4 @@
-﻿// --- PETA KONGLOMERAT ---
+// --- PETA KONGLOMERAT ---
 function renderGrid(groups = dataGroups) {
     const gridContainer = document.getElementById('group-grid');
     if (!gridContainer) return;
@@ -164,7 +164,7 @@ function showFunda(ticker, company, sector) {
         .then(({ data: d, sourceLabel, source }) => {
             if (loadingEl) loadingEl.classList.add('hidden');
             if (badge) {
-                const cls = source === 'finnhub' || source === 'curated' || source === 'bundle'
+                const cls = source === 'finnhub' || source === 'yahoo' || source === 'bundle'
                     ? 'text-[10px] font-bold px-2 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
                     : source === 'estimate'
                         ? 'text-[10px] font-bold px-2 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/40'
@@ -317,9 +317,7 @@ function saveKongloFinnhubToken() {
     try {
         localStorage.setItem('ewoks_finnhub_token', token);
         window.EWOKS_FINNHUB_TOKEN = token;
-        Object.keys(localStorage)
-            .filter((k) => k.startsWith('ewoks_funda_v2_'))
-            .forEach((k) => localStorage.removeItem(k));
+        if (typeof clearFundaCaches === 'function') clearFundaCaches();
     } catch (_) {}
     if (typeof showToast === 'function') showToast('Token Finnhub disimpan. Buka ulang laporan keuangan emiten untuk sinkron data.', 'success');
 }

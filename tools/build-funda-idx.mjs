@@ -1,7 +1,7 @@
 /**
- * Bangun assets/data/funda-idx.json dari Yahoo Finance (BBCA.JK).
- * Jalankan sekali di komputer dev: node tools/build-funda-idx.mjs
- * Hasil JSON di-commit ke repo — GitHub Pages tidak perlu install apa pun.
+ * Bangun assets/data/funda-idx.json dari Yahoo Finance fundamentals-timeseries (.JK).
+ * Jalankan di komputer dev: node tools/build-funda-idx.mjs
+ * Hasil JSON di-commit — GitHub Pages tidak perlu install apa pun.
  */
 import fs from 'fs';
 import path from 'path';
@@ -12,30 +12,82 @@ const root = path.join(__dirname, '..');
 const srcPath = path.join(root, 'assets/js/pages/page-konglo-data-funda.js');
 const outPath = path.join(root, 'assets/data/funda-idx.json');
 
+const YEARS = [2020, 2021, 2022, 2023, 2024, 2025, 2026];
+const YAHOO_TYPES = [
+    'annualTotalRevenue',
+    'annualNetInterestIncome',
+    'annualNetIncome',
+    'annualCostOfRevenue',
+    'annualTotalAssets',
+    'annualStockholdersEquity',
+    'annualInterestExpense',
+    'annualTaxProvision',
+    'annualFreeCashFlow',
+    'annualOperatingCashFlow',
+    'annualCapitalExpenditure'
+].join(',');
+
 const src = fs.readFileSync(srcPath, 'utf8');
 const tickers = [...new Set([...src.matchAll(/ticker:\s*"([A-Z0-9]+)"/g)].map((m) => m[1]))].sort();
-
-const YEARS = [2020, 2021, 2022, 2023, 2024, 2025];
-const YTD_YEAR = 2026;
 
 function sleep(ms) {
     return new Promise((r) => setTimeout(r, ms));
 }
 
-function toTriliun(v) {
-    if (v == null || Number.isNaN(v)) return null;
-    return +(v / 1e12).toFixed(1);
+let usdIdrRate = null;
+
+async function getUsdIdrRate() {
+    if (usdIdrRate) return usdIdrRate;
+    try {
+        const res = await fetch('https://query2.finance.yahoo.com/v8/finance/chart/USDIDR=X?interval=1d&range=5d', {
+            headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36' }
+        });
+        const json = await res.json();
+        const p = json?.chart?.result?.[0]?.meta?.regularMarketPrice;
+        usdIdrRate = Number.isFinite(p) && p > 0 ? p : 16000;
+    } catch (_) {
+        usdIdrRate = 16000;
+    }
+    return usdIdrRate;
 }
 
-function pickByYear(rows, yearKeys) {
+function toTriliun(raw, currencyCode, fxUsdIdr) {
+    if (raw == null || !Number.isFinite(Number(raw))) return null;
+    const n = Number(raw);
+    if (String(currencyCode).toUpperCase() === 'USD') {
+        return +((n * fxUsdIdr) / 1e12).toFixed(1);
+    }
+    const abs = Math.abs(n);
+    if (abs >= 1e12) return +(n / 1e12).toFixed(1);
+    if (abs >= 1e6) return +(n / 1e9).toFixed(1);
+    return +n.toFixed(1);
+}
+
+function yearFromAsOf(asOf) {
+    return parseInt(String(asOf).slice(0, 4), 10);
+}
+
+function seriesByYear(rows, fxUsdIdr) {
+    const currency = rows?.[0]?.currencyCode || 'IDR';
     const map = {};
     for (const row of rows || []) {
-        const end = row.endDate?.raw ?? row.endDate;
-        if (!end) continue;
-        const y = new Date(end * 1000).getFullYear();
-        map[y] = row;
+        const y = yearFromAsOf(row.asOfDate);
+        if (!YEARS.includes(y)) continue;
+        const cc = row.currencyCode || currency;
+        map[y] = toTriliun(row.reportedValue?.raw, cc, fxUsdIdr);
     }
-    return yearKeys.map((y) => map[y] || null);
+    return YEARS.map((y) => map[y] ?? null);
+}
+
+function fillForward(arr) {
+    let last = 0;
+    return arr.map((v) => {
+        if (v != null && !Number.isNaN(v)) {
+            last = v;
+            return v;
+        }
+        return last;
+    });
 }
 
 function altmanZ(asset, eq, rev, net, isBank) {
@@ -45,13 +97,21 @@ function altmanZ(asset, eq, rev, net, isBank) {
     const wc = ta * 0.1;
     const re = net / ta;
     const ebit = net * 1.15;
-    const z = 1.2 * (wc / ta) + 1.4 * (re) + 3.3 * (ebit / ta) + 0.6 * (eq / tl) + 1.0 * (rev / ta);
+    const z = 1.2 * (wc / ta) + 1.4 * re + 3.3 * (ebit / ta) + 0.6 * (eq / tl) + 1.0 * (rev / ta);
     return +Math.min(6, Math.max(0.5, z)).toFixed(2);
 }
 
-async function fetchYahoo(ticker) {
+function computeMos(z) {
+    return +(8 + z * 3).toFixed(1);
+}
+
+async function fetchYahooTimeseries(ticker) {
     const sym = `${ticker}.JK`;
-    const url = `https://query1.finance.yahoo.com/v10/finance/quoteSummary/${sym}?modules=incomeStatementHistory,balanceSheetHistory,cashflowStatementHistory,summaryDetail`;
+    const period1 = Math.floor(new Date('2019-01-01').getTime() / 1000);
+    const period2 = Math.floor(Date.now() / 1000) + 86400 * 400;
+    const url =
+        `https://query2.finance.yahoo.com/ws/fundamentals-timeseries/v1/finance/timeseries/${sym}` +
+        `?symbol=${encodeURIComponent(sym)}&type=${YAHOO_TYPES}&period1=${period1}&period2=${period2}`;
     const res = await fetch(url, {
         headers: {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
@@ -60,114 +120,115 @@ async function fetchYahoo(ticker) {
     });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const json = await res.json();
-    const r = json?.quoteSummary?.result?.[0];
-    if (!r) throw new Error('no result');
-    return r;
+    const results = json?.timeseries?.result;
+    if (!results?.length) throw new Error('no timeseries');
+    const byType = {};
+    for (const block of results) {
+        const type = block?.meta?.type?.[0];
+        if (type) byType[type] = block[type] || [];
+    }
+    return byType;
 }
 
-function normalize(ticker, yahoo, isBank) {
-    const ic = yahoo.incomeStatementHistory?.incomeStatementHistory || [];
-    const bs = yahoo.balanceSheetHistory?.balanceSheetStatements || [];
-    const cf = yahoo.cashflowStatementHistory?.cashflowStatements || [];
-    const detail = yahoo.summaryDetail || {};
+function normalize(ticker, byType, isBank, fxUsdIdr) {
+    const revInterest = seriesByYear(byType.annualNetInterestIncome, fxUsdIdr);
+    const revTotal = seriesByYear(byType.annualTotalRevenue, fxUsdIdr);
+    const rev = isBank
+        ? revInterest.map((v, i) => (v != null ? v : revTotal[i]))
+        : revTotal;
 
-    const yearKeys = [...YEARS, YTD_YEAR];
-    const icRows = pickByYear(ic, yearKeys);
-    const bsRows = pickByYear(bs, yearKeys);
-    const cfRows = pickByYear(cf, yearKeys);
+    const net = seriesByYear(byType.annualNetIncome, fxUsdIdr);
+    const cogs = isBank
+        ? YEARS.map(() => 0)
+        : seriesByYear(byType.annualCostOfRevenue, fxUsdIdr).map((v) => (v != null ? -Math.abs(v) : null));
+    const asset = seriesByYear(byType.annualTotalAssets, fxUsdIdr);
+    const eq = seriesByYear(byType.annualStockholdersEquity, fxUsdIdr);
+    const interest = seriesByYear(byType.annualInterestExpense, fxUsdIdr);
+    const tax = seriesByYear(byType.annualTaxProvision, fxUsdIdr);
 
-    const rev = icRows.map((r) => toTriliun(r?.totalRevenue?.raw ?? r?.netInterestIncome?.raw));
-    const net = icRows.map((r) => toTriliun(r?.netIncome?.raw));
-    const cogs = icRows.map((r) => {
-        if (isBank) return 0;
-        const c = r?.costOfRevenue?.raw;
-        return c != null ? -Math.abs(toTriliun(c)) : 0;
+    const fcfDirect = seriesByYear(byType.annualFreeCashFlow, fxUsdIdr);
+    const ocf = seriesByYear(byType.annualOperatingCashFlow, fxUsdIdr);
+    const capex = seriesByYear(byType.annualCapitalExpenditure, fxUsdIdr);
+    const fcf = fcfDirect.map((v, i) => {
+        if (v != null) return v;
+        if (ocf[i] != null) return +(ocf[i] + (capex[i] || 0)).toFixed(1);
+        return null;
     });
-    const asset = bsRows.map((r) => toTriliun(r?.totalAssets?.raw));
-    const eq = bsRows.map((r) => toTriliun(r?.totalStockholderEquity?.raw ?? r?.totalEquity?.raw));
-    const interest = icRows.map((r) => toTriliun(r?.interestExpense?.raw) || 0);
-    const tax = icRows.map((r) => toTriliun(r?.taxProvision?.raw) || 0);
-    const fcf = cfRows.map((r) => {
-        const ocf = r?.totalCashFromOperatingActivities?.raw;
-        const capex = r?.capitalExpenditures?.raw;
-        if (ocf == null) return null;
-        return toTriliun(ocf + (capex || 0));
-    });
-
-    const divYield = yearKeys.map(() => {
-        const dy = detail.dividendYield?.raw ?? detail.trailingAnnualDividendYield?.raw;
-        return dy != null ? +(dy * 100).toFixed(1) : 0;
-    });
-
-    const fill = (arr) => {
-        let last = 0;
-        return arr.map((v) => {
-            if (v != null && !Number.isNaN(v)) {
-                last = v;
-                return v;
-            }
-            return last;
-        });
-    };
 
     const out = {
-        rev: fill(rev),
-        cogs: fill(cogs),
-        net: fill(net),
-        asset: fill(asset),
-        eq: fill(eq),
-        interest: fill(interest),
-        tax: fill(tax),
-        fcf: fill(fcf),
-        divYield: fill(divYield),
-        mos: 15,
-        zscore: altmanZ(asset[5], eq[5], rev[5], net[5], isBank),
+        rev: fillForward(rev),
+        cogs: fillForward(cogs),
+        net: fillForward(net),
+        asset: fillForward(asset),
+        eq: fillForward(eq),
+        interest: fillForward(interest.map((v) => v ?? 0)),
+        tax: fillForward(tax.map((v) => v ?? 0)),
+        fcf: fillForward(fcf.map((v) => v ?? 0)),
+        divYield: YEARS.map(() => 0),
         source: 'yahoo',
+        sourceLabel: 'Yahoo Finance (data pasar .JK)',
         updated: new Date().toISOString().slice(0, 10)
     };
 
-    if (!out.rev[5] && !out.net[5]) throw new Error('empty financials');
+    out.zscore = altmanZ(out.asset[5], out.eq[5], out.rev[5], out.net[5], isBank);
+    out.mos = computeMos(out.zscore);
+
+    const hasData = out.net.some((v) => v > 0) || out.rev.some((v) => v > 0);
+    if (!hasData) throw new Error('empty financials');
     return out;
 }
 
-function sectorForTicker(ticker, src) {
-    const m = src.match(new RegExp(`ticker:\\s*"${ticker}"[^}]+sector:\\s*"([^"]+)"`));
+function sectorForTicker(ticker, srcText) {
+    const m = srcText.match(new RegExp(`ticker:\\s*"${ticker}"[^}]+sector:\\s*"([^"]+)"`));
     return m ? m[1] : '';
 }
 
 async function main() {
-    const existing = {};
+    const force = process.argv.includes('--force');
+    let existing = {};
     try {
         const old = JSON.parse(fs.readFileSync(outPath, 'utf8'));
-        Object.assign(existing, old.tickers || old);
+        existing = old.tickers || old;
     } catch (_) {}
 
-    const out = { meta: { source: 'Yahoo Finance (.JK)', built: new Date().toISOString(), unit: 'triliun IDR' }, tickers: { ...existing } };
+    const out = {
+        meta: {
+            source: 'Yahoo Finance fundamentals-timeseries (.JK)',
+            unit: 'triliun IDR',
+            built: new Date().toISOString()
+        },
+        tickers: { ...existing }
+    };
+
+    const fxUsdIdr = await getUsdIdrRate();
+    console.log(`USD/IDR: ${fxUsdIdr.toFixed(0)}`);
 
     let ok = 0;
+    let skip = 0;
     let fail = 0;
+
     for (const ticker of tickers) {
-        if (out.tickers[ticker]?.source === 'yahoo' && out.tickers[ticker]?.updated) {
-            ok++;
+        if (!force && out.tickers[ticker]?.source === 'yahoo' && out.tickers[ticker]?.rev?.[5]) {
+            skip++;
             continue;
         }
         const sector = sectorForTicker(ticker, src);
         const isBank = sector.includes('Perbankan');
         try {
-            const yahoo = await fetchYahoo(ticker);
-            out.tickers[ticker] = normalize(ticker, yahoo, isBank);
+            const byType = await fetchYahooTimeseries(ticker);
+            out.tickers[ticker] = normalize(ticker, byType, isBank, fxUsdIdr);
             ok++;
             process.stdout.write(`OK ${ticker}\n`);
         } catch (e) {
             fail++;
             process.stdout.write(`SKIP ${ticker}: ${e.message}\n`);
         }
-        await sleep(350);
+        await sleep(280);
     }
 
     fs.mkdirSync(path.dirname(outPath), { recursive: true });
     fs.writeFileSync(outPath, JSON.stringify(out, null, 2));
-    console.log(`Done. OK=${ok} fail=${fail} -> ${outPath}`);
+    console.log(`Done. new=${ok} skip=${skip} fail=${fail} total=${Object.keys(out.tickers).length} -> ${outPath}`);
 }
 
 main().catch((e) => {
