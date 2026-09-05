@@ -1,6 +1,6 @@
 {
   "meta": {
-    "built": "2026-08-05",
+    "built": "2026-09-05",
     "period": "~10 tahun",
     "disclaimer": "Kinerja masa lalu tidak menjamin hasil masa depan. ETF dari Yahoo Finance (USD). Obligasi & reksadana Indonesia berbasis estimasi/referensi — periksa prospektus resmi.",
     "benchmark": {
@@ -227,7 +227,7 @@
       "type": "Obligasi Negara AS",
       "currency": "USD",
       "focus": "Safe haven USD",
-      "cagr10y": -1.8,
+      "cagr10y": -1.7,
       "yieldNow": 4.35,
       "yahooSymbol": "IEF",
       "note": "CAGR diisi otomatis dari Yahoo jika tersedia.",
@@ -270,7 +270,7 @@
         },
         {
           "year": 2026,
-          "return": -3
+          "return": -4.1
         }
       ],
       "source": "yahoo"
@@ -750,7 +750,7 @@
         },
         {
           "year": 2026,
-          "return": 59.9
+          "return": 57.4
         }
       ],
       "source": "yahoo"
@@ -762,7 +762,7 @@
       "market": "AS",
       "focus": "Saham AS — Teknologi",
       "currency": "USD",
-      "cagr10y": 19.8,
+      "cagr10y": 19.9,
       "yearly": [
         {
           "year": 2017,
@@ -802,7 +802,7 @@
         },
         {
           "year": 2026,
-          "return": 17.8
+          "return": 17
         }
       ],
       "source": "yahoo"
@@ -814,7 +814,7 @@
       "market": "AS",
       "focus": "Saham AS — Large Cap",
       "currency": "USD",
-      "cagr10y": 13.6,
+      "cagr10y": 13.7,
       "yearly": [
         {
           "year": 2017,
@@ -854,7 +854,7 @@
         },
         {
           "year": 2026,
-          "return": 13.1
+          "return": 12.9
         }
       ],
       "source": "yahoo"
@@ -866,7 +866,7 @@
       "market": "AS",
       "focus": "Saham AS — Total Market",
       "currency": "USD",
-      "cagr10y": 13.1,
+      "cagr10y": 13.3,
       "yearly": [
         {
           "year": 2017,
@@ -906,7 +906,7 @@
         },
         {
           "year": 2026,
-          "return": 13.6
+          "return": 13.3
         }
       ],
       "source": "yahoo"
@@ -918,7 +918,7 @@
       "market": "Komoditas",
       "focus": "Emas",
       "currency": "USD",
-      "cagr10y": 11.5,
+      "cagr10y": 12.8,
       "yearly": [
         {
           "year": 2017,
@@ -958,7 +958,7 @@
         },
         {
           "year": 2026,
-          "return": -5.6
+          "return": 2.6
         }
       ],
       "source": "yahoo"
@@ -970,7 +970,7 @@
       "market": "Global",
       "focus": "Saham Dunia",
       "currency": "USD",
-      "cagr10y": 10.2,
+      "cagr10y": 10.5,
       "yearly": [
         {
           "year": 2017,
@@ -1010,7 +1010,7 @@
         },
         {
           "year": 2026,
-          "return": 13.7
+          "return": 14.7
         }
       ],
       "source": "yahoo"
@@ -1022,7 +1022,7 @@
       "market": "AS",
       "focus": "Dividen AS",
       "currency": "USD",
-      "cagr10y": 9.1,
+      "cagr10y": 9.6,
       "yearly": [
         {
           "year": 2017,
@@ -1062,7 +1062,7 @@
         },
         {
           "year": 2026,
-          "return": 23.4
+          "return": 26.9
         }
       ],
       "source": "yahoo"
@@ -1074,7 +1074,7 @@
       "market": "Emerging",
       "focus": "Saham Pasar Emerging",
       "currency": "USD",
-      "cagr10y": 5.8,
+      "cagr10y": 6.3,
       "yearly": [
         {
           "year": 2017,
@@ -1114,7 +1114,7 @@
         },
         {
           "year": 2026,
-          "return": 20.6
+          "return": 25.6
         }
       ],
       "source": "yahoo"
@@ -1126,7 +1126,7 @@
       "market": "Sektor",
       "focus": "Energi Global",
       "currency": "USD",
-      "cagr10y": 5.2,
+      "cagr10y": 6.1,
       "yearly": [
         {
           "year": 2017,
@@ -1166,7 +1166,7 @@
         },
         {
           "year": 2026,
-          "return": 29.9
+          "return": 39.3
         }
       ],
       "source": "yahoo"
@@ -1178,7 +1178,7 @@
       "market": "Emerging",
       "focus": "Saham Emerging (FTSE)",
       "currency": "USD",
-      "cagr10y": 4.8,
+      "cagr10y": 5,
       "yearly": [
         {
           "year": 2017,
@@ -1218,7 +1218,7 @@
         },
         {
           "year": 2026,
-          "return": 11.7
+          "return": 14.3
         }
       ],
       "source": "yahoo"
@@ -1230,7 +1230,7 @@
       "market": "AS",
       "focus": "Properti / REIT AS",
       "currency": "USD",
-      "cagr10y": 1.3,
+      "cagr10y": 1.6,
       "yearly": [
         {
           "year": 2017,
@@ -1270,7 +1270,7 @@
         },
         {
           "year": 2026,
-          "return": 11.8
+          "return": 8.5
         }
       ],
       "source": "yahoo"
@@ -1282,7 +1282,7 @@
       "market": "AS",
       "focus": "Obligasi High Yield AS",
       "currency": "USD",
-      "cagr10y": -0.9,
+      "cagr10y": -0.8,
       "yearly": [
         {
           "year": 2017,
@@ -1322,7 +1322,7 @@
         },
         {
           "year": 2026,
-          "return": -1.3
+          "return": -1.8
         }
       ],
       "source": "yahoo"
@@ -1374,7 +1374,7 @@
         },
         {
           "year": 2026,
-          "return": -2.2
+          "return": -2.9
         }
       ],
       "source": "yahoo"
@@ -1426,7 +1426,7 @@
         },
         {
           "year": 2026,
-          "return": -3.1
+          "return": -4.3
         }
       ],
       "source": "yahoo"
@@ -1438,7 +1438,7 @@
       "market": "AS",
       "focus": "Obligasi AS — Treasuries Panjang",
       "currency": "USD",
-      "cagr10y": -4.9,
+      "cagr10y": -4.6,
       "yearly": [
         {
           "year": 2017,
@@ -1478,7 +1478,7 @@
         },
         {
           "year": 2026,
-          "return": -5
+          "return": -5.7
         }
       ],
       "source": "yahoo"
@@ -1490,7 +1490,7 @@
       "market": "Indonesia",
       "focus": "Saham Indonesia (NYSE)",
       "currency": "USD",
-      "cagr10y": -7.1,
+      "cagr10y": -6.7,
       "yearly": [
         {
           "year": 2017,
@@ -1530,7 +1530,7 @@
         },
         {
           "year": 2026,
-          "return": -32
+          "return": -30.2
         }
       ],
       "source": "yahoo"
