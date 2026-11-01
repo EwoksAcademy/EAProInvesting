@@ -1,0 +1,61 @@
+# Sinkron harian: IHSG + harga emiten (market-snapshot), kalender korporasi, ETF/pasar alternatif.
+# Jalan Senin-Jumat 17:00 WIB (10:00 UTC), setelah bursa tutup. Bisa juga manual: Actions -> Daily market sync -> Run workflow
+
+name: Daily market sync
+
+on:
+  schedule:
+    - cron: '0 10 * * 1-5'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: market-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # Tiap langkah dibuat tidak saling membatalkan: kalau Yahoo gagal untuk satu data,
+      # data lain tetap diperbarui dan file lama tidak ditimpa dengan file rusak.
+      - name: Market snapshot (IHSG + emiten)
+        continue-on-error: true
+        run: node tools/build-market-snapshot.mjs
+
+      - name: Kalender korporasi
+        continue-on-error: true
+        run: node tools/build-corporate-calendar.mjs
+
+      - name: ETF / pasar alternatif
+        continue-on-error: true
+        run: node tools/build-pasar-alternatif.mjs
+
+      - name: Validasi JSON
+        run: |
+          for f in assets/data/*.json; do node -e "JSON.parse(require('fs').readFileSync('$f','utf8'))" || { echo "JSON rusak: $f"; git checkout -- "$f"; }; done
+
+      - name: Bump cache version
+        run: node tools/bump-asset-version.mjs
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add assets/data/market-snapshot.json assets/data/corporate-calendar.json assets/data/pasar-alternatif.json assets/js/ewoks-core.js ./*.html
+          if git diff --staged --quiet; then
+            echo "Tidak ada perubahan data - skip commit."
+            exit 0
+          fi
+          git commit -m "chore(data): daily market sync"
+          git pull --rebase origin "${GITHUB_REF_NAME}"
+          git push
