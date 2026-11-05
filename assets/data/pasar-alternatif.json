@@ -1,6 +1,6 @@
 {
   "meta": {
-    "built": "2026-10-05",
+    "built": "2026-11-05",
     "period": "~10 tahun",
     "disclaimer": "Kinerja masa lalu tidak menjamin hasil masa depan. ETF dari Yahoo Finance (USD). Obligasi & reksadana Indonesia berbasis estimasi/referensi — periksa prospektus resmi.",
     "benchmark": {
@@ -227,7 +227,7 @@
       "type": "Obligasi Negara AS",
       "currency": "USD",
       "focus": "Safe haven USD",
-      "cagr10y": -1.7,
+      "cagr10y": -1.3,
       "yieldNow": 4.35,
       "yahooSymbol": "IEF",
       "note": "CAGR diisi otomatis dari Yahoo jika tersedia.",
@@ -270,7 +270,7 @@
         },
         {
           "year": 2026,
-          "return": -7.4
+          "return": -4.7
         }
       ],
       "source": "yahoo"
@@ -710,7 +710,7 @@
       "market": "AS",
       "focus": "Semikonduktor Global",
       "currency": "USD",
-      "cagr10y": 33.3,
+      "cagr10y": 30.3,
       "yearly": [
         {
           "year": 2017,
@@ -750,7 +750,7 @@
         },
         {
           "year": 2026,
-          "return": 75.1
+          "return": 40
         }
       ],
       "source": "yahoo"
@@ -762,7 +762,7 @@
       "market": "AS",
       "focus": "Saham AS — Teknologi",
       "currency": "USD",
-      "cagr10y": 20.4,
+      "cagr10y": 19.3,
       "yearly": [
         {
           "year": 2017,
@@ -802,7 +802,7 @@
         },
         {
           "year": 2026,
-          "return": 22
+          "return": 12.6
         }
       ],
       "source": "yahoo"
@@ -814,7 +814,7 @@
       "market": "AS",
       "focus": "Saham AS — Large Cap",
       "currency": "USD",
-      "cagr10y": 13.3,
+      "cagr10y": 13.1,
       "yearly": [
         {
           "year": 2017,
@@ -854,7 +854,7 @@
         },
         {
           "year": 2026,
-          "return": 12.9
+          "return": 12.4
         }
       ],
       "source": "yahoo"
@@ -906,7 +906,7 @@
         },
         {
           "year": 2026,
-          "return": -4.1
+          "return": -6
         }
       ],
       "source": "yahoo"
@@ -918,7 +918,7 @@
       "market": "AS",
       "focus": "Saham AS — Total Market",
       "currency": "USD",
-      "cagr10y": 12.8,
+      "cagr10y": 12.6,
       "yearly": [
         {
           "year": 2017,
@@ -958,7 +958,7 @@
         },
         {
           "year": 2026,
-          "return": 12.7
+          "return": 12.4
         }
       ],
       "source": "yahoo"
@@ -970,7 +970,7 @@
       "market": "Global",
       "focus": "Saham Dunia",
       "currency": "USD",
-      "cagr10y": 10.2,
+      "cagr10y": 10,
       "yearly": [
         {
           "year": 2017,
@@ -1010,7 +1010,7 @@
         },
         {
           "year": 2026,
-          "return": 12.8
+          "return": 11.9
         }
       ],
       "source": "yahoo"
@@ -1022,7 +1022,7 @@
       "market": "AS",
       "focus": "Dividen AS",
       "currency": "USD",
-      "cagr10y": 8.6,
+      "cagr10y": 9.6,
       "yearly": [
         {
           "year": 2017,
@@ -1062,7 +1062,7 @@
         },
         {
           "year": 2026,
-          "return": 19.3
+          "return": 32
         }
       ],
       "source": "yahoo"
@@ -1074,7 +1074,7 @@
       "market": "Emerging",
       "focus": "Saham Pasar Emerging",
       "currency": "USD",
-      "cagr10y": 6.7,
+      "cagr10y": 5.8,
       "yearly": [
         {
           "year": 2017,
@@ -1114,7 +1114,7 @@
         },
         {
           "year": 2026,
-          "return": 23.7
+          "return": 12.6
         }
       ],
       "source": "yahoo"
@@ -1166,7 +1166,7 @@
         },
         {
           "year": 2026,
-          "return": 38.1
+          "return": 40.1
         }
       ],
       "source": "yahoo"
@@ -1178,7 +1178,7 @@
       "market": "Emerging",
       "focus": "Saham Emerging (FTSE)",
       "currency": "USD",
-      "cagr10y": 5.1,
+      "cagr10y": 4.6,
       "yearly": [
         {
           "year": 2017,
@@ -1218,7 +1218,7 @@
         },
         {
           "year": 2026,
-          "return": 10.8
+          "return": 4.7
         }
       ],
       "source": "yahoo"
@@ -1230,7 +1230,7 @@
       "market": "AS",
       "focus": "Properti / REIT AS",
       "currency": "USD",
-      "cagr10y": 1.1,
+      "cagr10y": 1.7,
       "yearly": [
         {
           "year": 2017,
@@ -1270,7 +1270,111 @@
         },
         {
           "year": 2026,
-          "return": 1.1
+          "return": 10.8
+        }
+      ],
+      "source": "yahoo"
+    },
+    {
+      "id": "agg",
+      "symbol": "AGG",
+      "name": "iShares Core US Aggregate Bond",
+      "market": "AS",
+      "focus": "Obligasi AS — Aggregat",
+      "currency": "USD",
+      "cagr10y": -1.1,
+      "yearly": [
+        {
+          "year": 2017,
+          "return": 1.2
+        },
+        {
+          "year": 2018,
+          "return": -2.6
+        },
+        {
+          "year": 2019,
+          "return": 5.5
+        },
+        {
+          "year": 2020,
+          "return": 5.2
+        },
+        {
+          "year": 2021,
+          "return": -3.5
+        },
+        {
+          "year": 2022,
+          "return": -15
+        },
+        {
+          "year": 2023,
+          "return": 2.3
+        },
+        {
+          "year": 2024,
+          "return": -2.4
+        },
+        {
+          "year": 2025,
+          "return": 3.1
+        },
+        {
+          "year": 2026,
+          "return": -3.5
+        }
+      ],
+      "source": "yahoo"
+    },
+    {
+      "id": "lqd",
+      "symbol": "LQD",
+      "name": "iShares Investment Grade Corporate",
+      "market": "AS",
+      "focus": "Obligasi Korporat IG AS",
+      "currency": "USD",
+      "cagr10y": -1.1,
+      "yearly": [
+        {
+          "year": 2017,
+          "return": 3.7
+        },
+        {
+          "year": 2018,
+          "return": -7.2
+        },
+        {
+          "year": 2019,
+          "return": 13.4
+        },
+        {
+          "year": 2020,
+          "return": 7.9
+        },
+        {
+          "year": 2021,
+          "return": -4.1
+        },
+        {
+          "year": 2022,
+          "return": -20.4
+        },
+        {
+          "year": 2023,
+          "return": 5
+        },
+        {
+          "year": 2024,
+          "return": -3.5
+        },
+        {
+          "year": 2025,
+          "return": 3.1
+        },
+        {
+          "year": 2026,
+          "return": -5.2
         }
       ],
       "source": "yahoo"
@@ -1322,111 +1426,7 @@
         },
         {
           "year": 2026,
-          "return": -4.6
-        }
-      ],
-      "source": "yahoo"
-    },
-    {
-      "id": "agg",
-      "symbol": "AGG",
-      "name": "iShares Core US Aggregate Bond",
-      "market": "AS",
-      "focus": "Obligasi AS — Aggregat",
-      "currency": "USD",
-      "cagr10y": -1.4,
-      "yearly": [
-        {
-          "year": 2017,
-          "return": 1.2
-        },
-        {
-          "year": 2018,
-          "return": -2.6
-        },
-        {
-          "year": 2019,
-          "return": 5.5
-        },
-        {
-          "year": 2020,
-          "return": 5.2
-        },
-        {
-          "year": 2021,
-          "return": -3.5
-        },
-        {
-          "year": 2022,
-          "return": -15
-        },
-        {
-          "year": 2023,
-          "return": 2.3
-        },
-        {
-          "year": 2024,
-          "return": -2.4
-        },
-        {
-          "year": 2025,
-          "return": 3.1
-        },
-        {
-          "year": 2026,
-          "return": -5.6
-        }
-      ],
-      "source": "yahoo"
-    },
-    {
-      "id": "lqd",
-      "symbol": "LQD",
-      "name": "iShares Investment Grade Corporate",
-      "market": "AS",
-      "focus": "Obligasi Korporat IG AS",
-      "currency": "USD",
-      "cagr10y": -1.4,
-      "yearly": [
-        {
-          "year": 2017,
-          "return": 3.7
-        },
-        {
-          "year": 2018,
-          "return": -7.2
-        },
-        {
-          "year": 2019,
-          "return": 13.4
-        },
-        {
-          "year": 2020,
-          "return": 7.9
-        },
-        {
-          "year": 2021,
-          "return": -4.1
-        },
-        {
-          "year": 2022,
-          "return": -20.4
-        },
-        {
-          "year": 2023,
-          "return": 5
-        },
-        {
-          "year": 2024,
-          "return": -3.5
-        },
-        {
-          "year": 2025,
-          "return": 3.1
-        },
-        {
-          "year": 2026,
-          "return": -7.6
+          "return": -3.9
         }
       ],
       "source": "yahoo"
@@ -1438,7 +1438,7 @@
       "market": "AS",
       "focus": "Obligasi AS — Treasuries Panjang",
       "currency": "USD",
-      "cagr10y": -4.3,
+      "cagr10y": -3.7,
       "yearly": [
         {
           "year": 2017,
@@ -1478,7 +1478,7 @@
         },
         {
           "year": 2026,
-          "return": -11.1
+          "return": -6.2
         }
       ],
       "source": "yahoo"
@@ -1490,7 +1490,7 @@
       "market": "Indonesia",
       "focus": "Saham Indonesia (NYSE)",
       "currency": "USD",
-      "cagr10y": -6.7,
+      "cagr10y": -8.6,
       "yearly": [
         {
           "year": 2017,
@@ -1530,7 +1530,7 @@
         },
         {
           "year": 2026,
-          "return": -37.5
+          "return": -47.3
         }
       ],
       "source": "yahoo"
